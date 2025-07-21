@@ -1,17 +1,20 @@
-// src/admin/dashboard/DashboardLayout.tsx
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import DashboardSidebar from './sidebar';
-import { Box } from '@mui/material';
+
+import {
+  StyledDashboardLayoutRoot,
+  StyledMainContentArea,
+} from '../styles/dashboardlayout'; 
 
 const DashboardLayout = () => {
   return (
-    <Box display="flex">
+    <StyledDashboardLayoutRoot>
       <DashboardSidebar />
-      <Box sx={{ flex: 1, padding: 2 }}>
+      <StyledMainContentArea>
         <Outlet />
-      </Box>
-    </Box>
+      </StyledMainContentArea>
+    </StyledDashboardLayoutRoot>
   );
 };
 

@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
-import EmailIcon from '@mui/icons-material/Email';
+// import EmailIcon from '@mui/icons-material/Email'; // REMOVE this import as we're using a custom image
 import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  InputAdornment,
-} from '@mui/material';
+import { InputAdornment } from '@mui/material';
 
 import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
+import mail from '../../../assets/admin/mail.png'; // Import your custom image icon
 
-import '../styles/loginstyle.css';
+// Import ALL necessary styled components, including the ones for custom icons
+import {
+  StyledLoginRoot,
+  StyledLoginLeft,
+  StyledLoginRight,
+  StyledLoginForm,
+  StyledLoginLogo,
+  StyledTitle,
+  StyledSubtitle,
+  StyledTextField,
+  StyledLoginButton,
+  StyledCustomIcon,       // <-- IMPORT THIS
+  StyledInputAdornmentIcon, // <-- IMPORT THIS
+} from '../styles/logins.styles'; // Ensure this path is correct
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  // Validation Logic
   const validateEmail = (value: string) => {
     if (!value) return 'Email is required';
     if (!/\S+@\S+\.\S+/.test(value)) return 'Enter a valid email';
@@ -38,28 +45,21 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Box className="forgot-root">
-      {/* LEFT HALF */}
-      <Box
-        className="forgot-left"
-        style={{ backgroundImage: `url(${bgimg})` }}
-      />
+    <StyledLoginRoot>
+      <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
 
-      {/* RIGHT HALF */}
-      <Box className="forgot-right">
-        <Box className="forgot-form">
-          {/* Logo */}
-          <Box component="img" src={logo} alt="Logo" className="forgot-logo" />
+      <StyledLoginRight>
+        <StyledLoginForm>
+          <StyledLoginLogo src={logo} alt="Logo" />
 
-          <Typography variant="h5" fontWeight="bold" color="black">
+          <StyledTitle variant="h5" fontWeight="bold">
             Forgot Password
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+          </StyledTitle>
+          <StyledSubtitle variant="body2">
             Enter your email address to reset the password
-          </Typography>
+          </StyledSubtitle>
 
-          {/* Email Field */}
-          <TextField
+          <StyledTextField
             fullWidth
             placeholder="Email"
             value={email}
@@ -70,24 +70,25 @@ const ForgotPassword = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailIcon />
+                  {/* Using your custom image icon */}
+                  <StyledInputAdornmentIcon>
+                    <StyledCustomIcon src={mail} alt="Email" />
+                  </StyledInputAdornmentIcon>
                 </InputAdornment>
               ),
             }}
           />
 
-          {/* Continue Button */}
-          <Button
+          <StyledLoginButton
             variant="contained"
             fullWidth
-            className="forgot-button"
             onClick={validateAndContinue}
           >
             Continue
-          </Button>
-        </Box>
-      </Box>
-    </Box>
+          </StyledLoginButton>
+        </StyledLoginForm>
+      </StyledLoginRight>
+    </StyledLoginRoot>
   );
 };
 

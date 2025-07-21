@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  Typography,
-  TextField,
-  Button,
   InputAdornment,
   IconButton,
+  Typography,
 } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Link } from '@mui/material';
-import LockIcon from '@mui/icons-material/Lock';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Visibility from '@mui/icons-material/Visibility';
 
 import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
-import '../styles/loginstyle.css';
+import lockIconPng from '../../../assets/admin/lock.png';
+import eyeIconPng from '../../../assets/admin/eye-off.png';
+
+import {
+  StyledLoginRoot,
+  StyledLoginLeft,
+  StyledLoginRight,
+  StyledLoginForm,
+  StyledLoginLogo,
+  StyledTitle,
+  StyledSubtitle,
+  StyledTextField,
+  StyledCustomIcon,
+  StyledInputAdornmentIcon,
+  StyledForgotPasswordLink,
+  StyledLink,
+  StyledLoginButton,
+} from '../styles/logins.styles';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -54,21 +64,21 @@ const ChangePassword = () => {
   };
 
   return (
-    <Box className="login-root">
-      <Box className="login-left" style={{ backgroundImage: `url(${bgimg})` }} />
+    <StyledLoginRoot>
+      <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
 
-      <Box className="login-right">
-        <Box className="login-form">
-          <Box component="img" src={logo} alt="Logo" className="login-logo" />
+      <StyledLoginRight>
+        <StyledLoginForm>
+          <StyledLoginLogo src={logo} alt="Logo" />
 
-          <Typography variant="h5" fontWeight="bold" color="black">
+          <StyledTitle variant="h5" fontWeight="bold">
             Set new password
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+          </StyledTitle>
+          <StyledSubtitle variant="body2">
             Enter a new password for your account
-          </Typography>
+          </StyledSubtitle>
 
-          <TextField
+          <StyledTextField
             fullWidth
             placeholder="New Password"
             type={showPassword ? 'text' : 'password'}
@@ -80,21 +90,22 @@ const ChangePassword = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <LockIcon />
+                  <StyledInputAdornmentIcon>
+                    <StyledCustomIcon src={lockIconPng} alt="Lock" />
+                  </StyledInputAdornmentIcon>
                 </InputAdornment>
               ),
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                    <StyledCustomIcon src={eyeIconPng} alt={showPassword ? "Hide password" : "Show password"} />
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
 
-        
-          <TextField
+          <StyledTextField
             fullWidth
             placeholder="Confirm New Password"
             type={showConfirmPassword ? 'text' : 'password'}
@@ -106,7 +117,9 @@ const ChangePassword = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <LockIcon />
+                  <StyledInputAdornmentIcon>
+                    <StyledCustomIcon src={lockIconPng} alt="Lock" />
+                  </StyledInputAdornmentIcon>
                 </InputAdornment>
               ),
               endAdornment: (
@@ -115,35 +128,33 @@ const ChangePassword = () => {
                     edge="end"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
-                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                    <StyledCustomIcon src={eyeIconPng} alt={showConfirmPassword ? "Hide password" : "Show password"} />
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
 
-          <Box className="forgot-password-link">
-            <Link
+          <StyledForgotPasswordLink>
+            <StyledLink
               component={RouterLink}
               to="/admin/forgotpassword"
               underline="hover"
-              fontSize="14px"
             >
               Forgot Password?
-            </Link>
-          </Box>
+            </StyledLink>
+          </StyledForgotPasswordLink>
 
-          <Button
+          <StyledLoginButton
             variant="contained"
             fullWidth
-            className="login-button"
             onClick={handleSubmit}
           >
             Reset Password
-          </Button>
-        </Box>
-      </Box>
-    </Box>
+          </StyledLoginButton>
+        </StyledLoginForm>
+      </StyledLoginRight>
+    </StyledLoginRoot>
   );
 };
 

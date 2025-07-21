@@ -1,12 +1,48 @@
 import React from 'react';
-import { Box, Typography, TextField, Card, CardMedia, CardContent, Grid } from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Typography, InputAdornment, Box, CardContent, Grid } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import PeopleIcon from '@mui/icons-material/People';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+// Corrected: Import as an image path (e.g., PeopleImg)
+import PeopleImg from '../../../assets/admin/fa-solid_users.png';
+import PersonAddIcon from '@mui/icons-material/PersonAdd'; // This one is correctly imported as an MUI component
+
 import bannerImage from '../../../assets/admin/banner.png';
-import '../styles/dashboard.css';
+import {
+  StyledDashboardContainer,
+  StyledDashboardHeader,
+  StyledDashboardTitle,
+  StyledSearchInput,
+  StyledBannerAndStatsWrapper,
+  StyledImageCard,
+  StyledCardMedia,
+  StyledStatsGrid,
+  StyledStatCard,
+  StyledStatCardContent,
+  StyledStatIconBox,
+  StyledStatNumber,
+  StyledStatLabel,
+  StyledChartsGrid,
+  StyledChartCard,
+  StyledChartTitle,
+  StyledChartContainer,
+  StyledChartYAxis,
+  StyledChartArea,
+  StyledChartBars,
+  StyledChartBarContainer,
+  StyledChartBar,
+  StyledChartBarLabel,
+  StyledRegisterCard,
+  StyledRegisterHeader,
+  StyledRegisterTitle,
+  StyledRegisterToday,
+  StyledRegisterStats,
+  StyledRegisterStatItem,
+  StyledRegisterStatLeft,
+  StyledRegisterStatIcon,
+  StyledRegisterStatLabel,
+  StyledRegisterStatRight,
+  StyledRegisterStatNumber,
+  StyledRegisterStatDate,
+} from '../styles/dashboard';
 
 const Dashboard = () => {
   const chartData = [
@@ -27,14 +63,13 @@ const Dashboard = () => {
   const maxValue = Math.max(...chartData.map(d => d.value));
 
   return (
-    <Box className="dashboardContainer">
-      <Box className="dashboardHeader">
-        <Typography className="dashboardTitle">Admin Dashboard</Typography>
-        <TextField
+    <StyledDashboardContainer>
+      <StyledDashboardHeader>
+        <StyledDashboardTitle component="h1">Admin Dashboard</StyledDashboardTitle>
+        <StyledSearchInput
           placeholder="Search..."
           variant="outlined"
           size="small"
-          className="searchInput"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -43,126 +78,124 @@ const Dashboard = () => {
             ),
           }}
         />
-      </Box>
+      </StyledDashboardHeader>
 
-      {/* New Wrapper for Banner and Stats Grid */}
-      <Box className="bannerAndStatsWrapper">
-        <Card className="imageCard">
-          <CardMedia
+      <StyledBannerAndStatsWrapper>
+        <StyledImageCard>
+          <StyledCardMedia
             component="img"
             image={bannerImage}
             alt="Dashboard Banner"
-            height="200"
           />
-        </Card>
+        </StyledImageCard>
 
-        {/* Removed 'overlappingStatsGrid' from the container Grid, as it's a styling class and shouldn't interfere with the prop typing. The CSS handles the overlap. */}
-        <Grid container spacing={3} className="statsGrid">
+        <StyledStatsGrid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Card className="statCard">
-              <CardContent className="statCardContent">
-                <Box className="statIcon">
-                  <PeopleIcon className="statIconSvg" />
-                </Box>
+            <StyledStatCard>
+              <StyledStatCardContent>
+                <StyledStatIconBox>
+                  {/* Corrected: Use <img> tag for the imported image */}
+                  <img src={PeopleImg} alt="Total Subscribers Icon" style={{ width: 40, height: 40 }} />
+                </StyledStatIconBox>
                 <Box>
-                  <Typography className="statNumber">2,500</Typography>
-                  <Typography className="statLabel">Total Subscribers</Typography>
+                  <StyledStatNumber>2,500</StyledStatNumber>
+                  <StyledStatLabel>Total Subscribers</StyledStatLabel>
                 </Box>
-              </CardContent>
-            </Card>
+              </StyledStatCardContent>
+            </StyledStatCard>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Card className="statCard">
-              <CardContent className="statCardContent">
-                <Box className="statIcon">
-                  <PersonAddIcon className="statIconSvg" />
-                </Box>
+            <StyledStatCard>
+              <StyledStatCardContent>
+                <StyledStatIconBox>
+                  {/* This one is an MUI component, so it's correct */}
+                  <PersonAddIcon />
+                </StyledStatIconBox>
                 <Box>
-                  <Typography className="statNumber">530</Typography>
-                  <Typography className="statLabel">Training Program Registered</Typography>
+                  <StyledStatNumber>530</StyledStatNumber>
+                  <StyledStatLabel>Training Program Registered</StyledStatLabel>
                 </Box>
-              </CardContent>
-            </Card>
+              </StyledStatCardContent>
+            </StyledStatCard>
           </Grid>
-        </Grid>
-      </Box> {/* End New Wrapper */}
+        </StyledStatsGrid>
+      </StyledBannerAndStatsWrapper>
 
-      <Grid container spacing={3} className="chartsGrid">
+      <StyledChartsGrid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Card className="chartCard">
+          <StyledChartCard>
             <CardContent>
-              <Typography className="chartTitle">Training Program Registrations</Typography>
-              <Box className="chartContainer">
-                <Box className="chartYAxis">
+              <StyledChartTitle>Training Program Registrations</StyledChartTitle>
+              <StyledChartContainer>
+                <StyledChartYAxis>
                   <span>60</span>
                   <span>50</span>
                   <span>40</span>
                   <span>30</span>
                   <span>20</span>
                   <span>10</span>
-                </Box>
-                <Box className="chartArea">
-                  <Box className="chartBars">
+                </StyledChartYAxis>
+                <StyledChartArea>
+                  <StyledChartBars>
                     {chartData.map((item, index) => (
-                      <Box key={index} className="chartBarContainer">
-                        <Box
-                          className="chartBar"
+                      <StyledChartBarContainer key={index}>
+                        <StyledChartBar
                           style={{ height: `${(item.value / maxValue) * 100}%` }}
                         />
-                        <Typography className="chartBarLabel">{item.month}</Typography>
-                      </Box>
+                        <StyledChartBarLabel>{item.month}</StyledChartBarLabel>
+                      </StyledChartBarContainer>
                     ))}
-                  </Box>
-                </Box>
-              </Box>
+                  </StyledChartBars>
+                </StyledChartArea>
+              </StyledChartContainer>
             </CardContent>
-          </Card>
+          </StyledChartCard>
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Card className="registerCard">
+          <StyledRegisterCard>
             <CardContent>
-              <Box className="registerHeader">
-                <Typography className="registerTitle">Training Program Register</Typography>
-                <Typography className="registerToday">Today</Typography>
-              </Box>
+              <StyledRegisterHeader>
+                <StyledRegisterTitle>Training Program Register</StyledRegisterTitle>
+                <StyledRegisterToday>Today</StyledRegisterToday>
+              </StyledRegisterHeader>
               
-              <Box className="registerStats">
-                <Box className="registerStatItem">
-                  <Box className="registerStatLeft">
-                    <TrendingUpIcon className="registerStatIcon" />
-                    <Typography className="registerStatLabel">Total Members Joined</Typography>
-                  </Box>
-                  <Typography className="registerStatNumber">20</Typography>
-                </Box>
+              <StyledRegisterStats>
+                <StyledRegisterStatItem>
+                  <StyledRegisterStatLeft>
+                    <StyledRegisterStatIcon />
+                    <StyledRegisterStatLabel>Total Members Joined</StyledRegisterStatLabel>
+                  </StyledRegisterStatLeft>
+                  <StyledRegisterStatNumber>20</StyledRegisterStatNumber>
+                </StyledRegisterStatItem>
                 
-                <Box className="registerStatItem">
-                  <Box className="registerStatLeft">
-                    <TrendingUpIcon className="registerStatIcon" />
-                    <Typography className="registerStatLabel">Total Members Joined</Typography>
-                  </Box>
-                  <Box className="registerStatRight">
-                    <Typography className="registerStatNumber">7</Typography>
-                    <Typography className="registerStatDate">Yesterday</Typography>
-                  </Box>
-                </Box>
+                <StyledRegisterStatItem>
+                  <StyledRegisterStatLeft>
+                    <StyledRegisterStatIcon />
+                    <StyledRegisterStatLabel>Total Members Joined</StyledRegisterStatLabel>
+                  </StyledRegisterStatLeft>
+                  <StyledRegisterStatRight>
+                    <StyledRegisterStatNumber>7</StyledRegisterStatNumber>
+                    <StyledRegisterStatDate>Yesterday</StyledRegisterStatDate>
+                  </StyledRegisterStatRight>
+                </StyledRegisterStatItem>
                 
-                <Box className="registerStatItem">
-                  <Box className="registerStatLeft">
-                    <TrendingUpIcon className="registerStatIcon" />
-                    <Typography className="registerStatLabel">Total Members Joined</Typography>
-                  </Box>
-                  <Box className="registerStatRight">
-                    <Typography className="registerStatNumber">10</Typography>
-                    <Typography className="registerStatDate">10/07/2025</Typography>
-                  </Box>
-                </Box>
-              </Box>
+                <StyledRegisterStatItem>
+                  <StyledRegisterStatLeft>
+                    <StyledRegisterStatIcon />
+                    <StyledRegisterStatLabel>Total Members Joined</StyledRegisterStatLabel>
+                  </StyledRegisterStatLeft>
+                  <StyledRegisterStatRight>
+                    <StyledRegisterStatNumber>10</StyledRegisterStatNumber>
+                    <StyledRegisterStatDate>10/07/2025</StyledRegisterStatDate>
+                  </StyledRegisterStatRight>
+                </StyledRegisterStatItem>
+              </StyledRegisterStats>
             </CardContent>
-          </Card>
+          </StyledRegisterCard>
         </Grid>
-      </Grid>
-    </Box>
+      </StyledChartsGrid>
+    </StyledDashboardContainer>
   );
 };
 
