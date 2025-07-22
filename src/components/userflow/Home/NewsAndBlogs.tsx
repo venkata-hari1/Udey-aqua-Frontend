@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import NewsCard from "./NewsCard";
 import fishesImg from "../../../assets/home/news_img.png";
@@ -39,9 +39,7 @@ const newsData = [
 ];
 
 const NewsAndBlogs = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { classes } = useHomeStyles(isMobile);
+  const { classes } = useHomeStyles();
   const scrollRef = useRef<HTMLDivElement>(null);
   useAutoHorizontalScroll(scrollRef);
   const isOverflowing = useIsOverflowing(scrollRef);

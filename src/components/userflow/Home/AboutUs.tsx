@@ -1,12 +1,10 @@
-import { Box, Typography, Button, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import aboutImg from "../../../assets/home/about_image.png";
 import aboutVideo from "../../../assets/home/video.mp4";
 import useHomeStyles from "./homeStyles";
 
 const AboutUs = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { classes } = useHomeStyles(isMobile);
+  const { classes } = useHomeStyles();
 
   return (
     <>

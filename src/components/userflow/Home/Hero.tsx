@@ -9,7 +9,7 @@ import useHomeStyles from './homeStyles';
 const Hero = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { classes } = useHomeStyles(isMobile);
+  const { classes } = useHomeStyles();
 
   return (
     <Box className={classes.heroRoot}>
@@ -31,7 +31,7 @@ const Hero = () => {
           <Box className={classes.heroTextBox}>
             {isMobile ? (
               <>
-                <Typography variant={isMobile ? "h6" : "h2"} className={classes.heroTitle} fontWeight={700}>
+                <Typography variant="h6" className={classes.heroTitle} fontWeight={700}>
                   <span className={classes.heroTitleBlue}>Uday Aqua</span>
                   <RemoveIcon className={classes.heroRemoveIcon} />
                   Your Platform to Sustainable Aquaculture
@@ -39,10 +39,10 @@ const Hero = () => {
               </>
             ) : (
               <>
-                <Typography variant={isMobile ? "h6" : "h2"} fontWeight={700} my={2} className={classes.heroTitleBlue}>
+                <Typography variant="h2" fontWeight={700} my={2} className={classes.heroTitleBlue}>
                   Uday Aqua <RemoveIcon className={classes.heroRemoveIcon} />
                 </Typography>
-                <Typography variant={isMobile ? "h6" : "h2"} className={classes.heroSubtitle} fontWeight={700}>
+                <Typography variant="h2" className={classes.heroSubtitle} fontWeight={700}>
                   Your Platform to Sustainable Aquaculture
                 </Typography>
               </>) }

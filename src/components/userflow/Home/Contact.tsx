@@ -1,4 +1,4 @@
-import { Box, Typography, Button, TextField, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, Button, TextField } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import { useState } from "react";
 import contactImg from "../../../assets/home/contact.jpg";
@@ -6,9 +6,7 @@ import useHomeStyles from "./homeStyles";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { classes } = useHomeStyles(isMobile);
+  const { classes } = useHomeStyles();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,11 +16,9 @@ const Contact = () => {
     <Box className={classes.contactRoot}>
       <SectionTitle title="Get In Touch" />
       <Box className={classes.contactMain}>
-        {isMobile && (
-          <Box className={classes.contactImgWrap}>
-            <Box component="img" src={contactImg} alt="Contact" className={classes.contactImg} />
-          </Box>
-        )}
+        <Box className={classes.contactImgWrap}>
+          <Box component="img" src={contactImg} alt="Contact" className={classes.contactImg} />
+        </Box>
         <Box className={classes.contactFormWrap}>
           <Box className={classes.contactFieldWrap}>
             <Typography className={classes.contactLabel}>First Name</Typography>

@@ -1,4 +1,4 @@
-import { Box, Typography, Button, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import useHomeStyles from "./homeStyles";
 
 export interface NewsCardProps {
@@ -14,9 +14,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
   image, date, title, description, author, authorLink
 }) => {
   const [day, month, year] = date.split(" ");
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { classes } = useHomeStyles(isMobile);
+  const { classes } = useHomeStyles();
   return (
     <Box className={classes.newsCardRoot}>
       <Box className={classes.newsCardImgWrap}>

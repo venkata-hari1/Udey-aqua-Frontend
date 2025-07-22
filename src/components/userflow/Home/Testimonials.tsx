@@ -5,6 +5,7 @@ import type { Testimonial } from "./TestimonialCard";
 import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
+import useHomeStyles from "./homeStyles";
 
 import img1 from "../../../assets/testimonials/person_1.jpg";
 import img2 from "../../../assets/testimonials/person_2.jpg";
@@ -32,34 +33,24 @@ const testimonials: Testimonial[] = [
 ];
 
 const Testimonials: React.FC = () => {
+  const { classes } = useHomeStyles();
   const scrollRef = useRef<HTMLDivElement>(null);
   useAutoHorizontalScroll(scrollRef);
   const isOverflowing = useIsOverflowing(scrollRef);
 
   return (
-    <Box sx={{ width: "100%", position: "relative", left: "50%", right: "50%", ml: "-50%", mr: "-50v%", py: 6, background: "#fff" }}>
+    <Box className={classes.testimonialsRoot}>
       <SectionTitle title="Testimonials" />
       <Box
         ref={scrollRef}
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "nowrap",
-          justifyContent: isOverflowing ? "flex-start" : "center",
-          alignItems: "stretch",
-          mt: 6,
-          width: "100%",
-          gap: 5,
-          overflowX: "auto",
-          overflowY: "hidden",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          '::-webkit-scrollbar': { display: 'none' },
-        }}
+        className={
+          classes.testimonialsScroll +
+          (isOverflowing ? ' ' + classes.testimonialsScrollFlexStart : '')
+        }
       >
         {isOverflowing && <Box />}
         {testimonials.map((t, idx) => (
-          <Box key={idx} sx={{ minWidth: 320, maxWidth: 380, width: 340, boxSizing: 'border-box', flex: '0 0 auto', height: '100%', ml: !isOverflowing && idx === 0 ? 4 : 0, mr: !isOverflowing && idx === testimonials.length - 1 ? 4 : 0, display: 'flex', alignItems: 'stretch' }}>
+          <Box key={idx} className={classes.testimonialsCardOuter}>
               <TestimonialCard testimonial={t} />
           </Box>
         ))}

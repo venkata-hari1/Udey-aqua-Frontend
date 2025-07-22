@@ -1,12 +1,15 @@
 import Footer from './Footer';
 import Header from './Header';
 import { Outlet } from 'react-router-dom';
+import useSharedStyles from './sharedStyles';
 
 const Layout = () => {
+  const { classes } = useSharedStyles();
+
   return (
     <>
       <Header />
-      <main style={{ minHeight: '100vh',width:"100%",overflow:"hidden" }}>
+      <main className={classes.layout}>
         <Outlet />
       </main>
       <Footer />

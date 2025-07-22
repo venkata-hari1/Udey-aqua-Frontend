@@ -1,4 +1,4 @@
-import { Box, Typography, Button, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import mottoHead from "../../../assets/home/motto_head.svg";
 import useHomeStyles from "./homeStyles";
 
@@ -11,9 +11,7 @@ interface MottoCardProps {
 }
 
 const MottoCard = ({ img, fishText, title, button, buttonText }: MottoCardProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { classes } = useHomeStyles(isMobile);
+  const { classes } = useHomeStyles();
 
   return (
     <Box className={classes.mottoCardRoot}>
