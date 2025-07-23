@@ -1,5 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 import type { Theme } from '@mui/material';
+import { COLORS, SHADOWS } from '../Shared/styles';
 
 const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutHeaderTitle: {
@@ -11,7 +12,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutHeaderSubtitle: {
-    color: theme.palette.primary.dark,  
+    color: theme.palette.primary.dark,
     fontWeight: 700,
     fontSize: 40,
     lineHeight: 1.3,
@@ -30,9 +31,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutCard: {
-    background: '#f8fafc',
+    background: COLORS.BLUE_GRAY,
     borderRadius: 12,
-    boxShadow: '0 4px 24px 0 #0463EE22',
+    boxShadow: SHADOWS.LIGHT_CARD,
     padding: theme.spacing(4),
     marginBottom: theme.spacing(8),
     position: 'relative',
@@ -47,7 +48,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutCardTitle: {
-    color: '#0A4FA4',
+    color: COLORS.PRIMARY_BLUE,
     fontWeight: 700,
     marginBottom: theme.spacing(2),
     fontSize: 32,
@@ -58,7 +59,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutCardDesc: {
     fontSize: 20,
-    color: '#222',
+    color: COLORS.DARK,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
       fontSize: 14,
@@ -76,13 +77,13 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     position: 'absolute',
     right: -24,
     bottom: -24,
-    backgroundColor: '#0A4FA4',
-    color: '#fff',
+    backgroundColor: COLORS.PRIMARY_BLUE,
+    color: COLORS.WHITE,
     width: 68,
     height: 68,
-    boxShadow: theme.shadows[3],
+    boxShadow: SHADOWS.MEDIUM,
     zIndex: 2,
-    '&:hover': { backgroundColor: '#083a7a' },
+    '&:hover': { backgroundColor: COLORS.DARKER_BLUE },
     transition: 'transform 0.2s',
     [theme.breakpoints.down('md')]: {
       right: -6,
@@ -92,7 +93,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutCardLargeDesc: {
     fontSize: 20,
-    color: '#222',
+    color: COLORS.DARK,
     marginTop: theme.spacing(1),
     fontWeight: 400,
     [theme.breakpoints.down('md')]: {
@@ -102,7 +103,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutLayoutRoot: {
     width: '100%',
     minHeight: '100vh',
-    background: '#f8fafc',
+    background: COLORS.BLUE_GRAY,
   },
   aboutHero: {
     width: '100vw',
@@ -135,7 +136,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     left: 0,
     width: '100%',
     height: '100%',
-    background: 'rgba(0,0,0,0.05)',
+    background: COLORS.BLACK_TRANSLUCENT,
     zIndex: 2,
   },
   aboutHeroContent: {
@@ -151,7 +152,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginTop: theme.spacing(3),
   },
   aboutHeroTitle: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontWeight: 700,
     fontSize: 64,
     margin: theme.spacing(5, 0, 2, 0),
@@ -163,7 +164,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutHeroSubtitle: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontWeight: 500,
     fontSize: 28,
     textAlign: 'center',
@@ -175,7 +176,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutHeroBreadcrumb: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontWeight: 500,
     fontSize: 22,
     marginBottom: theme.spacing(1),
@@ -201,9 +202,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutSidebar: {
     width: '100%',
-    background: 'linear-gradient(180deg, #0A4FA4 0%, #041E3E 100%)',
-    boxShadow: '0.5px 2px 14 0.5 #0A4FA463',
-    color: '#fff',
+    background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
+    boxShadow: SHADOWS.SIDEBAR,
+    color: COLORS.WHITE,
     padding: theme.spacing(2),
     borderRadius: 12,
     display: 'flex',
@@ -226,21 +227,21 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     cursor: 'pointer',
     fontFamily: '',
     background: 'transparent',
-    color: '#fff',
+    color: COLORS.WHITE,
     transition: '300ms ease',
     '&.active': {
-      background: '#fff',
-      color: '#0A4FA4',
+      background: COLORS.WHITE,
+      color: COLORS.PRIMARY_BLUE,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
     },
   },
   aboutSidebarContact: {
     width: '100%',
-    background: '#fff',
-    color: '#0A4FA4',
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
     borderRadius: 12,
-    boxShadow: '0 4px 24px 0 #00000022',
+    boxShadow: SHADOWS.DARK_CARD,
     padding: theme.spacing(2.5),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -274,12 +275,12 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutMainRow: {
-    display: "flex",
-    width: "100%",
+    display: 'flex',
+    width: '100%',
     marginLeft: 64,
     marginRight: 64,
     marginTop: 48,
-    minHeight: "100vh",
+    minHeight: '100vh',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       marginRight: 0,
@@ -289,22 +290,22 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutSidebarContactTitle: {
     fontWeight: 700,
     fontSize: 18,
-    color: '#0A4FA4',
+    color: COLORS.PRIMARY_BLUE,
     marginBottom: 8,
   },
   aboutSidebarContactLabel: {
     fontWeight: 500,
     fontSize: 15,
-    color: '#222',
+    color: COLORS.DARK,
     marginBottom: 4,
   },
   aboutSidebarContactValue: {
     fontWeight: 600,
     fontSize: 15,
-    color: '#222',
+    color: COLORS.DARK,
   },
   aboutSidebarContactIcon: {
-    color: '#0A4FA4',
+    color: COLORS.PRIMARY_BLUE,
     fontSize: 18,
   },
   aboutSidebarContactRow: {
@@ -314,14 +315,14 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginBottom: 4,
   },
   aboutMainFish: {
-    position: "absolute",
+    position: 'absolute',
     top: -50,
     right: -20,
-    display: "block",
+    display: 'block',
     [theme.breakpoints.down('md')]: {
-      display: "none",
+      display: 'none',
     },
   },
 }));
 
-export default useAboutStyles; 
+export default useAboutStyles;

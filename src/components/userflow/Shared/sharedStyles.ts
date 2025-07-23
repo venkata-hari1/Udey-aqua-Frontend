@@ -1,9 +1,12 @@
 import { makeStyles } from 'tss-react/mui';
 import type { Theme } from '@mui/material';
+import { COLORS, SHADOWS, TYPOGRAPHY, baseStyles } from './styles';
 
 const useSharedStyles = makeStyles()((theme: Theme) => ({
-  layout:{
-    minHeight: '100vh',width:"100%",overflow:"hidden"
+  layout: {
+    minHeight: '100vh',
+    width: '100%',
+    overflow: 'hidden',
   },
   footerRoot: {
     width: '100%',
@@ -13,7 +16,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     paddingBottom: 0,
     overflow: 'hidden',
     [theme.breakpoints.down('md')]: {
-      minHeight: 750,
+      minHeight: 820,
     },
   },
   footerBg: {
@@ -44,7 +47,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
       marginTop: 85,
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
-      paddingTop: theme.spacing(3),
+      paddingTop: 60,
     },
   },
   footerLogoBox: {
@@ -84,42 +87,36 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   subscribeInput: {
     flex: 1,
-    background: '#fff',
+    background: COLORS.WHITE,
     borderRadius: 3,
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
-    fontSize: 22,
-    boxShadow: '0 2px 8px 0 #0A4FA422',
+    ...TYPOGRAPHY.subtitle1(theme),
+    boxShadow: SHADOWS.DARK_CARD,
     height: 56,
     paddingRight: 0,
     width: 'auto',
     minWidth: 0,
     marginBottom: 0,
     [theme.breakpoints.down('md')]: {
-      fontSize: 16,
+      ...TYPOGRAPHY.body1(theme),
       height: 44,
       width: '100%',
       marginBottom: theme.spacing(1),
     },
   },
   subscribeButton: {
-    background: '#0463EE',
-    color: '#fff',
-    fontWeight: 400,
-    fontSize: 16,
-    borderRadius: 999,
+    ...baseStyles.button(theme),
+    background: COLORS.SECONDARY_BLUE,
+    color: COLORS.WHITE,
     marginRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
     height: 'fit-content',
-    boxShadow: '0 2px 8px 0 #0A4FA422',
-    textTransform: 'none',
     letterSpacing: 0.5,
     minWidth: 0,
-    '&:hover': { background: '#1251a3' },
+    '&:hover': { background: COLORS.HERO_BLUE },
     [theme.breakpoints.down('md')]: {
-      fontSize: 14,
+      ...TYPOGRAPHY.body1(theme),
     },
   },
   navLinks1: {
@@ -129,16 +126,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     alignItems: 'flex-start',
   },
   navLink: {
-    color: '#fff',
-    fontWeight: 400,
-    fontSize: 16,
+    color: COLORS.WHITE,
+    ...TYPOGRAPHY.body1(theme),
     marginBottom: 4,
     cursor: 'pointer',
     '&:hover': { textDecoration: 'underline' },
-    [theme.breakpoints.down('md')]: {
-      fontSize: 14,
-      marginBottom: 2,
-    },
   },
   navLinks2: {
     display: 'flex',
@@ -147,16 +139,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     alignItems: 'flex-start',
   },
   navLinkBold: {
-    color: '#fff',
-    fontWeight: 700,
-    fontSize: 16,
+    color: COLORS.WHITE,
+    ...TYPOGRAPHY.subtitle1(theme),
     marginBottom: 4,
     cursor: 'pointer',
     '&:hover': { textDecoration: 'underline' },
-    [theme.breakpoints.down('md')]: {
-      fontSize: 14,
-      marginBottom: 2,
-    },
   },
   contactBox: {
     display: 'flex',
@@ -171,28 +158,21 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     },
   },
   contactTitle: {
-    color: '#fff',
-    fontWeight: 700,
-    fontSize: 18,
+    ...TYPOGRAPHY.subtitle1(theme),
+    color: COLORS.WHITE,
     marginBottom: 8,
     textAlign: 'center',
-    [theme.breakpoints.down('md')]: {
-      fontSize: 15,
-      marginBottom: 4,
-    },
   },
   contactRow: {
     display: 'flex',
     alignItems: 'center',
     gap: 8,
-    color: '#fff',
+    color: COLORS.WHITE,
     marginBottom: 4,
   },
   contactText: {
-    fontSize: 15,
-    [theme.breakpoints.down('md')]: {
-      fontSize: 13,
-    },
+    ...TYPOGRAPHY.body2(theme),
+    color: COLORS.WHITE,
   },
   socialIcons: {
     display: 'flex',
@@ -214,7 +194,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: 220,
     height: 160,
     borderRadius: 3,
-    boxShadow: theme.shadows[2],
+    boxShadow: SHADOWS.SUBTLE,
     objectFit: 'cover',
     [theme.breakpoints.down('md')]: {
       width: 120,
@@ -223,13 +203,13 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   copyright: {
     width: '100%',
-    borderTop: '1px solid #e0e7ef',
+    borderTop: `1px solid ${COLORS.LIGHT_GRAY}`,
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     marginTop: 0,
     textAlign: 'center',
-    color: '#fff',
-    fontSize: 17,
+    color: COLORS.WHITE,
+    ...TYPOGRAPHY.body1(theme),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -238,9 +218,6 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     left: 0,
     bottom: 0,
     background: 'transparent',
-    [theme.breakpoints.down('md')]: {
-      fontSize: 13,
-    },
   },
   footerLogoBoxMobile: {
     width: '100%',
@@ -249,7 +226,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     marginBottom: 16,
     [theme.breakpoints.up('md')]: {
       display: 'none',
-      marginBottom:0
+      marginBottom: 0,
     },
   },
   navLinksBoxMobile: {
@@ -308,42 +285,36 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     marginBottom: 16,
   },
   navLinkMobile: {
-    fontSize: 14,
-    fontWeight: 400,
+    ...TYPOGRAPHY.body1(theme),
     marginBottom: 4,
   },
   navLinkBoldMobile: {
-    fontSize: 14,
-    fontWeight: 700,
+    ...TYPOGRAPHY.subtitle1(theme),
     marginBottom: 4,
   },
   navLinkDesktop: {
-    fontSize: 16,
-    fontWeight: 400,
+    ...TYPOGRAPHY.body1(theme),
     marginBottom: 4,
   },
   navLinkBoldDesktop: {
-    fontSize: 16,
-    fontWeight: 700,
+    ...TYPOGRAPHY.subtitle1(theme),
     marginBottom: 4,
   },
   contactTitleMobile: {
-    fontWeight: 700,
-    fontSize: 15,
+    ...TYPOGRAPHY.subtitle1(theme),
     marginBottom: 8,
   },
   contactTitleDesktop: {
-    color: '#fff',
-    fontWeight: 700,
-    fontSize: 18,
+    ...TYPOGRAPHY.subtitle1(theme),
+    color: COLORS.WHITE,
     marginBottom: 8,
     textAlign: 'center',
   },
   contactTextMobile: {
-    fontSize: 13,
+    ...TYPOGRAPHY.body2(theme),
   },
   contactTextDesktop: {
-    fontSize: 15,
+    ...TYPOGRAPHY.body2(theme),
   },
   socialIconsMobile: {
     gap: 16,
@@ -363,10 +334,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     height: 160,
   },
   copyrightMobile: {
-    fontSize: 13,
+    ...TYPOGRAPHY.body2(theme),
   },
   copyrightDesktop: {
-    fontSize: 17,
+    ...TYPOGRAPHY.body1(theme),
   },
   appBar: {
     position: 'fixed',
@@ -377,13 +348,13 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     transition: 'background 0.3s, color 0.3s, box-shadow 0.3s',
   },
   appBarTrigger: {
-    background: '#fff',
-    color: '#000',
-    boxShadow: theme.shadows[2],
+    background: COLORS.WHITE,
+    color: COLORS.DARK,
+    boxShadow: SHADOWS.SUBTLE,
   },
   appBarNoTrigger: {
     background: 'transparent',
-    color: '#fff',
+    color: COLORS.WHITE,
     boxShadow: 'none',
   },
   mobileTopBar: {
@@ -392,17 +363,17 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    background: '#fff',
+    background: COLORS.WHITE,
     color: theme.palette.primary.main,
     paddingLeft: 0,
     paddingRight: 0,
     minHeight: 36,
-    borderBottom: '1px solid #e0e0e0',
+    borderBottom: `1px solid ${COLORS.BBB}`,
     position: 'fixed',
     top: 0,
     left: 0,
     zIndex: 1301,
-    fontSize: 12,
+    ...TYPOGRAPHY.body2(theme),
   },
   mobileContact: {
     display: 'flex',
@@ -411,8 +382,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 500,
     fontSize: 10,
   },
-  mobileFont:{
-    fontSize:13,
+  mobileFont: {
+    ...TYPOGRAPHY.body2(theme),
   },
   mobileDivider: {
     width: 1,
@@ -420,12 +391,12 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     background: theme.palette.primary.main,
   },
   mobileSidebarBtn: {
-    background: '#fff',
+    background: COLORS.WHITE,
     color: theme.palette.primary.main,
     borderRadius: '50%',
     width: 30,
     height: 30,
-    boxShadow: theme.shadows[1],
+    boxShadow: SHADOWS.SUBTLE,
     marginTop: 16,
     marginLeft: 16,
     display: 'flex',
@@ -464,12 +435,12 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     transition: 'background 0.3s, color 0.3s, border-bottom 0.3s',
   },
   desktopTopBarTrigger: {
-    background: '#fff',
+    background: COLORS.WHITE,
     color: theme.palette.primary.main,
   },
   desktopTopBarNoTrigger: {
     background: 'transparent',
-    color: '#fff',
+    color: COLORS.WHITE,
   },
   desktopContact: {
     display: 'flex',
@@ -484,18 +455,18 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     background: theme.palette.primary.main,
   },
   desktopDividerNoTrigger: {
-    background: '#1976d2',
+    background: COLORS.LIGHT_BLUE,
   },
   desktopSearchPaper: {
     padding: '1px 6px',
     display: 'flex',
     alignItems: 'center',
     width: 300,
-    borderRadius:999,
+    borderRadius: 999,
     marginRight: theme.spacing(8),
     border: 'none',
     boxShadow: 'none',
-    background: '#fff',
+    background: COLORS.WHITE,
     transition: 'background 0.3s, border 0.3s',
   },
   desktopSearchPaperTrigger: {
@@ -537,7 +508,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     transition: 'all 0.2s',
   },
   desktopNavItemActiveTrigger: {
-    color: '#fff',
+    color: COLORS.WHITE,
     background: theme.palette.primary.main,
     fontWeight: 700,
     paddingLeft: theme.spacing(3),
@@ -552,7 +523,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   desktopNavItemActiveNoTrigger: {
     color: theme.palette.primary.main,
-    background: '#fff',
+    background: COLORS.WHITE,
     fontWeight: 700,
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
@@ -561,17 +532,17 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 5,
   },
   desktopNavItemInactiveNoTrigger: {
-    color: '#fff',
+    color: COLORS.WHITE,
     background: 'transparent',
   },
   drawerPaper: {
     width: 220,
-    background: '#fff',
+    background: COLORS.WHITE,
     boxShadow: 'none',
     paddingTop: theme.spacing(2),
   },
   drawerBackdrop: {
-    background: 'rgba(0,0,0,0.2)',
+    background: COLORS.DARK_SHADOW,
   },
   drawerNavItem: {
     fontWeight: 500,
@@ -598,20 +569,20 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   desktopSearchInput: {
     marginLeft: 12,
     flex: 1,
-    fontSize: 12,
-    color: '#000',
+    ...TYPOGRAPHY.body2(theme),
+    color: COLORS.DARK,
     '&::placeholder': {
-      color: '#9A9EA5',
+      color: COLORS.MEDIUM_GRAY,
       opacity: 1,
     },
   },
   footerSocialIconWhite: {
-    color: '#fff',
+    color: COLORS.WHITE,
   },
   headerSearchIcon: {
-    fontSize: 20,
+    ...TYPOGRAPHY.body1(theme),
     color: theme.palette.primary.main,
   },
 }));
 
-export default useSharedStyles; 
+export default useSharedStyles;
