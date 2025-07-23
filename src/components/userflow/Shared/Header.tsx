@@ -1,10 +1,10 @@
-import { AppBar, Toolbar, Box, Typography, InputBase, IconButton, Paper } from "@mui/material";
+import { AppBar, Toolbar, Grid, Typography, InputBase, IconButton, Paper, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import logo from "../../../assets/logo.png";
-import colorLogo from "../../../assets/logo_color.png"
+import colorLogo from "../../../assets/logo_color.png";
 import { useTheme } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import Drawer from "@mui/material/Drawer";
@@ -36,11 +36,7 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY < 20) {
-        setTrigger(false);
-      }else if(currentScrollY > 20){
-        setTrigger(true)
-      }
+      setTrigger(currentScrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -59,20 +55,20 @@ const Header = () => {
           <Box className={classes.mobileTopBar}>
             <Box className={classes.mobileContact}>
               <MailOutlineIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2"  className={classes.mobileFont} >info@Uday.com</Typography>
+              <Typography variant="body2" className={classes.mobileFont}>info@Uday.com</Typography>
             </Box>
             <Box className={classes.mobileDivider} />
             <Box className={classes.mobileContact}>
               <PhoneIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont} >+91 97911 99909</Typography>
+              <Typography variant="body2" className={classes.mobileFont}>+91 97911 99909</Typography>
             </Box>
             <Box className={classes.mobileDivider} />
             <Box className={classes.mobileContact}>
               <LocationOnIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont} >Hyderabad</Typography>
+              <Typography variant="body2" className={classes.mobileFont}>Hyderabad</Typography>
             </Box>
           </Box>
-          <Box className={classes.mobileHeaderBar}>
+          <Grid size={{ xs: 12 }} container justifyContent="flex-start" className={classes.mobileHeaderBar}>
             <IconButton
               edge="start"
               color="primary"
@@ -82,41 +78,43 @@ const Header = () => {
             >
               <img src={sidebarIcon} alt="sidebar" className={classes.mobileSidebarIcon} />
             </IconButton>
-          </Box>
+          </Grid>
         </>
       ) : (
         <>
-          <Box className={clsx(classes.desktopTopBar, (trigger || !isHome) ? classes.desktopTopBarTrigger : classes.desktopTopBarNoTrigger)}>
-            <Box className={classes.desktopContact}>
-              <Box className={classes.desktopContact}>
+          <Grid container spacing={2} className={clsx(classes.desktopTopBar, (trigger || !isHome) ? classes.desktopTopBarTrigger : classes.desktopTopBarNoTrigger)}>
+            <Grid size={{ xs: 8 }} container spacing={1} alignItems="center">
+              <Grid size={{ xs: 4 }} container alignItems="center" className={classes.desktopContact}>
                 <MailOutlineIcon fontSize="small" />
-                <Typography variant="body2" >info@Uday.com</Typography>
-              </Box>
-              <Box className={clsx(classes.desktopDivider, !(trigger || !isHome) && classes.desktopDividerNoTrigger)} />
-              <Box className={classes.desktopContact}>
+                <Typography variant="body2">info@Uday.com</Typography>
+              </Grid>
+              <Grid size={{ xs: 1 }} className={clsx(classes.desktopDivider, !(trigger || !isHome) && classes.desktopDividerNoTrigger)} />
+              <Grid size={{ xs: 4 }} container alignItems="center" className={classes.desktopContact}>
                 <PhoneIcon fontSize="small" />
                 <Typography variant="body2">+91 97911 99909</Typography>
-              </Box>
-              <Box className={clsx(classes.desktopDivider, !(trigger || !isHome) && classes.desktopDividerNoTrigger)} />
-              <Box className={classes.desktopContact}>
+              </Grid>
+              <Grid size={{ xs: 1 }} className={clsx(classes.desktopDivider, !(trigger || !isHome) && classes.desktopDividerNoTrigger)} />
+              <Grid size={{ xs: 2 }} container alignItems="center" className={classes.desktopContact}>
                 <LocationOnIcon fontSize="small" />
                 <Typography variant="body2">Hyderabad</Typography>
-              </Box>
-            </Box>
-            <Paper
-              component="form"
-              className={clsx(classes.desktopSearchPaper, (trigger || !isHome) && classes.desktopSearchPaperTrigger)}
-            >
-              <IconButton className={classes.desktopSearchIcon}>
-                <SearchIcon className={classes.headerSearchIcon} />
-              </IconButton>
-              <InputBase
-                className={classes.desktopSearchInput}
-                placeholder="Search Here....."
-                inputProps={{ "aria-label": "search", style: { color: '#000' } }}
-              />
-            </Paper>
-          </Box>
+              </Grid>
+            </Grid>
+            <Grid size={{ xs: 4 }} container justifyContent="flex-end">
+              <Paper
+                component="form"
+                className={clsx(classes.desktopSearchPaper, (trigger || !isHome) && classes.desktopSearchPaperTrigger)}
+              >
+                <IconButton className={classes.desktopSearchIcon}>
+                  <SearchIcon className={classes.headerSearchIcon} />
+                </IconButton>
+                <InputBase
+                  className={classes.desktopSearchInput}
+                  placeholder="Search Here....."
+                  inputProps={{ "aria-label": "search", style: { color: '#000' } }}
+                />
+              </Paper>
+            </Grid>
+          </Grid>
           <Toolbar className={classes.desktopToolbar}>
             <Box>
               <Box

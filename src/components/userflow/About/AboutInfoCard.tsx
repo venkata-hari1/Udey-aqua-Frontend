@@ -1,4 +1,4 @@
-import { Box, Typography, IconButton, Collapse } from "@mui/material";
+import { Box, Typography, IconButton, Collapse, Grid } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useAboutStyles from "./aboutStyles";
 
@@ -15,7 +15,7 @@ const AboutInfoCard = ({ title, smallDesc, largeDesc, img, expanded, onExpand }:
   const {classes} = useAboutStyles();
   
   return (
-    <Box className={classes.aboutCard}>
+    <Grid container className={classes.aboutCard}>
       <Typography className={classes.aboutCardTitle}>{title}</Typography>
       {!expanded && (
         <Typography className={classes.aboutCardDesc}>{smallDesc}</Typography>
@@ -31,7 +31,7 @@ const AboutInfoCard = ({ title, smallDesc, largeDesc, img, expanded, onExpand }:
           <ExpandMoreIcon sx={{ fontSize: 52 }} />
         </IconButton>
       )}
-    </Box>
+    </Grid>
   );
 };
 

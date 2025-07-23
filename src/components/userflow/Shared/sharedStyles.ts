@@ -196,9 +196,13 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 3,
     boxShadow: SHADOWS.SUBTLE,
     objectFit: 'cover',
+    [theme.breakpoints.down('lg')]: {
+      display:"none"
+    },
     [theme.breakpoints.down('md')]: {
-      width: 120,
-      height: 90,
+      width: 180,
+      height: 140,
+      display:"block"
     },
   },
   copyright: {

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import AboutHeader from "./AboutHeader";
 import AboutInfoCard from "./AboutInfoCard";
 import { useState, useRef, useEffect } from "react";
@@ -34,7 +34,7 @@ const AboutCardsSection = ({ headerTitle, headerSubtitle, headerImg, cards }: Pr
   return (
     <Box>
       <AboutHeader title={headerTitle} subtitle={headerSubtitle} img={headerImg} />
-      <Box sx={{ mt: 6 }} ref={containerRef}>
+      <Grid sx={{ mt: 6 }} ref={containerRef}>
         {cards.map((card, idx) => (
           <AboutInfoCard
             key={idx}
@@ -43,7 +43,7 @@ const AboutCardsSection = ({ headerTitle, headerSubtitle, headerImg, cards }: Pr
             onExpand={() => setOpenIndex(idx)}
           />
         ))}
-      </Box>
+      </Grid>
     </Box>
   );
 };

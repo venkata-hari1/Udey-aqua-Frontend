@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import useHomeStyles from "./homeStyles";
 
 interface ProjectCardProps {
@@ -12,23 +12,25 @@ interface ProjectCardProps {
 const ProjectCard = ({ img, title, shortDescription, longDescription, highlight }: ProjectCardProps) => {
   const { classes } = useHomeStyles();
   return (
-    <Box
+    <Grid
+      container
+      spacing={2}
       className={classes.projectCardRoot}
       style={{ backgroundImage: `url(${img})` }}
     >
       {highlight ? (
-        <Box className={classes.projectCardHighlight}>
+        <Grid size={{ xs: 12 }} className={classes.projectCardHighlight}>
           <Typography variant="h6" className={classes.projectCardHighlightTitle}>{title}</Typography>
           <Typography className={classes.projectCardHighlightDesc}>{longDescription}</Typography>
-        </Box>
+        </Grid>
       ) : (
-        <Box className={classes.projectCardNormal}>
+        <Grid size={{ xs: 12 }} className={classes.projectCardNormal}>
           <Typography variant="subtitle1" className={classes.projectCardNormalTitle}>{title}</Typography>
           <Typography className={classes.projectCardNormalDesc}>{shortDescription}</Typography>
-        </Box>
+        </Grid>
       )}
-    </Box>
+    </Grid>
   );
 };
 
-export default ProjectCard; 
+export default ProjectCard;

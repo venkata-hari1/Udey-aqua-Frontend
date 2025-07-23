@@ -1,4 +1,4 @@
-import { Box, Typography, Button, TextField } from "@mui/material";
+import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import { useState } from "react";
 import contactImg from "../../../assets/home/contact.jpg";
@@ -13,14 +13,16 @@ const Contact = () => {
   };
 
   return (
-    <Box className={classes.contactRoot}>
-      <SectionTitle title="Get In Touch" />
-      <Box className={classes.contactMain}>
-        <Box className={classes.contactImgWrap}>
+    <Grid container spacing={2} className={classes.contactRoot}>
+      <Grid size={{ xs: 12 }}>
+        <SectionTitle title="Get In Touch" />
+      </Grid>
+      <Grid container spacing={2} className={classes.contactMain}>
+        <Grid size={{ xs: 12 }} className={classes.contactImgWrap}>
           <Box component="img" src={contactImg} alt="Contact" className={classes.contactImg} />
-        </Box>
-        <Box className={classes.contactFormWrap}>
-          <Box className={classes.contactFieldWrap}>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }} className={classes.contactFormWrap}>
+          <Grid size={{ xs: 12 }} className={classes.contactFieldWrap}>
             <Typography className={classes.contactLabel}>First Name</Typography>
             <TextField
               name="name"
@@ -32,8 +34,8 @@ const Contact = () => {
               size="small"
               className={classes.contactTextField}
             />
-          </Box>
-          <Box className={classes.contactFieldWrap}>
+          </Grid>
+          <Grid size={{ xs: 12 }} className={classes.contactFieldWrap}>
             <Typography className={classes.contactLabel}>Phone</Typography>
             <TextField
               name="phone"
@@ -45,8 +47,8 @@ const Contact = () => {
               size="small"
               className={classes.contactTextField}
             />
-          </Box>
-          <Box className={classes.contactFieldWrap}>
+          </Grid>
+          <Grid size={{ xs: 12 }} className={classes.contactFieldWrap}>
             <Typography className={classes.contactLabel}>Message</Typography>
             <TextField
               name="message"
@@ -59,17 +61,17 @@ const Contact = () => {
               variant="outlined"
               className={classes.contactTextField}
             />
-          </Box>
+          </Grid>
           <Button
             variant="contained"
             className={classes.contactButton}
           >
             Send
           </Button>
-        </Box>
-      </Box>
-    </Box>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
-export default Contact; 
+export default Contact;
