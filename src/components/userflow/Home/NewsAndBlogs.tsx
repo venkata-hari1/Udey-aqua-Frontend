@@ -3,8 +3,8 @@ import SectionTitle from "./SectionTitle";
 import NewsCard from "./NewsCard";
 import fishesImg from "../../../assets/home/news_img.png";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
-import useIsOverflowing from "./useIsOverflowing";
+import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
+import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 import newsImg1 from "../../../assets/news_and_blogs/news_1.jpg";

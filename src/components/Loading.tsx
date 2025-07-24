@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material"
+import useSharedStyles from "./userflow/Shared/sharedStyles";
 
 const Loading = () => {
+  const { classes } = useSharedStyles();
+
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" position="fixed" top={0} left={0} width="100%" height="100vh"
-    >
+    <Box className={classes.loadingLayout} >
       <Typography variant="h6">Loading...</Typography>
     </Box>
   )

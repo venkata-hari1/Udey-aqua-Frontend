@@ -5,8 +5,8 @@ import teamImg from "../../../assets/team/team_1.png";
 import teamBg from "../../../assets/team/team_bg.png";
 import fishesImg from "../../../assets/home/team_image.png";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
-import useIsOverflowing from "./useIsOverflowing";
+import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
+import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 const teamData = [
