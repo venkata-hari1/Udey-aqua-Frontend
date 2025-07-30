@@ -1,12 +1,21 @@
-import { AppBar, Toolbar, Grid, Typography, InputBase, IconButton, Paper, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Grid,
+  Typography,
+  InputBase,
+  IconButton,
+  Paper,
+  Box,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import logo from "../../../assets/logo.png";
 import colorLogo from "../../../assets/logo_color.png";
-import { useTheme } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+import { useTheme } from "@mui/material/styles";
+import { useState, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import sidebarIcon from "../../../assets/home/sidebar_btn.svg";
@@ -34,12 +43,12 @@ const Header = () => {
   const { classes } = useSharedStyles();
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const currentScrollY = window.scrollY;
       setTrigger(currentScrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const isHome = location.pathname === "/";
@@ -48,27 +57,44 @@ const Header = () => {
     <AppBar
       position="fixed"
       elevation={trigger ? 4 : 0}
-      className={clsx(classes.appBar, trigger ? classes.appBarTrigger : classes.appBarNoTrigger)}
+      className={clsx(
+        classes.appBar,
+        trigger ? classes.appBarTrigger : classes.appBarNoTrigger
+      )}
     >
       {isMobile ? (
         <>
           <Box className={classes.mobileTopBar}>
             <Box className={classes.mobileContact}>
-              <MailOutlineIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont}>info@Uday.com</Typography>
+              <MailOutlineIcon
+                className={classes.mobileFont}
+                fontSize="small"
+              />
+              <Typography variant="body2" className={classes.mobileFont}>
+                info@Uday.com
+              </Typography>
             </Box>
             <Box className={classes.mobileDivider} />
             <Box className={classes.mobileContact}>
               <PhoneIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont}>+91 97911 99909</Typography>
+              <Typography variant="body2" className={classes.mobileFont}>
+                +91 97911 99909
+              </Typography>
             </Box>
             <Box className={classes.mobileDivider} />
             <Box className={classes.mobileContact}>
               <LocationOnIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont}>Hyderabad</Typography>
+              <Typography variant="body2" className={classes.mobileFont}>
+                Hyderabad
+              </Typography>
             </Box>
           </Box>
-          <Grid size={{ xs: 12 }} container justifyContent="flex-start" className={classes.mobileHeaderBar}>
+          <Grid
+            size={{ xs: 12 }}
+            container
+            justifyContent="flex-start"
+            className={classes.mobileHeaderBar}
+          >
             <IconButton
               edge="start"
               color="primary"
@@ -76,25 +102,65 @@ const Header = () => {
               onClick={() => setDrawerOpen(true)}
               className={classes.mobileSidebarBtn}
             >
-              <img src={sidebarIcon} alt="sidebar" className={classes.mobileSidebarIcon} />
+              <img
+                src={sidebarIcon}
+                alt="sidebar"
+                className={classes.mobileSidebarIcon}
+              />
             </IconButton>
           </Grid>
         </>
       ) : (
         <>
-          <Grid container spacing={2} className={clsx(classes.desktopTopBar, (trigger || !isHome) ? classes.desktopTopBarTrigger : classes.desktopTopBarNoTrigger)}>
+          <Grid
+            container
+            spacing={2}
+            className={clsx(
+              classes.desktopTopBar,
+              trigger || !isHome
+                ? classes.desktopTopBarTrigger
+                : classes.desktopTopBarNoTrigger
+            )}
+          >
             <Grid size={{ xs: 8 }} container spacing={1} alignItems="center">
-              <Grid size={{ xs: 4 }} container alignItems="center" className={classes.desktopContact}>
+              <Grid
+                size={{ xs: 4 }}
+                container
+                alignItems="center"
+                className={classes.desktopContact}
+              >
                 <MailOutlineIcon fontSize="small" />
                 <Typography variant="body2">info@Uday.com</Typography>
               </Grid>
-              <Grid size={{ xs: 1 }} className={clsx(classes.desktopDivider, !(trigger || !isHome) && classes.desktopDividerNoTrigger)} />
-              <Grid size={{ xs: 4 }} container alignItems="center" className={classes.desktopContact}>
+              <Grid
+                size={{ xs: 1 }}
+                className={clsx(
+                  classes.desktopDivider,
+                  !(trigger || !isHome) && classes.desktopDividerNoTrigger
+                )}
+              />
+              <Grid
+                size={{ xs: 4 }}
+                container
+                alignItems="center"
+                className={classes.desktopContact}
+              >
                 <PhoneIcon fontSize="small" />
                 <Typography variant="body2">+91 97911 99909</Typography>
               </Grid>
-              <Grid size={{ xs: 1 }} className={clsx(classes.desktopDivider, !(trigger || !isHome) && classes.desktopDividerNoTrigger)} />
-              <Grid size={{ xs: 2 }} container alignItems="center" className={classes.desktopContact}>
+              <Grid
+                size={{ xs: 1 }}
+                className={clsx(
+                  classes.desktopDivider,
+                  !(trigger || !isHome) && classes.desktopDividerNoTrigger
+                )}
+              />
+              <Grid
+                size={{ xs: 2 }}
+                container
+                alignItems="center"
+                className={classes.desktopContact}
+              >
                 <LocationOnIcon fontSize="small" />
                 <Typography variant="body2">Hyderabad</Typography>
               </Grid>
@@ -102,15 +168,27 @@ const Header = () => {
             <Grid size={{ xs: 4 }} container justifyContent="flex-end">
               <Paper
                 component="form"
-                className={clsx(classes.desktopSearchPaper, (trigger || !isHome) && classes.desktopSearchPaperTrigger)}
+                className={clsx(
+                  classes.desktopSearchPaper,
+                  (trigger || !isHome) && classes.desktopSearchPaperTrigger
+                )}
               >
                 <IconButton className={classes.desktopSearchIcon}>
-                  <SearchIcon className={classes.headerSearchIcon} />
+                  <SearchIcon
+                    className={
+                      trigger
+                        ? classes.headerSearchIconTrigger
+                        : classes.headerSearchIcon
+                    }
+                  />
                 </IconButton>
                 <InputBase
                   className={classes.desktopSearchInput}
                   placeholder="Search Here....."
-                  inputProps={{ "aria-label": "search", style: { color: '#000' } }}
+                  inputProps={{
+                    "aria-label": "search",
+                    style: { color: trigger ? "#000" : "#fff" },
+                  }}
                 />
               </Paper>
             </Grid>
@@ -128,12 +206,24 @@ const Header = () => {
               {navItems.map((navItem) => {
                 let navClass = classes.desktopNavItem;
                 if (trigger) {
-                  navClass += ' ' + (activeNav === navItem.label ? classes.desktopNavItemActiveTrigger : classes.desktopNavItemInactiveTrigger);
+                  navClass +=
+                    " " +
+                    (activeNav === navItem.label
+                      ? classes.desktopNavItemActiveTrigger
+                      : classes.desktopNavItemInactiveTrigger);
                 } else {
-                  navClass += ' ' + (activeNav === navItem.label ? classes.desktopNavItemActiveNoTrigger : classes.desktopNavItemInactiveNoTrigger);
+                  navClass +=
+                    " " +
+                    (activeNav === navItem.label
+                      ? classes.desktopNavItemActiveNoTrigger
+                      : classes.desktopNavItemInactiveNoTrigger);
                 }
                 return (
-                  <Link to={navItem.link} style={{ textDecoration: 'none' }} key={navItem.label}>
+                  <Link
+                    to={navItem.link}
+                    style={{ textDecoration: "none" }}
+                    key={navItem.label}
+                  >
                     <Typography
                       variant="subtitle1"
                       onClick={() => setActiveNav(navItem.label)}
@@ -154,9 +244,21 @@ const Header = () => {
         onClose={() => setDrawerOpen(false)}
         classes={{ paper: classes.drawerPaper }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", p: 2, gap: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            p: 2,
+            gap: 2,
+          }}
+        >
           {navItems.map((navItem) => (
-            <Link to={navItem.link} style={{ textDecoration: 'none' }} key={navItem.label}>
+            <Link
+              to={navItem.link}
+              style={{ textDecoration: "none" }}
+              key={navItem.label}
+            >
               <Typography
                 variant="subtitle1"
                 onClick={() => {

@@ -2,6 +2,8 @@ import { Box } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import TeamCard from "./TeamCard";
 import teamImg from "../../../assets/team/team_1.png";
+import teamImg2 from "../../../assets/team/team_2.png";
+import teamImg3 from "../../../assets/team/team_3.png";
 import teamBg from "../../../assets/team/team_bg.png";
 import fishesImg from "../../../assets/home/team_image.png";
 import { useRef } from "react";
@@ -15,15 +17,22 @@ const teamData = [
     name: "Uday Krishna",
     location: "Hyderabad, Telangana",
     role: "Managing Director",
-    roleColor: "#1976d2"
+    roleColor: "#1976d2",
   },
   {
-    image: teamImg,
+    image: teamImg2,
+    name: "Uday Krishna",
+    location: "Hyderabad, Telangana",
+    role: "Co- Director",
+    roleColor: "#1976d2",
+  },
+  {
+    image: teamImg3,
     name: "Uday Krishna",
     location: "Hyderabad, Telangana",
     role: "Director",
-    roleColor: "#1976d2"
-  }
+    roleColor: "#1976d2",
+  },
 ];
 
 const Team = () => {
@@ -34,7 +43,12 @@ const Team = () => {
 
   return (
     <Box className={classes.teamRoot}>
-      <Box component="img" src={fishesImg} alt="Fishes" className={classes.teamFishesImg} />
+      <Box
+        component="img"
+        src={fishesImg}
+        alt="Fishes"
+        className={classes.teamFishesImg}
+      />
       <SectionTitle title="Our Directors & Advisors" />
       <Box className={classes.teamTabs}>
         <Box className={classes.teamTabActive}>Directors</Box>
@@ -42,12 +56,17 @@ const Team = () => {
         <Box className={classes.teamTabInactive}>Advisors</Box>
       </Box>
       <Box className={classes.teamScrollWrap}>
-        <Box component="img" src={teamBg} alt="Team Background" className={classes.teamBgImg} />
+        <Box
+          component="img"
+          src={teamBg}
+          alt="Team Background"
+          className={classes.teamBgImg}
+        />
         <Box
           ref={scrollRef}
           className={
             classes.teamCardsScroll +
-            (isOverflowing ? ' ' + classes.teamCardsScrollFlexStart : '')
+            (isOverflowing ? " " + classes.teamCardsScrollFlexStart : "")
           }
         >
           {isOverflowing && <Box />}
@@ -65,4 +84,4 @@ const Team = () => {
   );
 };
 
-export default Team; 
+export default Team;

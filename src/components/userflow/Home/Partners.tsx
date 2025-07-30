@@ -28,13 +28,13 @@ const PartnersSection = () => {
 
   return (
     <Box className={classes.partnersRoot}>
-      <SectionTitle title="Our Partners" />
+      <SectionTitle title="Our Corporates" />
       <Box className={classes.partnersInner}>
         <Box
           ref={scrollRef}
           className={
             classes.partnersScroll +
-            (isOverflowing ? ' ' + classes.partnersScrollFlexStart : '')
+            (isOverflowing ? " " + classes.partnersScrollFlexStart : "")
           }
         >
           {partners.map((p) => (
