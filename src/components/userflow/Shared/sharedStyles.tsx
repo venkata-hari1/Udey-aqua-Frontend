@@ -151,6 +151,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   navLinkBold: {
     color: COLORS.WHITE,
     ...TYPOGRAPHY.subtitle1(theme),
+    fontWeight: 500,
     marginBottom: 4,
     cursor: "pointer",
     "&:hover": { textDecoration: "underline" },
@@ -304,6 +305,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   navLinkBoldMobile: {
     ...TYPOGRAPHY.subtitle1(theme),
+    fontWeight: 500,
     marginBottom: 4,
   },
   navLinkDesktop: {
@@ -312,6 +314,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   navLinkBoldDesktop: {
     ...TYPOGRAPHY.subtitle1(theme),
+    fontSize: 16,
+    fontWeight: 500,
     marginBottom: 4,
   },
   contactTitleMobile: {
@@ -405,36 +409,45 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     background: theme.palette.primary.main,
   },
   mobileSidebarBtn: {
-    background: COLORS.WHITE,
+    background: COLORS.SECONDARY_BLUE,
     color: theme.palette.primary.main,
     borderRadius: "50%",
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
     boxShadow: SHADOWS.SUBTLE,
-    marginTop: 16,
-    marginLeft: 16,
+    margin: "0px 15px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
   mobileSidebarIcon: {
-    width: 14,
-    height: 14,
+    width: 18,
+    height: 18,
     display: "block",
+    color: "white",
   },
   mobileHeaderBar: {
     width: "100vw",
     maxWidth: "100vw",
     display: "flex",
     alignItems: "center",
-    background: "transparent",
-    paddingLeft: 0,
-    paddingRight: 0,
+    justifyItems: "justify-between",
+    background: "white",
+    padding: "5px",
     minHeight: 44,
     position: "fixed",
-    top: 36,
+    top: 0,
     left: 0,
     zIndex: 1301,
+  },
+  logo_mb: {
+    paddingRight: "10px",
+  },
+  mobileFlex: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
   },
   desktopTopBar: {
     display: "flex",
@@ -603,6 +616,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     ...TYPOGRAPHY.subtitle1(theme),
     fontSize: 22,
     color: theme.palette.primary.main,
+  },
+  hideInBig: {
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
 }));
 

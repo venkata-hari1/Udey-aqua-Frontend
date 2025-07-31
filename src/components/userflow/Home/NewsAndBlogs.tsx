@@ -16,26 +16,29 @@ const newsData = [
     image: newsImg1,
     date: "01 Jun 2025",
     title: "Boosting Fish Farming with Indian Tech",
-    description: "Smart aeration systems and IoT sensors are helping Indian farmers improve water quality and fish health like never before.",
+    description:
+      "Smart aeration systems and IoT sensors are helping Indian farmers improve water quality and fish health like never before.",
     author: "Ramesh Varma",
-    authorLink: "#"
+    authorLink: "#",
   },
   {
     image: newsImg2,
     date: "15 Jun 2025",
     title: "Sustainable Farming Along India's Coasts",
-    description: "Andhra Pradesh to Gujarat, India's coastline is becoming a hub for eco-friendly aquaculture Innovations.",
+    description:
+      "Andhra Pradesh to Gujarat, India's coastline is becoming a hub for eco-friendly aquaculture Innovations.",
     author: "Shruti Nair",
-    authorLink: "#"
+    authorLink: "#",
   },
   {
     image: newsImg3,
     date: "27 Jun 2025",
     title: "India's Inland Fisheries See Growth",
-    description: "Smart aeration systems and IoT sensors are helping Indian farmers improve water quality and fish health like never before.",
+    description:
+      "Smart aeration systems and IoT sensors are helping Indian farmers improve water quality and fish health like never before.",
     author: "Ramesh Varma",
-    authorLink: "#"
-  }
+    authorLink: "#",
+  },
 ];
 
 const NewsAndBlogs = () => {
@@ -46,14 +49,21 @@ const NewsAndBlogs = () => {
 
   return (
     <Box className={classes.newsRoot}>
-      <Box component="img" src={fishesImg} alt="Fishes" className={classes.newsFishesImg} />
-      <SectionTitle title="News & Blog" />
+      <Box
+        component="img"
+        src={fishesImg}
+        alt="Fishes"
+        className={classes.newsFishesImg}
+      />
+      <SectionTitle title="News & Blogs" />
       <Box
         ref={scrollRef}
         className={
           classes.newsScrollWrap +
-          ' ' +
-          (isOverflowing ? classes.newsScrollFlexStart : classes.newsScrollCenter)
+          " " +
+          (isOverflowing
+            ? classes.newsScrollFlexStart
+            : classes.newsScrollCenter)
         }
       >
         {isOverflowing && <Box className={classes.newsOverflowBox} />}
@@ -62,8 +72,12 @@ const NewsAndBlogs = () => {
             key={idx}
             className={
               classes.newsCardOuter +
-              (idx === 0 && !isOverflowing ? ' ' + classes.newsCardOuterFirst : '') +
-              (idx === newsData.length - 1 && !isOverflowing ? ' ' + classes.newsCardOuterLast : '')
+              (idx === 0 && !isOverflowing
+                ? " " + classes.newsCardOuterFirst
+                : "") +
+              (idx === newsData.length - 1 && !isOverflowing
+                ? " " + classes.newsCardOuterLast
+                : "")
             }
           >
             <Box className={classes.newsCardInner}>

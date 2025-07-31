@@ -9,10 +9,11 @@ import {
   Box,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import logo from "../../../assets/logo.png";
+import logo_mobile from "../../../assets/logo_mobile.png";
 import colorLogo from "../../../assets/logo_color.png";
 import { useTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
@@ -64,50 +65,28 @@ const Header = () => {
     >
       {isMobile ? (
         <>
-          <Box className={classes.mobileTopBar}>
-            <Box className={classes.mobileContact}>
-              <MailOutlineIcon
-                className={classes.mobileFont}
-                fontSize="small"
-              />
-              <Typography variant="body2" className={classes.mobileFont}>
-                info@Uday.com
-              </Typography>
-            </Box>
-            <Box className={classes.mobileDivider} />
-            <Box className={classes.mobileContact}>
-              <PhoneIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont}>
-                +91 97911 99909
-              </Typography>
-            </Box>
-            <Box className={classes.mobileDivider} />
-            <Box className={classes.mobileContact}>
-              <LocationOnIcon className={classes.mobileFont} fontSize="small" />
-              <Typography variant="body2" className={classes.mobileFont}>
-                Hyderabad
-              </Typography>
-            </Box>
-          </Box>
-          <Grid
-            size={{ xs: 12 }}
-            container
-            justifyContent="flex-start"
-            className={classes.mobileHeaderBar}
-          >
-            <IconButton
-              edge="start"
-              color="primary"
-              aria-label="menu"
-              onClick={() => setDrawerOpen(true)}
-              className={classes.mobileSidebarBtn}
-            >
+          <Grid size={{ xs: 12 }} className={classes.mobileHeaderBar}>
+            <Box className={classes.mobileFlex}>
+              <IconButton
+                edge="start"
+                color="primary"
+                aria-label="menu"
+                onClick={() => setDrawerOpen(true)}
+                className={classes.mobileSidebarBtn}
+              >
+                <img
+                  src={sidebarIcon}
+                  alt="sidebar"
+                  className={classes.mobileSidebarIcon}
+                />
+              </IconButton>
               <img
-                src={sidebarIcon}
-                alt="sidebar"
-                className={classes.mobileSidebarIcon}
+                src={logo_mobile}
+                className={classes.logo_mb}
+                width={50}
+                height={50}
               />
-            </IconButton>
+            </Box>
           </Grid>
         </>
       ) : (
@@ -129,7 +108,7 @@ const Header = () => {
                 alignItems="center"
                 className={classes.desktopContact}
               >
-                <MailOutlineIcon fontSize="small" />
+                <MailIcon fontSize="small" />
                 <Typography variant="body2">info@Uday.com</Typography>
               </Grid>
               <Grid

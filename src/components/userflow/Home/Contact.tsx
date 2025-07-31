@@ -34,7 +34,7 @@ const Contact = () => {
         <SectionTitle title="Get In Touch" />
       </Grid>
       <Grid container spacing={2} className={classes.contactRoot}>
-        <Grid container spacing={2} className={classes.contactMain}>
+        <Grid container size={12} spacing={2} className={classes.contactMain}>
           <Grid size={{ xs: 12, md: 6 }} className={classes.contactImgWrap}>
             <Box
               component="img"
@@ -49,7 +49,7 @@ const Contact = () => {
               <Grid container spacing={2}>
                 <Grid size={12} className={classes.contactFieldWrap}>
                   <Typography className={classes.contactLabel}>
-                    First Name <span style={{ color: "red" }}>*</span>
+                    <span style={{ color: "red" }}>*</span> First Name
                   </Typography>
                   <TextField
                     name="name"
@@ -65,7 +65,7 @@ const Contact = () => {
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>
                   <Typography className={classes.contactLabel}>
-                    Phone <span style={{ color: "red" }}>*</span>
+                    <span style={{ color: "red" }}>*</span> Phone
                   </Typography>
                   <TextField
                     name="phone"
@@ -81,7 +81,7 @@ const Contact = () => {
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>
                   <Typography className={classes.contactLabel}>
-                    Message <span style={{ color: "red" }}>*</span>
+                    <span style={{ color: "red" }}>*</span> Message
                   </Typography>
                   <TextField
                     name="message"
@@ -99,21 +99,14 @@ const Contact = () => {
 
                 {hasError && (
                   <Grid size={12}>
-                    <Typography
-                      color="error"
-                      style={{ textAlign: "center", marginTop: "10px" }}
-                    >
+                    <Typography color="white" textAlign="left">
                       All fields are required.
                     </Typography>
                   </Grid>
                 )}
 
                 <Grid size={12} className={classes.fullWidth}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    className={classes.contactButton}
-                  >
+                  <Button type="submit" className={classes.contactButton}>
                     Send
                   </Button>
                 </Grid>

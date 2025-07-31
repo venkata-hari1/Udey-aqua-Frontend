@@ -1,120 +1,247 @@
-import { Box, Typography, Button, InputBase, InputAdornment, useTheme, useMediaQuery, IconButton } from "@mui/material";
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import PhoneIcon from '@mui/icons-material/Phone';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import {
+  Box,
+  Typography,
+  Button,
+  InputBase,
+  InputAdornment,
+  useTheme,
+  useMediaQuery,
+  IconButton,
+} from "@mui/material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import PhoneIcon from "@mui/icons-material/Phone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import logo from "../../../assets/logo.png";
 import footerBg from "../../../assets/home/footer.png";
 import footerMap from "../../../assets/home/footer_map.png";
 import useSharedStyles from "./sharedStyles";
 
 const navLinks1 = ["Home", "About US", "New & Events", "Contact Us"];
-const navLinks2 = ["Training Program", "Technologies"];
+const navLinks2 = ["Cultures", "Training Program", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes } = useSharedStyles();
   return (
     <Box className={classes.footerRoot}>
-      <Box component="img" src={footerBg} alt="Footer Waves" className={classes.footerBg} />
+      <Box
+        component="img"
+        src={footerBg}
+        alt="Footer Waves"
+        className={classes.footerBg}
+      />
       <Box className={classes.footerContent}>
         <Box className={classes.footerLogoBoxMobile}>
-          <Box component="img" src={logo} alt="Logo" className={classes.footerLogo} />
+          <Box
+            component="img"
+            src={logo}
+            alt="Logo"
+            className={classes.footerLogo}
+          />
         </Box>
         <Box className={classes.subscribeBox}>
           <InputBase
             placeholder="Enter Email"
             endAdornment={
               <InputAdornment position="end">
-                <Button variant="contained" className={classes.subscribeButton}>Subscribe</Button>
+                <Button
+                  variant="contained"
+                  className={`${classes.subscribeButton}`}
+                >
+                  Subscribe
+                </Button>
               </InputAdornment>
             }
-            className={classes.subscribeInput}
+            className={`${classes.subscribeInput}  ${classes.hideInBig}`}
           />
         </Box>
         {isMobile ? (
-          <Box style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
+          <Box style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
             <Box className={classes.navLinksBoxMobile}>
-              {navLinks1.map(link => (
-                <Typography key={link} className={`${classes.navLink} ${classes.navLinkMobile}`}>{link}</Typography>
+              {navLinks1.map((link) => (
+                <Typography
+                  key={link}
+                  className={`${classes.navLink} ${classes.navLinkMobile}`}
+                >
+                  {link}
+                </Typography>
               ))}
             </Box>
             <Box className={classes.navLinksBoxMobile}>
-              {navLinks2.map(link => (
-                <Typography key={link} className={`${classes.navLinkBold} ${classes.navLinkBoldMobile}`}>{link}</Typography>
+              {navLinks2.map((link) => (
+                <Typography
+                  key={link}
+                  className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile}`}
+                >
+                  {link}
+                </Typography>
               ))}
             </Box>
             <Box className={classes.contactBoxMobile}>
-              <Typography className={`${classes.contactTitle} ${classes.contactTitleMobile}`}>Contact Us</Typography>
+              <Typography
+                className={`${classes.contactTitle} ${classes.contactTitleMobile}`}
+              >
+                Contact Us
+              </Typography>
               <Box className={classes.contactRow}>
                 <MailOutlineIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>info@Uday.com</Typography>
+                <Typography
+                  className={`${classes.contactText} ${classes.contactTextMobile}`}
+                >
+                  info@Uday.com
+                </Typography>
               </Box>
               <Box className={classes.contactRow}>
                 <PhoneIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>+91 97911-99909</Typography>
+                <Typography
+                  className={`${classes.contactText} ${classes.contactTextMobile}`}
+                >
+                  +91 97911-99909
+                </Typography>
               </Box>
               <Box className={classes.contactRow}>
                 <LocationOnIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>Mulapolam, Srikakulam</Typography>
+                <Typography
+                  className={`${classes.contactText} ${classes.contactTextMobile}`}
+                >
+                  Mulapolam, Srikakulam
+                </Typography>
               </Box>
               <Box className={classes.socialIconsMobile}>
-                <IconButton className={classes.footerSocialIconWhite}><TwitterIcon /></IconButton>
-                <IconButton className={classes.footerSocialIconWhite}><FacebookIcon /></IconButton>
-                <IconButton className={classes.footerSocialIconWhite}><InstagramIcon /></IconButton>
+                <IconButton className={classes.footerSocialIconWhite}>
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton className={classes.footerSocialIconWhite}>
+                  <FacebookIcon />
+                </IconButton>
+                <IconButton className={classes.footerSocialIconWhite}>
+                  <InstagramIcon />
+                </IconButton>
               </Box>
             </Box>
             <Box className={classes.mapBoxMobile}>
-              <Box component="img" src={footerMap} alt="Map" className={`${classes.mapImg} ${classes.mapImgMobile}`} />
+              <Box
+                component="img"
+                src={footerMap}
+                alt="Map"
+                className={`${classes.mapImg} ${classes.mapImgMobile}`}
+              />
             </Box>
           </Box>
         ) : (
-          <Box style={{ width: '100%', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 16, gap: 32, marginBottom: 16 }}>
+          <Box
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              marginTop: 16,
+              gap: 32,
+              marginBottom: 16,
+            }}
+          >
             <Box className={classes.logoBoxDesktop}>
-              <Box component="img" src={logo} alt="Logo" className={classes.footerLogoDesktop} />
+              <Box
+                component="img"
+                src={logo}
+                alt="Logo"
+                className={classes.footerLogoDesktop}
+              />
             </Box>
-            <Box className={`${classes.navLinks1} ${classes.navLinksBoxDesktop}`}>
-              {navLinks1.map(link => (
-                <Typography key={link} className={`${classes.navLink} ${classes.navLinkDesktop}`}>{link}</Typography>
+            <Box
+              className={`${classes.navLinks1} ${classes.navLinksBoxDesktop}`}
+            >
+              {navLinks1.map((link) => (
+                <Typography
+                  key={link}
+                  className={`${classes.navLink} ${classes.navLinkDesktop}`}
+                >
+                  {link}
+                </Typography>
               ))}
             </Box>
-            <Box className={`${classes.navLinks2} ${classes.navLinksBoxDesktop}`}>
-              {navLinks2.map(link => (
-                <Typography key={link} className={`${classes.navLinkBold} ${classes.navLinkBoldDesktop}`}>{link}</Typography>
+            <Box
+              className={`${classes.navLinks2} ${classes.navLinksBoxDesktop}`}
+            >
+              {navLinks2.map((link) => (
+                <Typography
+                  key={link}
+                  className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop}`}
+                >
+                  {link}
+                </Typography>
               ))}
             </Box>
-            <Box className={`${classes.contactBox} ${classes.contactBoxDesktop}`}>
-              <Typography className={`${classes.contactTitle} ${classes.contactTitleDesktop}`}>Contact Us</Typography>
+            <Box
+              className={`${classes.contactBox} ${classes.contactBoxDesktop}`}
+            >
+              <Typography
+                className={`${classes.contactTitle} ${classes.contactTitleDesktop}`}
+              >
+                Contact Us
+              </Typography>
               <Box className={classes.contactRow}>
                 <MailOutlineIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>info@Uday.com</Typography>
+                <Typography
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                >
+                  info@Uday.com
+                </Typography>
               </Box>
               <Box className={classes.contactRow}>
                 <PhoneIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>+91 97911-99909</Typography>
+                <Typography
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                >
+                  +91 97911-99909
+                </Typography>
               </Box>
               <Box className={classes.contactRow}>
                 <LocationOnIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>Mulapolam, Srikakulam</Typography>
+                <Typography
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                >
+                  Mulapolam, Srikakulam
+                </Typography>
               </Box>
               <Box className={classes.socialIconsDesktop}>
-                <IconButton className={classes.footerSocialIconWhite}><TwitterIcon /></IconButton>
-                <IconButton className={classes.footerSocialIconWhite}><FacebookIcon /></IconButton>
-                <IconButton className={classes.footerSocialIconWhite}><InstagramIcon /></IconButton>
+                <IconButton className={classes.footerSocialIconWhite}>
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton className={classes.footerSocialIconWhite}>
+                  <FacebookIcon />
+                </IconButton>
+                <IconButton className={classes.footerSocialIconWhite}>
+                  <InstagramIcon />
+                </IconButton>
               </Box>
             </Box>
             <Box className={classes.mapBoxDesktop}>
-              <Box component="img" src={footerMap} alt="Map" className={`${classes.mapImg} ${classes.mapImgDesktop}`} />
+              <Box
+                component="img"
+                src={footerMap}
+                alt="Map"
+                className={`${classes.mapImg} ${classes.mapImgDesktop}`}
+              />
             </Box>
           </Box>
         )}
       </Box>
-      <Box className={isMobile ? `${classes.copyright} ${classes.copyrightMobile}` : `${classes.copyright} ${classes.copyrightDesktop}`}>
+      <Box
+        className={
+          isMobile
+            ? `${classes.copyright} ${classes.copyrightMobile}`
+            : `${classes.copyright} ${classes.copyrightDesktop}`
+        }
+      >
         <span>Copyright</span>
-        <span style={{ fontSize: isMobile ? 16 : 22, margin: '0 4px' }}>©</span>
+        <span style={{ fontSize: isMobile ? 16 : 22, margin: "0 4px" }}>©</span>
         <span>Uday Aqua all rights reserved.</span>
       </Box>
     </Box>
