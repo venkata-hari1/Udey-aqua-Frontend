@@ -14,16 +14,26 @@ interface Props {
   headerTitle: string;
   headerSubtitle: string;
   headerImg: string;
+  headerImgSide: string;
   cards: CardData[];
 }
 
-const AboutCardsSection = ({ headerTitle, headerSubtitle, headerImg, cards }: Props) => {
+const AboutCardsSection = ({
+  headerTitle,
+  headerSubtitle,
+  headerImg,
+  headerImgSide,
+  cards,
+}: Props) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setOpenIndex(null);
       }
     };
@@ -33,14 +43,25 @@ const AboutCardsSection = ({ headerTitle, headerSubtitle, headerImg, cards }: Pr
 
   return (
     <Box>
-      <AboutHeader title={headerTitle} subtitle={headerSubtitle} img={headerImg} />
+      <AboutHeader
+        title={headerTitle}
+        subtitle={headerSubtitle}
+        img={headerImg}
+        aboutImg={headerImgSide}
+      />
       <Grid sx={{ mt: 6 }} ref={containerRef}>
         {cards.map((card, idx) => (
           <AboutInfoCard
             key={idx}
             {...card}
             expanded={openIndex === idx}
-            onExpand={() => setOpenIndex(idx)}
+            onExpand={() => {
+              if (openIndex === idx) {
+                setOpenIndex(null);
+                return;
+              }
+              setOpenIndex(idx);
+            }}
           />
         ))}
       </Grid>
@@ -48,4 +69,4 @@ const AboutCardsSection = ({ headerTitle, headerSubtitle, headerImg, cards }: Pr
   );
 };
 
-export default AboutCardsSection; 
+export default AboutCardsSection;

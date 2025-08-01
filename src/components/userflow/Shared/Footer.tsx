@@ -24,7 +24,7 @@ const navLinks2 = ["Cultures", "Training Program", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { classes } = useSharedStyles();
   return (
     <Box className={classes.footerRoot}>
@@ -35,110 +35,116 @@ const Footer = () => {
         className={classes.footerBg}
       />
       <Box className={classes.footerContent}>
-        <Box className={classes.footerLogoBoxMobile}>
-          <Box
-            component="img"
-            src={logo}
-            alt="Logo"
-            className={classes.footerLogo}
-          />
-        </Box>
-        <Box className={classes.subscribeBox}>
-          <InputBase
-            placeholder="Enter Email"
-            endAdornment={
-              <InputAdornment position="end">
-                <Button
-                  variant="contained"
-                  className={`${classes.subscribeButton}`}
-                >
-                  Subscribe
-                </Button>
-              </InputAdornment>
-            }
-            className={`${classes.subscribeInput}  ${classes.hideInBig}`}
-          />
-        </Box>
         {isMobile ? (
-          <Box style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
-            <Box className={classes.navLinksBoxMobile}>
-              {navLinks1.map((link) => (
-                <Typography
-                  key={link}
-                  className={`${classes.navLink} ${classes.navLinkMobile}`}
-                >
-                  {link}
-                </Typography>
-              ))}
-            </Box>
-            <Box className={classes.navLinksBoxMobile}>
-              {navLinks2.map((link) => (
-                <Typography
-                  key={link}
-                  className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile}`}
-                >
-                  {link}
-                </Typography>
-              ))}
-            </Box>
-            <Box className={classes.contactBoxMobile}>
-              <Typography
-                className={`${classes.contactTitle} ${classes.contactTitleMobile}`}
-              >
-                Contact Us
-              </Typography>
-              <Box className={classes.contactRow}>
-                <MailOutlineIcon fontSize="small" />
-                <Typography
-                  className={`${classes.contactText} ${classes.contactTextMobile}`}
-                >
-                  info@Uday.com
-                </Typography>
+          <>
+            <Box className={classes.flexSide}>
+              <Box className={classes.footerLogoBoxMobile}>
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Logo"
+                  className={classes.footerLogo}
+                />
               </Box>
-              <Box className={classes.contactRow}>
-                <PhoneIcon fontSize="small" />
-                <Typography
-                  className={`${classes.contactText} ${classes.contactTextMobile}`}
-                >
-                  +91 97911-99909
-                </Typography>
-              </Box>
-              <Box className={classes.contactRow}>
-                <LocationOnIcon fontSize="small" />
-                <Typography
-                  className={`${classes.contactText} ${classes.contactTextMobile}`}
-                >
-                  Mulapolam, Srikakulam
-                </Typography>
-              </Box>
-              <Box className={classes.socialIconsMobile}>
-                <IconButton className={classes.footerSocialIconWhite}>
-                  <TwitterIcon />
-                </IconButton>
-                <IconButton className={classes.footerSocialIconWhite}>
-                  <FacebookIcon />
-                </IconButton>
-                <IconButton className={classes.footerSocialIconWhite}>
-                  <InstagramIcon />
-                </IconButton>
+              <Box className={classes.subscribeBox}>
+                <InputBase
+                  placeholder="Enter Email"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <Button
+                        variant="contained"
+                        className={`${classes.subscribeButton}`}
+                      >
+                        Subscribe
+                      </Button>
+                    </InputAdornment>
+                  }
+                  className={`${classes.subscribeInput}  ${classes.hideInBig}`}
+                />
               </Box>
             </Box>
-            <Box className={classes.mapBoxMobile}>
+            <Box className={classes.flexRoot}>
+              <Box className={classes.navLinksBoxMobile}>
+                {navLinks1.map((link) => (
+                  <Typography
+                    key={link}
+                    className={`${classes.navLink} ${classes.navLinkMobile}`}
+                  >
+                    {link}
+                  </Typography>
+                ))}
+              </Box>
               <Box
-                component="img"
-                src={footerMap}
-                alt="Map"
-                className={`${classes.mapImg} ${classes.mapImgMobile}`}
-              />
+                className={`${classes.navLinksBoxMobile} ${classes.navLinksBoxMobile2}`}
+              >
+                {navLinks2.map((link) => (
+                  <Typography
+                    key={link}
+                    className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile}`}
+                  >
+                    {link}
+                  </Typography>
+                ))}
+              </Box>
+              <Box className={classes.contactBoxMobile}>
+                <Typography
+                  className={`${classes.contactTitle} ${classes.contactTitleMobile}`}
+                >
+                  Contact Us
+                </Typography>
+                <Box className={classes.contactRow}>
+                  <MailOutlineIcon fontSize="small" />
+                  <Typography
+                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                  >
+                    info@Uday.com
+                  </Typography>
+                </Box>
+                <Box className={classes.contactRow}>
+                  <PhoneIcon fontSize="small" />
+                  <Typography
+                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                  >
+                    +91 97911-99909
+                  </Typography>
+                </Box>
+                <Box className={classes.contactRow}>
+                  <LocationOnIcon fontSize="small" />
+                  <Typography
+                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                  >
+                    Mulapolam, Srikakulam
+                  </Typography>
+                </Box>
+                <Box className={classes.socialIconsMobile}>
+                  <IconButton className={classes.footerSocialIconWhite}>
+                    <TwitterIcon />
+                  </IconButton>
+                  <IconButton className={classes.footerSocialIconWhite}>
+                    <FacebookIcon />
+                  </IconButton>
+                  <IconButton className={classes.footerSocialIconWhite}>
+                    <InstagramIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+              <Box className={classes.mapBoxMobile}>
+                <Box
+                  component="img"
+                  src={footerMap}
+                  alt="Map"
+                  className={`${classes.mapImg} ${classes.mapImgMobile}`}
+                />
+              </Box>
             </Box>
-          </Box>
+          </>
         ) : (
           <Box
             style={{
               width: "100%",
               display: "flex",
               flexDirection: "row",
-              flexWrap: "wrap",
+              flexWrap: "nowrap",
               justifyContent: "space-between",
               alignItems: "flex-start",
               marginTop: 16,
@@ -154,32 +160,52 @@ const Footer = () => {
                 className={classes.footerLogoDesktop}
               />
             </Box>
-            <Box
-              className={`${classes.navLinks1} ${classes.navLinksBoxDesktop}`}
-            >
-              {navLinks1.map((link) => (
-                <Typography
-                  key={link}
-                  className={`${classes.navLink} ${classes.navLinkDesktop}`}
+            <Box>
+              <Box className={classes.subscribeBox}>
+                <InputBase
+                  placeholder="Enter Email"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <Button
+                        variant="contained"
+                        className={`${classes.subscribeButton}`}
+                      >
+                        Subscribe
+                      </Button>
+                    </InputAdornment>
+                  }
+                  className={`${classes.subscribeInput}`}
+                />
+              </Box>
+              <Box className={classes.linksFlex}>
+                <Box
+                  className={`${classes.navLinks1} ${classes.navLinksBoxDesktop}`}
                 >
-                  {link}
-                </Typography>
-              ))}
+                  {navLinks1.map((link) => (
+                    <Typography
+                      key={link}
+                      className={`${classes.navLink} ${classes.navLinkDesktop}`}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+                <Box
+                  className={`${classes.navLinks2} ${classes.navLinksBoxDesktop}`}
+                >
+                  {navLinks2.map((link) => (
+                    <Typography
+                      key={link}
+                      className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop}`}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Box>
             </Box>
             <Box
-              className={`${classes.navLinks2} ${classes.navLinksBoxDesktop}`}
-            >
-              {navLinks2.map((link) => (
-                <Typography
-                  key={link}
-                  className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop}`}
-                >
-                  {link}
-                </Typography>
-              ))}
-            </Box>
-            <Box
-              className={`${classes.contactBox} ${classes.contactBoxDesktop}`}
+              className={`${classes.contactBox} ${classes.contactBoxDesktop} ${classes.topInBig}`}
             >
               <Typography
                 className={`${classes.contactTitle} ${classes.contactTitleDesktop}`}

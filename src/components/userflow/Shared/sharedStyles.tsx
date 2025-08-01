@@ -25,8 +25,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     paddingTop: 0,
     paddingBottom: 0,
     overflow: "hidden",
-    [theme.breakpoints.down("md")]: {
-      minHeight: 820,
+    [theme.breakpoints.down("lg")]: {
+      minHeight: 650,
     },
   },
   footerBg: {
@@ -38,7 +38,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     objectFit: "cover",
     objectPosition: "top",
     zIndex: 0,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       height: "100%",
     },
   },
@@ -53,11 +53,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    [theme.breakpoints.down("md")]: {
-      marginTop: 85,
+    [theme.breakpoints.down("lg")]: {
+      paddingBottom: 50,
+      marginTop: "50px",
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
-      paddingTop: 60,
     },
   },
   footerLogoBox: {
@@ -65,7 +65,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     marginBottom: 0,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       justifyContent: "flex-start",
       marginBottom: theme.spacing(2),
     },
@@ -73,14 +73,14 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   footerLogo: {
     width: 180,
     marginBottom: theme.spacing(2),
-    [theme.breakpoints.down("md")]: {
-      width: 120,
+    [theme.breakpoints.down("lg")]: {
+      width: 80,
       marginTop: 20,
     },
   },
   subscribeBox: {
     width: "100%",
-    maxWidth: 600,
+    maxWidth: 350,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -88,32 +88,34 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     marginTop: theme.spacing(2),
     gap: 0,
     justifyContent: "center",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       flexDirection: "column",
       gap: theme.spacing(2),
-      marginBottom: theme.spacing(4),
-      marginTop: theme.spacing(2),
     },
   },
   subscribeInput: {
     flex: 1,
+    borderRadius: 999,
     background: COLORS.WHITE,
-    borderRadius: 3,
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
     ...TYPOGRAPHY.subtitle1(theme),
     boxShadow: SHADOWS.DARK_CARD,
-    height: 56,
+    height: 42,
     paddingRight: 0,
     width: "auto",
     minWidth: 0,
     marginBottom: 0,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       ...TYPOGRAPHY.body1(theme),
-      height: 44,
+      height: "24px",
+      fontSize: "12px",
       width: "100%",
-      marginBottom: theme.spacing(1),
+      borderRadius: 10,
+      marginTop: 30,
+      marginBottom: 10,
+      padding: "1.5px 0px 1.5px 10px",
     },
   },
   subscribeButton: {
@@ -121,13 +123,24 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     background: COLORS.SECONDARY_BLUE,
     color: COLORS.WHITE,
     marginRight: theme.spacing(2),
-    height: "fit-content",
+    height: 28,
     letterSpacing: 0.5,
     minWidth: 0,
     "&:hover": { background: COLORS.HERO_BLUE },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       ...TYPOGRAPHY.body1(theme),
     },
+  },
+  topInBig: {
+    marginTop: "100px",
+    [theme.breakpoints.down("lg")]: {
+      marginTop: 0,
+    },
+  },
+  linksFlex: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
   },
   navLinks1: {
     display: "flex",
@@ -163,7 +176,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     alignItems: "flex-start",
     minWidth: 160,
     marginTop: 0,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       minWidth: 0,
       marginTop: theme.spacing(2),
     },
@@ -196,7 +209,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       minWidth: 0,
       marginTop: theme.spacing(2),
     },
@@ -208,12 +221,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     boxShadow: SHADOWS.SUBTLE,
     objectFit: "cover",
     [theme.breakpoints.down("lg")]: {
-      display: "none",
-    },
-    [theme.breakpoints.down("md")]: {
       width: 180,
       height: 140,
-      display: "block",
     },
   },
   copyright: {
@@ -235,23 +244,26 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     background: "transparent",
   },
   footerLogoBoxMobile: {
-    width: "100%",
     display: "flex",
     justifyContent: "flex-start",
     marginBottom: 16,
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "none",
       marginBottom: 0,
     },
   },
   navLinksBoxMobile: {
     width: "50%",
+    marginBottom: 20,
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
     gap: 8,
     alignItems: "flex-start",
     paddingLeft: 8,
+  },
+  navLinksBoxMobile2: {
+    alignItems: "flex-end",
   },
   navLinksBoxDesktop: {
     gap: 12,
@@ -270,12 +282,22 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     minWidth: 160,
     gap: 8,
   },
+  flexRoot: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  flexSide: {
+    display: "flex",
+    width: "100%",
+    gap: "20px",
+  },
   mapBoxMobile: {
     width: "50%",
     boxSizing: "border-box",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
     minWidth: 0,
     marginTop: 16,
   },
@@ -291,7 +313,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     alignItems: "center",
     gap: 16,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       display: "none",
     },
   },
@@ -344,12 +366,19 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "center",
   },
   mapImgMobile: {
-    width: 120,
+    width: 40,
     height: 90,
+    borderRadius: "20px",
+    [theme.breakpoints.up("lg")]: {
+      width: 150,
+      height: 150,
+    },
   },
   mapImgDesktop: {
-    width: 220,
-    height: 160,
+    marginTop: "20px",
+    width: 320,
+    height: 230,
+    borderRadius: 20,
   },
   copyrightMobile: {
     ...TYPOGRAPHY.body2(theme),
@@ -618,7 +647,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     color: theme.palette.primary.main,
   },
   hideInBig: {
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "none",
     },
   },

@@ -155,7 +155,7 @@ const Header = () => {
                 <IconButton className={classes.desktopSearchIcon}>
                   <SearchIcon
                     className={
-                      trigger
+                      trigger || !isHome
                         ? classes.headerSearchIconTrigger
                         : classes.headerSearchIcon
                     }
@@ -166,7 +166,7 @@ const Header = () => {
                   placeholder="Search Here....."
                   inputProps={{
                     "aria-label": "search",
-                    style: { color: trigger ? "#000" : "#fff" },
+                    style: { color: trigger || !isHome ? "#000" : "#fff" },
                   }}
                 />
               </Paper>

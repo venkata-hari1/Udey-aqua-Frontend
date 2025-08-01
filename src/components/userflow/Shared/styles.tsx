@@ -38,6 +38,7 @@ export const SHADOWS = {
   LIGHT_CARD: `0 2px 10px 0 ${COLORS.SECONDARY_BLUE}33`,
   MEDIUM: `0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)`,
   SIDEBAR: `0.5px 2px 14px 0.5px ${COLORS.PRIMARY_BLUE}63`,
+  LARGE: `0 2px 10px 0 #0463EE80`,
 };
 
 export const FONTS = {
