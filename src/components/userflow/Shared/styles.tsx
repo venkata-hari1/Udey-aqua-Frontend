@@ -6,6 +6,7 @@ export const COLORS = {
   SECONDARY_BLUE: "#0463EE",
   WHITE: "#fff",
   LIGHTWHITE: "#ffffffbb",
+  WHITE_GRAY: "#F7FAFC",
   DARK: "#222",
   GRAY: "#333",
   LIGHT_GRAY: "#e0e7ef",

@@ -499,6 +499,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     borderColor: COLORS.LIGHT_BLUE,
     fontWeight: 600,
     borderRadius: 999,
+    textTransform: "capitalize",
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
     paddingTop: theme.spacing(0.5),

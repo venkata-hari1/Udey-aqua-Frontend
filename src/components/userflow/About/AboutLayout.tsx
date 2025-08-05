@@ -1,13 +1,15 @@
 import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import about_image from "../../../assets/about_us/about_hero.png";
 import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useAboutStyles from "./aboutStyles";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import AboutHero from "./AboutHero";
 
 const sidebarItems = [
   { label: "Who We Are", path: "/about" },
   { label: "Our History", path: "/about/our-history" },
-  { label: "Our Team", path: "/about/our-team" },
+  { label: "Our Directors & Advisors", path: "/about/our-team" },
   { label: "Sustainable Development", path: "/about/sustainable-development" },
   { label: "Careers", path: "/about/careers" },
   { label: "Milestones", path: "/about/milestones" },
@@ -30,40 +32,12 @@ const AboutLayout = () => {
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
       <Grid size={{ xs: 12 }}>
-        <div className={classes.aboutHero}>
-          <Box
-            component="img"
-            src={about_image}
-            alt="About Us Hero"
-            className={classes.aboutHeroImg}
-          />
-          <Box className={classes.aboutHeroOverlay} />
-          <Box className={classes.aboutHeroContent}>
-            <Typography
-              variant="h2"
-              className={classes.aboutHeroTitle}
-              style={{ fontSize: isMobile ? 28 : 64 }}
-            >
-              About Us
-            </Typography>
-            <Typography variant="h5" className={classes.aboutHeroSubtitle}>
-              Empowering the Future of Aquaculture Through Knowledge
-            </Typography>
-            {isMobile && (
-              <Typography className={classes.aboutHeroBreadcrumb}>
-                About Us{currentLabel ? ` > ${currentLabel}` : ""}
-              </Typography>
-            )}
-          </Box>
-        </div>
+        <AboutHero currentLabel={currentLabel} />
       </Grid>
       <Grid size={{ xs: 12 }}>
         <Grid container className={classes.aboutMainRow} wrap="nowrap">
           {!isMobile && (
-            <Grid
-              size={{ xs: 3, md: 2 }}
-              className={classes.aboutSidebarWrapper}
-            >
+            <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper}>
               <Box className={classes.aboutSidebar}>
                 <Box className={classes.aboutSidebarNavTitle}>About Us</Box>
                 {sidebarItems.map((item) => (
@@ -89,12 +63,7 @@ const AboutLayout = () => {
                   Call Us Now:
                 </Typography>
                 <Box className={classes.aboutSidebarContactRow}>
-                  <Box
-                    component="span"
-                    className={classes.aboutSidebarContactIcon}
-                  >
-                    📞
-                  </Box>
+                  <PhoneIcon className={classes.aboutSidebarContactIcon} />
                   <Typography className={classes.aboutSidebarContactValue}>
                     +91 97911-99909
                   </Typography>
@@ -103,12 +72,7 @@ const AboutLayout = () => {
                   Talk Us Now:
                 </Typography>
                 <Box className={classes.aboutSidebarContactRow}>
-                  <Box
-                    component="span"
-                    className={classes.aboutSidebarContactIcon}
-                  >
-                    ✉️
-                  </Box>
+                  <EmailIcon className={classes.aboutSidebarContactIcon} />
                   <Typography className={classes.aboutSidebarContactValue}>
                     info@Uday.com
                   </Typography>

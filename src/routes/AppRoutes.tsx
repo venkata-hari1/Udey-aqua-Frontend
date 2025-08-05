@@ -19,11 +19,14 @@ const AppRoutes = () => {
           <Route index element={<WhoWeAre />} />
           <Route path="our-history" element={<OurHistory />} />
           <Route path="our-team" element={<OurTeam />} />
-          <Route path="sustainable-development" element={<SustainableDevelopment />} />
+          <Route
+            path="sustainable-development"
+            element={<SustainableDevelopment />}
+          />
           <Route path="careers" element={<Careers />} />
-          <Route path="milestones" element={<Milestones />} />
           <Route path="testimonials" element={<Testimonials />} />
         </Route>
+        <Route path="/about/milestones" element={<Milestones />} />
       </Route>
     </Routes>
   );

@@ -5,7 +5,7 @@ import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
 const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutHeaderTitle: {
     color: theme.palette.primary.dark,
-    fontWeight: 800,
+    fontWeight: 500,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontSize: 55,
     [theme.breakpoints.down("md")]: {
@@ -20,6 +20,31 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       color: COLORS.WHITE,
       background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     },
+  },
+  mileStoneHeader: {
+    textAlign: "center",
+    fontSize: 28,
+    borderRadius: 999,
+    color: COLORS.WHITE,
+    background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
+    width: "90%",
+    maxWidth: 200,
+    margin: "10px auto",
+    marginTop: "40px",
+    padding: "0.5px 60px",
+  },
+  mileStoneSubtitle: {
+    textAlign: "center",
+    fontSize: 30,
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontWeight: 400,
+    marginBottom: "20px",
+  },
+  mileStoneImg: {
+    minHeight: "100vh",
+    width: "100%",
+    marginBottom: "100px",
   },
   aboutHeaderSubtitle: {
     color: COLORS.PRIMARY_BLUE,
@@ -41,7 +66,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutCard: {
-    background: COLORS.BLUE_GRAY,
+    background: COLORS.WHITE_GRAY,
     borderRadius: 12,
     boxShadow: SHADOWS.LARGE,
     padding: theme.spacing(4),
@@ -59,7 +84,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutCardTitle: {
     color: COLORS.PRIMARY_BLUE,
-    fontWeight: 700,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontWeight: 400,
     marginBottom: theme.spacing(2),
     fontSize: 32,
     [theme.breakpoints.down("md")]: {
@@ -69,6 +95,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutCardDesc: {
     fontSize: 20,
+    fontWeight: 500,
     color: COLORS.DARK,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
@@ -110,9 +137,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutCardLargeDesc: {
     fontSize: 20,
     color: COLORS.DARK,
+    fontWeight: 500,
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(4),
-    fontWeight: 400,
     [theme.breakpoints.down("md")]: {
       fontSize: 14,
     },
@@ -178,7 +205,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutHeroTitle: {
     color: COLORS.WHITE,
-    fontWeight: 700,
+    fontWeight: 400,
     fontSize: 48,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     margin: theme.spacing(5, 0, 2, 0),
@@ -191,7 +218,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   aboutHeroSubtitle: {
     color: COLORS.WHITE,
-    fontWeight: 500,
+    fontWeight: 700,
     fontSize: 22,
     textAlign: "center",
     maxWidth: 700,
@@ -251,13 +278,14 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     paddingBottom: theme.spacing(1),
     borderRadius: 999,
     cursor: "pointer",
-    fontFamily: "",
+    fontFamily: "Roboto",
     background: "transparent",
     color: COLORS.WHITE,
     transition: "300ms ease",
     "&.active": {
       background: COLORS.WHITE,
       color: COLORS.PRIMARY_BLUE,
+      fontWeight: 600,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
     },
@@ -314,10 +342,11 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutSidebarContactTitle: {
-    fontWeight: 700,
+    fontWeight: 500,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontSize: 18,
-    color: COLORS.PRIMARY_BLUE,
-    marginBottom: 8,
+    color: COLORS.SECONDARY_BLUE,
+    marginBottom: 4,
   },
   aboutSidebarContactLabel: {
     fontWeight: 500,
@@ -326,12 +355,12 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginBottom: 4,
   },
   aboutSidebarContactValue: {
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: 15,
     color: COLORS.DARK,
   },
   aboutSidebarContactIcon: {
-    color: COLORS.PRIMARY_BLUE,
+    color: COLORS.SECONDARY_BLUE,
     fontSize: 18,
   },
   aboutSidebarContactRow: {
@@ -348,6 +377,79 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+  },
+  milestoneContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    position: "relative",
+    padding: theme.spacing(4, 0),
+  },
+  milestoneItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: 1200,
+    margin: theme.spacing(8, 0),
+    position: "relative",
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
+    },
+  },
+
+  milestoneImg: {
+    flex: "0 0 50%",
+    width: "50%",
+    maxWidth: 500,
+    height: "auto",
+    borderRadius: 8,
+    zIndex: 2,
+    [theme.breakpoints.down("md")]: {
+      maxWidth: 300,
+      marginBottom: theme.spacing(2),
+    },
+  },
+
+  milestoneText: {
+    flex: "0 0 50%",
+    width: "100%",
+    maxWidth: 500,
+    margin: "0 20px",
+    zIndex: 2,
+    [theme.breakpoints.down("md")]: {
+      margin: 0,
+    },
+  },
+
+  milestoneYear: {
+    fontWeight: "bold",
+    color: COLORS.PRIMARY_BLUE,
+    fontSize: 22,
+    marginBottom: theme.spacing(1),
+  },
+  milestoneDot: {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 32,
+    height: 32,
+    zIndex: 3,
+  },
+  rotate180: {
+    transform: "translate(-50%, -50%) rotate(180deg)",
+  },
+  dottedLine: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: "50%",
+    width: "2px",
+    backgroundImage: "linear-gradient(to bottom, #0000FF 50%, transparent 50%)",
+    backgroundSize: "2px 12px",
+    backgroundRepeat: "repeat-y",
+    zIndex: 1,
   },
 }));
 

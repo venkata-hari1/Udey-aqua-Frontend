@@ -132,7 +132,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     },
   },
   topInBig: {
-    marginTop: "100px",
+    marginTop: "90px",
     [theme.breakpoints.down("lg")]: {
       marginTop: 0,
     },
@@ -357,11 +357,13 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     ...TYPOGRAPHY.body2(theme),
   },
   socialIconsMobile: {
+    display: "flex",
     gap: 16,
     marginTop: 16,
   },
   socialIconsDesktop: {
-    gap: 16,
+    display: "flex",
+    gap: 12,
     marginTop: 16,
     justifyContent: "center",
   },
@@ -519,7 +521,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     width: 300,
     borderRadius: 999,
-    marginRight: theme.spacing(8),
+    marginRight: theme.spacing(1),
     border: `1.5px solid ${COLORS.WHITE}`,
     boxShadow: "none",
     background: "transparent",

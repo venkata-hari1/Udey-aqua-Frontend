@@ -6,14 +6,13 @@ import {
   InputAdornment,
   useTheme,
   useMediaQuery,
-  IconButton,
 } from "@mui/material";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import MailOutlineIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "../../../assets/icons/twitter.svg";
+import FacebookIcon from "../../../assets/icons/facebook.svg";
+import InstagramIcon from "../../../assets/icons/instagram.svg";
 import logo from "../../../assets/logo.png";
 import footerBg from "../../../assets/home/footer.png";
 import footerMap from "../../../assets/home/footer_map.png";
@@ -117,15 +116,24 @@ const Footer = () => {
                   </Typography>
                 </Box>
                 <Box className={classes.socialIconsMobile}>
-                  <IconButton className={classes.footerSocialIconWhite}>
-                    <TwitterIcon />
-                  </IconButton>
-                  <IconButton className={classes.footerSocialIconWhite}>
-                    <FacebookIcon />
-                  </IconButton>
-                  <IconButton className={classes.footerSocialIconWhite}>
-                    <InstagramIcon />
-                  </IconButton>
+                  <Box
+                    component="img"
+                    src={TwitterIcon}
+                    alt="Twitter"
+                    className={classes.footerSocialIconWhite}
+                  />
+                  <Box
+                    component="img"
+                    src={FacebookIcon}
+                    alt="Facebook"
+                    className={classes.footerSocialIconWhite}
+                  />
+                  <Box
+                    component="img"
+                    src={InstagramIcon}
+                    alt="Instagram"
+                    className={classes.footerSocialIconWhite}
+                  />
                 </Box>
               </Box>
               <Box className={classes.mapBoxMobile}>
@@ -237,15 +245,24 @@ const Footer = () => {
                 </Typography>
               </Box>
               <Box className={classes.socialIconsDesktop}>
-                <IconButton className={classes.footerSocialIconWhite}>
-                  <TwitterIcon />
-                </IconButton>
-                <IconButton className={classes.footerSocialIconWhite}>
-                  <FacebookIcon />
-                </IconButton>
-                <IconButton className={classes.footerSocialIconWhite}>
-                  <InstagramIcon />
-                </IconButton>
+                <Box
+                  component="img"
+                  src={TwitterIcon}
+                  alt="Twitter"
+                  className={classes.footerSocialIconWhite}
+                />
+                <Box
+                  component="img"
+                  src={FacebookIcon}
+                  alt="Facebook"
+                  className={classes.footerSocialIconWhite}
+                />
+                <Box
+                  component="img"
+                  src={InstagramIcon}
+                  alt="Instagram"
+                  className={classes.footerSocialIconWhite}
+                />
               </Box>
             </Box>
             <Box className={classes.mapBoxDesktop}>

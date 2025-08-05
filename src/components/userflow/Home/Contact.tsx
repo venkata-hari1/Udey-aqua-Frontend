@@ -87,7 +87,6 @@ const Contact = () => {
                     name="message"
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="Write your message..."
                     fullWidth
                     multiline
                     minRows={4}
