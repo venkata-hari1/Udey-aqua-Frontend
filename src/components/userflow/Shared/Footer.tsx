@@ -18,7 +18,7 @@ import footerBg from "../../../assets/home/footer.png";
 import footerMap from "../../../assets/home/footer_map.png";
 import useSharedStyles from "./sharedStyles";
 
-const navLinks1 = ["Home", "About US", "New & Events", "Contact Us"];
+const navLinks1 = ["Home", "About US", "News & Events", "Contact Us"];
 const navLinks2 = ["Cultures", "Training Program", "Technologies"];
 
 const Footer = () => {

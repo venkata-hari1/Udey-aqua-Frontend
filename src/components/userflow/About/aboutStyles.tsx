@@ -42,9 +42,12 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginBottom: "20px",
   },
   mileStoneImg: {
-    minHeight: "100vh",
+    minHeight: "90vh",
     width: "100%",
     marginBottom: "100px",
+    [theme.breakpoints.down("md")]: {
+      marginBottom: "60px",
+    },
   },
   aboutHeaderSubtitle: {
     color: COLORS.PRIMARY_BLUE,
@@ -101,6 +104,14 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       fontSize: 14,
       marginBottom: theme.spacing(4),
+    },
+  },
+  milestoneItemText: {
+    fontSize: 20,
+    lineHeight: 38,
+    paddingBottom: 10,
+    [theme.breakpoints.down("md")]: {
+      lineHeight: 12,
     },
   },
   aboutCardImg: {
@@ -237,7 +248,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     letterSpacing: 0.5,
     opacity: 0.9,
     [theme.breakpoints.down("md")]: {
-      fontSize: 16,
+      fontSize: 12,
       marginTop: theme.spacing(2),
     },
   },
@@ -382,56 +393,82 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "flex-start",
     position: "relative",
-    padding: theme.spacing(4, 0),
+    padding: "8px 15px 0 15px",
   },
   milestoneItem: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     width: "100%",
     maxWidth: 1200,
-    margin: theme.spacing(8, 0),
+    margin: theme.spacing(20, 0),
+    marginTop: "0",
     position: "relative",
     [theme.breakpoints.down("md")]: {
       textAlign: "center",
+      marginBottom: "25px",
     },
   },
-
+  milestoneScrollContainer: {
+    maxHeight: "100vh",
+    overflowY: "scroll",
+    scrollbarWidth: "none",
+    marginBottom: "120px",
+  },
   milestoneImg: {
     flex: "0 0 50%",
-    width: "50%",
-    maxWidth: 500,
+    maxWidth: "45%",
     height: "auto",
     borderRadius: 8,
     zIndex: 2,
     [theme.breakpoints.down("md")]: {
-      maxWidth: 300,
+      maxWidth: "45%",
+      height: "125px",
       marginBottom: theme.spacing(2),
     },
   },
 
   milestoneText: {
-    flex: "0 0 50%",
-    width: "100%",
+    flex: "0 0 45%",
+    width: "50%",
     maxWidth: 500,
     margin: "0 20px",
+    fontWeight: 400,
+    display: "flex",
+    textAlign: "left",
+    flexDirection: "column",
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
     zIndex: 2,
     [theme.breakpoints.down("md")]: {
       margin: 0,
     },
   },
-
+  milestoneDesc: {
+    lineHeight: "28px",
+    fontFamily: FONTS.INTER,
+    letterSpacing: "0%",
+    fontWeight: 500,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 14,
+      lineHeight: 1.4,
+    },
+  },
   milestoneYear: {
-    fontWeight: "bold",
+    fontWeight: 400,
     color: COLORS.PRIMARY_BLUE,
-    fontSize: 22,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontSize: 28,
     marginBottom: theme.spacing(1),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 17,
+    },
   },
   milestoneDot: {
     position: "absolute",
     left: "50%",
-    top: "50%",
+    top: "0%",
     transform: "translate(-50%, -50%)",
     width: 32,
     height: 32,
