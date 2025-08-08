@@ -1,6 +1,6 @@
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
-import { COLORS, SHADOWS, TYPOGRAPHY, baseStyles } from "./styles";
+import { COLORS, SHADOWS, TYPOGRAPHY, FONTS, baseStyles } from "./styles";
 
 const useSharedStyles = makeStyles()((theme: Theme) => ({
   loadingLayout: {
@@ -218,7 +218,6 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: 220,
     height: 160,
     borderRadius: 3,
-    boxShadow: SHADOWS.SUBTLE,
     objectFit: "cover",
     [theme.breakpoints.down("lg")]: {
       width: 180,
@@ -653,6 +652,53 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
       display: "none",
     },
   },
+
+  // ContactBox styles
+  contactBoxWrapper: {
+    width: "100%",
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    borderRadius: 12,
+    boxShadow: SHADOWS.DARK_CARD,
+    padding: theme.spacing(2.5),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    fontSize: 16,
+    gap: theme.spacing(1.5),
+  },
+  contactBoxTitle: {
+    fontWeight: 500,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontSize: 18,
+    color: COLORS.SECONDARY_BLUE,
+    marginBottom: 4,
+  },
+  contactBoxLabel: {
+    fontWeight: 500,
+    fontSize: 15,
+    color: COLORS.DARK,
+    marginBottom: 4,
+  },
+  contactBoxValue: {
+    fontWeight: 500,
+    fontSize: 15,
+    color: COLORS.DARK,
+  },
+  contactBoxIcon: {
+    color: COLORS.SECONDARY_BLUE,
+    fontSize: 18,
+  },
+  contactBoxRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 4,
+  },
+
+  // Testimonials
 }));
 
 export default useSharedStyles;

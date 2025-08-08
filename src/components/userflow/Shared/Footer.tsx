@@ -284,7 +284,9 @@ const Footer = () => {
         }
       >
         <span>Copyright</span>
-        <span style={{ fontSize: isMobile ? 16 : 22, margin: "0 4px" }}>©</span>
+        <span style={{ fontSize: isMobile ? 10 : 16, margin: "0 4px" }}>
+          &copy;
+        </span>
         <span>Uday Aqua all rights reserved.</span>
       </Box>
     </Box>

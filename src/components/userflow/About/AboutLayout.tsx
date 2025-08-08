@@ -2,8 +2,7 @@ import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useAboutStyles from "./aboutStyles";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
+import ContactBox from "../Shared/ContactBox";
 import AboutHero from "./AboutHero";
 
 const sidebarItems = [
@@ -55,29 +54,7 @@ const AboutLayout = () => {
                   </NavLink>
                 ))}
               </Box>
-              <Box className={classes.aboutSidebarContact}>
-                <Typography className={classes.aboutSidebarContactTitle}>
-                  Do You Need Any Help?
-                </Typography>
-                <Typography className={classes.aboutSidebarContactLabel}>
-                  Call Us Now:
-                </Typography>
-                <Box className={classes.aboutSidebarContactRow}>
-                  <PhoneIcon className={classes.aboutSidebarContactIcon} />
-                  <Typography className={classes.aboutSidebarContactValue}>
-                    +91 97911-99909
-                  </Typography>
-                </Box>
-                <Typography className={classes.aboutSidebarContactLabel}>
-                  Talk Us Now:
-                </Typography>
-                <Box className={classes.aboutSidebarContactRow}>
-                  <EmailIcon className={classes.aboutSidebarContactIcon} />
-                  <Typography className={classes.aboutSidebarContactValue}>
-                    info@Uday.com
-                  </Typography>
-                </Box>
-              </Box>
+              <ContactBox />
               <Box className={classes.aboutSidebarFish}>
                 <img src={aboutSideFish} alt="Fish" />
               </Box>
