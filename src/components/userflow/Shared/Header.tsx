@@ -27,7 +27,7 @@ import clsx from "clsx";
 const navItems = [
   { label: "Home", link: "/" },
   { label: "About Us", link: "/about" },
-  { label: "Cultures", link: "/" },
+  { label: "Cultures", link: "/cultures" },
   { label: "Training Programs", link: "/" },
   { label: "Technologies", link: "/" },
   { label: "News & Events", link: "/" },

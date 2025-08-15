@@ -1,5 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import AboutInfoCard from "../About/AboutInfoCard";
 import useCulturesStyles from "./culturesStyles";
 
@@ -25,7 +26,11 @@ const CulturePage = ({
 }: CulturePageProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
   const { classes } = useCulturesStyles();
+
+  // Check if the current path contains "murrel"
+  const isMurrelPage = location.pathname.includes("murrel");
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -50,9 +55,13 @@ const CulturePage = ({
               src={headerImg}
               alt={title}
               className={classes.culturePageIconImg}
+              style={{
+                transform: isMurrelPage ? "rotate(-100deg)" : "rotate(0deg)",
+                transition: "transform 0.3s ease",
+              }}
             />
           </Box>
-          <Box>
+          <Box className={classes.culturePageTextContent}>
             <h1 className={classes.culturePageTitle}>{title}</h1>
             <p className={classes.culturePageSubtitle}>{subtitle}</p>
           </Box>

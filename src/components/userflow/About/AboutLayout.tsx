@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useAboutStyles from "./aboutStyles";

@@ -1,5 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import cultures_image from "../../../assets/about_us/about_hero.png";
+import cultures_image from "../../../assets/cultures/main.jpg";
 import useCulturesStyles from "./culturesStyles";
 
 interface CulturesHeroProps {
@@ -20,6 +20,7 @@ const CulturesHero = ({ currentLabel }: CulturesHeroProps) => {
         className={classes.culturesHeroImg}
       />
       <Box className={classes.culturesHeroOverlay} />
+      <Box className={classes.culturesHeroColorOverlay} />
       <Box className={classes.culturesHeroContent}>
         <Typography
           variant="h2"

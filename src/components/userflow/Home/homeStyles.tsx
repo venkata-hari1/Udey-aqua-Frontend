@@ -1476,6 +1476,193 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     fontSize: 14,
     color: theme.palette.primary.main,
   },
+
+  // Testimonial Carousel Styles
+  testimonialCarouselWrapper: {
+    maxWidth: 1200,
+    margin: "40px auto",
+    position: "relative",
+  },
+  testimonialCarouselCard: {
+    background: COLORS.WHITE,
+    borderRadius: 12,
+    boxShadow: SHADOWS.LARGE,
+    padding: 32,
+    position: "relative",
+    marginBottom: 24,
+    [theme.breakpoints.down("md")]: {
+      padding: 24,
+      marginBottom: 16,
+    },
+  },
+  testimonialCarouselContent: {
+    display: "flex",
+    gap: 32,
+    alignItems: "flex-start",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      gap: 16,
+      alignItems: "center",
+    },
+  },
+  testimonialImageContainer: {
+    flexShrink: 0,
+    width: 140,
+    height: 140,
+    [theme.breakpoints.down("md")]: {
+      width: 120,
+      height: 120,
+    },
+  },
+  testimonialImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "50%",
+    objectFit: "cover",
+    boxShadow: SHADOWS.CARD,
+  },
+  testimonialTextContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+    minHeight: 140,
+    justifyContent: "space-between",
+  },
+  testimonialHeading: {
+    fontSize: 22,
+    fontWeight: 700,
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.INTER,
+    marginBottom: 4,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 18,
+      textAlign: "center",
+    },
+  },
+  testimonialQuote: {
+    fontSize: 16,
+    lineHeight: 1.5,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    fontWeight: 400,
+    marginBottom: 8,
+    flex: 1,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 14,
+      textAlign: "center",
+    },
+  },
+  testimonialReadMore: {
+    fontSize: 14,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    fontWeight: 500,
+    marginBottom: 8,
+    cursor: "pointer",
+    textDecoration: "underline",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+      textAlign: "center",
+    },
+  },
+  testimonialName: {
+    fontSize: 18,
+    fontWeight: 700,
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.INTER,
+    marginBottom: 2,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 16,
+      textAlign: "center",
+    },
+  },
+  testimonialDesignation: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: COLORS.GRAY,
+    fontFamily: FONTS.INTER,
+    marginBottom: 1,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+      textAlign: "center",
+    },
+  },
+  testimonialPlace: {
+    fontSize: 12,
+    fontWeight: 400,
+    color: COLORS.GRAY,
+    fontFamily: FONTS.INTER,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 11,
+      textAlign: "center",
+    },
+  },
+  testimonialAttribution: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 1,
+    marginTop: 4,
+  },
+  testimonialArrowButton: {
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    borderRadius: "50%",
+    width: 48,
+    height: 48,
+    boxShadow: SHADOWS.CARD,
+    zIndex: 10,
+    "&:hover": {
+      background: COLORS.PRIMARY_BLUE,
+      color: COLORS.WHITE,
+    },
+    "&:first-of-type": {
+      left: -24,
+    },
+    "&:last-of-type": {
+      right: -24,
+    },
+    [theme.breakpoints.down("md")]: {
+      width: 40,
+      height: 40,
+      "&:first-of-type": {
+        left: -20,
+      },
+      "&:last-of-type": {
+        right: -20,
+      },
+    },
+  },
+  testimonialDotsWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 12,
+    marginTop: 24,
+  },
+  testimonialDot: {
+    width: 12,
+    height: 12,
+    borderRadius: "50%",
+    backgroundColor: "transparent",
+    border: `2px solid ${COLORS.PRIMARY_BLUE}`,
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    opacity: 0.4,
+    "&:hover": {
+      opacity: 0.7,
+      transform: "scale(1.1)",
+    },
+  },
+  testimonialActiveDot: {
+    backgroundColor: COLORS.PRIMARY_BLUE,
+    border: `2px solid ${COLORS.PRIMARY_BLUE}`,
+    opacity: 1,
+    transform: "scale(1.1)",
+  },
 }));
 
 export default useHomeStyles;

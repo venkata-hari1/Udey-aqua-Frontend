@@ -1,6 +1,7 @@
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, SHADOWS, TYPOGRAPHY, FONTS, baseStyles } from "./styles";
+import planWaterBg from "../../../assets/cultures/plan_water.png";
 
 const useSharedStyles = makeStyles()((theme: Theme) => ({
   loadingLayout: {
@@ -387,6 +388,15 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   copyrightDesktop: {
     ...TYPOGRAPHY.body1(theme),
   },
+  copyrightIcon: {
+    width: 18,
+    height: 18,
+    margin: "0 0 0 1px",
+    [theme.breakpoints.down("lg")]: {
+      width: 14,
+      height: 14,
+    },
+  },
   appBar: {
     position: "fixed",
     top: 0,
@@ -699,6 +709,138 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
 
   // Testimonials
+}));
+
+export const usePlansStyles = makeStyles()((theme: Theme) => ({
+  plansRoot: {
+    width: "98vw",
+    position: "relative",
+    left: "50%",
+    right: "50%",
+    marginLeft: "-49vw",
+    marginRight: "-49vw",
+    backgroundImage: `url(${planWaterBg})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(8),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+    borderRadius: "10px",
+    overflow: "hidden",
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "rgba(0, 0, 0, 0.4)",
+      zIndex: 1,
+    },
+  },
+  plansHeader: {
+    position: "relative",
+    zIndex: 2,
+    width: "fit-content",
+    margin: "0 auto",
+    background: COLORS.SECONDARY_BLUE,
+    color: COLORS.WHITE,
+    padding: theme.spacing(1.5, 4),
+    borderRadius: 999,
+    boxShadow: SHADOWS.SUBTLE,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontSize: 24,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 18,
+      padding: theme.spacing(1, 3),
+    },
+  },
+  plansHeaderBlue: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: COLORS.SECONDARY_BLUE,
+    borderRadius: 999,
+    zIndex: -1,
+    transform: "scale(1.1)",
+  },
+  plansContainer: {
+    position: "relative",
+    zIndex: 2,
+    marginTop: theme.spacing(4),
+    marginLeft: "auto",
+    marginRight: "auto",
+    maxWidth: 1400,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+  plansCard: {
+    background: COLORS.WHITE,
+    borderRadius: 16,
+    boxShadow: SHADOWS.LARGE,
+    padding: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(1),
+    height: "100%",
+    minHeight: 400,
+  },
+  plansCardHeader: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    width: "100%",
+  },
+  plansBadge: {
+    position: "absolute",
+    top: -12,
+    right: 12,
+    background: "#87CEEB",
+    color: COLORS.WHITE,
+    borderRadius: 999,
+    padding: theme.spacing(0.5, 1.5),
+    fontSize: 12,
+    boxShadow: SHADOWS.SUBTLE,
+  },
+  plansTitleChip: {
+    background: COLORS.SECONDARY_BLUE,
+    color: COLORS.WHITE,
+    borderRadius: 999,
+    padding: theme.spacing(0.5, 3),
+    fontWeight: 600,
+    width: "fit-content",
+    margin: "0 auto",
+  },
+  plansPrice: {
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    color: COLORS.WHITE,
+    fontSize: 18,
+  },
+  plansList: {
+    marginTop: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    flex: 1,
+  },
+  plansListItem: {
+    marginBottom: theme.spacing(1),
+  },
+  plansCta: {
+    marginTop: "auto",
+    alignSelf: "center",
+    background: COLORS.SECONDARY_BLUE,
+    color: COLORS.WHITE,
+    textTransform: "none",
+    padding: theme.spacing(0.75, 3),
+    borderRadius: 999,
+    boxShadow: SHADOWS.SUBTLE,
+    "&:hover": {
+      background: COLORS.HERO_BLUE,
+    },
+  },
 }));
 
 export default useSharedStyles;

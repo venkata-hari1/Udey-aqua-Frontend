@@ -5,6 +5,8 @@ import useCulturesStyles from "./culturesStyles";
 import ContactBox from "../Shared/ContactBox";
 import CulturesHero from "./CulturesHero";
 import CulturesSideImg from "../../../assets/cultures/side_img.png";
+import PdfDownloadSection from "./PdfDownloadSection";
+import PlansSection from "../Shared/PlansSection";
 import seaBassImg from "../../../assets/cultures/seebass.png";
 import pearlSpotImg from "../../../assets/cultures/pearlspot.png";
 import mudCrabImg from "../../../assets/cultures/mudcrab.png";
@@ -33,17 +35,6 @@ const CulturesLayout = () => {
         ? location.pathname === "/cultures"
         : location.pathname.startsWith(item.path)
     )?.label || "";
-
-  const getCultureImage = () => {
-    const path = location.pathname;
-    if (path === "/cultures") return seaBassImg;
-    if (path === "/cultures/pearl-spot") return pearlSpotImg;
-    if (path === "/cultures/mud-crab") return mudCrabImg;
-    if (path === "/cultures/murrel") return murrelImg;
-    if (path === "/cultures/tilapia") return tilapiaImg;
-    if (path === "/cultures/sea-weed") return seaWeedImg;
-    return CulturesSideImg;
-  };
 
   const getSidebarFishImage = () => {
     const path = location.pathname;
@@ -101,6 +92,9 @@ const CulturesLayout = () => {
           </Grid>
         </Grid>
       </Grid>
+
+      <PdfDownloadSection currentLabel={currentLabel} />
+      <PlansSection />
     </Grid>
   );
 };

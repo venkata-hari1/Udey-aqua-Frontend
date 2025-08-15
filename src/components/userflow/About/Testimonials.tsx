@@ -37,6 +37,7 @@ const testimonials = [
     name: "Mr. Sandeep Rao",
     designation: "Regional Director, AquaTech Solutions Pvt. Ltd.",
     image: person1,
+    title: "Driving Aquaculture Innovation Together",
     quote:
       "Collaborating with Uday Aqua Connect has been one of the most transformative partnerships in my career. Their deep industry knowledge with a hands-on, farmer-first approach was executed with precision, transparency, and genuine passion for sustainable aquaculture.",
     shortQuote:
@@ -47,6 +48,7 @@ const testimonials = [
     name: "Ravi Kumar",
     designation: "Fish Farmer, Srikakulam, Andhra Pradesh",
     image: person2,
+    title: "From Struggle to Success",
     quote:
       "Before I joined Uday Aqua Connect's training, I struggled with low yield and inconsistent results. Thanks to Uday Aqua, my income has doubled and I now mentor other farmers in sustainable practices.",
     shortQuote: "My income has doubled and I now mentor other farmers.",
@@ -56,6 +58,7 @@ const testimonials = [
     name: "Dr. Priya Sharma",
     designation: "Aquaculture Consultant",
     image: person3,
+    title: "Revolutionary Technical Expertise",
     quote:
       "The technical expertise and innovative solutions provided by Uday Aqua Connect have revolutionized how we approach aquaculture development. Their commitment to sustainability is truly commendable.",
     shortQuote:
@@ -66,6 +69,7 @@ const testimonials = [
     name: "Krishna Reddy",
     designation: "Aquaculture Entrepreneur",
     image: person4,
+    title: "Comprehensive Training & Support",
     quote:
       "Uday Aqua Connect's comprehensive training programs and ongoing support have been instrumental in scaling my aquaculture business. Their practical approach makes complex concepts accessible.",
     shortQuote:
@@ -76,6 +80,7 @@ const testimonials = [
     name: "Anita Patel",
     designation: "Research Scientist, Marine Biology",
     image: person5,
+    title: "Innovative Methodologies",
     quote:
       "Working with Uday Aqua Connect has opened new possibilities in aquaculture research. Their innovative methodologies and commitment to scientific excellence are setting new industry standards.",
     shortQuote: "Innovative methodologies setting new industry standards.",
@@ -194,15 +199,36 @@ const Testimonials = () => {
                       />
                     </Box>
                     <Box className={classes.testimonialTextContainer}>
+                      <Typography className={classes.testimonialTitle}>
+                        {currentTestimonial.title}
+                      </Typography>
                       <Typography className={classes.testimonialQuote}>
                         "{currentTestimonial.quote}"
+                        <Typography
+                          component="span"
+                          className={classes.testimonialDots}
+                        >
+                          ....
+                        </Typography>
+                        <Typography
+                          component="span"
+                          className={classes.testimonialReadMore}
+                        >
+                          Read More
+                        </Typography>
                       </Typography>
-                      <Typography className={classes.testimonialName}>
-                        {currentTestimonial.name}
-                      </Typography>
-                      <Typography className={classes.testimonialDesignation}>
-                        {currentTestimonial.designation}
-                      </Typography>
+                      <Box className={classes.testimonialAttribution}>
+                        <Typography className={classes.testimonialName}>
+                          {currentTestimonial.name}
+                        </Typography>
+                        <Typography className={classes.testimonialDesignation}>
+                          {currentTestimonial.designation.split(",")[0]}
+                        </Typography>
+                        <Typography className={classes.testimonialPlace}>
+                          {currentTestimonial.designation.split(",")[1] ||
+                            currentTestimonial.designation}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
 
@@ -221,20 +247,6 @@ const Testimonials = () => {
                   >
                     <ArrowForwardIos fontSize="small" />
                   </IconButton>
-                </Box>
-
-                {/* Pagination Dots */}
-                <Box className={classes.testimonialDotsWrapper}>
-                  {testimonials.map((_, i) => (
-                    <span
-                      key={i}
-                      className={`${classes.testimonialDot} ${
-                        i === currentIndex ? classes.testimonialActiveDot : ""
-                      }`}
-                      onClick={() => setCurrentIndex(i)}
-                      style={{ cursor: "pointer" }}
-                    />
-                  ))}
                 </Box>
               </Box>
             </Grid>

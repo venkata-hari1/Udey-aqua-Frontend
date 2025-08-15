@@ -13,6 +13,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import TwitterIcon from "../../../assets/icons/twitter.svg";
 import FacebookIcon from "../../../assets/icons/facebook.svg";
 import InstagramIcon from "../../../assets/icons/instagram.svg";
+import CopyIcon from "../../../assets/icons/copy.svg";
 import logo from "../../../assets/logo.png";
 import footerBg from "../../../assets/home/footer.png";
 import footerMap from "../../../assets/home/footer_map.png";
@@ -284,9 +285,12 @@ const Footer = () => {
         }
       >
         <span>Copyright</span>
-        <span style={{ fontSize: isMobile ? 10 : 16, margin: "0 4px" }}>
-          &copy;
-        </span>
+        <Box
+          component="img"
+          src={CopyIcon}
+          alt="Copyright"
+          className={classes.copyrightIcon}
+        />
         <span>Uday Aqua all rights reserved.</span>
       </Box>
     </Box>
