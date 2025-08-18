@@ -505,6 +505,84 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
       },
     },
   },
+
+  // PDF Modal styles
+  pdfDialogPaper: {
+    borderRadius: 12,
+    overflow: "hidden",
+    background: "linear-gradient(180deg, #FFFFFF 0%, #9BC4FF 100%)",
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+  },
+  pdfDialogTitle: {
+    textAlign: "center",
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    position: "relative",
+  },
+  pdfDialogTitlePill: {
+    display: "inline-block",
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    backgroundColor: COLORS.PRIMARY_BLUE,
+    color: COLORS.WHITE,
+    borderRadius: 999,
+    fontWeight: 600,
+    fontSize: 14,
+  },
+  pdfDialogCloseButton: {
+    position: "absolute",
+    right: 8,
+    top: 8,
+  },
+  pdfDialogContentContainer: {
+    paddingTop: 0,
+  },
+  pdfDialogStack: {
+    maxWidth: 520,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  pdfDialogImage: {
+    width: "100%",
+    maxWidth: 300,
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 8,
+    boxShadow: SHADOWS.LARGE,
+    marginBottom: theme.spacing(2),
+  },
+  pdfDialogSectionTitle: {
+    fontWeight: 700,
+    marginBottom: theme.spacing(1.5),
+  },
+  pdfDialogList: {
+    color: "#0A2A4A",
+    marginBottom: theme.spacing(2),
+  },
+  pdfDialogListItem: {
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+  },
+  pdfDialogPrimaryButton: {
+    marginBottom: theme.spacing(2),
+    backgroundColor: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    boxShadow: SHADOWS.MEDIUM,
+    textTransform: "none",
+  },
+  pdfDialogPrimaryButtonIconImg: {
+    width: 20,
+    height: 20,
+    display: "block",
+  },
+  pdfDialogSecondaryButton: {
+    backgroundColor: COLORS.PRIMARY_BLUE,
+  },
 }));
 
 export default useCulturesStyles;

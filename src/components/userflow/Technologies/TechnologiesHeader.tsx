@@ -1,20 +1,13 @@
-import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import useTechnologiesStyles from "./technologiesStyles";
-
-interface TechnologiesHeaderProps {
-  title: string;
-  subtitle: string;
-  img: string;
-}
+import type { TechnologyHeaderProps } from "./types";
 
 const TechnologiesHeader = ({
   title,
   subtitle,
   img,
-}: TechnologiesHeaderProps) => {
+}: TechnologyHeaderProps) => {
   const { classes } = useTechnologiesStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <>
@@ -31,6 +24,7 @@ const TechnologiesHeader = ({
       <Box
         component="img"
         src={img}
+        alt={title}
         className={classes.technologiesHeaderImg}
       />
     </>

@@ -150,8 +150,13 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   },
   technologiesSidebarNavTitle: {
     fontWeight: 700,
-    fontSize: 40,
+    fontSize: 36,
     margin: theme.spacing(1),
+  },
+  sideFish: {
+    position: "absolute",
+    top: "-30px",
+    right: "60px",
   },
   technologiesSidebarNavItem: {
     fontWeight: 500,
@@ -160,7 +165,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     paddingRight: 0,
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    borderRadius: 999,
+    borderRadius: 16,
     cursor: "pointer",
     fontFamily: "Roboto",
     background: "transparent",
@@ -191,9 +196,9 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     color: theme.palette.primary.dark,
     fontWeight: 500,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
-    fontSize: 55,
+    fontSize: 38,
     [theme.breakpoints.down("md")]: {
-      fontSize: 28,
+      fontSize: 22,
       maxWidth: "fit-content",
       margin: "auto",
       textAlign: "center",
@@ -223,6 +228,83 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       marginTop: theme.spacing(3),
     },
+  },
+
+  // Card styles
+  technologiesCard: {
+    background: COLORS.WHITE_GRAY,
+    borderRadius: 12,
+    boxShadow: SHADOWS.LARGE,
+    padding: theme.spacing(4),
+    marginBottom: theme.spacing(8),
+    position: "relative",
+    transition: "box-shadow 0.2s",
+    minWidth: 0,
+    maxWidth: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(2),
+      marginBottom: theme.spacing(6),
+    },
+  },
+  technologiesCardTitle: {
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontWeight: 400,
+    marginBottom: theme.spacing(2),
+    fontSize: 32,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 22,
+      marginBottom: theme.spacing(1.5),
+    },
+  },
+  technologiesCardDesc: {
+    fontSize: 20,
+    fontWeight: 500,
+    color: COLORS.DARK,
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 14,
+      marginBottom: theme.spacing(4),
+    },
+  },
+  technologiesCardImg: {
+    width: "100%",
+    borderRadius: 8,
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    display: "block",
+  },
+  technologiesCardLargeDesc: {
+    fontSize: 18,
+    fontWeight: 400,
+    color: COLORS.DARK,
+    lineHeight: 1.6,
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 14,
+      marginBottom: theme.spacing(1.5),
+    },
+  },
+  technologiesCardExpandBtn: {
+    position: "absolute",
+    bottom: theme.spacing(1),
+    right: theme.spacing(2),
+    color: COLORS.SECONDARY_BLUE,
+    background: COLORS.WHITE,
+    [theme.breakpoints.down("md")]: {
+      bottom: theme.spacing(1),
+      right: theme.spacing(1),
+    },
+  },
+  technologiesUpIcon: {
+    color: COLORS.PRIMARY_BLUE,
+    fontSize: 32,
+    transition: "transform 0.3s ease",
+  },
+  technologiesDownIcon: {
+    transform: "rotate(180deg)",
   },
 }));
 

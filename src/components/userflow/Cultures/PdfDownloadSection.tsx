@@ -1,4 +1,17 @@
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
 import useCulturesStyles from "./culturesStyles";
 import seaBassImg from "../../../assets/cultures/pdf_fish/seabass.png";
 import pearlSpotImg from "../../../assets/cultures/pdf_fish/pearlspot.png";
@@ -8,6 +21,14 @@ import tilapiaImg from "../../../assets/cultures/pdf_fish/tilapia.png";
 import seaWeedImg from "../../../assets/cultures/pdf_fish/seaweed.png";
 import pdfWaterBg from "../../../assets/cultures/pdf_water.png";
 import PdfIcon from "../../../assets/icons/pdf.svg";
+// Technology images
+import rasImg from "../../../assets/technologies/pdf_fish/rac.png";
+import casImg from "../../../assets/technologies/pdf_fish/cas.png";
+import pondFarmingImg from "../../../assets/technologies/pdf_fish/pond.png";
+import fishHatcheryImg from "../../../assets/technologies/pdf_fish/hatchery.png";
+import cageCultureImg from "../../../assets/technologies/pdf_fish/cage.png";
+
+import modalFish from "../../../assets/cultures/pdf_fish/pdf.jpg";
 
 interface PdfDownloadSectionProps {
   currentLabel: string;
@@ -17,6 +38,39 @@ const getPdfContent = (label: string) => {
   const contentMap: {
     [key: string]: { image: string; title: string; description: string };
   } = {
+    // Technologies
+    "Recirculating Aquaculture System (RAS)": {
+      image: rasImg,
+      title: "Master Recirculating Aquaculture Systems (RAS)",
+      description:
+        "Download our in-depth RAS Technology Guide (PDF) covering biofiltration, system design, water reuse, and automation best practices.",
+    },
+    "Circulating Aquaculture System (CAS)": {
+      image: casImg,
+      title: "Optimize Production with CAS Technology",
+      description:
+        "Get the CAS Operations Manual (PDF) including circulation dynamics, oxygenation, stocking densities, and energy-efficient workflows.",
+    },
+    "Pond Farming": {
+      image: pondFarmingImg,
+      title: "Pond Farming Best Practices",
+      description:
+        "Download our Pond Aquaculture Handbook (PDF) with guidance on pond design, water quality, aeration, feeding, and seasonal management.",
+    },
+    "Fish Hatchery": {
+      image: fishHatcheryImg,
+      title: "Advanced Fish Hatchery Systems",
+      description:
+        "Access the Hatchery Systems Guide (PDF) detailing broodstock care, spawning, larval rearing protocols, and nursery management.",
+    },
+    "Cage Culture": {
+      image: cageCultureImg,
+      title: "Scale Efficiently with Cage Culture",
+      description:
+        "Download the Cage Culture Field Guide (PDF) covering site selection, mooring systems, cage design, and biomass optimization.",
+    },
+
+    // Cultures
     "Sea Bass": {
       image: seaBassImg,
       title: "Want to Master Sea Bass Farming?",
@@ -61,6 +115,7 @@ const getPdfContent = (label: string) => {
 const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
   const { classes } = useCulturesStyles();
   const content = getPdfContent(currentLabel);
+  const [open, setOpen] = useState(false);
 
   return (
     <Box
@@ -82,7 +137,11 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
           <Typography className={classes.pdfDownloadDescription}>
             {content.description}
           </Typography>
-          <Button variant="contained" className={classes.pdfDownloadButton}>
+          <Button
+            variant="contained"
+            className={classes.pdfDownloadButton}
+            onClick={() => setOpen(true)}
+          >
             <Box component="span" className={classes.pdfDownloadButtonIcon}>
               <Box component="img" src={PdfIcon} alt="PDF" />
             </Box>
@@ -90,6 +149,81 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
           </Button>
         </Box>
       </Box>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          className: classes.pdfDialogPaper,
+        }}
+      >
+        <DialogTitle className={classes.pdfDialogTitle}>
+          <Box className={classes.pdfDialogTitlePill}>
+            {`${currentLabel || "Sea Bass"} Farming Guide`}
+          </Box>
+          <IconButton
+            aria-label="close"
+            onClick={() => setOpen(false)}
+            className={classes.pdfDialogCloseButton}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent className={classes.pdfDialogContentContainer}>
+          <Box className={classes.pdfDialogStack}>
+            <Box
+              component="img"
+              src={modalFish}
+              alt={currentLabel}
+              className={classes.pdfDialogImage}
+            />
+            <Typography variant="h5" className={classes.pdfDialogSectionTitle}>
+              What's Inside The PDF?
+            </Typography>
+            <List dense className={classes.pdfDialogList}>
+              <ListItem className={classes.pdfDialogListItem}>
+                <ListItemText
+                  primary={`Complete ${currentLabel} Methodology`}
+                />
+              </ListItem>
+              <ListItem className={classes.pdfDialogListItem}>
+                <ListItemText primary="Ideal Conditions & Habitat Setup" />
+              </ListItem>
+              <ListItem className={classes.pdfDialogListItem}>
+                <ListItemText primary="Harvesting, Processing & Eco-Sustainability Tips" />
+              </ListItem>
+              <ListItem className={classes.pdfDialogListItem}>
+                <ListItemText primary="Profit Estimation & Market Selling Insights" />
+              </ListItem>
+              <ListItem className={classes.pdfDialogListItem}>
+                <ListItemText primary="Best Practices From Real-World Farms" />
+              </ListItem>
+            </List>
+            <Button
+              variant="contained"
+              fullWidth
+              className={classes.pdfDialogPrimaryButton}
+              startIcon={
+                <Box
+                  component="img"
+                  src={PdfIcon}
+                  className={classes.pdfDialogPrimaryButtonIconImg}
+                />
+              }
+            >
+              Access This Premium Guide For Just ₹89
+            </Button>
+            <Button
+              variant="contained"
+              fullWidth
+              className={classes.pdfDialogSecondaryButton}
+            >
+              Continue to Payment
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };

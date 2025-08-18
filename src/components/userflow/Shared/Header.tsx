@@ -29,7 +29,7 @@ const navItems = [
   { label: "About Us", link: "/about" },
   { label: "Cultures", link: "/cultures" },
   { label: "Training Programs", link: "/" },
-  { label: "Technologies", link: "/" },
+  { label: "Technologies", link: "/technologies" },
   { label: "News & Events", link: "/" },
   { label: "Contact Us", link: "/" },
 ];
@@ -37,11 +37,30 @@ const navItems = [
 const Header = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [activeNav, setActiveNav] = useState(navItems[0].label);
+  const [activeNav, setActiveNav] = useState("");
   const [trigger, setTrigger] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
   const { classes } = useSharedStyles();
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    if (currentPath === "/") {
+      setActiveNav("Home");
+    } else if (currentPath.startsWith("/about")) {
+      setActiveNav("About Us");
+    } else if (currentPath.startsWith("/cultures")) {
+      setActiveNav("Cultures");
+    } else if (currentPath.startsWith("/technologies")) {
+      setActiveNav("Technologies");
+    } else if (currentPath.startsWith("/training")) {
+      setActiveNav("Training Programs");
+    } else if (currentPath.startsWith("/news")) {
+      setActiveNav("News & Events");
+    } else if (currentPath.startsWith("/contact")) {
+      setActiveNav("Contact Us");
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = (): void => {

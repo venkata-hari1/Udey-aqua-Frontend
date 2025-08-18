@@ -4,10 +4,12 @@ import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useTechnologiesStyles from "./technologiesStyles";
 import ContactBox from "../Shared/ContactBox";
 import TechnologiesHero from "./TechnologiesHero";
+import sideFish from "../../../assets/technologies/main.png";
+import PdfDownloadSection from "../Cultures/PdfDownloadSection";
 
 const sidebarItems = [
-  { label: "RAS", path: "/technologies" },
-  { label: "CAS", path: "/technologies/cas" },
+  { label: "Recirculating Aquaculture System (RAS)", path: "/technologies" },
+  { label: "Circulating Aquaculture System (CAS)", path: "/technologies/cas" },
   { label: "Pond Farming", path: "/technologies/pond-farming" },
   { label: "Fish Hatchery", path: "/technologies/fish-hatchery" },
   { label: "Cage Culture", path: "/technologies/cage-culture" },
@@ -71,10 +73,12 @@ const TechnologiesLayout = () => {
             size={{ xs: 12, md: 10 }}
             className={classes.technologiesMainContent}
           >
+            <img src={sideFish} className={classes.sideFish} />
             <Outlet />
           </Grid>
         </Grid>
       </Grid>
+      <PdfDownloadSection currentLabel={currentLabel} />
     </Grid>
   );
 };

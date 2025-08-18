@@ -16,6 +16,12 @@ import MudCrab from "../components/userflow/Cultures/MudCrab";
 import Murrel from "../components/userflow/Cultures/Murrel";
 import Tilapia from "../components/userflow/Cultures/Tilapia";
 import SeaWeed from "../components/userflow/Cultures/SeaWeed";
+import TechnologiesLayout from "../components/userflow/Technologies/TechnologiesLayout";
+import RAS from "../components/userflow/Technologies/RAS";
+import CAS from "../components/userflow/Technologies/CAS";
+import PondFarming from "../components/userflow/Technologies/PondFarming";
+import FishHatchery from "../components/userflow/Technologies/FishHatchery";
+import CageCulture from "../components/userflow/Technologies/CageCulture";
 
 const AppRoutes = () => {
   return (
@@ -41,6 +47,13 @@ const AppRoutes = () => {
           <Route path="murrel" element={<Murrel />} />
           <Route path="tilapia" element={<Tilapia />} />
           <Route path="sea-weed" element={<SeaWeed />} />
+        </Route>
+        <Route path="technologies" element={<TechnologiesLayout />}>
+          <Route index element={<RAS />} />
+          <Route path="cas" element={<CAS />} />
+          <Route path="pond-farming" element={<PondFarming />} />
+          <Route path="fish-hatchery" element={<FishHatchery />} />
+          <Route path="cage-culture" element={<CageCulture />} />
         </Route>
       </Route>
     </Routes>

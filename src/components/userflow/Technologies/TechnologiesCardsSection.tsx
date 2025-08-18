@@ -1,28 +1,15 @@
 import { Box, Grid } from "@mui/material";
 import TechnologiesHeader from "./TechnologiesHeader";
-import AboutInfoCard from "../About/AboutInfoCard";
+import TechnologiesCard from "./TechnologiesCard";
 import { useState, useRef, useEffect } from "react";
-
-export interface CardData {
-  title: string;
-  smallDesc: string;
-  largeDesc: string;
-  img?: string;
-}
-
-interface Props {
-  headerTitle: string;
-  headerSubtitle: string;
-  headerImg: string;
-  cards: CardData[];
-}
+import type { TechnologyCardsSectionProps, TechnologyCard } from "./types";
 
 const TechnologiesCardsSection = ({
   headerTitle,
   headerSubtitle,
   headerImg,
   cards,
-}: Props) => {
+}: TechnologyCardsSectionProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -47,8 +34,8 @@ const TechnologiesCardsSection = ({
         img={headerImg}
       />
       <Grid sx={{ mt: 6 }} ref={containerRef}>
-        {cards.map((card, idx) => (
-          <AboutInfoCard
+        {cards.map((card: TechnologyCard, idx: number) => (
+          <TechnologiesCard
             key={idx}
             {...card}
             expanded={openIndex === idx}
