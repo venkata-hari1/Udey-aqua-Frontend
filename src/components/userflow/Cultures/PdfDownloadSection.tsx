@@ -5,12 +5,10 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  IconButton,
   List,
   ListItem,
   ListItemText,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import useCulturesStyles from "./culturesStyles";
 import seaBassImg from "../../../assets/cultures/pdf_fish/seabass.png";
@@ -162,13 +160,6 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
           <Box className={classes.pdfDialogTitlePill}>
             {`${currentLabel || "Sea Bass"} Farming Guide`}
           </Box>
-          <IconButton
-            aria-label="close"
-            onClick={() => setOpen(false)}
-            className={classes.pdfDialogCloseButton}
-          >
-            <CloseIcon />
-          </IconButton>
         </DialogTitle>
         <DialogContent className={classes.pdfDialogContentContainer}>
           <Box className={classes.pdfDialogStack}>
@@ -183,44 +174,53 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
             </Typography>
             <List dense className={classes.pdfDialogList}>
               <ListItem className={classes.pdfDialogListItem}>
+                <Box className={classes.pdfDialogBulletDot} />
                 <ListItemText
                   primary={`Complete ${currentLabel} Methodology`}
                 />
               </ListItem>
               <ListItem className={classes.pdfDialogListItem}>
+                <Box className={classes.pdfDialogBulletDot} />
                 <ListItemText primary="Ideal Conditions & Habitat Setup" />
               </ListItem>
               <ListItem className={classes.pdfDialogListItem}>
+                <Box className={classes.pdfDialogBulletDot} />
                 <ListItemText primary="Harvesting, Processing & Eco-Sustainability Tips" />
               </ListItem>
               <ListItem className={classes.pdfDialogListItem}>
+                <Box className={classes.pdfDialogBulletDot} />
                 <ListItemText primary="Profit Estimation & Market Selling Insights" />
               </ListItem>
               <ListItem className={classes.pdfDialogListItem}>
+                <Box className={classes.pdfDialogBulletDot} />
                 <ListItemText primary="Best Practices From Real-World Farms" />
               </ListItem>
             </List>
-            <Button
-              variant="contained"
-              fullWidth
-              className={classes.pdfDialogPrimaryButton}
-              startIcon={
-                <Box
-                  component="img"
-                  src={PdfIcon}
-                  className={classes.pdfDialogPrimaryButtonIconImg}
-                />
-              }
-            >
-              Access This Premium Guide For Just ₹89
-            </Button>
-            <Button
-              variant="contained"
-              fullWidth
-              className={classes.pdfDialogSecondaryButton}
-            >
-              Continue to Payment
-            </Button>
+            <Box className={classes.pdfDialogFlex}>
+              <Button
+                variant="contained"
+                fullWidth
+                className={classes.pdfDialogPrimaryButton}
+                startIcon={
+                  <Box
+                    component="img"
+                    src={PdfIcon}
+                    className={classes.pdfDialogPrimaryButtonIconImg}
+                  />
+                }
+              >
+                Access This Premium Guide For Just ₹89
+              </Button>
+            </Box>
+            <Box className={classes.pdfDialogFlex}>
+              <Button
+                variant="contained"
+                fullWidth
+                className={`${classes.pdfDialogTitlePill} ${classes.pdfDialogTitlePillFloat}`}
+              >
+                Continue to Payment
+              </Button>
+            </Box>
           </Box>
         </DialogContent>
       </Dialog>

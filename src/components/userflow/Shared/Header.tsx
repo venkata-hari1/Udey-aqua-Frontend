@@ -28,7 +28,7 @@ const navItems = [
   { label: "Home", link: "/" },
   { label: "About Us", link: "/about" },
   { label: "Cultures", link: "/cultures" },
-  { label: "Training Programs", link: "/" },
+  { label: "Training Programs", link: "/training-programs" },
   { label: "Technologies", link: "/technologies" },
   { label: "News & Events", link: "/" },
   { label: "Contact Us", link: "/" },
@@ -53,7 +53,7 @@ const Header = () => {
       setActiveNav("Cultures");
     } else if (currentPath.startsWith("/technologies")) {
       setActiveNav("Technologies");
-    } else if (currentPath.startsWith("/training")) {
+    } else if (currentPath.startsWith("/training-programs")) {
       setActiveNav("Training Programs");
     } else if (currentPath.startsWith("/news")) {
       setActiveNav("News & Events");

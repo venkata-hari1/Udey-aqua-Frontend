@@ -510,21 +510,34 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   pdfDialogPaper: {
     borderRadius: 12,
     overflow: "hidden",
-    background: "linear-gradient(180deg, #FFFFFF 0%, #9BC4FF 100%)",
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
+    background: "linear-gradient(0deg, #9BC4FF 0%, #FFFFFF 100%)",
+    paddingLeft: theme.spacing(0),
+    paddingRight: theme.spacing(0),
     paddingBottom: theme.spacing(3),
+    "& .MuiDialogContent-root": {
+      overflowY: "scroll",
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+      scrollbarWidth: "none",
+      msOverflowStyle: "none",
+    },
+    "& .MuiDialogContent-root::-webkit-scrollbar": {
+      width: 0,
+      height: 0,
+    },
+    "& .MuiDialogContent-root::-webkit-scrollbar-thumb": {
+      background: "transparent",
+    },
   },
   pdfDialogTitle: {
     textAlign: "center",
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    position: "relative",
   },
   pdfDialogTitlePill: {
     display: "inline-block",
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2.5),
+    paddingRight: theme.spacing(2.5),
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
     backgroundColor: COLORS.PRIMARY_BLUE,
@@ -532,14 +545,23 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 999,
     fontWeight: 600,
     fontSize: 14,
+    maxWidth: "fit-content",
+    margin: "10px auto 5px auto",
   },
-  pdfDialogCloseButton: {
-    position: "absolute",
-    right: 8,
-    top: 8,
+  pdfDialogTitlePillFloat: {
+    backgroundColor: COLORS.SECONDARY_BLUE,
+    borderRadius: "10px",
+    textTransform: "capitalize",
+    margin: "auto",
+  },
+  pdfDialogFlex: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   pdfDialogContentContainer: {
     paddingTop: 0,
+    overflow: "hidden",
   },
   pdfDialogStack: {
     maxWidth: 520,
@@ -557,23 +579,57 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     marginBottom: theme.spacing(2),
   },
   pdfDialogSectionTitle: {
-    fontWeight: 700,
-    marginBottom: theme.spacing(1.5),
+    fontWeight: 400,
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontSize: "20px",
+    color: COLORS.PRIMARY_BLUE,
   },
   pdfDialogList: {
-    color: "#0A2A4A",
-    marginBottom: theme.spacing(2),
+    color: COLORS.PRIMARY_BLUE,
+    paddingTop: 0,
+    marginBottom: theme.spacing(1.5),
+    "& .MuiListItemIcon-root": {
+      color: COLORS.PRIMARY_BLUE,
+    },
+    "& .MuiListItemText-primary": {
+      color: COLORS.PRIMARY_BLUE,
+    },
   },
   pdfDialogListItem: {
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
+    "& .MuiListItemText-root": {
+      margin: 0,
+      fontFamily: FONTS.INTER,
+      "& .MuiListItemText-primary": {
+        fontWeight: 600,
+      },
+    },
+  },
+  pdfDialogListItemIcon: {
+    minWidth: 14,
+    marginRight: theme.spacing(1),
+  },
+  pdfDialogBulletDot: {
+    width: 6,
+    height: 6,
+    marginRight: "10px",
+    borderRadius: 999,
+    background: COLORS.PRIMARY_BLUE,
+    display: "inline-block",
   },
   pdfDialogPrimaryButton: {
     marginBottom: theme.spacing(2),
     backgroundColor: COLORS.WHITE,
-    color: COLORS.PRIMARY_BLUE,
-    boxShadow: SHADOWS.MEDIUM,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    color: COLORS.SECONDARY_BLUE,
+    fontSize: "16px",
     textTransform: "none",
+    fontWeight: 400,
+    width: "fit-content",
+    boxShadow: "none",
+    border: "15px",
+    borderRadius: "7px",
   },
   pdfDialogPrimaryButtonIconImg: {
     width: 20,
@@ -581,7 +637,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     display: "block",
   },
   pdfDialogSecondaryButton: {
-    backgroundColor: COLORS.PRIMARY_BLUE,
+    backgroundColor: COLORS.SECONDARY_BLUE,
   },
 }));
 

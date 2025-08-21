@@ -22,6 +22,7 @@ import CAS from "../components/userflow/Technologies/CAS";
 import PondFarming from "../components/userflow/Technologies/PondFarming";
 import FishHatchery from "../components/userflow/Technologies/FishHatchery";
 import CageCulture from "../components/userflow/Technologies/CageCulture";
+import TrainingProgramsLayout from "../components/userflow/TrainingPrograms/TrainingProgramsLayout";
 
 const AppRoutes = () => {
   return (
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         </Route>
         <Route path="/about/testimonials" element={<Testimonials />} />
         <Route path="/about/milestones" element={<Milestones />} />
+        <Route path="training-programs" element={<TrainingProgramsLayout />} />
         <Route path="cultures" element={<CulturesLayout />}>
           <Route index element={<SeaBass />} />
           <Route path="pearl-spot" element={<PearlSpot />} />
