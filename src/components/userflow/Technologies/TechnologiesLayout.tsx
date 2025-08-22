@@ -6,6 +6,7 @@ import ContactBox from "../Shared/ContactBox";
 import TechnologiesHero from "./TechnologiesHero";
 import sideFish from "../../../assets/technologies/main.png";
 import PdfDownloadSection from "../Cultures/PdfDownloadSection";
+import PlansSection from "../Shared/PlansSection";
 
 const sidebarItems = [
   { label: "Recirculating Aquaculture System (RAS)", path: "/technologies" },
@@ -79,6 +80,7 @@ const TechnologiesLayout = () => {
         </Grid>
       </Grid>
       <PdfDownloadSection currentLabel={currentLabel} />
+      <PlansSection />
     </Grid>
   );
 };

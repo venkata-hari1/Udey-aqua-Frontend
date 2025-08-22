@@ -1,6 +1,7 @@
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
+import pdfWaterBg from "../../../assets/cultures/pdf_water.png";
 
 const useCulturesStyles = makeStyles()((theme: Theme) => ({
   // Layout styles
@@ -375,6 +376,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     marginRight: "-50vw",
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(8),
+    backgroundImage: `url(${pdfWaterBg})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

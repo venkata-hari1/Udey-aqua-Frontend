@@ -18,7 +18,15 @@ const TrainingProgramsHero = ({}: TrainingProgramsHeroProps) => {
         className={classes.trainingHeroImg}
       />
       <Box className={classes.trainingHeroOverlay} />
-      <Box className={classes.trainingHeroContent}></Box>
+      <Box className={classes.trainingHeroContent}>
+        <Box component="h1" className={classes.trainingHeroTitle}>
+          Training Programs
+        </Box>
+        <Box component="p" className={classes.trainingHeroSubtitle}>
+          Upskill with expert-led aquaculture training designed for real-world
+          impact.
+        </Box>
+      </Box>
     </div>
   );
 };

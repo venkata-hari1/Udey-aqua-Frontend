@@ -86,9 +86,11 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     margin: theme.spacing(2, 0),
     textAlign: "center",
     letterSpacing: 1,
+    marginTop: theme.spacing(8),
     [theme.breakpoints.down("md")]: {
       fontSize: 32,
       margin: theme.spacing(1, 0),
+      marginTop: theme.spacing(4),
     },
   },
   trainingHeroSubtitle: {
@@ -98,6 +100,7 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     textAlign: "center",
     maxWidth: 700,
     letterSpacing: 0.5,
+    margin: 0,
     opacity: 0.95,
     [theme.breakpoints.down("md")]: {
       fontSize: 16,

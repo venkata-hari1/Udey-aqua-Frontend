@@ -359,6 +359,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       marginLeft: 0,
       marginRight: 0,
       marginTop: 16,
+      minHeight: "fit-content",
     },
   },
   aboutSidebarContactTitle: {
@@ -1079,7 +1080,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   testimonialImageContainer: {
     flexShrink: 0,
     width: 260,
-    height: "100%",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
   },
   testimonialImage: {
     width: "100%",
@@ -1115,6 +1118,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     flex: 1,
     [theme.breakpoints.down("md")]: {
       fontSize: 16,
+      lineHeight: "20px",
     },
   },
   testimonialReadMore: {
@@ -1127,7 +1131,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     textDecoration: "underline",
     fontFamily: FONTS.INTER,
     [theme.breakpoints.down("md")]: {
-      fontSize: 12,
+      fontSize: 16,
       marginBottom: 12,
     },
   },
@@ -1175,6 +1179,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     gap: 2,
     marginTop: 8,
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
   testimonialArrowButton: {
     position: "absolute",
@@ -1353,14 +1360,23 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   // Bottom section full-width
   testimonialBottomWrapper: {
     width: "100%",
-    background: COLORS.BLUE_GRAY,
+    background: "#DBECF9",
     paddingTop: 24,
     paddingBottom: 48,
-    marginTop: 24,
+    marginTop: 62,
+    marginBottom: 80,
     [theme.breakpoints.down("md")]: {
       paddingTop: 16,
       paddingBottom: 32,
       marginTop: 16,
+      marginBottom: 40,
+    },
+  },
+  extraWidth: {
+    width: 1,
+    paddingLeft: "60px",
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: "20px",
     },
   },
   testimonialWideCards: {
@@ -1386,44 +1402,253 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 12,
     backgroundSize: "cover",
     backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
     position: "relative",
     overflow: "hidden",
     boxShadow: SHADOWS.CARD,
     [theme.breakpoints.down("md")]: {
-      minWidth: 320,
+      minWidth: 400,
       height: 180,
     },
   },
   testimonialWideOverlay: {
     position: "absolute",
     inset: 0,
-    background:
-      "linear-gradient(90deg, rgba(10,79,164,0.65) 0%, rgba(10,79,164,0.2) 100%)",
   },
   testimonialWideTextBox: {
-    position: "absolute",
-    left: 16,
-    bottom: 16,
-    right: 16,
-    color: COLORS.WHITE,
+    width: "70%",
+    backgroundColor: COLORS.WHITE,
+    padding: "20px",
     display: "flex",
     flexDirection: "column",
-    gap: 6,
+    justifyContent: "space-between",
+    borderRadius: "0 8px 8px 0",
+    color: COLORS.DARK,
   },
   testimonialWideQuote: {
     fontSize: 14,
-    lineHeight: 1.5,
+    lineHeight: 1.8,
     fontFamily: FONTS.INTER,
+    fontWeight: 500,
+    color: "#000",
+    fontStyle: "italic",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   testimonialWideName: {
-    fontSize: 16,
-    fontWeight: 700,
+    fontSize: 12,
+    fontWeight: 500,
     fontFamily: FONTS.INTER,
+    color: COLORS.PRIMARY_BLUE,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 11,
+    },
   },
   testimonialWideDesignation: {
-    fontSize: 13,
-    opacity: 0.9,
+    fontSize: 12,
+    fontWeight: 500,
     fontFamily: FONTS.INTER,
+    paddingBottom: 0,
+    marginBottom: 0,
+    color: COLORS.PRIMARY_BLUE,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 11,
+    },
+  },
+
+  // Pagination styles for Read More mode
+  testimonialPaginationWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 32,
+    marginBottom: 32,
+    [theme.breakpoints.down("md")]: {
+      marginTop: 24,
+      marginBottom: 24,
+    },
+  },
+  testimonialPagination: {
+    display: "flex",
+    alignItems: "center",
+    gap: 16,
+    [theme.breakpoints.down("md")]: {
+      gap: 12,
+    },
+  },
+  testimonialBackButton: {
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    borderRadius: "50%",
+    width: 40,
+    height: 40,
+    "&:hover": {
+      background: COLORS.PRIMARY_BLUE,
+      color: COLORS.WHITE,
+    },
+    border: `0.5px solid ${COLORS.LGRAY}`,
+    [theme.breakpoints.down("md")]: {
+      width: 36,
+      height: 36,
+    },
+  },
+  testimonialNextButton: {
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    borderRadius: "50%",
+    width: 40,
+    height: 40,
+    border: `0.5px solid ${COLORS.LGRAY}`,
+    "&:hover": {
+      background: COLORS.PRIMARY_BLUE,
+      color: COLORS.WHITE,
+    },
+    [theme.breakpoints.down("md")]: {
+      width: 36,
+      height: 36,
+    },
+  },
+  smallText: {
+    fontSize: 12,
+  },
+  testimonialPageButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 40,
+    height: 40,
+    borderRadius: "50%",
+    border: `0.5px solid ${COLORS.PRIMARY_BLUE}`,
+    backgroundColor: "transparent",
+    color: COLORS.PRIMARY_BLUE,
+    fontSize: 16,
+    fontWeight: 600,
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundColor: COLORS.PRIMARY_BLUE,
+      color: COLORS.WHITE,
+      transform: "scale(1.05)",
+    },
+    [theme.breakpoints.down("md")]: {
+      width: 36,
+      height: 36,
+      fontSize: 14,
+    },
+  },
+  testimonialActivePageButton: {
+    backgroundColor: COLORS.PRIMARY_BLUE,
+    color: COLORS.WHITE,
+    border: `2px solid ${COLORS.PRIMARY_BLUE}`,
+    transform: "scale(1.1)",
+  },
+
+  // Read More overrides
+  testimonialReadMoreCard: {
+    background: "transparent",
+    borderRadius: 0,
+    boxShadow: "none",
+    minHeight: "auto",
+    marginBottom: 16,
+  },
+  testimonialReadMoreContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 0,
+    alignItems: "stretch",
+    height: "auto",
+  },
+  testimonialReadMoreImageContainer: {
+    width: "100%",
+    height: 420,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundPositionY: "calc(50% + 100px)",
+    backgroundRepeat: "no-repeat",
+    [theme.breakpoints.down("md")]: {
+      height: 220,
+      backgroundPositionY: "calc(50% - 60px)",
+    },
+  },
+  testimonialReadMoreTextContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
+    padding: "16px 0",
+  },
+  testimonialQuoteCompact: {
+    fontSize: 16,
+    lineHeight: 1.6,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    fontWeight: 500,
+    marginBottom: 8,
+  },
+
+  // Line pagination styles for bottom carousel
+  testimonialLinePagination: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+    marginTop: 24,
+    [theme.breakpoints.down("md")]: {
+      gap: 6,
+      marginTop: 20,
+    },
+  },
+  testimonialLine: {
+    height: 4,
+    borderRadius: 2,
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    backgroundColor: "#0A4FA4FA",
+    opacity: 0.6,
+    width: 20,
+    [theme.breakpoints.down("md")]: {
+      height: 3,
+      width: 16,
+    },
+  },
+  testimonialActiveLine: {
+    backgroundColor: COLORS.PRIMARY_BLUE,
+    opacity: 1,
+    width: 40,
+    [theme.breakpoints.down("md")]: {
+      width: 32,
+    },
+  },
+
+  // Bottom wide card layout styles
+  testimonialWideContent: {
+    display: "flex",
+    width: "100%",
+    height: "100%",
+  },
+  testimonialWideImageContainer: {
+    width: "30%",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    borderRadius: "8px 0 0 8px",
+  },
+  testimonialWideAttribution: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: 12,
+  },
+  testimonialWidePlace: {
+    fontSize: 12,
+    fontWeight: 500,
+    marginBottom: 0,
+    paddingBottom: 0,
+    fontFamily: FONTS.INTER,
+    color: COLORS.PRIMARY_BLUE,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 11,
+    },
   },
 }));
 

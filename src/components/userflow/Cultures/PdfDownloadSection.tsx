@@ -17,7 +17,6 @@ import mudCrabImg from "../../../assets/cultures/pdf_fish/mudcrab.png";
 import murrelImg from "../../../assets/cultures/pdf_fish/murrel.png";
 import tilapiaImg from "../../../assets/cultures/pdf_fish/tilapia.png";
 import seaWeedImg from "../../../assets/cultures/pdf_fish/seaweed.png";
-import pdfWaterBg from "../../../assets/cultures/pdf_water.png";
 import PdfIcon from "../../../assets/icons/pdf.svg";
 // Technology images
 import rasImg from "../../../assets/technologies/pdf_fish/rac.png";
@@ -28,14 +27,18 @@ import cageCultureImg from "../../../assets/technologies/pdf_fish/cage.png";
 
 import modalFish from "../../../assets/cultures/pdf_fish/pdf.jpg";
 
+interface PdfContent {
+  image: string;
+  title: string;
+  description: string;
+}
+
 interface PdfDownloadSectionProps {
   currentLabel: string;
 }
 
-const getPdfContent = (label: string) => {
-  const contentMap: {
-    [key: string]: { image: string; title: string; description: string };
-  } = {
+const getPdfContent = (label: string): PdfContent => {
+  const contentMap: { [key: string]: PdfContent } = {
     // Technologies
     "Recirculating Aquaculture System (RAS)": {
       image: rasImg,
@@ -115,11 +118,16 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
   const content = getPdfContent(currentLabel);
   const [open, setOpen] = useState(false);
 
+  const listItems = [
+    `Complete ${currentLabel} Methodology`,
+    "Ideal Conditions & Habitat Setup",
+    "Harvesting, Processing & Eco-Sustainability Tips",
+    "Profit Estimation & Market Selling Insights",
+    "Best Practices From Real-World Farms",
+  ];
+
   return (
-    <Box
-      className={classes.pdfDownloadSection}
-      style={{ backgroundImage: `url(${pdfWaterBg})` }}
-    >
+    <Box className={classes.pdfDownloadSection}>
       <Box className={classes.pdfDownloadContainer}>
         <Box className={classes.pdfDownloadImageSection}>
           <img
@@ -173,28 +181,12 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
               What's Inside The PDF?
             </Typography>
             <List dense className={classes.pdfDialogList}>
-              <ListItem className={classes.pdfDialogListItem}>
-                <Box className={classes.pdfDialogBulletDot} />
-                <ListItemText
-                  primary={`Complete ${currentLabel} Methodology`}
-                />
-              </ListItem>
-              <ListItem className={classes.pdfDialogListItem}>
-                <Box className={classes.pdfDialogBulletDot} />
-                <ListItemText primary="Ideal Conditions & Habitat Setup" />
-              </ListItem>
-              <ListItem className={classes.pdfDialogListItem}>
-                <Box className={classes.pdfDialogBulletDot} />
-                <ListItemText primary="Harvesting, Processing & Eco-Sustainability Tips" />
-              </ListItem>
-              <ListItem className={classes.pdfDialogListItem}>
-                <Box className={classes.pdfDialogBulletDot} />
-                <ListItemText primary="Profit Estimation & Market Selling Insights" />
-              </ListItem>
-              <ListItem className={classes.pdfDialogListItem}>
-                <Box className={classes.pdfDialogBulletDot} />
-                <ListItemText primary="Best Practices From Real-World Farms" />
-              </ListItem>
+              {listItems.map((item, index) => (
+                <ListItem key={index} className={classes.pdfDialogListItem}>
+                  <Box className={classes.pdfDialogBulletDot} />
+                  <ListItemText primary={item} />
+                </ListItem>
+              ))}
             </List>
             <Box className={classes.pdfDialogFlex}>
               <Button
