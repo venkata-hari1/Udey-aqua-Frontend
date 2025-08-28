@@ -23,6 +23,14 @@ import PondFarming from "../components/userflow/Technologies/PondFarming";
 import FishHatchery from "../components/userflow/Technologies/FishHatchery";
 import CageCulture from "../components/userflow/Technologies/CageCulture";
 import TrainingProgramsLayout from "../components/userflow/TrainingPrograms/TrainingProgramsLayout";
+import NewsEventsLayout from "../components/userflow/NewsEvents/NewsEventsLayout";
+import SuccessStories from "../components/userflow/NewsEvents/SuccessStories";
+import News from "../components/userflow/NewsEvents/News";
+import Videos from "../components/userflow/NewsEvents/Videos";
+import Gallery from "../components/userflow/NewsEvents/Gallery";
+import Awards from "../components/userflow/NewsEvents/Awards";
+import Blog from "../components/userflow/NewsEvents/Blog";
+import Contact from "../components/userflow/Contact/Contact";
 
 const AppRoutes = () => {
   return (
@@ -42,6 +50,15 @@ const AppRoutes = () => {
         <Route path="/about/testimonials" element={<Testimonials />} />
         <Route path="/about/milestones" element={<Milestones />} />
         <Route path="training-programs" element={<TrainingProgramsLayout />} />
+        <Route path="news-events" element={<NewsEventsLayout />}>
+          <Route index element={<SuccessStories />} />
+          <Route path="news" element={<News />} />
+          <Route path="videos" element={<Videos />} />
+          <Route path="gallery" element={<Gallery />} />
+          <Route path="awards" element={<Awards />} />
+          <Route path="blog" element={<Blog />} />
+        </Route>
+        <Route path="contact" element={<Contact />} />
         <Route path="cultures" element={<CulturesLayout />}>
           <Route index element={<SeaBass />} />
           <Route path="pearl-spot" element={<PearlSpot />} />

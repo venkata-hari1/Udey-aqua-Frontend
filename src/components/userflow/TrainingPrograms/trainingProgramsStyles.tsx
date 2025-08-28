@@ -95,8 +95,9 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
   },
   trainingHeroSubtitle: {
     color: COLORS.WHITE,
-    fontWeight: 400,
-    fontSize: 22,
+    fontWeight: 700,
+    fontSize: 18,
+    fontFamily: FONTS.INTER,
     textAlign: "center",
     maxWidth: 700,
     letterSpacing: 0.5,

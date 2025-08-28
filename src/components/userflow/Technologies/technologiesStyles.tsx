@@ -100,8 +100,9 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   },
   technologiesHeroSubtitle: {
     color: COLORS.WHITE,
-    fontWeight: 400,
-    fontSize: 22,
+    fontFamily: FONTS.INTER,
+    fontWeight: 700,
+    fontSize: 18,
     textAlign: "center",
     maxWidth: 700,
     letterSpacing: 0.5,
@@ -216,6 +217,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     fontSize: 28,
     lineHeight: 1.3,
     marginTop: 0,
+
     [theme.breakpoints.down("md")]: {
       fontSize: 16,
       marginTop: theme.spacing(1),

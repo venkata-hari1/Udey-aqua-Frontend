@@ -111,8 +111,9 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   },
   culturesHeroSubtitle: {
     color: COLORS.WHITE,
-    fontWeight: 400,
-    fontSize: 22,
+    fontFamily: FONTS.INTER,
+    fontWeight: 700,
+    fontSize: 18,
     textAlign: "center",
     maxWidth: 700,
     letterSpacing: 0.5,
