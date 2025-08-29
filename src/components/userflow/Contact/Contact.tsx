@@ -220,7 +220,7 @@ const Contact = () => {
 
       <Box className={classes.contactFormSection}>
         <Container className={classes.contactFormContainer}>
-          <ContactForm />
+          <ContactForm title={false} />
         </Container>
       </Box>
     </ContactLayout>

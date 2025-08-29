@@ -5,8 +5,7 @@ import pondFarmingHeaderImage from "../../../assets/technologies/pondfarming.png
 
 // Static data outside the component for performance
 const HEADER_TITLE = "Pond Farming";
-const HEADER_SUBTITLE =
-  "Traditional and modern pond-based aquaculture systems for sustainable fish production";
+const HEADER_SUBTITLE = "A Traditional Yet Scalable Aquaculture Method";
 const HEADER_IMG = pondFarmingHeaderImage;
 
 const POND_FARMING_CARDS: TechnologyPageProps["cards"] = [

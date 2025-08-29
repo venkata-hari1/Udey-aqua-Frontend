@@ -4,17 +4,38 @@ import { useState } from "react";
 import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
 
-const Contact = () => {
+const Contact = ({ title = true }: { title: boolean }) => {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const { classes } = useHomeStyles();
 
-  const hasError = submitted && (!form.name || !form.phone || !form.message);
+  const maxMessageLength = 500;
+
+  const isValidPhone = (value: string) => {
+    const digitsOnly = value.replace(/[^0-9]/g, "");
+    return digitsOnly.length >= 10 && digitsOnly.length <= 15;
+  };
+
+  const nameError = submitted && !form.name ? "First name is required" : "";
+  const phoneError = submitted
+    ? !form.phone
+      ? "Enter a valid phone number"
+      : !isValidPhone(form.phone)
+      ? "Enter a valid phone number"
+      : ""
+    : "";
+  const messageError = submitted && !form.message ? "Message is required" : "";
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "message") {
+      const limited = value.slice(0, maxMessageLength);
+      setForm({ ...form, message: limited });
+      return;
+    }
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,9 +51,11 @@ const Contact = () => {
 
   return (
     <>
-      <Grid size={12}>
-        <SectionTitle title="Get In Touch" />
-      </Grid>
+      {title && (
+        <Grid size={12}>
+          <SectionTitle title="Get In Touch" />
+        </Grid>
+      )}
       <Grid container spacing={2} className={classes.contactRoot}>
         <Grid container size={12} spacing={2} className={classes.contactMain}>
           <Grid size={{ xs: 12, md: 6 }} className={classes.contactImgWrap}>
@@ -48,9 +71,20 @@ const Contact = () => {
             <form onSubmit={handleSubmit} noValidate>
               <Grid container spacing={2}>
                 <Grid size={12} className={classes.contactFieldWrap}>
-                  <Typography className={classes.contactLabel}>
-                    <span style={{ color: "red" }}>*</span> First Name
-                  </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography className={classes.contactLabel}>
+                      <span style={{ color: "red" }}>*</span> First Name
+                    </Typography>
+                    {nameError && (
+                      <Typography color="error" fontSize={16}>
+                        {nameError}
+                      </Typography>
+                    )}
+                  </Box>
                   <TextField
                     name="name"
                     value={form.name}
@@ -60,13 +94,24 @@ const Contact = () => {
                     variant="outlined"
                     size="small"
                     className={classes.contactTextField}
-                    error={submitted && !form.name}
+                    error={Boolean(nameError)}
                   />
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>
-                  <Typography className={classes.contactLabel}>
-                    <span style={{ color: "red" }}>*</span> Phone
-                  </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography className={classes.contactLabel}>
+                      <span style={{ color: "red" }}>*</span> Phone
+                    </Typography>
+                    {phoneError && (
+                      <Typography color="error" fontSize={16}>
+                        {phoneError}
+                      </Typography>
+                    )}
+                  </Box>
                   <TextField
                     name="phone"
                     value={form.phone}
@@ -76,13 +121,24 @@ const Contact = () => {
                     variant="outlined"
                     size="small"
                     className={classes.contactTextField}
-                    error={submitted && !form.phone}
+                    error={Boolean(phoneError)}
                   />
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>
-                  <Typography className={classes.contactLabel}>
-                    <span style={{ color: "red" }}>*</span> Message
-                  </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Typography className={classes.contactLabel}>
+                      <span style={{ color: "red" }}>*</span> Message
+                    </Typography>
+                    {messageError && (
+                      <Typography color="error" fontSize={16}>
+                        {messageError}
+                      </Typography>
+                    )}
+                  </Box>
                   <TextField
                     name="message"
                     value={form.message}
@@ -92,17 +148,11 @@ const Contact = () => {
                     minRows={4}
                     variant="outlined"
                     className={classes.contactTextField}
-                    error={submitted && !form.message}
+                    error={Boolean(messageError)}
+                    placeholder={"Message can’t be more than 500 characters"}
+                    inputProps={{ maxLength: maxMessageLength }}
                   />
                 </Grid>
-
-                {hasError && (
-                  <Grid size={12}>
-                    <Typography color="white" textAlign="left">
-                      All fields are required.
-                    </Typography>
-                  </Grid>
-                )}
 
                 <Grid size={12} className={classes.fullWidth}>
                   <Button type="submit" className={classes.contactButton}>

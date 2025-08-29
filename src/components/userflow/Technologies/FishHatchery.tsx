@@ -5,8 +5,7 @@ import fishHatcheryHeaderImage from "../../../assets/technologies/fishhatchery.p
 
 // Static data outside the component for performance
 const HEADER_TITLE = "Fish Hatchery";
-const HEADER_SUBTITLE =
-  "Advanced breeding and hatchery systems for producing high-quality fish seed and fingerlings";
+const HEADER_SUBTITLE = "The Foundation of Sustainable Aquaculture Practices";
 const HEADER_IMG = fishHatcheryHeaderImage;
 
 const FISH_HATCHERY_CARDS: TechnologyPageProps["cards"] = [

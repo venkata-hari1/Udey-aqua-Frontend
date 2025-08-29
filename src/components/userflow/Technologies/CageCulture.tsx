@@ -5,8 +5,7 @@ import cageCultureHeaderImage from "../../../assets/technologies/cagecultures.pn
 
 // Static data outside the component for performance
 const HEADER_TITLE = "Cage Culture";
-const HEADER_SUBTITLE =
-  "Innovative cage-based aquaculture systems for open water fish farming and marine production";
+const HEADER_SUBTITLE = "Open-Water Farming for Efficient Space Utilization";
 const HEADER_IMG = cageCultureHeaderImage;
 
 const CAGE_CULTURE_CARDS: TechnologyPageProps["cards"] = [

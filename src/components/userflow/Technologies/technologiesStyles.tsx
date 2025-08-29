@@ -217,7 +217,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     fontSize: 28,
     lineHeight: 1.3,
     marginTop: 0,
-
+    textTransform: "capitalize",
     [theme.breakpoints.down("md")]: {
       fontSize: 16,
       marginTop: theme.spacing(1),
