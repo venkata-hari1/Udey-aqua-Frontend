@@ -1,4 +1,3 @@
-import React from 'react';
 import { ListItemIcon, ListItemText, Grid } from '@mui/material';
 
 import { Link as RouterLink, useLocation } from 'react-router-dom';

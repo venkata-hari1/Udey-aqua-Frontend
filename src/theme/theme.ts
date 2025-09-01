@@ -8,6 +8,10 @@ const theme = createTheme({
       contrastText: '#fff',
     }
   },
+  typography:{
+    fontFamily:"Poppins",
+    
+  }
 });
 
 export default theme;
