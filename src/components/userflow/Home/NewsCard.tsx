@@ -11,7 +11,12 @@ export interface NewsCardProps {
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
-  image, date, title, description, author, authorLink
+  image,
+  date,
+  title,
+  description,
+  author,
+  authorLink,
 }) => {
   const [day, month, year] = date.split(" ");
   const { classes } = useHomeStyles();
@@ -30,27 +35,32 @@ const NewsCard: React.FC<NewsCardProps> = ({
           <Typography className={classes.newsCardDateYear}>{year}</Typography>
         </Box>
       </Box>
-      <Box className={classes.newsCardContent}>
-        <Typography className={classes.newsCardTitle}>{title}</Typography>
-        <Typography className={classes.newsCardDesc}>{description}</Typography>
-        <Typography className={classes.newsCardAuthor}>
-          By{" "}
-          {authorLink ? (
-            <Box component="a" href={authorLink} className={classes.newsCardAuthorLink}>
-              {author}
-            </Box>
-          ) : (
-            <Box component="span" className={classes.newsCardAuthorSpan}>{author}</Box>
-          )}
-        </Typography>
-      </Box>
-      <Box className={classes.newsCardFooter}>
-        <Button variant="outlined" className={classes.newsCardButton}>
-          Read More
-        </Button>
+      <Box className={classes.newsBody}>
+        <Box className={classes.newsCardContent}>
+          <Typography className={classes.newsCardTitle}>{title}</Typography>
+          <Typography className={classes.newsCardDesc}>
+            {description}
+          </Typography>
+          <Typography className={classes.newsCardAuthor}>
+            {authorLink ? (
+              <Typography className={classes.newsCardAuthorLink}>
+                {author}
+              </Typography>
+            ) : (
+              <Box component="span" className={classes.newsCardAuthorSpan}>
+                {author}
+              </Box>
+            )}
+          </Typography>
+        </Box>
+        <Box className={classes.newsCardFooter}>
+          <Button variant="outlined" className={classes.newsCardButton}>
+            Read More
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default NewsCard; 
+export default NewsCard;

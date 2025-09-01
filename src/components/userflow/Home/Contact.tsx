@@ -4,7 +4,7 @@ import { useState } from "react";
 import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
 
-const Contact = ({ title = true }: { title: boolean }) => {
+const Contact = ({ title = true }: { title?: boolean }) => {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const { classes } = useHomeStyles();
