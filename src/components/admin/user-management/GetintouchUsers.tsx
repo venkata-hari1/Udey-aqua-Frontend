@@ -37,7 +37,7 @@ const {classes}=useUsermanagementStyles()
   </Box>
    <TableContainer component={Paper}>
        <Table sx={{width:'100%'}} size="medium">
-          <TableHead >
+          <TableHead>
           <TableRow sx={{border: "1px solid #0A4FA4",
           }}>
              {getinUserheading.map((heading)=>(
@@ -54,10 +54,11 @@ const {classes}=useUsermanagementStyles()
                border: "1px solid #0463EE29",   
                 "& td": {
                   borderBottom: "none", 
+                  paddingLeft:'10px',
                 },
               }}>
               <TableCell padding="checkbox" >
-               <Checkbox className={classes.trainingCheckbox} />
+               <Checkbox className={classes.trainingCheckbox}/>
                {tdata.id}
                 </TableCell>
                 <TableCell padding="checkbox" >{tdata.name}</TableCell>

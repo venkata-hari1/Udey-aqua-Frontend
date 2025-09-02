@@ -39,7 +39,8 @@ switch(path){
   case "getin-touch":
   title="Get In Touch Users"
   break;
-
+  case "subscriber":
+  title="Subscribers"
 }
 
 const backarrowHandle=()=>{
@@ -53,9 +54,9 @@ const backarrowHandle=()=>{
    case "getin-touch":
     navigate('/admin/user-management')
     break;
-    
-  }
-  
+   case "subscriber":
+    navigate('/admin/user-management') 
+ }
 }
 
 const{classes}=useHeaderStyles()

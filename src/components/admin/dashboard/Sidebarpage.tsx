@@ -24,7 +24,7 @@ const navigationmenu=[
     submenu:[
       {id:31,icon:ModelTrainingIcon,menu:'Training Registrations',link:'/admin/user-management/training-registrations'},
       {id:32,icon:PortraitIcon,menu:'Get In Touch Users',link:'/admin/user-management/getin-touch'},
-      {id:33,icon:UnsubscribeOutlinedIcon,menu:'Subscribers',link:'/admin/user-management/getin-touch'},
+      {id:33,icon:UnsubscribeOutlinedIcon,menu:'Subscribers',link:'/admin/user-management/subscriber'},
     ]
   },
   {id:4,icon:AccountCircleOutlinedIcon,menu:'Profile',link:'/admin/Profile'},

@@ -5,6 +5,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useNavigate } from "react-router-dom";
+import MyPagination from "../utils/MyPagination";
 
 const Trainingprograms = () => {
   const {classes}=useUsermanagementStyles()
@@ -90,7 +91,8 @@ const tablebodydata=[
                <Checkbox className={classes.trainingCheckbox} />
                {tdata.id}
                 </TableCell>
-                <TableCell padding="checkbox" onClick={()=>navigate('user-info')}>{tdata.name}</TableCell>
+                <TableCell padding="checkbox" sx={{cursor:'pointer'}}
+                 onClick={()=>navigate('user-info')}>{tdata.name}</TableCell>
                 <TableCell padding="checkbox">{tdata.email}</TableCell>
                 <TableCell padding="checkbox">{tdata.phone}</TableCell>
                 <TableCell padding="checkbox">{tdata.address}</TableCell>
@@ -110,6 +112,7 @@ const tablebodydata=[
           </TableBody>
         </Table>
      </TableContainer>
+    <MyPagination />
 
     </Box> /* main container training */
     )
