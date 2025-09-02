@@ -1,8 +1,15 @@
-import { Box, Typography, Select, MenuItem, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 
 import gallery1 from "../../../assets/news/gallery/gallery1.png";
@@ -34,6 +41,18 @@ interface DetailView {
   title: string;
   date: string;
   moreImages: string[];
+}
+
+interface LoadingState {
+  isLoading: boolean;
+  error: string | null;
+}
+
+interface FlatListConfig {
+  itemHeight: number;
+  itemWidth: number;
+  containerHeight: number;
+  overscan: number;
 }
 
 const heroGalleryItems: ReadonlyArray<GalleryItem> = [
@@ -168,17 +187,240 @@ const readMoreGalleryData: ReadonlyArray<ReadMoreGalleryItem> = [
   },
 ];
 
+interface OptimizedImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+  onLoad?: () => void;
+  onError?: () => void;
+  lazy?: boolean;
+}
+
+const OptimizedImage: React.FC<OptimizedImageProps> = ({
+  src,
+  alt,
+  className,
+  onLoad,
+  onError,
+  lazy = true,
+}) => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [isInView, setIsInView] = useState<boolean>(false);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!lazy || !imageRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      {
+        rootMargin: "50px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(imageRef.current);
+    return () => observer.disconnect();
+  }, [lazy]);
+
+  const handleLoad = useCallback((): void => {
+    setIsLoaded(true);
+    onLoad?.();
+  }, [onLoad]);
+
+  const handleError = useCallback((): void => {
+    setHasError(true);
+    onError?.();
+  }, [onError]);
+
+  if (lazy && !isInView) {
+    return (
+      <Box
+        ref={imageRef}
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#f5f5f5",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress size={20} />
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      ref={imageRef}
+      sx={{ position: "relative", width: "100%", height: "100%" }}
+    >
+      {!isLoaded && !hasError && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#f5f5f5",
+          }}
+        >
+          <CircularProgress size={30} />
+        </Box>
+      )}
+      {hasError && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#f5f5f5",
+            color: "#666",
+          }}
+        >
+          <Typography variant="body2">Failed to load image</Typography>
+        </Box>
+      )}
+      <Box
+        component="img"
+        src={src}
+        alt={alt}
+        className={className}
+        onLoad={handleLoad}
+        onError={handleError}
+        sx={{
+          opacity: isLoaded ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      />
+    </Box>
+  );
+};
+
+interface VirtualizedGridProps {
+  items: ReadonlyArray<ReadMoreGalleryItem>;
+  itemHeight: number;
+  itemWidth: number;
+  containerHeight: number;
+  onItemClick: (item: ReadMoreGalleryItem) => void;
+  className?: string;
+}
+
+const VirtualizedGrid: React.FC<VirtualizedGridProps> = ({
+  items,
+  itemHeight,
+  itemWidth,
+  containerHeight,
+  onItemClick,
+  className,
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollTop, setScrollTop] = useState(0);
+  const { classes } = useNewsEventsStyles();
+
+  const itemsPerRow =
+    Math.floor(containerRef.current?.clientWidth || 1200) / itemWidth;
+  const rowHeight = itemHeight;
+  const totalRows = Math.ceil(items.length / itemsPerRow);
+
+  const startRow = Math.max(0, Math.floor(scrollTop / rowHeight) - 1);
+  const endRow = Math.min(
+    totalRows - 1,
+    Math.floor((scrollTop + containerHeight) / rowHeight) + 1
+  );
+
+  const visibleItems = items.slice(
+    startRow * itemsPerRow,
+    (endRow + 1) * itemsPerRow
+  );
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    setScrollTop(e.currentTarget.scrollTop);
+  }, []);
+
+  const totalHeight = totalRows * rowHeight;
+
+  return (
+    <Box
+      ref={containerRef}
+      className={className}
+      sx={{
+        height: containerHeight,
+        overflow: "auto",
+        position: "relative",
+      }}
+      onScroll={handleScroll}
+    >
+      <Box sx={{ height: totalHeight, position: "relative" }}>
+        {visibleItems.map((item, index) => {
+          const globalIndex = startRow * itemsPerRow + index;
+          const row = Math.floor(globalIndex / itemsPerRow);
+          const col = globalIndex % itemsPerRow;
+
+          return (
+            <Box
+              key={item.id}
+              className={classes.latestUpdatesCard}
+              onClick={() => onItemClick(item)}
+              sx={{
+                cursor: "pointer",
+                position: "absolute",
+                top: row * rowHeight,
+                left: col * itemWidth,
+                width: itemWidth - 16,
+                height: itemHeight - 16,
+              }}
+            >
+              <OptimizedImage
+                src={item.image}
+                alt={item.title}
+                className={classes.latestUpdatesImage}
+                lazy={true}
+              />
+            </Box>
+          );
+        })}
+      </Box>
+    </Box>
+  );
+};
+
 const Gallery = () => {
   const { classes } = useNewsEventsStyles();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [detailPage, setDetailPage] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [detailPage, setDetailPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     image: "",
     title: "",
     date: "",
     moreImages: [],
+  });
+
+  const [loadingState, setLoadingState] = useState<LoadingState>({
+    isLoading: true,
+    error: null,
   });
 
   const months = [
@@ -200,28 +442,39 @@ const Gallery = () => {
   const [selYear, setSelYear] = useState<number>(2025);
   const [openSelect, setOpenSelect] = useState<boolean>(false);
 
-  const handlePrevious = () => {
+  const flatListConfig: FlatListConfig = {
+    itemHeight: 250,
+    itemWidth: 300,
+    containerHeight: 600,
+    overscan: 2,
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingState({
+        isLoading: false,
+        error: null,
+      });
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handlePrevious = useCallback((): void => {
     setCurrentIndex((prev) =>
       prev === 0 ? heroGalleryItems.length - 1 : prev - 1
     );
-  };
+  }, []);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === heroGalleryItems.length - 1 ? 0 : prev + 1
-    );
-  };
+  const handleNext = useCallback((): void => {
+    setCurrentIndex((prev) => (prev === 0 ? heroGalleryItems.length - 1 : 0));
+  }, []);
 
   const currentGallery = heroGalleryItems[currentIndex];
 
-  // Pagination logic for main gallery
   const itemsPerPage = 4;
   const totalPages = Math.ceil(readMoreGalleryData.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentGalleries = readMoreGalleryData.slice(startIndex, endIndex);
 
-  // Pagination logic for detail view
   const detailItemsPerPage = 8;
   const detailTotalPages = detail.active
     ? Math.ceil(detail.moreImages.length / detailItemsPerPage)
@@ -232,39 +485,39 @@ const Gallery = () => {
     ? detail.moreImages.slice(detailStartIndex, detailEndIndex)
     : [];
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number): void => {
     setCurrentPage(page);
-  };
+  }, []);
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = useCallback((): void => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
-  };
+  }, [currentPage]);
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback((): void => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
-  };
+  }, [currentPage, totalPages]);
 
-  const handleDetailPageChange = (page: number) => {
+  const handleDetailPageChange = useCallback((page: number): void => {
     setDetailPage(page);
-  };
+  }, []);
 
-  const handleDetailPreviousPage = () => {
+  const handleDetailPreviousPage = useCallback((): void => {
     if (detailPage > 1) {
       setDetailPage(detailPage - 1);
     }
-  };
+  }, [detailPage]);
 
-  const handleDetailNextPage = () => {
+  const handleDetailNextPage = useCallback((): void => {
     if (detailPage < detailTotalPages) {
       setDetailPage(detailPage + 1);
     }
-  };
+  }, [detailPage, detailTotalPages]);
 
-  const handleImageClick = (gallery: ReadMoreGalleryItem) => {
+  const handleImageClick = useCallback((gallery: ReadMoreGalleryItem): void => {
     setDetail({
       active: true,
       image: gallery.image,
@@ -272,8 +525,46 @@ const Gallery = () => {
       date: gallery.date,
       moreImages: gallery.moreImages,
     });
-    setDetailPage(1); // Reset to first page when opening detail view
-  };
+    setDetailPage(1);
+  }, []);
+
+  if (loadingState.isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={60} />
+        <Typography variant="h6" color="text.secondary">
+          Loading gallery images...
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (loadingState.error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+          padding: 3,
+        }}
+      >
+        <Typography variant="h6" color="error">
+          Error: {loadingState.error}
+        </Typography>
+      </Box>
+    );
+  }
 
   if (detail.active) {
     return (
@@ -290,11 +581,11 @@ const Gallery = () => {
           <Box className={classes.storyImageGrid}>
             {currentDetailImages.map((image, index) => (
               <Box key={index} className={classes.storyGridItem}>
-                <Box
-                  component="img"
+                <OptimizedImage
                   src={image}
                   alt={`Gallery Image ${index + 1}`}
                   className={classes.storyGridImg}
+                  lazy={true}
                 />
               </Box>
             ))}
@@ -369,7 +660,7 @@ const Gallery = () => {
         </Box>
       </Box>
 
-      {/* Bottom Section - from News.tsx */}
+      {/* Bottom Section - from News.tsx with Virtualized Grid */}
       <Box className={classes.readMoreNewsSection}>
         <Box className={classes.readMoreNewsHeader}>
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
@@ -429,23 +720,15 @@ const Gallery = () => {
           </Box>
         </Box>
 
-        <Box className={classes.readMoreNewsGrid}>
-          {currentGalleries.map((gallery: ReadMoreGalleryItem) => (
-            <Box
-              key={gallery.id}
-              className={classes.latestUpdatesCard}
-              onClick={() => handleImageClick(gallery)}
-              sx={{ cursor: "pointer" }}
-            >
-              <Box
-                component="img"
-                src={gallery.image}
-                alt={gallery.title}
-                className={classes.latestUpdatesImage}
-              />
-            </Box>
-          ))}
-        </Box>
+        {/* Virtualized Grid for better performance */}
+        <VirtualizedGrid
+          items={readMoreGalleryData}
+          itemHeight={flatListConfig.itemHeight}
+          itemWidth={flatListConfig.itemWidth}
+          containerHeight={flatListConfig.containerHeight}
+          onItemClick={handleImageClick}
+          className={classes.readMoreNewsGrid}
+        />
 
         <Box className={classes.readMoreNewsPagination}>
           <IconButton

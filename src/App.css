@@ -1,8 +1,12 @@
-*_{
-    padding: 0;
-    margin: 0;
+*_ {
+  padding: 0;
+  margin: 0;
 }
 
-body{
-    margin: 0;
+body {
+  margin: 0;
+}
+
+.css-ljjkeo {
+  z-index: 1000000;
 }

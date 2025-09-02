@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import culturesSideFish from "../../../assets/about_us/about_sidefish.png";
@@ -23,11 +24,12 @@ const sidebarItems = [
   { label: "Sea Weed", path: "/cultures/sea-weed" },
 ];
 
-const CulturesLayout = () => {
+const CulturesLayout: React.FC = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useCulturesStyles();
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   const currentLabel =
     sidebarItems.find((item) =>
@@ -45,6 +47,10 @@ const CulturesLayout = () => {
     if (path === "/cultures/tilapia") return tilapiaImg;
     if (path === "/cultures/sea-weed") return seaWeedImg;
     return culturesSideFish;
+  };
+
+  const handleStepChange = (step: number) => {
+    setCurrentStep(step);
   };
 
   return (
@@ -94,7 +100,7 @@ const CulturesLayout = () => {
       </Grid>
 
       <PdfDownloadSection currentLabel={currentLabel} />
-      <PlansSection />
+      <PlansSection currentStep={currentStep} onStepChange={handleStepChange} />
     </Grid>
   );
 };

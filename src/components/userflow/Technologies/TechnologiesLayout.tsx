@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
@@ -16,11 +17,12 @@ const sidebarItems = [
   { label: "Cage Culture", path: "/technologies/cage-culture" },
 ];
 
-const TechnologiesLayout = () => {
+const TechnologiesLayout: React.FC = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useTechnologiesStyles();
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   const currentLabel =
     sidebarItems.find((item) =>
@@ -28,6 +30,10 @@ const TechnologiesLayout = () => {
         ? location.pathname === "/technologies"
         : location.pathname.startsWith(item.path)
     )?.label || "";
+
+  const handleStepChange = (step: number) => {
+    setCurrentStep(step);
+  };
 
   return (
     <Grid
@@ -80,7 +86,7 @@ const TechnologiesLayout = () => {
         </Grid>
       </Grid>
       <PdfDownloadSection currentLabel={currentLabel} />
-      <PlansSection />
+      <PlansSection currentStep={currentStep} onStepChange={handleStepChange} />
     </Grid>
   );
 };

@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { usePlansStyles } from "./sharedStyles";
-import { COLORS } from "./styles";
 
 const plans = [
   {
@@ -47,78 +46,154 @@ const plans = [
   },
 ];
 
-const PlansSection = () => {
+import type1 from "../../../assets/training/type1.png";
+import type2 from "../../../assets/training/type2.png";
+import type3 from "../../../assets/training/type3.png";
+
+const aquacultureTypes = [
+  {
+    id: 1,
+    title: "FRESH WATER AQUACULTURE",
+    image: type1,
+    description: "Freshwater aquaculture systems for inland water bodies",
+  },
+  {
+    id: 2,
+    title: "BRACKISH WATER AQUACULTURE",
+    image: type2,
+    description: "Brackish water systems for coastal and estuarine areas",
+  },
+  {
+    id: 3,
+    title: "MARINE AQUACULTURE",
+    image: type3,
+    description: "Marine aquaculture for open ocean environments",
+  },
+];
+
+interface PlansSectionProps {
+  onStepChange?: (step: number) => void;
+  currentStep?: number;
+}
+
+const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
   const { classes } = usePlansStyles();
 
-  return (
-    <Box className={classes.plansRoot}>
-      <Box className={classes.plansHeader}>
-        <Box className={classes.plansHeaderBlue}></Box>
-        <Box sx={{ textAlign: "center" }}>
-          <Box sx={{ fontSize: "1.2em", fontWeight: 600 }}>
-            Choose Your Plan
-          </Box>
+  const handleBookNow = () => {
+    if (onStepChange) {
+      onStepChange(2);
+    }
+  };
+
+  const handleBackClick = () => {
+    if (onStepChange) {
+      onStepChange(currentStep - 1);
+    }
+  };
+
+  if (currentStep === 1) {
+    return (
+      <Box className={classes.plansRoot}>
+        <Typography variant="h4" className={classes.plansHeaderTitle}>
+          Choose Your Plan
+        </Typography>
+
+        <Grid container spacing={4} className={classes.plansContainer}>
+          {plans.map((plan) => (
+            <Grid
+              key={plan.title}
+              size={{ xs: 12, md: 6, lg: 3 }}
+              sx={{ display: "flex" }}
+            >
+              <Box
+                className={classes.plansCard}
+                position="relative"
+                sx={{ width: "100%" }}
+              >
+                {plan.badge && (
+                  <Box className={classes.plansBadgeNew}>{plan.badge}</Box>
+                )}
+                <Box className={classes.plansCardHeaderNew}>
+                  <Typography className={classes.plansCardTitle}>
+                    {plan.title}
+                  </Typography>
+                  <Typography className={classes.plansCardPrice}>
+                    {plan.price}
+                  </Typography>
+                </Box>
+                <Box component="ul" className={classes.plansCardList}>
+                  {plan.points.map((pt) => (
+                    <Box
+                      component="li"
+                      key={pt}
+                      className={classes.plansCardListItem}
+                    >
+                      {pt}
+                    </Box>
+                  ))}
+                </Box>
+                <Button
+                  className={classes.plansCardButton}
+                  onClick={handleBookNow}
+                >
+                  Book Now
+                </Button>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
+
+  if (currentStep === 2) {
+    return (
+      <Box className={classes.step2Root}>
+        <Typography variant="h4" className={classes.plansHeaderTitle}>
+          Choose Your Aquaculture Type
+        </Typography>
+
+        <Grid container spacing={4} className={classes.step2Container}>
+          {aquacultureTypes.map((type) => (
+            <Grid
+              key={type.id}
+              size={{ xs: 12, md: 6, lg: 4 }}
+              sx={{ display: "flex" }}
+            >
+              <Box
+                className={classes.step2Card}
+                position="relative"
+                sx={{ width: "100%" }}
+              >
+                <Box className={classes.step2CardImageContainer}>
+                  <Box
+                    component="img"
+                    src={type.image}
+                    alt={type.title}
+                    className={classes.step2CardImage}
+                  />
+                </Box>
+                <Box className={classes.step2CardTitleBanner}>
+                  <Typography className={classes.step2CardTitleText}>
+                    {type.title}
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Back Button */}
+        <Box className={classes.step2BackButtonContainer}>
+          <Button onClick={handleBackClick} className={classes.step2BackButton}>
+            ← Back
+          </Button>
         </Box>
       </Box>
-      <Grid container spacing={4} className={classes.plansContainer}>
-        {plans.map((plan) => (
-          <Grid key={plan.title} size={{ xs: 12, md: 6, lg: 3 }}>
-            <Box className={classes.plansCard} position="relative">
-              {plan.badge && (
-                <Box className={classes.plansBadge}>{plan.badge}</Box>
-              )}
-              <Box
-                className={classes.plansCardHeader}
-                sx={{
-                  background: COLORS.SECONDARY_BLUE,
-                  color: "white",
-                  borderRadius: "16px 16px 0 0",
-                  padding: 2,
-                  margin: "-16px -16px 16px -16px",
-                  width: "calc(100% + 32px)",
-                  minHeight: "80px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    fontSize: "1.4em",
-                    fontWeight: 600,
-                    marginBottom: 1,
-                  }}
-                >
-                  {plan.title}
-                </Box>
-                <Typography
-                  sx={{
-                    fontSize: "0.9em",
-                    opacity: 0.9,
-                  }}
-                >
-                  {plan.price}
-                </Typography>
-              </Box>
-              <Box component="ul" className={classes.plansList}>
-                {plan.points.map((pt) => (
-                  <Box
-                    component="li"
-                    key={pt}
-                    className={classes.plansListItem}
-                  >
-                    {pt}
-                  </Box>
-                ))}
-              </Box>
-              <Button className={classes.plansCta}>Book Now</Button>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
-  );
+    );
+  }
+
+  return null;
 };
 
 export default PlansSection;

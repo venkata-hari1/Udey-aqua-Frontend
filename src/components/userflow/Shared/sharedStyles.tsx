@@ -1,7 +1,7 @@
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
-import { COLORS, SHADOWS, TYPOGRAPHY, FONTS, baseStyles } from "./styles";
 import planWaterBg from "../../../assets/cultures/plan_water.png";
+import { COLORS, SHADOWS, TYPOGRAPHY, FONTS, baseStyles } from "./styles";
 
 const useSharedStyles = makeStyles()((theme: Theme) => ({
   loadingLayout: {
@@ -402,7 +402,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     top: 0,
     left: 0,
     width: "100vw",
-    zIndex: 1200,
+    zIndex: 200,
     transition: "background 0.3s, color 0.3s, box-shadow 0.3s",
   },
   appBarTrigger: {
@@ -713,21 +713,23 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
 
 export const usePlansStyles = makeStyles()((theme: Theme) => ({
   plansRoot: {
-    width: "98vw",
+    width: "97vw",
     position: "relative",
     left: "50%",
     right: "50%",
     marginLeft: "-49vw",
     marginRight: "-49vw",
+    marginTop: "40px",
+    marginBottom: "40px",
     backgroundImage: `url(${planWaterBg})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(8),
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
+    paddingLeft: "12px",
     borderRadius: "10px",
-    overflow: "hidden",
+    border: "2px solid #57B6FF",
+    zIndex: 1,
     "&::before": {
       content: '""',
       position: "absolute",
@@ -735,7 +737,6 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
       left: 0,
       right: 0,
       bottom: 0,
-      background: "rgba(0, 0, 0, 0.4)",
       zIndex: 1,
     },
   },
@@ -776,6 +777,9 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     maxWidth: 1400,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
+    "& .MuiGrid-root": {
+      marginBottom: "30px",
+    },
   },
   plansCard: {
     background: COLORS.WHITE,
@@ -787,6 +791,8 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     gap: theme.spacing(1),
     height: "100%",
     minHeight: 400,
+    marginBottom: "20px",
+    flex: 1,
   },
   plansCardHeader: {
     display: "flex",
@@ -840,6 +846,301 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     "&:hover": {
       background: COLORS.HERO_BLUE,
     },
+  },
+
+  // New styles moved from sx props
+  plansHeaderBanner: {
+    width: "fit-content",
+    margin: "0 auto",
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    padding: "12px 32px",
+    marginBottom: "60px",
+    marginTop: "-65px",
+    borderRadius: 999,
+  },
+  plansHeaderTitle: {
+    fontSize: "24px",
+    marginBottom: "20px",
+    color: COLORS.SECONDARY_BLUE,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontWeight: 400,
+    textAlign: "center",
+    background: "white",
+    padding: "12px 76px",
+    borderRadius: 999,
+    maxWidth: "fit-content",
+    margin: "-80px auto 40px auto",
+  },
+  plansBadgeNew: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    background: "#DBECF9",
+    color: "#0A4FA4",
+    borderRadius: "20px 0 20px 0",
+    padding: "8px 12px",
+    fontSize: "14px",
+    fontWeight: 600,
+    zIndex: 10,
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+  },
+  plansCardHeaderNew: {
+    background: COLORS.PRIMARY_BLUE,
+    color: "white",
+    borderRadius: "16px 16px 0 0",
+    padding: "20px",
+    margin: "-16px -16px 16px -16px",
+    minHeight: "80px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    gap: "15px",
+  },
+  plansCardTitle: {
+    fontSize: "16px",
+    fontWeight: 600,
+    color: COLORS.PRIMARY_BLUE,
+    background: COLORS.WHITE,
+    padding: "2px 26px",
+    borderRadius: "4px",
+    maxWidth: "fit-content",
+    textAlign: "center",
+    width: "100%",
+  },
+  plansCardPrice: {
+    fontSize: "1.2em",
+    opacity: 0.9,
+    color: "white",
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+  },
+  plansCardList: {
+    marginTop: 2,
+    paddingLeft: 3,
+    flex: 1,
+    listStyle: "none",
+  },
+  plansCardListItem: {
+    marginBottom: 3,
+    position: "relative",
+    paddingLeft: "20px",
+    fontSize: "16px",
+    color: COLORS.DARK,
+    lineHeight: 1.4,
+    "&::before": {
+      content: '"•"',
+      position: "absolute",
+      left: 0,
+      color: COLORS.PRIMARY_BLUE,
+      fontWeight: "bold",
+    },
+  },
+  plansCardButton: {
+    marginTop: "auto",
+    alignSelf: "center",
+    background: COLORS.SECONDARY_BLUE,
+    color: COLORS.WHITE,
+    textTransform: "none",
+    padding: "5px 25px",
+    borderRadius: "999px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    fontWeight: 600,
+    "&:hover": {
+      background: COLORS.SECONDARY_BLUE,
+    },
+  },
+
+  // New styles for aquaculture type selection
+  plansCardImage: {
+    width: "100%",
+    height: "200px",
+    objectFit: "cover",
+    borderRadius: "8px",
+    marginBottom: "15px",
+  },
+
+  plansCardImageContainer: {
+    width: "100%",
+    height: "200px",
+    overflow: "hidden",
+    borderRadius: "16px 16px 0 0",
+  },
+
+  plansCardTitleBanner: {
+    background: COLORS.PRIMARY_BLUE,
+    padding: "12px 16px",
+    borderRadius: "0 0 16px 16px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "60px",
+  },
+
+  plansCardTitleText: {
+    color: COLORS.WHITE,
+    fontSize: "14px",
+    fontWeight: 600,
+    textAlign: "center",
+    lineHeight: 1.2,
+  },
+
+  plansBackButtonContainer: {
+    marginTop: "32px",
+    display: "flex",
+    justifyContent: "flex-start",
+    paddingLeft: "16px",
+  },
+
+  plansBackButton: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    color: COLORS.PRIMARY_BLUE,
+    background: "rgba(255, 255, 255, 0.9)",
+    textTransform: "none",
+    padding: "8px 16px",
+    borderRadius: "8px",
+    fontWeight: 500,
+    "&:hover": {
+      background: "rgba(255, 255, 255, 1)",
+    },
+  },
+
+  plansBackIcon: {
+    color: COLORS.PRIMARY_BLUE,
+    background: "rgba(255, 255, 255, 0.9)",
+    "&:hover": {
+      background: "rgba(255, 255, 255, 1)",
+    },
+  },
+  plansBackText: {
+    color: COLORS.PRIMARY_BLUE,
+    fontWeight: 500,
+    fontSize: "16px",
+  },
+
+  // Step 2 specific styles - Aquaculture Type Selection
+  step2Root: {
+    width: "97vw",
+    position: "relative",
+    left: "50%",
+    right: "50%",
+    marginLeft: "-49vw",
+    marginRight: "-49vw",
+    marginTop: "40px",
+    background: "#DBECF9",
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: "12px",
+    borderRadius: "10px",
+    border: "2px solid #57B6FF",
+    zIndex: 1,
+  },
+
+  step2Header: {
+    width: "fit-content",
+    margin: "0 auto",
+    background: COLORS.WHITE,
+    color: COLORS.PRIMARY_BLUE,
+    padding: "12px 32px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    marginBottom: "32px",
+    textAlign: "center",
+  },
+
+  step2HeaderTitle: {
+    fontSize: "1.2em",
+    fontWeight: 600,
+    color: COLORS.PRIMARY_BLUE,
+    textAlign: "center",
+    margin: 0,
+  },
+
+  step2Container: {
+    position: "relative",
+    zIndex: 2,
+    marginTop: theme.spacing(4),
+    marginLeft: "auto",
+    marginRight: "auto",
+    maxWidth: 1400,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+
+  step2Card: {
+    background: COLORS.WHITE,
+    borderRadius: 16,
+    boxShadow: SHADOWS.LARGE,
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    minHeight: 300,
+    marginBottom: "20px",
+    flex: 1,
+    overflow: "hidden",
+  },
+
+  step2CardImageContainer: {
+    width: "100%",
+    height: "200px",
+    overflow: "hidden",
+    borderRadius: "16px 16px 0 0",
+    position: "relative",
+  },
+
+  step2CardImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    transition: "transform 0.3s ease",
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
+  },
+
+  step2CardTitleBanner: {
+    background: COLORS.PRIMARY_BLUE,
+    padding: "16px 20px",
+    borderRadius: "0 0 16px 16px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "70px",
+    flex: 1,
+  },
+
+  step2CardTitleText: {
+    color: COLORS.WHITE,
+    fontSize: "14px",
+    fontWeight: 600,
+    textAlign: "center",
+    lineHeight: 1.3,
+    textTransform: "uppercase",
+    letterSpacing: "0.5px",
+  },
+
+  step2BackButtonContainer: {
+    marginTop: "10px",
+    display: "flex",
+    justifyContent: "flex-start",
+    paddingLeft: "16px",
+  },
+
+  step2BackButton: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    color: COLORS.PRIMARY_BLUE,
+    cursor: "pointer",
+    textTransform: "none",
+    fontSize: "16px",
+    transition: "all 0.2s ease",
+    fontFamily: FONTS.INTER,
+    fontWeight: 600,
   },
 }));
 

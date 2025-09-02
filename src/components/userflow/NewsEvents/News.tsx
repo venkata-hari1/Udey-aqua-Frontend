@@ -6,11 +6,13 @@ import {
   Select,
   MenuItem,
   IconButton,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
 
@@ -58,6 +60,11 @@ interface DetailView {
   description: string;
   author: string;
   body: string[];
+}
+
+interface LoadingState {
+  isLoading: boolean;
+  error: string | null;
 }
 
 const newsData: ReadonlyArray<NewsItem> = [
@@ -191,7 +198,7 @@ const readMoreNewsData: ReadonlyArray<ReadMoreNewsItem> = [
 
 const News = () => {
   const { classes } = useNewsEventsStyles();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     image: "",
@@ -200,6 +207,10 @@ const News = () => {
     description: "",
     author: "",
     body: [],
+  });
+  const [loadingState, setLoadingState] = useState<LoadingState>({
+    isLoading: true,
+    error: null,
   });
 
   const months = [
@@ -227,11 +238,23 @@ const News = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentNews = readMoreNewsData.slice(startIndex, endIndex);
 
-  const handlePageChange = (page: number) => {
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingState({
+        isLoading: false,
+        error: null,
+      });
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handlePageChange = (page: number): void => {
     setCurrentPage(page);
   };
 
-  const handleReadMore = (news: ReadMoreNewsItem) => {
+  const handleReadMore = (news: ReadMoreNewsItem): void => {
     setDetail({
       active: true,
       image: news.image,
@@ -247,6 +270,49 @@ const News = () => {
       ],
     });
   };
+
+  // Loading state
+  if (loadingState.isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={60} />
+        <Typography variant="h6" color="text.secondary">
+          Loading news and updates...
+        </Typography>
+      </Box>
+    );
+  }
+
+  // Error state
+  if (loadingState.error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+          padding: 3,
+        }}
+      >
+        <Alert severity="error" sx={{ maxWidth: 600 }}>
+          <Typography variant="h6" gutterBottom>
+            Error Loading News
+          </Typography>
+          <Typography variant="body2">{loadingState.error}</Typography>
+        </Alert>
+      </Box>
+    );
+  }
 
   if (detail.active) {
     return (

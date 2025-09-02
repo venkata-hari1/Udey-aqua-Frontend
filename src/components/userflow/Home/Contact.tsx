@@ -43,7 +43,6 @@ const Contact = ({ title = true }: { title?: boolean }) => {
     setSubmitted(true);
 
     if (form.name && form.phone && form.message) {
-      console.log("Form Submitted:", form);
       setSubmitted(false);
       setForm({ name: "", phone: "", message: "" });
     }

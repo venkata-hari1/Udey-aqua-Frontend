@@ -887,7 +887,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     backgroundColor: COLORS.SECONDARY_BLUE,
     color: COLORS.WHITE,
     borderRadius: 8,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.5, 1),
   },
   readMoreNewsCalendarIcon: {
     width: 16,
@@ -916,7 +916,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
   readMoreNewsGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(1, 1fr)",
     gap: theme.spacing(3),
     marginBottom: theme.spacing(4),
     placeItems: "center",
@@ -1097,6 +1097,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.WHITE,
     borderRadius: 8,
     padding: theme.spacing(1),
+    cursor: "pointer",
   },
   awardsSelect: {
     backgroundColor: "transparent",
@@ -1386,6 +1387,108 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     "&:hover": {
       background: COLORS.PRIMARY_DARK,
     },
+  },
+
+  // Video styles
+  videoRow: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+  },
+  videoRowContent: {
+    display: "flex",
+    gap: theme.spacing(2),
+    width: "100%",
+    marginBottom: theme.spacing(2),
+    flexWrap: "wrap",
+  },
+  videoItem: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+  },
+  videoThumbnailsContainer: {
+    display: "flex",
+    gap: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  videoThumbnail: {
+    cursor: "pointer",
+    flex: 1,
+    minWidth: "200px",
+  },
+  videoThumbnailImage: {
+    position: "relative",
+    overflow: "hidden",
+    aspectRatio: "16/9",
+  },
+  videoThumbnailImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  videoPlayButton: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+  videoPlayButtonCircle: {
+    width: 50,
+    height: 50,
+    backgroundColor: "#FF0000",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+  },
+  videoInfo: {
+    padding: "0 8px",
+  },
+  videoTitle: {
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontSize: "26px",
+    fontWeight: 400,
+    marginBottom: theme.spacing(0.5),
+    lineHeight: 1,
+  },
+  videoDate: {
+    color: COLORS.PRIMARY_BLUE,
+    fontSize: "16px",
+  },
+  videoModal: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.9)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+    padding: theme.spacing(2),
+  },
+  videoModalContent: {
+    position: "relative",
+    width: "100%",
+    maxWidth: "90vw",
+    maxHeight: "90vh",
+  },
+  videoModalClose: {
+    position: "absolute",
+    top: -40,
+    right: 0,
+    color: "white",
+    fontSize: "24px",
+    zIndex: 1001,
+  },
+  videoModalIframe: {
+    width: "100%",
+    height: "100%",
+    minHeight: "70vh",
   },
 }));
 

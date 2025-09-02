@@ -1,9 +1,10 @@
-import { Box, Typography, Select, MenuItem } from "@mui/material";
+import { Box, Typography, Select, MenuItem, IconButton } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
+import NewsCard from "../Home/NewsCard";
 
 import awards1 from "../../../assets/news/awards/img1.png";
 import awards2 from "../../../assets/news/awards/img2.png";
@@ -18,6 +19,8 @@ interface AwardItem {
   image: string;
   title: string;
   description: string;
+  date: string;
+  author: string;
 }
 
 interface DetailView {
@@ -32,6 +35,8 @@ const awardsData: ReadonlyArray<AwardItem> = [
     title: "Excellence In Sustainable Aquaculture",
     description:
       "Recognized for our eco-conscious practices and commitment to sustainability, Uday Aqua Connect received the Green Aquaculture Award for outstanding environmental stewardship in aquaculture operations.",
+    date: "15 Jun 2025",
+    author: "Uday Aqua Team",
   },
   {
     id: 2,
@@ -39,6 +44,8 @@ const awardsData: ReadonlyArray<AwardItem> = [
     title: "Innovation in Aquaculture Technology",
     description:
       "Recognized for our eco-conscious practices and commitment to sustainability, Uday Aqua Connect received the Green Aquaculture Award for outstanding environmental stewardship in aquaculture operations.",
+    date: "12 Jun 2025",
+    author: "Uday Aqua Team",
   },
   {
     id: 3,
@@ -46,6 +53,8 @@ const awardsData: ReadonlyArray<AwardItem> = [
     title: "Community Development & Empowerment",
     description:
       "Recognized for our eco-conscious practices and commitment to sustainability, Uday Aqua Connect received the Green Aquaculture Award for outstanding environmental stewardship in aquaculture operations.",
+    date: "10 Jun 2025",
+    author: "Uday Aqua Team",
   },
   {
     id: 4,
@@ -53,6 +62,8 @@ const awardsData: ReadonlyArray<AwardItem> = [
     title: "Excellence In Sustainable Aquaculture",
     description:
       "Recognized for our eco-conscious practices and commitment to sustainability, Uday Aqua Connect received the Green Aquaculture Award for outstanding environmental stewardship in aquaculture operations.",
+    date: "08 Jun 2025",
+    author: "Uday Aqua Team",
   },
   {
     id: 5,
@@ -60,6 +71,8 @@ const awardsData: ReadonlyArray<AwardItem> = [
     title: "Community Development & Empowerment",
     description:
       "Recognized for our eco-conscious practices and commitment to sustainability, Uday Aqua Connect received the Green Aquaculture Award for outstanding environmental stewardship in aquaculture operations.",
+    date: "05 Jun 2025",
+    author: "Uday Aqua Team",
   },
   {
     id: 6,
@@ -67,13 +80,15 @@ const awardsData: ReadonlyArray<AwardItem> = [
     title: "Excellence In Sustainable Aquaculture",
     description:
       "Recognized for our eco-conscious practices and commitment to sustainability, Uday Aqua Connect received the Green Aquaculture Award for outstanding environmental stewardship in aquaculture operations.",
+    date: "03 Jun 2025",
+    author: "Uday Aqua Team",
   },
 ];
 
 const Awards = () => {
   const { classes } = useNewsEventsStyles();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     award: null,
@@ -98,11 +113,11 @@ const Awards = () => {
   const [selYear, setSelYear] = useState<number>(2025);
   const [openSelect, setOpenSelect] = useState<boolean>(false);
 
-  const handlePrevious = () => {
+  const handlePrevious = (): void => {
     setCurrentIndex((prev) => (prev === 0 ? awardsData.length - 1 : prev - 1));
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     setCurrentIndex((prev) => (prev === awardsData.length - 1 ? 0 : prev + 1));
   };
 
@@ -115,23 +130,23 @@ const Awards = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentAwards = awardsData.slice(startIndex, endIndex);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (page: number): void => {
     setCurrentPage(page);
   };
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = (): void => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  const handleNextPage = () => {
+  const handleNextPage = (): void => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  const handleReadMore = (award: AwardItem) => {
+  const handleReadMore = (award: AwardItem): void => {
     setDetail({
       active: true,
       award,
@@ -151,7 +166,7 @@ const Awards = () => {
                 width={16}
                 height={16}
               />
-              <Typography variant="body2">24-08-2025</Typography>
+              <Typography variant="body2">{detail.award.date}</Typography>
             </Box>
             <Box
               component="img"
@@ -231,10 +246,7 @@ const Awards = () => {
           See All Our Awards & Recognitions
         </Typography>
         <Box className={classes.awardsHeaderRight}>
-          <Box
-            className={classes.awardsCalendarPill}
-            sx={{ cursor: "pointer" }}
-          >
+          <Box className={classes.awardsCalendarPill}>
             <Box
               component="img"
               src={calendarIcon}
@@ -284,44 +296,29 @@ const Awards = () => {
         </Box>
       </Box>
 
-      <Box className={classes.awardsCardsGrid}>
-        {currentAwards.map((award) => (
-          <Box key={award.id} className={classes.awardsCard}>
-            <Box
-              component="img"
-              src={award.image}
-              alt={award.title}
-              className={classes.awardsCardImage}
+      {/* Using NewsCard layout for Awards */}
+      <Box className={classes.readMoreNewsGrid}>
+        {currentAwards.map((award: AwardItem) => (
+          <Box key={award.id} onClick={() => handleReadMore(award)}>
+            <NewsCard
+              image={award.image}
+              date={award.date}
+              title={award.title}
+              description={award.description}
+              author={award.author}
             />
-            <Box className={classes.awardsCardContent}>
-              <Typography className={classes.awardsCardTitle}>
-                {award.title}
-              </Typography>
-              <Typography className={classes.awardsCardDescription}>
-                {award.description}
-              </Typography>
-              <Box
-                className={classes.awardsCardButton}
-                onClick={() => handleReadMore(award)}
-              >
-                Read More
-              </Box>
-            </Box>
           </Box>
         ))}
       </Box>
 
       <Box className={classes.awardsPagination}>
-        <Box
-          className={classes.awardsPaginationArrow}
+        <IconButton
           onClick={handlePreviousPage}
-          sx={{
-            cursor: currentPage === 1 ? "not-allowed" : "pointer",
-            opacity: currentPage === 1 ? 0.5 : 1,
-          }}
+          disabled={currentPage === 1}
+          className={classes.awardsPaginationArrow}
         >
           <ChevronLeftIcon />
-        </Box>
+        </IconButton>
 
         {Array.from({ length: totalPages }, (_, index) => (
           <Box
@@ -337,16 +334,13 @@ const Awards = () => {
           </Box>
         ))}
 
-        <Box
-          className={classes.awardsPaginationArrow}
+        <IconButton
           onClick={handleNextPage}
-          sx={{
-            cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-            opacity: currentPage === totalPages ? 0.5 : 1,
-          }}
+          disabled={currentPage === totalPages}
+          className={classes.awardsPaginationArrow}
         >
           <ChevronRightIcon />
-        </Box>
+        </IconButton>
       </Box>
     </Box>
   );
