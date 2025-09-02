@@ -6,6 +6,7 @@ const theme = createTheme({
       main: '#0463EE',
       dark:"#0A4FA4FA",
       contrastText: '#fff',
+      light:"#F7FAFC",
     }
   },
   typography:{

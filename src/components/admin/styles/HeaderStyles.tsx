@@ -35,7 +35,26 @@ headerAppbar:{
 headerToolbar:{
   minHeight:80, 
   display:'flex', 
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  [theme.breakpoints.down('sm')]:{
+    justifyContent:'space-between',
+    gap:5,
+  } 
+},
+
+AdmintitleBox:{
+ display:"flex",
+justifyContent:"center",
+alignItems:"center",
+gap:5, 
+color:"#0A4FA4",
+},
+backArrow:{
+ cursor:'pointer',
+ fontSize:'18px',
+ [theme.breakpoints.down('sm')]:{
+  marginBottom:"14px",
+ }
 },
 AdminheaderTitle:{
   color:theme.palette.primary.dark,
@@ -43,6 +62,7 @@ AdminheaderTitle:{
   fontSize:25,
   [theme.breakpoints.down('md')]:{
     fontSize:15,
+
   }
 }
     

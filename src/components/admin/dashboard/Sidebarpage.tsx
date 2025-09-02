@@ -8,14 +8,14 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import PortraitIcon from '@mui/icons-material/Portrait';
-import UnsubscribeIcon from '@mui/icons-material/Unsubscribe';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import UnsubscribeOutlinedIcon from '@mui/icons-material/UnsubscribeOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const Sidebar = () => {
 
- const navigate=useNavigate()
- const{classes,cx}=useSidebarStyles()
+const navigate=useNavigate()
+const{classes,cx}=useSidebarStyles()
 
 const navigationmenu=[
   {id:1,icon:GridViewIcon,menu:'Dashboard',link:'/admin/dashboard'},
@@ -24,10 +24,10 @@ const navigationmenu=[
     submenu:[
       {id:31,icon:ModelTrainingIcon,menu:'Training Registrations',link:'/admin/user-management/training-registrations'},
       {id:32,icon:PortraitIcon,menu:'Get In Touch Users',link:'/admin/user-management/getin-touch'},
-      {id:33,icon:UnsubscribeIcon,menu:'Subscribers',link:'/admin/user-management/getin-touch'},
+      {id:33,icon:UnsubscribeOutlinedIcon,menu:'Subscribers',link:'/admin/user-management/getin-touch'},
     ]
   },
-  {id:4,icon:AccountCircleIcon,menu:'Profile',link:'/admin/Profile'},
+  {id:4,icon:AccountCircleOutlinedIcon,menu:'Profile',link:'/admin/Profile'},
   {id:5,icon:LogoutIcon,menu:'Logout', link:'/admin/logout'}
  ]
 

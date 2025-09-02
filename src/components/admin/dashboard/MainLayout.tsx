@@ -7,8 +7,6 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 
-
-
 const drawerWidth=240
 
 const MainLayout:React.FC = () => {

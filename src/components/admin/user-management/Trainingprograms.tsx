@@ -2,12 +2,15 @@ import { Box, Button, Checkbox, Paper, Table, TableBody, TableCell, TableContain
 import useUsermanagementStyles from "./UsermanagementStyle"
 import DownloadIcon from '@mui/icons-material/Download';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useNavigate } from "react-router-dom";
 
 const Trainingprograms = () => {
   const {classes}=useUsermanagementStyles()
  
+  const navigate=useNavigate()
+
   const tableheading=[
     {id:1,label:'S.No'},
     {id:2,label:'Name'},
@@ -47,11 +50,9 @@ const tablebodydata=[
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-    
   ]
 
-
-  return (
+ return (
     <Box>{/* main container */}
       <Box className={classes.waterButtonsContainer}>{/* buttons container  */}
       <Box className={classes.leftbuttonscontainer}>  
@@ -65,41 +66,31 @@ const tablebodydata=[
      </Box>
      </Box>{/* buttons container end */}
      <TableContainer component={Paper}>
-       <Table sx={{width:'100%'}}>
+       <Table sx={{width:'100%'}} size="medium">
           <TableHead >
-          <TableRow sx={{border: "2px solid #0A4FA4",
+          <TableRow sx={{border: "1px solid #0A4FA4",
           }}>
              {tableheading.map((heading)=>(
                 <TableCell key={heading.id}align="left"
-                sx={{color:'#0A4FA4'}}>{heading.label}</TableCell>
+                sx={{color:'#0A4FA4',
+                borderBottom:'1px solid #0A4FA4'}}>{heading.label}</TableCell>
              ))}
             </TableRow>
           </TableHead>
             <TableBody>
             {tablebodydata.map(tdata=>(
-              <TableRow sx={{
-        border: "1px solid #0463EE29",   
-        "& td": {
-          borderBottom: "none", 
-        },
-      }}>
+              <TableRow key={tdata.id} sx={{
+               borderTop:'1px solid #0A4FA4',
+               border: "1px solid #0463EE29",   
+                "& td": {
+                  borderBottom: "none", 
+                },
+              }}>
               <TableCell padding="checkbox" >
-               <Checkbox color="primary"
-                 sx={{
-      "& .MuiSvgIcon-root": {
-      fill: "#b3c2d6ff",          
-      strokeWidth: 0.1,
-      
-    },
-     "&.Mui-checked": {
-      color: "#0463EE",
-      fill:"#0A4FA4"
-    },
-    
-                 }}/>
+               <Checkbox className={classes.trainingCheckbox} />
                {tdata.id}
                 </TableCell>
-                <TableCell padding="checkbox">{tdata.name}</TableCell>
+                <TableCell padding="checkbox" onClick={()=>navigate('user-info')}>{tdata.name}</TableCell>
                 <TableCell padding="checkbox">{tdata.email}</TableCell>
                 <TableCell padding="checkbox">{tdata.phone}</TableCell>
                 <TableCell padding="checkbox">{tdata.address}</TableCell>
@@ -109,7 +100,7 @@ const tablebodydata=[
                 <TableCell padding="checkbox">{tdata.availability}</TableCell>
                 <TableCell padding="checkbox">{tdata.payment}</TableCell>
                 <TableCell padding="checkbox">
-                  <VisibilityIcon />
+                  <VisibilityOutlinedIcon />
                   <DeleteOutlineIcon sx={{color:'red'}}/>
                 </TableCell>
               
