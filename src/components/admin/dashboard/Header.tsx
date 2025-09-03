@@ -41,6 +41,10 @@ switch(path){
   break;
   case "subscriber":
   title="Subscribers"
+  break;
+  case "profile":
+  title="Profile"
+  break;
 }
 
 const backarrowHandle=()=>{
@@ -55,13 +59,14 @@ const backarrowHandle=()=>{
     navigate('/admin/user-management')
     break;
    case "subscriber":
-    navigate('/admin/user-management') 
+    navigate('/admin/user-management')
+    break; 
  }
 }
 
 const{classes}=useHeaderStyles()
   return (
-    <AppBar position="static" className={classes.headerAppbar}>
+    <AppBar position="static" className={classes.headerAppbar} style={{background:path==='profile'?"#F7FAFC":""}}>
       <Toolbar className={classes.headerToolbar}>
           {isMobile&&(
             <IconButton
@@ -85,8 +90,9 @@ const{classes}=useHeaderStyles()
         </Typography>
         </Box>    
         
-        <Box sx={{ minWidth:{md:400,xs:230},flexShrink:0 }}>
+        <Box>
           <TextField
+            className={classes.headerSearch}
             size="small"
             type="search"
             fullWidth
@@ -98,8 +104,7 @@ const{classes}=useHeaderStyles()
                 </InputAdornment>
               ),
             }}
-            className={classes.headerSearch}
-            />
+        />
         </Box>
       </Toolbar>
     </AppBar>

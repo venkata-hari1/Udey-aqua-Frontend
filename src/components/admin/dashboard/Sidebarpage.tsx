@@ -10,8 +10,8 @@ import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import UnsubscribeOutlinedIcon from '@mui/icons-material/UnsubscribeOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import LogoutIcon from '@mui/icons-material/Logout';
-
+/* import LogoutIcon from '@mui/icons-material/Logout'; */
+import LogoutImg from '../../../assets/admin/logout_icon.png'
 const Sidebar = () => {
 
 const navigate=useNavigate()
@@ -27,8 +27,8 @@ const navigationmenu=[
       {id:33,icon:UnsubscribeOutlinedIcon,menu:'Subscribers',link:'/admin/user-management/subscriber'},
     ]
   },
-  {id:4,icon:AccountCircleOutlinedIcon,menu:'Profile',link:'/admin/Profile'},
-  {id:5,icon:LogoutIcon,menu:'Logout', link:'/admin/logout'}
+  {id:4,icon:AccountCircleOutlinedIcon,menu:'Profile',link:'/admin/profile'},
+  {id:5,icon:LogoutImg,menu:'Logout', link:'/admin/logout'}
  ]
 
  const logoutItem = navigationmenu.find(item => item.menu === 'Logout');
@@ -84,7 +84,7 @@ const navigationmenu=[
       }
      }}>
       
-      {logoutItem?.icon &&<logoutItem.icon />}  
+      {logoutItem?.icon &&<img src={LogoutImg} width="25px" height="25px"/>}  
       {logoutItem?.menu}
      </Box>
 

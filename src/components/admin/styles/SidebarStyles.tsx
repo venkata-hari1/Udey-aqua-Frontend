@@ -44,7 +44,7 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
       marginBottom:'20px',
       gap:10,
       marginRight:50,
-      color:'red',
+      color:'#f15556',
       textDecoration:'underline',
       fontFamily:'Inter'
     },
@@ -61,7 +61,7 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
       '&:hover':{
         backgroundColor:'#0A4FA4',
         color:'white',
-        borderColor:'#0A4FA4',
+        borderColor:theme.palette.primary.dark,
         borderTopLeftRadius:'30px',
         borderBottomRightRadius:'30px',
       },

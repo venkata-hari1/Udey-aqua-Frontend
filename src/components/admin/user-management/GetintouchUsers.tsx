@@ -1,9 +1,9 @@
 import { Box, Button,Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import useUsermanagementStyles from "./UsermanagementStyle"
-import DownloadIcon from '@mui/icons-material/Download';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
+import Delete_Img from '../../../assets/admin/delete_icon.png'
+import MyPagination from "../utils/MyPagination";
 
 const GetintouchUsers = () => {
 
@@ -32,20 +32,21 @@ const {classes}=useUsermanagementStyles()
   return (
   <Box>
   <Box className={classes.rightbuttonsGetinUser}>
-       <Button variant="contained" className={classes.GetinuserExport} endIcon={<DownloadIcon />} >Export</Button>
+       <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} >Export</Button>
        <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
   </Box>
    <TableContainer component={Paper}>
        <Table sx={{width:'100%'}} size="medium">
-          <TableHead>
+          <TableHead >
           <TableRow sx={{border: "1px solid #0A4FA4",
           }}>
-             {getinUserheading.map((heading)=>(
-                <TableCell key={heading.id}align="left"
+            {getinUserheading.map((heading)=>(
+                <TableCell key={heading.id} align="left"
+                padding="normal"
                 sx={{color:'#0A4FA4',
                 borderBottom:'1px solid #0A4FA4'}}>{heading.label}</TableCell>
              ))}
-            </TableRow>
+          </TableRow>
           </TableHead>
             <TableBody>
             {getinuserdata.map(tdata=>(
@@ -54,19 +55,20 @@ const {classes}=useUsermanagementStyles()
                border: "1px solid #0463EE29",   
                 "& td": {
                   borderBottom: "none", 
-                  paddingLeft:'10px',
+                  fontSize:"14px",
                 },
               }}>
-              <TableCell padding="checkbox" >
+              <TableCell padding="checkbox" align="left" >
                <Checkbox className={classes.trainingCheckbox}/>
                {tdata.id}
                 </TableCell>
-                <TableCell padding="checkbox" >{tdata.name}</TableCell>
-                <TableCell padding="checkbox">{tdata.phone}</TableCell>
-                <TableCell padding="checkbox">{tdata.message}</TableCell>
-                <TableCell padding="checkbox">{tdata.date}</TableCell>
-                <TableCell padding="checkbox">
-                  <DeleteOutlineIcon sx={{color:'red'}}/>
+                <TableCell >{tdata.name}</TableCell>
+                <TableCell >{tdata.phone}</TableCell>
+                <TableCell >{tdata.message}</TableCell>
+                <TableCell >{tdata.date}</TableCell>
+                <TableCell >
+                  <img src={Delete_Img} style={{width:"30px",height:"30px",paddingLeft:'10px' }}/>
+                  {/* <DeleteOutlineIcon sx={{color:'red'}}/> */}
                 </TableCell>
               
               </TableRow>
@@ -75,7 +77,7 @@ const {classes}=useUsermanagementStyles()
           </TableBody>
         </Table>
      </TableContainer>
-
+     <MyPagination />
   </Box>
 
   )

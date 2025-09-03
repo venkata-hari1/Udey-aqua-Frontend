@@ -10,8 +10,8 @@ import MainLayout from "../components/admin/dashboard/MainLayout";
 import Admindb from "../components/admin/dashboard/Admindb";
 import UserInformation from "../components/admin/user-management/UserInformation";
 import GetintouchUsers from "../components/admin/user-management/GetintouchUsers";
-import { Pagination } from "@mui/material";
-import MyPagination from "../components/admin/utils/MyPagination";
+import Subscriber from "../components/admin/user-management/Subscriber";
+import Profile from "../components/admin/profile/Profile";
 
 const AppRoutes = () => {
   return (
@@ -38,9 +38,11 @@ const AppRoutes = () => {
         <Route path="user-management/user-info" element={<UserInformation />} />  
         <Route path="user-management/training-registrations/user-info" element={<UserInformation />} />
         <Route path="user-management/getin-touch" element={<GetintouchUsers />}/>
-        <Route path="user-management/subscriber" element={<GetintouchUsers />}/>
+        <Route path="user-management/subscriber" element={<Subscriber />}/>
+         <Route path="profile" element={<Profile />}/>
       </Route>
-       <Route path="page" element={<MyPagination />}/>
+
+      
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />
     </Routes>

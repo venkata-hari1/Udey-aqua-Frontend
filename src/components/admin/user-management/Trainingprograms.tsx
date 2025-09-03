@@ -1,15 +1,17 @@
 import { Box, Button, Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material"
 import useUsermanagementStyles from "./UsermanagementStyle"
-import DownloadIcon from '@mui/icons-material/Download';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Delete_Img from '../../../assets/admin/delete_icon.png'
 import { useNavigate } from "react-router-dom";
 import MyPagination from "../utils/MyPagination";
+import { useState } from "react";
+import Deletepopup from "../utils/Deletepopup";
 
 const Trainingprograms = () => {
+  
   const {classes}=useUsermanagementStyles()
- 
   const navigate=useNavigate()
 
   const tableheading=[
@@ -26,7 +28,7 @@ const Trainingprograms = () => {
     {id:10,label:'Action'},
   ]
 
-const tablebodydata=[
+ const tablebodydata=[
     {id:1,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
@@ -53,7 +55,13 @@ const tablebodydata=[
     },
   ]
 
- return (
+const [open, setOpen] = useState(false);
+
+const handleClickOpen = () => {
+   setOpen((prev)=>!prev)
+  };
+
+return (
     <Box>{/* main container */}
       <Box className={classes.waterButtonsContainer}>{/* buttons container  */}
       <Box className={classes.leftbuttonscontainer}>  
@@ -62,7 +70,7 @@ const tablebodydata=[
       <Button variant="outlined" className={classes.BrackMarinebutton}>Marine Water</Button>  
      </Box>
      <Box className={classes.rightbuttonscontainer}>
-       <Button variant="contained" className={classes.Freshwaterbutton} endIcon={<DownloadIcon />} >Export</Button>
+       <Button variant="contained" className={classes.Freshwaterbutton} endIcon={<FileDownloadOutlinedIcon />} >Export</Button>
        <Button variant="outlined" className={classes.BrackMarinebutton} endIcon={<FilterListIcon />}>Filters</Button>
      </Box>
      </Box>{/* buttons container end */}
@@ -84,26 +92,31 @@ const tablebodydata=[
                borderTop:'1px solid #0A4FA4',
                border: "1px solid #0463EE29",   
                 "& td": {
-                  borderBottom: "none", 
+                  borderBottom: "none",
+                  fontSize: "13px",
                 },
               }}>
               <TableCell padding="checkbox" >
                <Checkbox className={classes.trainingCheckbox} />
                {tdata.id}
                 </TableCell>
-                <TableCell padding="checkbox" sx={{cursor:'pointer'}}
+                <TableCell sx={{cursor:'pointer'}}
                  onClick={()=>navigate('user-info')}>{tdata.name}</TableCell>
-                <TableCell padding="checkbox">{tdata.email}</TableCell>
-                <TableCell padding="checkbox">{tdata.phone}</TableCell>
-                <TableCell padding="checkbox">{tdata.address}</TableCell>
-                <TableCell padding="checkbox">{tdata.plan}</TableCell>
-                <TableCell padding="checkbox">{tdata.culture}</TableCell>
-                <TableCell padding="checkbox">{tdata.program}</TableCell>
-                <TableCell padding="checkbox">{tdata.availability}</TableCell>
-                <TableCell padding="checkbox">{tdata.payment}</TableCell>
-                <TableCell padding="checkbox">
-                  <VisibilityOutlinedIcon />
-                  <DeleteOutlineIcon sx={{color:'red'}}/>
+                <TableCell>{tdata.email}</TableCell>
+                <TableCell>{tdata.phone}</TableCell>
+                <TableCell>{tdata.address}</TableCell>
+                <TableCell>{tdata.plan}</TableCell>
+                <TableCell>{tdata.culture}</TableCell>
+                <TableCell>{tdata.program}</TableCell>
+                <TableCell>{tdata.availability}</TableCell>
+                <TableCell>{tdata.payment}</TableCell>
+                <TableCell>
+                  <Box sx={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                  <VisibilityOutlinedIcon sx={{fontSize:"20px",cursor:'pointer'}}/>
+                  <img src={Delete_Img} style={{width:"24px",height:"25px",paddingTop:'3px',cursor:'pointer' }}
+                  onClick={handleClickOpen}/>
+                  </Box>
+                  {open&&<Deletepopup open={open} handleclickopen={handleClickOpen}/>}
                 </TableCell>
               
               </TableRow>

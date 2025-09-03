@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Drawer,Box } from '@mui/material'
 import Sidebar from './Sidebarpage'
 import Header from './Header'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -20,6 +20,12 @@ const[open,setOpen]=useState(false);
  const toggleDrawer = () =>{
     setOpen((prev)=>!prev);
   };
+
+const location=useLocation()
+const path=location.pathname.split('/').pop()
+console.log(path)
+
+
 
 return (
     <Box sx={{ display:'flex'}}>
@@ -48,7 +54,12 @@ return (
       
       <Box sx={{flexGrow:1,display:'flex',flexDirection:'column',height:'100vh',overflowX:{xs:'hidden'}}}>
           <Header open={open} toggleDrawer={toggleDrawer}/>
-        <Box component="main" sx={{backgroundColor:'white',flexGrow:1,p:2,overflow:'auto'}}>
+        <Box component="main" 
+         sx={{
+          backgroundColor:path==="profile"?"#F7FAFC":"white",
+          flexGrow:1,
+          p:2,
+          overflow:'auto'}}>
           <Outlet />
         </Box>
       </Box>

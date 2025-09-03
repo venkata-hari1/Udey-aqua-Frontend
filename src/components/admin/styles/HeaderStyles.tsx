@@ -3,8 +3,23 @@ import type { Theme } from "@mui/material/styles"
 
 const useHeaderStyles = makeStyles()((theme: Theme) => ({
   
+headerAppbar:{
+ backgroundColor:'white', 
+ color: 'black', 
+ boxShadow: '0 2px 4px rgba(0,0,0,0.08)' 
+},
+headerToolbar:{
+  minHeight:80, 
+  display:'flex', 
+  justifyContent: 'space-between',
+  [theme.breakpoints.down('md')]:{
+    justifyContent:'space-between',
+    gap:4,
+  } 
+},
+
   headerSearch:{
-    
+    minWidth:400,
     '& .MuiOutlinedInput-root':{
         borderRadius:'30px',
         fontSize:12,
@@ -24,23 +39,13 @@ const useHeaderStyles = makeStyles()((theme: Theme) => ({
         fontSize:"10px", 
         opacity: 1, 
       },
-    }
+    },
+    [theme.breakpoints.down('sm')]:{
+       minWidth:'auto',
+    },
 },
 
-headerAppbar:{
- backgroundColor:'white', 
- color: 'black', 
- boxShadow: '0 2px 4px rgba(0,0,0,0.08)' 
-},
-headerToolbar:{
-  minHeight:80, 
-  display:'flex', 
-  justifyContent: 'space-between',
-  [theme.breakpoints.down('sm')]:{
-    justifyContent:'space-between',
-    gap:5,
-  } 
-},
+
 
 AdmintitleBox:{
  display:"flex",
@@ -53,7 +58,8 @@ backArrow:{
  cursor:'pointer',
  fontSize:'18px',
  [theme.breakpoints.down('sm')]:{
-  marginBottom:"14px",
+  
+  fontSize:'15px',
  }
 },
 AdminheaderTitle:{

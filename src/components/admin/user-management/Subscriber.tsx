@@ -1,8 +1,10 @@
 import { Box, Button,Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import useUsermanagementStyles from "./UsermanagementStyle"
-import DownloadIcon from '@mui/icons-material/Download';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Delete_Img from '../../../assets/admin/delete_icon.png'
+import MyPagination from "../utils/MyPagination";
+
 const Subscriber = () => {
 
   const subscribeheading=[
@@ -21,7 +23,7 @@ const {classes}=useUsermanagementStyles()
   return (
    <Box>
        <Box className={classes.rightbuttonsGetinUser}>
-            <Button variant="contained" className={classes.GetinuserExport} endIcon={<DownloadIcon />} >Export</Button>
+            <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} >Export</Button>
             <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
        </Box>
     <TableContainer component={Paper}>
@@ -29,33 +31,35 @@ const {classes}=useUsermanagementStyles()
               <TableHead>
               <TableRow sx={{border: "1px solid #0A4FA4",
               }}>
-                 {subscribeheading.map((heading)=>(
-                    <TableCell key={heading.id}align="left"
-                    sx={{color:'#0A4FA4',
-                    borderBottom:'1px solid #0A4FA4'}}>{heading.label}</TableCell>
+                 {subscribeheading.map((subheading)=>(
+                    <TableCell key={subheading.id} 
+                     align="left"
+                     sx={{color:'#0A4FA4',
+                     borderBottom:'1px solid #0A4FA4'}}>{subheading.label}</TableCell>
                  ))}
                 </TableRow>
               </TableHead>
                 <TableBody>
                 {subscriptiondata.map(tdata=>(
                   <TableRow key={tdata.sno} sx={{
-                   borderTop:'1px solid #0A4FA4',
+                    
+                    borderTop:'1px solid #0A4FA4',
                    border: "1px solid #0463EE29",   
                     "& td": {
-                      borderBottom: "none", 
-                      paddingLeft:'10px',
-                    },
+                      borderBottom: "none",
+                      fontSize: "13px",  
+                      },
                   }}>
                   <TableCell padding="checkbox" >
                    <Checkbox className={classes.trainingCheckbox}/>
                    {tdata.sno}
-                    </TableCell>
-                    <TableCell padding="checkbox" >{tdata.email}</TableCell>
-                    <TableCell padding="checkbox">{tdata.subscriptiontype}</TableCell>
-                    <TableCell padding="checkbox">{tdata.date}</TableCell>
-                    <TableCell padding="checkbox">
-                      <DeleteOutlineIcon sx={{color:'red'}}/>
-                    </TableCell>
+                    </TableCell >
+                    <TableCell>{tdata.email}</TableCell>
+                    <TableCell align="left">{tdata.subscriptiontype}</TableCell>
+                    <TableCell >{tdata.date}</TableCell>
+                    <TableCell>
+                      <img src={Delete_Img} style={{width:"30px",height:"30px" }}/>
+                     </TableCell>
                   
                   </TableRow>
        
@@ -63,6 +67,7 @@ const {classes}=useUsermanagementStyles()
               </TableBody>
             </Table>
          </TableContainer>
+        <MyPagination />
    </Box>
   )
 }

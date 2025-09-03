@@ -8,10 +8,16 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import MovingIcon from '@mui/icons-material/Moving';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from '@mui/material/styles';
+
 
 const Admindb = () => {
 
 const {classes}=useAdmindbStyles()
+const theme = useTheme();
+const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
 
 const chartdata=[
   {month:'Jan',value:'40'},
@@ -67,14 +73,16 @@ return (
         <Typography variant='h6' className={classes.cardContentTitle}>
          Training Program Registrations
         </Typography>
-       <ResponsiveContainer width="100%" height={200} >
-           <BarChart data={chartdata} barSize={20}>
+        <Box sx={{ marginLeft: isMobile ? "-35px": 0 }}>
+       <ResponsiveContainer width="100%" height={200}>
+           <BarChart data={chartdata} barSize={isMobile?15:20} >
             <XAxis dataKey="month" axisLine={false} tickLine={false} fontFamily='Inter' fontSize={12}/>
             <YAxis axisLine={false} tickLine={false} fontFamily='Inter' fontSize={12}/>
             <Tooltip />
             <Bar dataKey="value" fill="#1565C0" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>        
+        </Box>
       </CardContent>
      </Card> 
     

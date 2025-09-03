@@ -54,9 +54,13 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
     border:'1px groove #0A4FA4'
    },
    cardContentTitle:{
-    mb:2,
+    marginBottom:4,
     fontFamily:'Dm Serif Display',
-    color:"#0A4FA4"
+    color:"#0A4FA4",
+    paddingLeft:'40px',
+    [theme.breakpoints.down('sm')]:{
+      paddingLeft:0,
+    }
    },
    rightCardContainer:{
      flex:2,
