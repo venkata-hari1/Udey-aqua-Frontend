@@ -78,24 +78,26 @@ const{classes}=useHeaderStyles()
             <MenuIcon />
           </IconButton>    
           )}
+         <Box className={classes.headerandSearchContainer}> 
         <Box className={classes.AdmintitleBox}>
         {path!=="admin" && 
         path!=="dashboard" && 
         path!=="user-management" &&
         <ArrowBackIosOutlinedIcon className={classes.backArrow}
         onClick={backarrowHandle}/>}
-            
         <Typography variant="h6" component="div" className={classes.AdminheaderTitle}>
-        {title}
+          {title}
         </Typography>
         </Box>    
         
-        <Box>
-          <TextField
+        <Box className={classes.searchBox}>
+          {path!=='profile'&&
+          path!=='user-info' &&
+           <TextField
             className={classes.headerSearch}
             size="small"
             type="search"
-            fullWidth
+            
             placeholder="Search"
             InputProps={{
               startAdornment: (
@@ -105,6 +107,9 @@ const{classes}=useHeaderStyles()
               ),
             }}
         />
+          }
+          
+        </Box>
         </Box>
       </Toolbar>
     </AppBar>

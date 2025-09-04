@@ -18,7 +18,16 @@ headerToolbar:{
   } 
 },
 
-  headerSearch:{
+headerandSearchContainer:{
+  display:'flex',
+  justifyContent:"space-between",
+  width:'100%',
+},
+searchBox:{
+ display:'flex',
+ alignItems:'center',
+},
+headerSearch:{
     minWidth:400,
     '& .MuiOutlinedInput-root':{
         borderRadius:'30px',
@@ -45,11 +54,9 @@ headerToolbar:{
     },
 },
 
-
-
 AdmintitleBox:{
- display:"flex",
-justifyContent:"center",
+display:"flex",
+justifyContent:"start",
 alignItems:"center",
 gap:5, 
 color:"#0A4FA4",
@@ -58,7 +65,6 @@ backArrow:{
  cursor:'pointer',
  fontSize:'18px',
  [theme.breakpoints.down('sm')]:{
-  
   fontSize:'15px',
  }
 },

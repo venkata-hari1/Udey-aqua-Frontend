@@ -57,7 +57,7 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
       fontFamily:'Inter',
       fontSize:'14px',
       padding:'4px 20px',
-      
+      width:'170px',
       '&:hover':{
         backgroundColor:'#0A4FA4',
         color:'white',

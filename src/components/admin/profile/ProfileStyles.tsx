@@ -48,6 +48,43 @@ const useProfileStyles = makeStyles()((theme: Theme) => ({
    textTransform:'capitalize',
  },   
     
+//profileEmailpopup
+
+dialogContainer:{
+  "& .MuiBackdrop-root": {
+      backgroundColor: "rgba(0,0,0,0.2)", 
+  }, 
+},
+profileEmailBox:{
+  display:'flex',
+  flexDirection:'column',
+  gap:5,
+  padding:28,
+  justifyContent:'center',
+  borderRadius:"3px"
+},
+updateEmailText:{
+ color:'#0A4FA4',
+ fontSize:"20px",
+ fontWeight:"600",
+textAlign:"center",
+},
+profileContinuebutton:{
+ background:theme.palette.primary.dark,
+ padding:7,
+ borderRadius:10,
+},
+backtoProfileBox:{
+display:'flex', 
+justifyContent:'center',
+marginTop:"10px",
+},
+backProfiletext:{
+ textDecoration:'underline',
+ color:'#0A4FA4',
+ cursor:'pointer' 
+},
+
 }));
 
 export default useProfileStyles    
