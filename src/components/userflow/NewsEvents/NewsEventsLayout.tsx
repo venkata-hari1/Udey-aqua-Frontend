@@ -65,15 +65,18 @@ const NewsEventsLayout = () => {
               />
             </Grid>
           )}
+          {isMobile && <ContactBox />}
           <Grid
             size={{ xs: 12, md: 10 }}
             className={classes.newsEventsMainContent}
           >
-            <img
-              src={NewsSideImgSide}
-              alt="News Side Fish"
-              className={classes.newsEventsSideImg}
-            />
+            {!isMobile && (
+              <img
+                src={NewsSideImgSide}
+                alt="News Side Fish"
+                className={classes.newsEventsSideImg}
+              />
+            )}
             <Outlet />
           </Grid>
         </Grid>

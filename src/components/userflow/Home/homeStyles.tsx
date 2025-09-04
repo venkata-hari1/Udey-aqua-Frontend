@@ -718,7 +718,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     minHeight: "100%",
   },
   contactRoot: {
-    width: "90%",
+    width: "98%",
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
     background: COLORS.PRIMARY_BLUE,
@@ -732,6 +732,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
+      margin: "auto",
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(4),
     },

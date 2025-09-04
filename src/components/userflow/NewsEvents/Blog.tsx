@@ -1,16 +1,14 @@
-import { Box, Typography, Select, MenuItem, IconButton } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
+import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 import blog1 from "../../../assets/news/blog/blog1.png";
 import blog2 from "../../../assets/news/blog/blog2.png";
 
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
-import calendarIcon2 from "../../../assets/icons/calendar.svg";
 
 interface BlogItem {
   id: number;
@@ -117,8 +115,6 @@ const readMoreBlogData: ReadonlyArray<ReadMoreBlogItem> = [
 
 const Blog = () => {
   const { classes } = useNewsEventsStyles();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     image: "",
@@ -129,61 +125,13 @@ const Blog = () => {
     body: [],
   });
 
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ] as const;
-  const years = [2024, 2025, 2026];
-  const [selMonth, setSelMonth] = useState<number>(5);
-  const [selYear, setSelYear] = useState<number>(2025);
-  const [openSelect, setOpenSelect] = useState<boolean>(false);
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? heroBlogItems.length - 1 : prev - 1
-    );
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === heroBlogItems.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const currentBlog = heroBlogItems[currentIndex];
-
-  // Pagination logic
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(readMoreBlogData.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentBlogs = readMoreBlogData.slice(startIndex, endIndex);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  // Use custom hooks
+  const carousel = useCarousel({ items: heroBlogItems });
+  const pagination = usePagination({
+    items: readMoreBlogData,
+    itemsPerPage: 4,
+  });
+  const calendarFilter = useCalendarFilter();
 
   const handleReadMore = (blog: ReadMoreBlogItem) => {
     setDetail({
@@ -249,41 +197,18 @@ const Blog = () => {
 
   return (
     <Box>
-      {/* Top Carousel Section - from SuccessStories */}
-      <Box className={classes.successStoriesRoot}>
-        <Typography variant="h4" className={classes.successStoriesHeading}>
-          Read Our Latest Blog Posts
-        </Typography>
-
-        <Box className={classes.successStoriesCarousel}>
+      <HeroCarousel
+        title="Read Our Latest Blog Posts"
+        currentItem={carousel.currentItem}
+        onPrevious={carousel.goToPrevious}
+        onNext={carousel.goToNext}
+        renderBackground={(item) => (
           <Box
             className={classes.successStoriesBg}
-            style={{ backgroundImage: `url(${currentBlog.image})` }}
+            style={{ backgroundImage: `url(${item.image})` }}
           />
-
-          <IconButton
-            onClick={handlePrevious}
-            className={`${classes.successStoriesArrow} ${classes.successStoriesArrowLeft}`}
-            aria-label="Previous"
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-
-          <IconButton
-            onClick={handleNext}
-            className={`${classes.successStoriesArrow} ${classes.successStoriesArrowRight}`}
-            aria-label="Next"
-          >
-            <ChevronRightIcon />
-          </IconButton>
-
-          <Box className={classes.successStoriesOverlay}>
-            <Typography className={classes.successStoriesTitle}>
-              {currentBlog.title}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+        )}
+      />
 
       {/* Bottom Section - from News */}
       <Box className={classes.readMoreNewsSection}>
@@ -291,97 +216,38 @@ const Blog = () => {
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
             Explore More Blog Articles
           </Typography>
-          <Box className={classes.readMoreNewsHeaderRight}>
-            <Box
-              className={classes.readMoreNewsCalendarPill}
-              sx={{ cursor: "pointer" }}
-            >
-              <Box
-                component="img"
-                src={calendarIcon2}
-                alt="Calendar"
-                width={16}
-                height={16}
-              />
-              <Select
-                value={`${selMonth}-${selYear}`}
-                onChange={(e) => {
-                  const [m, y] = String(e.target.value).split("-");
-                  setSelMonth(Number(m));
-                  setSelYear(Number(y));
-                  setOpenSelect(false);
-                }}
-                open={openSelect}
-                onOpen={() => setOpenSelect(true)}
-                onClose={() => setOpenSelect(false)}
-                className={classes.readMoreNewsSelect}
-                MenuProps={{
-                  PaperProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  MenuListProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  disableScrollLock: true,
-                }}
-                renderValue={() => (
-                  <Typography variant="body2">24-08-2025</Typography>
-                )}
-                IconComponent={KeyboardArrowDownIcon}
-              >
-                {years.map((y) =>
-                  months.map((_, mIdx) => (
-                    <MenuItem
-                      key={`${mIdx}-${y}`}
-                      value={`${mIdx}-${y}`}
-                      onClick={() => setOpenSelect(false)}
-                    >
-                      {months[mIdx]} {y}
-                    </MenuItem>
-                  ))
-                )}
-              </Select>
-            </Box>
-          </Box>
+          <CalendarFilter
+            selectedMonth={calendarFilter.selectedMonth}
+            selectedYear={calendarFilter.selectedYear}
+            openSelect={calendarFilter.openSelect}
+            months={calendarFilter.months}
+            years={calendarFilter.years}
+            onMonthYearChange={calendarFilter.handleMonthYearChange}
+            onOpenSelect={calendarFilter.setOpenSelect}
+            getDisplayValue={calendarFilter.getDisplayValue}
+            pillClassName={`${classes.readMoreNewsCalendarPill} ${classes.blogCalendarPillClickable}`}
+            menuPaperClassName={classes.blogSelectMenuPaper}
+            menuListClassName={classes.blogSelectMenuList}
+          />
         </Box>
 
         <Box className={classes.readMoreNewsGrid}>
-          {currentBlogs.map((blog: ReadMoreBlogItem) => (
+          {pagination.currentItems.map((blog: ReadMoreBlogItem) => (
             <Box key={blog.id} onClick={() => handleReadMore(blog)}>
               <NewsCard {...blog} />
             </Box>
           ))}
         </Box>
 
-        <Box className={classes.readMoreNewsPagination}>
-          <IconButton
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className={classes.readMoreNewsPaginationArrow}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Box
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`${classes.readMoreNewsPaginationButton} ${
-                page === currentPage
-                  ? classes.readMoreNewsPaginationButtonActive
-                  : ""
-              }`}
-            >
-              {page}
-            </Box>
-          ))}
-          <IconButton
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className={classes.readMoreNewsPaginationArrow}
-          >
-            <ChevronRightIcon />
-          </IconButton>
-        </Box>
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.goToPage}
+          onPrevious={pagination.goToPreviousPage}
+          onNext={pagination.goToNextPage}
+          canGoPrevious={pagination.canGoPrevious}
+          canGoNext={pagination.canGoNext}
+        />
       </Box>
     </Box>
   );

@@ -54,11 +54,11 @@ const CulturePage = ({
             <img
               src={headerImg}
               alt={title}
-              className={classes.culturePageIconImg}
-              style={{
-                transform: isMurrelPage ? "rotate(-100deg)" : "rotate(0deg)",
-                transition: "transform 0.3s ease",
-              }}
+              className={`${classes.culturePageIconImg} ${
+                isMurrelPage
+                  ? classes.culturePageIconRotated
+                  : classes.culturePageIconNormal
+              }`}
             />
           </Box>
           <Box className={classes.culturePageTextContent}>
@@ -69,7 +69,7 @@ const CulturePage = ({
       </Box>
 
       {/* Cards Section */}
-      <Grid sx={{ mt: 6 }} ref={containerRef}>
+      <Grid className={classes.culturePageCardsGrid} ref={containerRef}>
         {cards.map((card, idx) => (
           <AboutInfoCard
             key={idx}

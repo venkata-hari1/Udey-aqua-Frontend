@@ -2,6 +2,7 @@ import { Box, Grid } from "@mui/material";
 import AboutHeader from "./AboutHeader";
 import AboutInfoCard from "./AboutInfoCard";
 import { useState, useRef, useEffect } from "react";
+import useAboutStyles from "./aboutStyles";
 
 export interface CardData {
   title: string;
@@ -25,6 +26,7 @@ const AboutCardsSection = ({
   headerImgSide,
   cards,
 }: Props) => {
+  const { classes } = useAboutStyles();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -49,7 +51,7 @@ const AboutCardsSection = ({
         img={headerImg}
         aboutImg={headerImgSide}
       />
-      <Grid sx={{ mt: 6 }} ref={containerRef}>
+      <Grid className={classes.aboutCardsGrid} ref={containerRef}>
         {cards.map((card, idx) => (
           <AboutInfoCard
             key={idx}

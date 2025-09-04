@@ -36,7 +36,7 @@ const CulturesLayout: React.FC = () => {
       item.path === "/cultures"
         ? location.pathname === "/cultures"
         : location.pathname.startsWith(item.path)
-    )?.label || "";
+    )?.label || "Sea Bass";
 
   const getSidebarFishImage = () => {
     const path = location.pathname;
@@ -85,6 +85,7 @@ const CulturesLayout: React.FC = () => {
               </Box>
             </Grid>
           )}
+          {isMobile && <ContactBox />}
           <Grid
             size={{ xs: 12, md: 10 }}
             className={classes.culturesMainContent}

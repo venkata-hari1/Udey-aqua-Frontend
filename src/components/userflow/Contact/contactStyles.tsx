@@ -218,7 +218,7 @@ const useContactStyles = makeStyles()((theme: Theme) => ({
 
   // Contact Form Section
   contactFormSection: {
-    width: "90%",
+    width: "100%",
     maxWidth: "1200px",
     margin: "0 auto",
     padding: theme.spacing(8, 0),
@@ -227,6 +227,9 @@ const useContactStyles = makeStyles()((theme: Theme) => ({
     maxWidth: 1200,
     margin: "0 auto",
     padding: theme.spacing(0, 3),
+    [theme.breakpoints.down("md")]: {
+      padding: 0,
+    },
   },
 }));
 

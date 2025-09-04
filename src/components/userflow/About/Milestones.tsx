@@ -79,8 +79,11 @@ const Milestones = () => {
             return (
               <Box
                 key={index}
-                className={classes.milestoneItem}
-                sx={{ flexDirection: isEven ? "row" : "row-reverse" }}
+                className={`${classes.milestoneItem} ${
+                  isEven
+                    ? classes.milestoneItemRow
+                    : classes.milestoneItemRowReverse
+                }`}
               >
                 <Box
                   component="img"
@@ -106,10 +109,9 @@ const Milestones = () => {
                           {i + 1}.
                         </Typography>
                       </Grid>
-                      <Grid sx={{ flex: 1 }}>
+                      <Grid className={classes.milestoneGridFlex}>
                         <Typography
-                          className={classes.milestoneDesc}
-                          sx={{ textAlign: "justify", marginBottom: 0.5 }}
+                          className={`${classes.milestoneDesc} ${classes.milestoneTextJustify}`}
                         >
                           {item}
                         </Typography>

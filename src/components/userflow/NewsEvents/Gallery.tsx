@@ -1,24 +1,16 @@
-import {
-  Box,
-  Typography,
-  Select,
-  MenuItem,
-  IconButton,
-  CircularProgress,
-} from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
+import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 import gallery1 from "../../../assets/news/gallery/gallery1.png";
 import gallery2 from "../../../assets/news/gallery/gallery2.png";
 import gallery3 from "../../../assets/news/gallery/gallery3.png";
 import gallery4 from "../../../assets/news/gallery/gallery4.png";
 import gallery5 from "../../../assets/news/gallery/gallery5.png";
-
-import calendarIcon2 from "../../../assets/icons/calendar.svg";
 
 interface GalleryItem {
   id: number;
@@ -46,13 +38,6 @@ interface DetailView {
 interface LoadingState {
   isLoading: boolean;
   error: string | null;
-}
-
-interface FlatListConfig {
-  itemHeight: number;
-  itemWidth: number;
-  containerHeight: number;
-  overscan: number;
 }
 
 const heroGalleryItems: ReadonlyArray<GalleryItem> = [
@@ -204,6 +189,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   onError,
   lazy = true,
 }) => {
+  const { classes } = useNewsEventsStyles();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isInView, setIsInView] = useState<boolean>(false);
@@ -241,60 +227,21 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
   if (lazy && !isInView) {
     return (
-      <Box
-        ref={imageRef}
-        sx={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          backgroundColor: "#f5f5f5",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Box ref={imageRef} className={classes.optimizedImageContainer}>
         <CircularProgress size={20} />
       </Box>
     );
   }
 
   return (
-    <Box
-      ref={imageRef}
-      sx={{ position: "relative", width: "100%", height: "100%" }}
-    >
+    <Box ref={imageRef} className={classes.optimizedImageContainer}>
       {!isLoaded && !hasError && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#f5f5f5",
-          }}
-        >
+        <Box className={classes.optimizedImageLoadingOverlay}>
           <CircularProgress size={30} />
         </Box>
       )}
       {hasError && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#f5f5f5",
-            color: "#666",
-          }}
-        >
+        <Box className={classes.optimizedImageErrorOverlay}>
           <Typography variant="body2">Failed to load image</Typography>
         </Box>
       )}
@@ -302,113 +249,18 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         component="img"
         src={src}
         alt={alt}
-        className={className}
+        className={`${className} ${classes.optimizedImage} ${
+          isLoaded ? classes.optimizedImageLoaded : ""
+        }`}
         onLoad={handleLoad}
         onError={handleError}
-        sx={{
-          opacity: isLoaded ? 1 : 0,
-          transition: "opacity 0.3s ease",
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        }}
       />
-    </Box>
-  );
-};
-
-interface VirtualizedGridProps {
-  items: ReadonlyArray<ReadMoreGalleryItem>;
-  itemHeight: number;
-  itemWidth: number;
-  containerHeight: number;
-  onItemClick: (item: ReadMoreGalleryItem) => void;
-  className?: string;
-}
-
-const VirtualizedGrid: React.FC<VirtualizedGridProps> = ({
-  items,
-  itemHeight,
-  itemWidth,
-  containerHeight,
-  onItemClick,
-  className,
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollTop, setScrollTop] = useState(0);
-  const { classes } = useNewsEventsStyles();
-
-  const itemsPerRow =
-    Math.floor(containerRef.current?.clientWidth || 1200) / itemWidth;
-  const rowHeight = itemHeight;
-  const totalRows = Math.ceil(items.length / itemsPerRow);
-
-  const startRow = Math.max(0, Math.floor(scrollTop / rowHeight) - 1);
-  const endRow = Math.min(
-    totalRows - 1,
-    Math.floor((scrollTop + containerHeight) / rowHeight) + 1
-  );
-
-  const visibleItems = items.slice(
-    startRow * itemsPerRow,
-    (endRow + 1) * itemsPerRow
-  );
-
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    setScrollTop(e.currentTarget.scrollTop);
-  }, []);
-
-  const totalHeight = totalRows * rowHeight;
-
-  return (
-    <Box
-      ref={containerRef}
-      className={className}
-      sx={{
-        height: containerHeight,
-        overflow: "auto",
-        position: "relative",
-      }}
-      onScroll={handleScroll}
-    >
-      <Box sx={{ height: totalHeight, position: "relative" }}>
-        {visibleItems.map((item, index) => {
-          const globalIndex = startRow * itemsPerRow + index;
-          const row = Math.floor(globalIndex / itemsPerRow);
-          const col = globalIndex % itemsPerRow;
-
-          return (
-            <Box
-              key={item.id}
-              className={classes.latestUpdatesCard}
-              onClick={() => onItemClick(item)}
-              sx={{
-                cursor: "pointer",
-                position: "absolute",
-                top: row * rowHeight,
-                left: col * itemWidth,
-                width: itemWidth - 16,
-                height: itemHeight - 16,
-              }}
-            >
-              <OptimizedImage
-                src={item.image}
-                alt={item.title}
-                className={classes.latestUpdatesImage}
-                lazy={true}
-              />
-            </Box>
-          );
-        })}
-      </Box>
     </Box>
   );
 };
 
 const Gallery = () => {
   const { classes } = useNewsEventsStyles();
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [detailPage, setDetailPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
@@ -423,31 +275,13 @@ const Gallery = () => {
     error: null,
   });
 
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ] as const;
-  const years = [2024, 2025, 2026];
-  const [selMonth, setSelMonth] = useState<number>(5);
-  const [selYear, setSelYear] = useState<number>(2025);
-  const [openSelect, setOpenSelect] = useState<boolean>(false);
-
-  const flatListConfig: FlatListConfig = {
-    itemHeight: 250,
-    itemWidth: 300,
-    containerHeight: 600,
-    overscan: 2,
-  };
+  // Use custom hooks
+  const carousel = useCarousel({ items: heroGalleryItems });
+  const pagination = usePagination({
+    items: readMoreGalleryData,
+    itemsPerPage: 4,
+  });
+  const calendarFilter = useCalendarFilter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -460,21 +294,9 @@ const Gallery = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handlePrevious = useCallback((): void => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? heroGalleryItems.length - 1 : prev - 1
-    );
-  }, []);
+  // Pagination logic for main gallery (4 per page) - handled by hook
 
-  const handleNext = useCallback((): void => {
-    setCurrentIndex((prev) => (prev === 0 ? heroGalleryItems.length - 1 : 0));
-  }, []);
-
-  const currentGallery = heroGalleryItems[currentIndex];
-
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(readMoreGalleryData.length / itemsPerPage);
-
+  // Detail view pagination
   const detailItemsPerPage = 8;
   const detailTotalPages = detail.active
     ? Math.ceil(detail.moreImages.length / detailItemsPerPage)
@@ -485,21 +307,7 @@ const Gallery = () => {
     ? detail.moreImages.slice(detailStartIndex, detailEndIndex)
     : [];
 
-  const handlePageChange = useCallback((page: number): void => {
-    setCurrentPage(page);
-  }, []);
-
-  const handlePreviousPage = useCallback((): void => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  }, [currentPage]);
-
-  const handleNextPage = useCallback((): void => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  }, [currentPage, totalPages]);
+  // Main pagination handled by hook
 
   const handleDetailPageChange = useCallback((page: number): void => {
     setDetailPage(page);
@@ -528,18 +336,32 @@ const Gallery = () => {
     setDetailPage(1);
   }, []);
 
+  // Memoized grid items for the bottom section (old UI)
+  const memoizedGalleryItems = useMemo(() => {
+    return pagination.currentItems.map((gallery: ReadMoreGalleryItem) => (
+      <Box
+        key={gallery.id}
+        onClick={() => handleImageClick(gallery)}
+        className={`${classes.latestUpdatesCard} ${classes.galleryCardClickable}`}
+      >
+        <OptimizedImage
+          src={gallery.image}
+          alt={gallery.title}
+          className={classes.latestUpdatesImage}
+          lazy={true}
+        />
+      </Box>
+    ));
+  }, [
+    pagination.currentItems,
+    classes.latestUpdatesCard,
+    classes.latestUpdatesImage,
+    handleImageClick,
+  ]);
+
   if (loadingState.isLoading) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "400px",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
+      <Box className={classes.galleryLoadingContainer}>
         <CircularProgress size={60} />
         <Typography variant="h6" color="text.secondary">
           Loading gallery images...
@@ -550,15 +372,7 @@ const Gallery = () => {
 
   if (loadingState.error) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "400px",
-          padding: 3,
-        }}
-      >
+      <Box className={classes.galleryErrorContainer}>
         <Typography variant="h6" color="error">
           Error: {loadingState.error}
         </Typography>
@@ -630,135 +444,50 @@ const Gallery = () => {
 
   return (
     <Box>
-      {/* Top Carousel Section - from SuccessStories (without description below) */}
-      <Box className={classes.successStoriesRoot}>
-        <Typography variant="h4" className={classes.successStoriesHeading}>
-          Explore the Highlights Through Our Gallery
-        </Typography>
-
-        <Box className={classes.successStoriesCarousel}>
+      <HeroCarousel
+        currentItem={carousel.currentItem}
+        onPrevious={carousel.goToPrevious}
+        onNext={carousel.goToNext}
+        renderBackground={(item) => (
           <Box
             className={classes.successStoriesBg}
-            style={{ backgroundImage: `url(${currentGallery.image})` }}
+            style={{ backgroundImage: `url(${item.image})` }}
           />
+        )}
+      />
 
-          <IconButton
-            onClick={handlePrevious}
-            className={`${classes.successStoriesArrow} ${classes.successStoriesArrowLeft}`}
-            aria-label="Previous"
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-
-          <IconButton
-            onClick={handleNext}
-            className={`${classes.successStoriesArrow} ${classes.successStoriesArrowRight}`}
-            aria-label="Next"
-          >
-            <ChevronRightIcon />
-          </IconButton>
-        </Box>
-      </Box>
-
-      {/* Bottom Section - from News.tsx with Virtualized Grid */}
+      {/* Bottom Section - restored to old UI with 4 per page */}
       <Box className={classes.readMoreNewsSection}>
         <Box className={classes.readMoreNewsHeader}>
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
             View More Gallery Images
           </Typography>
-          <Box className={classes.readMoreNewsHeaderRight}>
-            <Box
-              className={classes.readMoreNewsCalendarPill}
-              sx={{ cursor: "pointer" }}
-            >
-              <Box
-                component="img"
-                src={calendarIcon2}
-                alt="Calendar"
-                width={16}
-                height={16}
-              />
-              <Select
-                value={`${selMonth}-${selYear}`}
-                onChange={(e) => {
-                  const [m, y] = String(e.target.value).split("-");
-                  setSelMonth(Number(m));
-                  setSelYear(Number(y));
-                  setOpenSelect(false);
-                }}
-                open={openSelect}
-                onOpen={() => setOpenSelect(true)}
-                onClose={() => setOpenSelect(false)}
-                className={classes.readMoreNewsSelect}
-                MenuProps={{
-                  PaperProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  MenuListProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  disableScrollLock: true,
-                }}
-                renderValue={() => (
-                  <Typography variant="body2">{`${months[selMonth]} ${selYear}`}</Typography>
-                )}
-                IconComponent={KeyboardArrowDownIcon}
-              >
-                {years.map((y) =>
-                  months.map((_, mIdx) => (
-                    <MenuItem
-                      key={`${mIdx}-${y}`}
-                      value={`${mIdx}-${y}`}
-                      onClick={() => setOpenSelect(false)}
-                    >
-                      {months[mIdx]} {y}
-                    </MenuItem>
-                  ))
-                )}
-              </Select>
-            </Box>
-          </Box>
+          <CalendarFilter
+            selectedMonth={calendarFilter.selectedMonth}
+            selectedYear={calendarFilter.selectedYear}
+            openSelect={calendarFilter.openSelect}
+            months={calendarFilter.months}
+            years={calendarFilter.years}
+            onMonthYearChange={calendarFilter.handleMonthYearChange}
+            onOpenSelect={calendarFilter.setOpenSelect}
+            getDisplayValue={calendarFilter.getDisplayValue}
+            pillClassName={`${classes.readMoreNewsCalendarPill} ${classes.galleryCalendarPillClickable}`}
+            menuPaperClassName={classes.gallerySelectMenuPaper}
+            menuListClassName={classes.gallerySelectMenuList}
+          />
         </Box>
 
-        {/* Virtualized Grid for better performance */}
-        <VirtualizedGrid
-          items={readMoreGalleryData}
-          itemHeight={flatListConfig.itemHeight}
-          itemWidth={flatListConfig.itemWidth}
-          containerHeight={flatListConfig.containerHeight}
-          onItemClick={handleImageClick}
-          className={classes.readMoreNewsGrid}
+        <Box className={classes.readMoreNewsGrid}>{memoizedGalleryItems}</Box>
+
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.goToPage}
+          onPrevious={pagination.goToPreviousPage}
+          onNext={pagination.goToNextPage}
+          canGoPrevious={pagination.canGoPrevious}
+          canGoNext={pagination.canGoNext}
         />
-
-        <Box className={classes.readMoreNewsPagination}>
-          <IconButton
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className={classes.readMoreNewsPaginationArrow}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Box
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`${classes.readMoreNewsPaginationButton} ${
-                page === currentPage
-                  ? classes.readMoreNewsPaginationButtonActive
-                  : ""
-              }`}
-            >
-              {page}
-            </Box>
-          ))}
-          <IconButton
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className={classes.readMoreNewsPaginationArrow}
-          >
-            <ChevronRightIcon />
-          </IconButton>
-        </Box>
       </Box>
     </Box>
   );

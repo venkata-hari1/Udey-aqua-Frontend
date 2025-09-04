@@ -3,6 +3,7 @@ import TechnologiesHeader from "./TechnologiesHeader";
 import TechnologiesCard from "./TechnologiesCard";
 import { useState, useRef, useEffect } from "react";
 import type { TechnologyCardsSectionProps, TechnologyCard } from "./types";
+import useTechnologiesStyles from "./technologiesStyles";
 
 const TechnologiesCardsSection = ({
   headerTitle,
@@ -10,6 +11,7 @@ const TechnologiesCardsSection = ({
   headerImg,
   cards,
 }: TechnologyCardsSectionProps) => {
+  const { classes } = useTechnologiesStyles();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +35,7 @@ const TechnologiesCardsSection = ({
         subtitle={headerSubtitle}
         img={headerImg}
       />
-      <Grid sx={{ mt: 6 }} ref={containerRef}>
+      <Grid className={classes.technologiesCardsGrid} ref={containerRef}>
         {cards.map((card: TechnologyCard, idx: number) => (
           <TechnologiesCard
             key={idx}

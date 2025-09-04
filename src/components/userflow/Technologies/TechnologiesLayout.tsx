@@ -76,11 +76,12 @@ const TechnologiesLayout: React.FC = () => {
               </Box>
             </Grid>
           )}
+          {isMobile && <ContactBox />}
           <Grid
             size={{ xs: 12, md: 10 }}
             className={classes.technologiesMainContent}
           >
-            <img src={sideFish} className={classes.sideFish} />
+            {!isMobile && <img src={sideFish} className={classes.sideFish} />}
             <Outlet />
           </Grid>
         </Grid>

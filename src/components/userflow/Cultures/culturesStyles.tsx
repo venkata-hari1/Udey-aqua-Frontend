@@ -642,6 +642,19 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   pdfDialogSecondaryButton: {
     backgroundColor: COLORS.SECONDARY_BLUE,
   },
+
+  // CulturePage styles
+  culturePageCardsGrid: {
+    marginTop: theme.spacing(6),
+  },
+  culturePageIconRotated: {
+    transform: "rotate(-100deg)",
+    transition: "transform 0.3s ease",
+  },
+  culturePageIconNormal: {
+    transform: "rotate(0deg)",
+    transition: "transform 0.3s ease",
+  },
 }));
 
 export default useCulturesStyles;

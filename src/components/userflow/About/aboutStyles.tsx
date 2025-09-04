@@ -1650,6 +1650,26 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       fontSize: 11,
     },
   },
+
+  // Milestones styles
+  milestoneItemRow: {
+    flexDirection: "row",
+  },
+  milestoneItemRowReverse: {
+    flexDirection: "row-reverse",
+  },
+  milestoneGridFlex: {
+    flex: 1,
+  },
+  milestoneTextJustify: {
+    textAlign: "justify",
+    marginBottom: theme.spacing(0.5),
+  },
+
+  // AboutCardsSection styles
+  aboutCardsGrid: {
+    marginTop: theme.spacing(6),
+  },
 }));
 
 export default useAboutStyles;

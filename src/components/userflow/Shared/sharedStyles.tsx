@@ -19,6 +19,81 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     overflow: "hidden",
   },
+  mobileContactBar: {
+    position: "fixed",
+    left: theme.spacing(2),
+    bottom: theme.spacing(2),
+    display: "none",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: theme.spacing(0),
+    background: "transparent",
+    boxShadow: "none",
+    zIndex: 999,
+    [theme.breakpoints.down("md")]: {
+      display: "flex",
+    },
+  },
+  mobileContactButton: {
+    width: 56,
+    height: 56,
+    borderRadius: "50%",
+    background: "transparent",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    border: "none",
+    overflow: "hidden",
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    },
+  },
+  mobileContactBackdropPad: {
+    height: 0,
+    display: "none",
+  },
+  contactBoxModalContainer: {
+    width: "90%",
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    maxWidth: "300px",
+    display: "flex",
+    justifyContent: "center",
+  },
+  contactBoxFloating: {
+    position: "fixed",
+    left: theme.spacing(2),
+    bottom: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: theme.spacing(0.5),
+    zIndex: 90,
+  },
+  contactBoxButton: {
+    width: 56,
+    height: 56,
+    borderRadius: "50%",
+    background: "transparent",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    cursor: "pointer",
+    zIndex: 5,
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      display: "block",
+    },
+  },
   footerRoot: {
     width: "100%",
     minHeight: 550,
@@ -459,6 +534,9 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    "&:hover": {
+      background: COLORS.SECONDARY_BLUE,
+    },
   },
   mobileSidebarIcon: {
     width: 18,
@@ -603,10 +681,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     background: "transparent",
   },
   drawerPaper: {
-    width: 220,
-    background: COLORS.WHITE,
+    width: 320,
+    background: "#F5F5F5",
     boxShadow: "none",
-    paddingTop: theme.spacing(2),
+    paddingTop: 0,
   },
   drawerBackdrop: {
     background: COLORS.DARK_SHADOW,
@@ -628,6 +706,181 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 700,
     color: theme.palette.primary.main,
     background: theme.palette.action.selected,
+  },
+  // New Sidebar Styles
+  sidebarContainer: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    background: "#F6F7F9",
+  },
+  sidebarHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: theme.spacing(2),
+  },
+  sidebarLogoContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+  },
+  sidebarLogo: {
+    width: 60,
+    height: 60,
+    borderRadius: "50%",
+    background: COLORS.WHITE,
+  },
+  sidebarCompanyName: {
+    fontSize: "12px",
+    fontWeight: 600,
+    color: theme.palette.primary.main,
+    lineHeight: 1.2,
+  },
+  sidebarCloseButton: {
+    width: 32,
+    height: 32,
+    borderRadius: "50%",
+    background: COLORS.WHITE,
+    color: "#F34646",
+    boxShadow: SHADOWS.SUBTLE,
+    "& svg": {
+      width: 20,
+      height: 20,
+    },
+  },
+  sidebarSearchContainer: {
+    padding: "16px 20px 16px 10px",
+    boxShadow: "none",
+  },
+  sidebarSearchPaper: {
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+    borderRadius: 12,
+    border: "1px solid #0463EE",
+    background: COLORS.WHITE,
+    padding: theme.spacing(1, 0.5),
+    boxShadow: "none",
+  },
+  sidebarSearchIcon: {
+    color: theme.palette.primary.main,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(2),
+  },
+  sidebarSearchInput: {
+    flex: 1,
+    fontSize: "14px",
+    color: "#333",
+    "&::placeholder": {
+      color: "#999",
+      opacity: 1,
+    },
+  },
+  sidebarNavContainer: {
+    flex: 1,
+    padding: theme.spacing(1),
+    overflowY: "auto",
+    msOverflowStyle: "none",
+    background: "transparent",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      width: 0,
+      height: 0,
+    },
+  },
+  sidebarNavItemContainer: {
+    marginBottom: theme.spacing(2),
+  },
+  sidebarNavItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: theme.spacing("8px", "10px"),
+    borderRadius: 4,
+    cursor: "pointer",
+    transition: "all 0.2s",
+    "&:hover": {
+      background: "#E8F4FD",
+    },
+  },
+  sidebarNavItemActive: {
+    background: COLORS.PRIMARY_BLUE,
+    color: COLORS.WHITE,
+    borderRadius: "10px",
+    "&:hover": {
+      background: COLORS.PRIMARY_BLUE,
+    },
+    "& span": {
+      color: COLORS.WHITE,
+    },
+    "& p": {
+      color: COLORS.WHITE,
+    },
+  },
+  sidebarNavItemActiveWithChildren: {
+    background: COLORS.PRIMARY_BLUE,
+    color: COLORS.WHITE,
+    borderRadius: "12px 12px 0 0",
+    "&:hover": {
+      background: COLORS.PRIMARY_BLUE,
+    },
+    "& span": {
+      color: COLORS.WHITE,
+    },
+    "& p": {
+      color: COLORS.WHITE,
+    },
+  },
+  sidebarNavItemText: {
+    fontSize: "14px",
+    fontWeight: 500,
+    color: "#363A44",
+  },
+  sidebarExpandIcon: {
+    fontSize: "20px",
+  },
+  sidebarSubcategoryList: {
+    padding: 0,
+    backgroundColor: "#F0F6FB",
+    boxShadow: "0 2px 6px 0 #0A4FA429",
+    paddingTop: "10px",
+  },
+  sidebarSubcategoryItem: {
+    padding: 0,
+    marginBottom: theme.spacing(0.5),
+  },
+  sidebarSubcategoryText: {
+    color: "#666",
+    padding: theme.spacing(0.5, 2),
+    borderRadius: 4,
+    transition: "all 0.2s",
+    "&:hover": {
+      background: "#E8F4FD",
+      color: theme.palette.primary.main,
+    },
+    "& span": {
+      fontSize: "12px",
+    },
+  },
+  sidebarHighlight: {
+    background: "#FFF59D",
+    color: "inherit",
+    padding: "0 2px",
+    borderRadius: 2,
+  },
+  sidebarSubcategoryActive: {
+    color: COLORS.PRIMARY_BLUE,
+    fontWeight: 600,
+  },
+  // Generic link reset classes for sidebar links
+  sidebarLinkReset: {
+    textDecoration: "none",
+  },
+  sidebarSubLink: {
+    textDecoration: "none",
+    width: "100%",
+    display: "block",
   },
   desktopSearchIcon: {
     padding: 6,
@@ -738,6 +991,9 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
       right: 0,
       bottom: 0,
       zIndex: 1,
+    },
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: 0,
     },
   },
   plansHeader: {
@@ -871,6 +1127,10 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 999,
     maxWidth: "fit-content",
     margin: "-80px auto 40px auto",
+    [theme.breakpoints.down("md")]: {
+      padding: "12px 20px",
+      fontSize: "14px",
+    },
   },
   plansBadgeNew: {
     position: "absolute",
@@ -1037,6 +1297,9 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     borderRadius: "10px",
     border: "2px solid #57B6FF",
     zIndex: 1,
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: 0,
+    },
   },
 
   step2Header: {
@@ -1062,12 +1325,15 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
   step2Container: {
     position: "relative",
     zIndex: 2,
-    marginTop: theme.spacing(4),
+    margin: theme.spacing(4),
     marginLeft: "auto",
     marginRight: "auto",
     maxWidth: 1400,
     paddingLeft: theme.spacing(2),
+    placeContent: "center",
     paddingRight: theme.spacing(2),
+    gap: "20px 0",
+    placeItems: "center",
   },
 
   step2Card: {
@@ -1086,7 +1352,7 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
 
   step2CardImageContainer: {
     width: "100%",
-    height: "200px",
+    height: "270px",
     overflow: "hidden",
     borderRadius: "16px 16px 0 0",
     position: "relative",
@@ -1096,20 +1362,14 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    transition: "transform 0.3s ease",
-    "&:hover": {
-      transform: "scale(1.05)",
-    },
   },
 
   step2CardTitleBanner: {
     background: COLORS.PRIMARY_BLUE,
-    padding: "16px 20px",
-    borderRadius: "0 0 16px 16px",
+    padding: "6px 16px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    minHeight: "70px",
     flex: 1,
   },
 
@@ -1124,7 +1384,7 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
   },
 
   step2BackButtonContainer: {
-    marginTop: "10px",
+    marginBottom: "10px",
     display: "flex",
     justifyContent: "flex-start",
     paddingLeft: "16px",
@@ -1141,6 +1401,410 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     transition: "all 0.2s ease",
     fontFamily: FONTS.INTER,
     fontWeight: 600,
+  },
+
+  // Make step 2 cards clickable with hover affordance
+  step2CardClickable: {
+    cursor: "pointer",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    margin: "10px",
+  },
+
+  // Step 3 illustration sizing
+  step3Illustration: {
+    width: "100%",
+    height: "auto",
+    maxWidth: 360,
+    display: "block",
+    margin: "0 auto",
+  },
+
+  // Step 3 form styles
+  step3FormCol: {
+    width: "100%",
+    maxWidth: 620,
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  step3FieldsGrid: {
+    width: "100%",
+    gap: "6px 10px",
+  },
+  step3Field: {
+    marginBottom: 8,
+    borderRadius: 8,
+    background: "transparent",
+    border: "none",
+    "& .MuiSelect-select": {
+      border: "1px solid #57B6FF",
+      background: "white",
+      padding: "10px",
+      borderRadius: "8px",
+    },
+    "& .MuiOutlinedInput-root": {
+      background: COLORS.WHITE,
+      borderRadius: 8,
+      border: "1px solid #57B6FF",
+      padding: 0,
+      "& .MuiOutlinedInput-input": {
+        padding: "8px 10px",
+      },
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& .MuiInputBase-input::placeholder": {
+      color: "#333333",
+      opacity: 1,
+    },
+    "& .MuiFormHelperText-root": {
+      margin: "0",
+      background: "#DBECF9",
+    },
+  },
+  step3Label: {
+    color: COLORS.PRIMARY_BLUE,
+    fontWeight: 400,
+    fontSize: 13,
+    marginBottom: 4,
+    display: "inline-block",
+  },
+  step3Asterisk: {
+    color: "#f44336",
+  },
+  step3ButtonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(3),
+  },
+
+  // Step 4 styles
+  step4FormField: {
+    marginBottom: theme.spacing(3),
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  step4DateField: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    background: COLORS.WHITE,
+    borderRadius: 8,
+    border: "1px solid #57B6FF",
+    padding: "12px 10px",
+  },
+
+  step4CalendarIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 25,
+    opacity: 0.7,
+  },
+
+  step4DateInput: {
+    border: "none",
+    outline: "none",
+    background: "transparent",
+    flex: 1,
+    fontSize: 14,
+    fontFamily: FONTS.INTER,
+    color: COLORS.DARK,
+    "&::placeholder": {
+      color: "#333333",
+    },
+  },
+
+  // Custom Select styling for Step 4 month dropdowns
+  step4Select: {
+    flex: 1,
+    margin: 0,
+    background: "transparent",
+    border: "none",
+    "& .MuiOutlinedInput-root": {
+      background: "transparent",
+      borderRadius: 8,
+      border: "none",
+      padding: 0,
+      boxShadow: "none",
+      "& .MuiOutlinedInput-input": {
+        padding: "0 8px",
+        height: 24,
+        display: "flex",
+        alignItems: "center",
+      },
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& .MuiSelect-select": {
+      padding: 0,
+      background: "transparent",
+      color: COLORS.DARK,
+      fontFamily: FONTS.INTER,
+      fontSize: 14,
+    },
+    "& .MuiSvgIcon-root": {
+      color: "#666",
+    },
+  },
+
+  step4MenuPaper: {
+    maxHeight: 260,
+    overflowY: "auto",
+    boxShadow: SHADOWS.SUBTLE,
+    "& .MuiMenuItem-root": {
+      fontFamily: FONTS.INTER,
+      fontSize: 14,
+    },
+  },
+
+  step4AvailableGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(2),
+  },
+
+  step4BottomSection: {
+    display: "flex",
+    flexDirection: "column",
+    padding: theme.spacing(0, 0, 2, 0),
+  },
+
+  step4Checkbox: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    "& input[type='checkbox']": {
+      width: 18,
+      height: 18,
+      accentColor: COLORS.PRIMARY_BLUE,
+      border: "1px solid #0A4FA4",
+      boxShadow: "0 2px 8px 0 #0A4FA424",
+      borderRadius: "8px",
+    },
+    "& label": {
+      fontFamily: FONTS.INTER,
+      fontWeight: 600,
+      fontSize: 14,
+      color: COLORS.PRIMARY_BLUE,
+      cursor: "pointer",
+    },
+  },
+
+  step4ButtonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  step3FormField: {
+    marginBottom: theme.spacing(0.5),
+  },
+
+  step3Error: {
+    color: "#E62310",
+    fontSize: 12,
+    fontFamily: FONTS.INTER,
+    marginTop: theme.spacing(0.5),
+    marginLeft: theme.spacing(1),
+    background: "transparent",
+  },
+
+  // Step 5 Summary
+  step5Card: {
+    padding: theme.spacing(2),
+  },
+  step5Divider: {
+    borderTop: "1px dashed #57B6FF",
+    margin: "12px 0",
+    height: 1,
+  },
+  step5Grid: {
+    display: "grid",
+    gridTemplateColumns: "140px 1fr",
+    rowGap: 4,
+    columnGap: 16,
+  },
+  step5SectionTitle: {
+    ...TYPOGRAPHY.subtitle1(theme),
+    fontWeight: 700,
+    color: COLORS.PRIMARY_BLUE,
+    marginBottom: 4,
+  },
+
+  // Utility classes
+  gridFlexItem: {
+    display: "flex",
+  },
+  fullWidthBox: {
+    width: "100%",
+  },
+
+  // Step 5 summary styles
+  step5SectionHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  step5SectionIcon: {
+    width: 24,
+    height: 24,
+  },
+  step5SectionTitleWithIcon: {
+    fontSize: 18,
+    fontFamily: FONTS.INTER,
+    fontWeight: 600,
+    color: COLORS.PRIMARY_BLUE,
+  },
+  step5DetailItem: {
+    marginBottom: theme.spacing(1),
+    fontSize: 14,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+  },
+  step5DetailLabel: {
+    fontSize: 14,
+    fontWeight: 600,
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.INTER,
+    marginBottom: theme.spacing(0.5),
+  },
+  step5DetailValue: {
+    fontSize: 14,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    fontWeight: 600,
+    marginBottom: theme.spacing(1),
+  },
+  step5DetailValueSpace: {
+    paddingRight: "15px",
+  },
+
+  // Step 6 payment styles
+  step6PaymentCard: {
+    padding: theme.spacing(4),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 200,
+  },
+  step6RazorpayLogo: {
+    maxWidth: 300,
+    height: "auto",
+  },
+
+  // Step 7 success styles
+  step7SuccessContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 400,
+  },
+  step7SuccessIcon: {
+    width: 120,
+    height: 120,
+    marginBottom: theme.spacing(1),
+  },
+  step7TickIcon: {
+    width: 120,
+    height: 120,
+    color: "white",
+  },
+  step7SuccessTitle: {
+    fontSize: 24,
+    fontWeight: 700,
+    color: "#4CAF50",
+    fontFamily: FONTS.INTER,
+    marginBottom: theme.spacing(0.5),
+  },
+  step7SuccessMessage: {
+    fontSize: 13,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    textAlign: "center",
+    marginBottom: theme.spacing(2.5),
+    maxWidth: 600,
+    fontWeight: 600,
+  },
+  step7DownloadButton: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    backgroundColor: COLORS.WHITE,
+    color: COLORS.SECONDARY_BLUE,
+    padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+    borderRadius: 8,
+    textDecoration: "none",
+    fontFamily: FONTS.INTER,
+    fontWeight: 600,
+    fontSize: 14,
+    border: "none",
+    cursor: "pointer",
+  },
+  step7PdfIcon: {
+    width: 24,
+    height: 24,
+  },
+
+  // Step 8 payment failed styles
+  step8FailedContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 400,
+  },
+  step8FailedIcon: {
+    width: 120,
+    height: 120,
+    marginBottom: theme.spacing(1),
+  },
+  step8ErrorIcon: {
+    width: 120,
+    height: 120,
+    color: "#E62310",
+  },
+  step8FailedTitle: {
+    fontSize: 24,
+    fontWeight: 700,
+    color: "#E62310",
+    fontFamily: FONTS.INTER,
+    marginBottom: theme.spacing(0.5),
+  },
+  step8FailedMessage: {
+    fontSize: 13,
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    textAlign: "center",
+    marginBottom: theme.spacing(2.5),
+    maxWidth: 600,
+    fontWeight: 600,
+  },
+  step8RetryButton: {
+    display: "flex",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    backgroundColor: COLORS.WHITE,
+    color: COLORS.SECONDARY_BLUE,
+    padding: `${theme.spacing(1)} ${theme.spacing(3)}`,
+    borderRadius: 6,
+    textDecoration: "none",
+    fontFamily: FONTS.DM_SERIF_DISPLAY,
+    fontWeight: 400,
+    fontSize: 14,
+    border: "none",
+    cursor: "pointer",
+    boxShadow: SHADOWS.MEDIUM,
   },
 }));
 

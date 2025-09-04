@@ -199,13 +199,13 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontSize: 38,
     [theme.breakpoints.down("md")]: {
-      fontSize: 22,
+      fontSize: 14,
       maxWidth: "fit-content",
       margin: "auto",
       textAlign: "center",
       marginTop: "-10px",
       marginBottom: "15px",
-      padding: "0.5px 60px",
+      padding: "3px 20px",
       borderRadius: 999,
       color: COLORS.WHITE,
       background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
@@ -307,6 +307,19 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   },
   technologiesDownIcon: {
     transform: "rotate(180deg)",
+  },
+
+  // TechnologiesCardsSection styles
+  technologiesCardsGrid: {
+    marginTop: theme.spacing(6),
+  },
+
+  // TechnologiesCard styles
+  technologiesCardDescMargin: {
+    marginBottom: theme.spacing(2),
+  },
+  technologiesCardDescNoMargin: {
+    marginBottom: 0,
   },
 }));
 

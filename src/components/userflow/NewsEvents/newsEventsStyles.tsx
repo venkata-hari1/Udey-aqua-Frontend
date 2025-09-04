@@ -189,7 +189,6 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     right: 80,
     width: 120,
     height: "auto",
-    opacity: 0.1,
     zIndex: 0,
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -264,6 +263,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     color: COLORS.PRIMARY_BLUE,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 18,
+    },
   },
   successStoriesHeaderBar: {
     width: "100%",
@@ -279,6 +281,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.PRIMARY_BLUE,
     fontWeight: 400,
     fontSize: 26,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 16,
+    },
   },
   successStoriesHeaderRight: {
     display: "flex",
@@ -327,6 +332,13 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
     transition: "background-image 300ms ease",
+  },
+  successStoriesBgImg: {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   successStoriesArrow: {
     position: "absolute",
@@ -385,6 +397,28 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     backgroundColor: "#0B4FA4A6",
     color: COLORS.WHITE,
   },
+  successStoriesPlayOverlay: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    cursor: "pointer",
+    zIndex: 3,
+  },
+  successStoriesPlayCircle: {
+    width: 80,
+    height: 80,
+    backgroundColor: "#FF0000",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+  },
+  videoPlayIcon: {
+    color: "white",
+    fontSize: 24,
+  },
   successStoriesTitle: {
     fontWeight: 400,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
@@ -392,6 +426,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     textTransform: "capitalize",
     letterSpacing: 0.5,
     textAlign: "center",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 10,
+    },
   },
 
   // twoCardsCarousel styles removed
@@ -494,7 +531,6 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   // Detail view (reuses modal look n feel)
   storyModalContent: {
     width: "95%",
-    maxHeight: "92vh",
     background: COLORS.WHITE,
     borderRadius: 12,
     overflow: "hidden",
@@ -510,6 +546,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     border: "1px solid #3D0A0A",
     borderRadius: 8,
     background: COLORS.LIGHT_GRAY,
+    marginBottom: "10px",
   },
   storyCalendarTopRight: {
     position: "absolute",
@@ -523,6 +560,12 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.SECONDARY_BLUE,
     borderRadius: 8,
     padding: theme.spacing(1, 2),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(0.5, 1),
+      "& .MuiTypography-root": {
+        fontSize: 12,
+      },
+    },
   },
   storyModalImage: {
     position: "absolute",
@@ -874,6 +917,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     color: COLORS.PRIMARY_BLUE,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 16,
+    },
   },
   readMoreNewsHeaderRight: {
     display: "flex",
@@ -888,6 +934,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.WHITE,
     borderRadius: 8,
     padding: theme.spacing(0.5, 1),
+    cursor: "pointer",
   },
   readMoreNewsCalendarIcon: {
     width: 16,
@@ -914,7 +961,24 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
       padding: "4px 8px",
     },
   },
+  newsSelectMenuPaper: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+  newsSelectMenuList: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
   readMoreNewsGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: theme.spacing(3),
+    marginBottom: theme.spacing(4),
+    [theme.breakpoints.down("md")]: {
+      gridTemplateColumns: "1fr",
+    },
+  },
+  readMoreVideosGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(1, 1fr)",
     gap: theme.spacing(3),
@@ -992,7 +1056,13 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.SECONDARY_BLUE,
     borderRadius: 8,
     padding: theme.spacing(1, 2),
-    zIndex: 9999,
+    zIndex: 99,
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(0.5, 1),
+      "& .MuiTypography-root": {
+        fontSize: 12,
+      },
+    },
   },
   newsDetailHero: {
     position: "relative",
@@ -1015,6 +1085,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontSize: 28,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     lineHeight: 1.3,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 18,
+    },
   },
   newsDetailDescription: {
     color: COLORS.PRIMARY_BLUE,
@@ -1023,6 +1096,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 500,
     lineHeight: 1.6,
     marginBottom: theme.spacing(3),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   newsDetailParagraph: {
     color: COLORS.DARK,
@@ -1031,6 +1107,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     lineHeight: 1.7,
     marginBottom: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   newsDetailAuthor: {
     color: COLORS.SECONDARY_BLUE,
@@ -1040,6 +1119,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     marginTop: theme.spacing(3),
     textAlign: "left",
     textDecoration: "underline",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   newsDetailBackButton: {
     display: "inline-block",
@@ -1068,6 +1150,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     color: COLORS.PRIMARY_BLUE,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 18,
+    },
   },
   awardsHeaderBar: {
     width: "100%",
@@ -1083,6 +1168,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.PRIMARY_BLUE,
     fontWeight: 400,
     fontSize: 26,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 14,
+    },
   },
   awardsHeaderRight: {
     display: "flex",
@@ -1202,6 +1290,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     letterSpacing: 0.5,
     textAlign: "left",
     marginBottom: "8px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
 
   // Awards cards grid and pagination
@@ -1336,7 +1427,10 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.SECONDARY_BLUE,
     borderRadius: 8,
     padding: theme.spacing(1, 2),
-    zIndex: 9999,
+    zIndex: 99,
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(0.5),
+    },
   },
   awardsDetailImage: {
     width: "100%",
@@ -1355,6 +1449,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     marginBottom: theme.spacing(3),
     lineHeight: 1.3,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 18,
+    },
   },
   awardsDetailDescription: {
     color: COLORS.DARK,
@@ -1363,6 +1460,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     lineHeight: 1.7,
     marginBottom: theme.spacing(3),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   awardsDetailParagraph: {
     color: COLORS.DARK,
@@ -1371,6 +1471,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     lineHeight: 1.7,
     marginBottom: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   awardsDetailBackButton: {
     display: "inline-block",
@@ -1489,6 +1592,144 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     minHeight: "70vh",
+  },
+
+  // Gallery styles
+  galleryLoadingContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "400px",
+    flexDirection: "column",
+    gap: theme.spacing(2),
+  },
+  galleryErrorContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "400px",
+    padding: theme.spacing(3),
+  },
+  galleryCardClickable: {
+    cursor: "pointer",
+  },
+  galleryCalendarPillClickable: {
+    cursor: "pointer",
+  },
+  gallerySelectMenuPaper: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+  gallerySelectMenuList: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+
+  // OptimizedImage styles
+  optimizedImageContainer: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#f5f5f5",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  optimizedImageLoadingOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f5f5f5",
+  },
+  optimizedImageErrorOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f5f5f5",
+    color: "#666",
+  },
+  optimizedImage: {
+    opacity: 0,
+    transition: "opacity 0.3s ease",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  optimizedImageLoaded: {
+    opacity: 1,
+  },
+
+  // News styles
+  newsLoadingContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "400px",
+    flexDirection: "column",
+    gap: theme.spacing(2),
+  },
+  newsErrorContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "400px",
+    padding: theme.spacing(3),
+  },
+  newsErrorAlert: {
+    maxWidth: 600,
+  },
+  newsCardContent: {
+    padding: theme.spacing(2),
+  },
+  newsCalendarPillClickable: {
+    cursor: "pointer",
+  },
+
+  // SuccessStories styles
+  successStoriesCalendarPillClickable: {
+    cursor: "pointer",
+  },
+  successStoriesSelectMenuPaper: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+  successStoriesSelectMenuList: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+  successStoriesDetailContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(2),
+  },
+
+  // Blog styles
+  blogCalendarPillClickable: {
+    cursor: "pointer",
+  },
+  blogSelectMenuPaper: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+  blogSelectMenuList: {
+    maxHeight: 200,
+    overflowY: "auto",
+  },
+
+  // Video styles
+  videoPlayIconWhite: {
+    color: "white",
+    fontSize: 24,
   },
 }));
 

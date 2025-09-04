@@ -1,17 +1,14 @@
-import { Box, Typography, Select, MenuItem, IconButton } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
-import NewsCard from "../Home/NewsCard";
+import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 import awards1 from "../../../assets/news/awards/img1.png";
 import awards2 from "../../../assets/news/awards/img2.png";
 import awards3 from "../../../assets/news/awards/img3.png";
 import awards4 from "../../../assets/news/awards/img4.png";
 
-import calendarIcon from "../../../assets/icons/calendar.svg";
 import calendarIcon2 from "../../../assets/icons/calendar-color.svg";
 
 interface AwardItem {
@@ -87,64 +84,15 @@ const awardsData: ReadonlyArray<AwardItem> = [
 
 const Awards = () => {
   const { classes } = useNewsEventsStyles();
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     award: null,
   });
 
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ] as const;
-  const years = [2024, 2025, 2026];
-  const [selMonth, setSelMonth] = useState<number>(5);
-  const [selYear, setSelYear] = useState<number>(2025);
-  const [openSelect, setOpenSelect] = useState<boolean>(false);
-
-  const handlePrevious = (): void => {
-    setCurrentIndex((prev) => (prev === 0 ? awardsData.length - 1 : prev - 1));
-  };
-
-  const handleNext = (): void => {
-    setCurrentIndex((prev) => (prev === awardsData.length - 1 ? 0 : prev + 1));
-  };
-
-  const currentAward = awardsData[currentIndex];
-
-  // Pagination logic
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(awardsData.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentAwards = awardsData.slice(startIndex, endIndex);
-
-  const handlePageChange = (page: number): void => {
-    setCurrentPage(page);
-  };
-
-  const handlePreviousPage = (): void => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = (): void => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  // Use custom hooks
+  const carousel = useCarousel({ items: awardsData });
+  const pagination = usePagination({ items: awardsData, itemsPerPage: 4 });
+  const calendarFilter = useCalendarFilter();
 
   const handleReadMore = (award: AwardItem): void => {
     setDetail({
@@ -210,137 +158,82 @@ const Awards = () => {
 
   return (
     <Box className={classes.awardsRoot}>
-      <Typography variant="h4" className={classes.awardsHeading}>
-        Watch Our Latest Awards & Events
-      </Typography>
-
-      <Box className={classes.awardsCarousel}>
-        <Box
-          className={classes.awardsBg}
-          style={{ backgroundImage: `url(${currentAward.image})` }}
-        />
-
-        <Box
-          className={`${classes.awardsArrow} ${classes.awardsArrowLeft}`}
-          onClick={handlePrevious}
-        >
-          <ChevronLeftIcon />
-        </Box>
-
-        <Box
-          className={`${classes.awardsArrow} ${classes.awardsArrowRight}`}
-          onClick={handleNext}
-        >
-          <ChevronRightIcon />
-        </Box>
-
-        <Box className={classes.awardsOverlay}>
+      <HeroCarousel
+        title="Watch Our Latest Awards & Events"
+        currentItem={carousel.currentItem}
+        onPrevious={carousel.goToPrevious}
+        onNext={carousel.goToNext}
+        renderBackground={(item) => (
+          <Box
+            className={classes.awardsBg}
+            style={{ backgroundImage: `url(${item.image})` }}
+          />
+        )}
+        renderTitle={(item) => (
           <Typography variant="h3" className={classes.awardsTitle}>
-            {currentAward.title}
+            {item.title}
           </Typography>
-        </Box>
-      </Box>
+        )}
+        className={classes.awardsRoot}
+      />
 
       <Box className={classes.awardsHeaderBar}>
         <Typography variant="h4" className={classes.awardsHeaderTitle}>
           See All Our Awards & Recognitions
         </Typography>
-        <Box className={classes.awardsHeaderRight}>
-          <Box className={classes.awardsCalendarPill}>
-            <Box
-              component="img"
-              src={calendarIcon}
-              alt="Calendar"
-              width={16}
-              height={16}
-            />
-            <Select
-              value={`${selMonth}-${selYear}`}
-              onChange={(e) => {
-                const [m, y] = String(e.target.value).split("-");
-                setSelMonth(Number(m));
-                setSelYear(Number(y));
-                setOpenSelect(false);
-              }}
-              open={openSelect}
-              onOpen={() => setOpenSelect(true)}
-              onClose={() => setOpenSelect(false)}
-              className={classes.awardsSelect}
-              MenuProps={{
-                PaperProps: {
-                  style: { maxHeight: 200, overflowY: "auto" },
-                },
-                MenuListProps: {
-                  style: { maxHeight: 200, overflowY: "auto" },
-                },
-                disableScrollLock: true,
-              }}
-              renderValue={() => (
-                <Typography variant="body2">{`${months[selMonth]} ${selYear}`}</Typography>
-              )}
-              IconComponent={KeyboardArrowDownIcon}
-            >
-              {years.map((y) =>
-                months.map((_, mIdx) => (
-                  <MenuItem
-                    key={`${mIdx}-${y}`}
-                    value={`${mIdx}-${y}`}
-                    onClick={() => setOpenSelect(false)}
-                  >
-                    {months[mIdx]} {y}
-                  </MenuItem>
-                ))
-              )}
-            </Select>
-          </Box>
-        </Box>
+        <CalendarFilter
+          selectedMonth={calendarFilter.selectedMonth}
+          selectedYear={calendarFilter.selectedYear}
+          openSelect={calendarFilter.openSelect}
+          months={calendarFilter.months}
+          years={calendarFilter.years}
+          onMonthYearChange={calendarFilter.handleMonthYearChange}
+          onOpenSelect={calendarFilter.setOpenSelect}
+          getDisplayValue={calendarFilter.getDisplayValue}
+          className={classes.awardsHeaderRight}
+          pillClassName={classes.awardsCalendarPill}
+          selectClassName={classes.awardsSelect}
+        />
       </Box>
 
-      {/* Using NewsCard layout for Awards */}
-      <Box className={classes.readMoreNewsGrid}>
-        {currentAwards.map((award: AwardItem) => (
-          <Box key={award.id} onClick={() => handleReadMore(award)}>
-            <NewsCard
-              image={award.image}
-              date={award.date}
-              title={award.title}
-              description={award.description}
-              author={award.author}
+      {/* Custom awards cards (no NewsCard) */}
+      <Box className={classes.awardsCardsGrid}>
+        {pagination.currentItems.map((award: AwardItem) => (
+          <Box
+            key={award.id}
+            className={classes.awardsCard}
+            onClick={() => handleReadMore(award)}
+          >
+            <Box
+              component="img"
+              src={award.image}
+              alt={award.title}
+              className={classes.awardsCardImage}
             />
+            <Box className={classes.awardsCardContent}>
+              <Typography className={classes.awardsCardTitle}>
+                {award.title}
+              </Typography>
+              <Typography className={classes.awardsCardDescription}>
+                {award.description}
+              </Typography>
+              <Box className={classes.awardsCardButton}>Read More</Box>
+            </Box>
           </Box>
         ))}
       </Box>
 
       <Box className={classes.awardsPagination}>
-        <IconButton
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-          className={classes.awardsPaginationArrow}
-        >
-          <ChevronLeftIcon />
-        </IconButton>
-
-        {Array.from({ length: totalPages }, (_, index) => (
-          <Box
-            key={index + 1}
-            className={`${classes.awardsPaginationButton} ${
-              currentPage === index + 1
-                ? classes.awardsPaginationButtonActive
-                : ""
-            }`}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Box>
-        ))}
-
-        <IconButton
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className={classes.awardsPaginationArrow}
-        >
-          <ChevronRightIcon />
-        </IconButton>
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.goToPage}
+          onPrevious={pagination.goToPreviousPage}
+          onNext={pagination.goToNextPage}
+          canGoPrevious={pagination.canGoPrevious}
+          canGoNext={pagination.canGoNext}
+          className={classes.awardsPagination}
+        />
       </Box>
     </Box>
   );

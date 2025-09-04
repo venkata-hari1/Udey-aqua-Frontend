@@ -1,21 +1,19 @@
-import { Box, IconButton, Typography, Select, MenuItem } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
-import calendarIcon2 from "../../../assets/icons/calendar.svg";
 import news1 from "../../../assets/news/past/past_news_1.png";
 import news2 from "../../../assets/news/past/past_news_2.png";
 import news3 from "../../../assets/news/success_story.png";
+import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 interface CarouselItem {
   image: string;
   title: string;
   subtitle?: string;
   time?: string;
-  images?: string[];
+  images: string[];
 }
 
 const useStyles = useNewsEventsStyles;
@@ -24,14 +22,17 @@ const heroItems: ReadonlyArray<CarouselItem> = [
   {
     image: news1,
     title: "Empowering In Pearl Spot Cultivation – Srikakulam",
+    images: [news1],
   },
   {
     image: news2,
     title: "Community-Driven Pond Revitalization – Vizianagaram",
+    images: [news2],
   },
   {
     image: news3,
     title: "Scaling Sustainable RAS Units – Andhra Pradesh",
+    images: [news3],
   },
 ];
 
@@ -66,6 +67,7 @@ const listItems: ReadonlyArray<CarouselItem> = [
     subtitle:
       "Local community partnered to desilt ponds and reintroduce native species.",
     time: "03 Jun 2025",
+    images: [news1],
   },
   {
     image: news2,
@@ -73,6 +75,7 @@ const listItems: ReadonlyArray<CarouselItem> = [
     subtitle:
       "Demonstration units showed faster growth cycles and improved feed conversion.",
     time: "04 Jun 2025",
+    images: [news2],
   },
   {
     image: news1,
@@ -80,6 +83,7 @@ const listItems: ReadonlyArray<CarouselItem> = [
     subtitle:
       "Local community partnered to desilt ponds and reintroduce native species.",
     time: "03 Jun 2025",
+    images: [news1],
   },
   {
     image: news2,
@@ -87,6 +91,7 @@ const listItems: ReadonlyArray<CarouselItem> = [
     subtitle:
       "Demonstration units showed faster growth cycles and improved feed conversion.",
     time: "04 Jun 2025",
+    images: [news2],
   },
   {
     image: news1,
@@ -94,6 +99,7 @@ const listItems: ReadonlyArray<CarouselItem> = [
     subtitle:
       "Local community partnered to desilt ponds and reintroduce native species.",
     time: "03 Jun 2025",
+    images: [news1],
   },
   {
     image: news2,
@@ -101,43 +107,17 @@ const listItems: ReadonlyArray<CarouselItem> = [
     subtitle:
       "Demonstration units showed faster growth cycles and improved feed conversion.",
     time: "04 Jun 2025",
+    images: [news2],
   },
 ];
 
 const SuccessStories = () => {
-  const [index, setIndex] = useState<number>(0);
-  const { classes, cx } = useStyles();
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ] as const;
-  const years = [2024, 2025, 2026];
-  const [selMonth, setSelMonth] = useState<number>(5);
-  const [selYear, setSelYear] = useState<number>(2025);
-  const [openSelect, setOpenSelect] = useState<boolean>(false);
+  const { classes } = useStyles();
 
-  const prev: () => void = () =>
-    setIndex((p) => (p - 1 + heroItems.length) % heroItems.length);
-  const next: () => void = () => setIndex((p) => (p + 1) % heroItems.length);
-
-  const current: CarouselItem = heroItems[index];
-  const pageSize = 2;
-  const totalPages = Math.ceil(listItems.length / pageSize);
-  const [page, setPage] = useState<number>(1);
-  const paged = listItems.slice(
-    (page - 1) * pageSize,
-    (page - 1) * pageSize + pageSize
-  );
+  // Use custom hooks
+  const carousel = useCarousel({ items: heroItems });
+  const pagination = usePagination({ items: listItems, itemsPerPage: 2 });
+  const calendarFilter = useCalendarFilter();
   const [lightbox, setLightbox] = useState<{
     open: boolean;
     src: string;
@@ -155,46 +135,18 @@ const SuccessStories = () => {
   return (
     <Box className={classes.successStoriesRoot}>
       {!detail.active && (
-        <Typography variant="h4" className={classes.successStoriesHeading}>
-          Watch Our Latest Success Stories
-        </Typography>
-      )}
-
-      {!detail.active && (
-        <Box className={classes.successStoriesCarousel}>
-          <Box
-            className={classes.successStoriesBg}
-            style={{ backgroundImage: `url(${current.image})` }}
-          />
-
-          <IconButton
-            onClick={prev}
-            className={cx(
-              classes.successStoriesArrow,
-              classes.successStoriesArrowLeft
-            )}
-            aria-label="Previous"
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-
-          <IconButton
-            onClick={next}
-            className={cx(
-              classes.successStoriesArrow,
-              classes.successStoriesArrowRight
-            )}
-            aria-label="Next"
-          >
-            <ChevronRightIcon />
-          </IconButton>
-
-          <Box className={classes.successStoriesOverlay}>
-            <Typography className={classes.successStoriesTitle}>
-              {current.title}
-            </Typography>
-          </Box>
-        </Box>
+        <HeroCarousel
+          title="Watch Our Latest Success Stories"
+          currentItem={carousel.currentItem}
+          onPrevious={carousel.goToPrevious}
+          onNext={carousel.goToNext}
+          renderBackground={(item) => (
+            <Box
+              className={classes.successStoriesBg}
+              style={{ backgroundImage: `url(${item.image})` }}
+            />
+          )}
+        />
       )}
 
       {!detail.active && (
@@ -202,69 +154,32 @@ const SuccessStories = () => {
           <Typography className={classes.successStoriesHeaderTitle}>
             Browse Past Successes
           </Typography>
-          <Box className={classes.successStoriesHeaderRight}>
-            <Box
-              className={classes.successStoriesCalendarPill}
-              sx={{ cursor: "pointer" }}
-            >
-              <Box
-                component="img"
-                src={calendarIcon2}
-                alt="Calendar"
-                width={16}
-                height={16}
-              />
-              <Select
-                value={`${selMonth}-${selYear}`}
-                onChange={(e) => {
-                  const [m, y] = String(e.target.value).split("-");
-                  setSelMonth(Number(m));
-                  setSelYear(Number(y));
-                  setOpenSelect(false);
-                }}
-                open={openSelect}
-                onOpen={() => setOpenSelect(true)}
-                onClose={() => setOpenSelect(false)}
-                className={classes.successStoriesSelect}
-                MenuProps={{
-                  PaperProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  MenuListProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  disableScrollLock: true,
-                }}
-                renderValue={() => (
-                  <Typography variant="body2">{`${months[selMonth]} ${selYear}`}</Typography>
-                )}
-                IconComponent={KeyboardArrowDownIcon}
-              >
-                {years.map((y) =>
-                  months.map((_, mIdx) => (
-                    <MenuItem
-                      key={`${mIdx}-${y}`}
-                      value={`${mIdx}-${y}`}
-                      onClick={() => setOpenSelect(false)}
-                    >
-                      {months[mIdx]} {y}
-                    </MenuItem>
-                  ))
-                )}
-              </Select>
-            </Box>
-          </Box>
+          <CalendarFilter
+            selectedMonth={calendarFilter.selectedMonth}
+            selectedYear={calendarFilter.selectedYear}
+            openSelect={calendarFilter.openSelect}
+            months={calendarFilter.months}
+            years={calendarFilter.years}
+            onMonthYearChange={calendarFilter.handleMonthYearChange}
+            onOpenSelect={calendarFilter.setOpenSelect}
+            getDisplayValue={calendarFilter.getDisplayValue}
+            className={classes.successStoriesHeaderRight}
+            pillClassName={`${classes.successStoriesCalendarPill} ${classes.successStoriesCalendarPillClickable}`}
+            selectClassName={classes.successStoriesSelect}
+            menuPaperClassName={classes.successStoriesSelectMenuPaper}
+            menuListClassName={classes.successStoriesSelectMenuList}
+          />
         </Box>
       )}
 
       {/* Detail View */}
       {detail.active ? (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box className={classes.successStoriesDetailContainer}>
           <Box className={classes.storyModalContent}>
-            {(!detail.images || detail.images.length <= 1) && (
+            {detail.images && detail.images.length === 1 && (
               <Box className={classes.storyModalHero}>
                 <img
-                  src={detail.image}
+                  src={detail.images[0]}
                   alt={detail.title}
                   className={classes.storyModalImage}
                 />
@@ -329,7 +244,7 @@ const SuccessStories = () => {
                   {p}
                 </Typography>
               ))}
-              {detail.images && detail.images.length > 0 && (
+              {detail.images && detail.images.length > 1 && (
                 <Box className={classes.storyImageGrid}>
                   {detail.images.map((img, idx) => (
                     <Box
@@ -354,7 +269,7 @@ const SuccessStories = () => {
       ) : (
         <Box className={classes.cardsSection}>
           <Box className={classes.cardsGrid}>
-            {paged.map((it, i) => (
+            {pagination.currentItems.map((it, i) => (
               <Box key={`${it.title}-${i}`} className={classes.storyCard}>
                 <Box className={classes.storyCardTop}>
                   <img
@@ -413,29 +328,16 @@ const SuccessStories = () => {
           </Box>
           <Box className={classes.testimonialPaginationWrapper}>
             <Box className={classes.testimonialPagination}>
-              <Box
-                onClick={() => setPage(Math.max(1, page - 1))}
-                className={classes.testimonialBackButton}
-              >
-                <ChevronLeftIcon fontSize="small" />
-              </Box>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                <Box
-                  key={p}
-                  onClick={() => setPage(p)}
-                  className={`${classes.testimonialPageButton} ${
-                    p === page ? classes.testimonialActivePageButton : ""
-                  }`}
-                >
-                  {p}
-                </Box>
-              ))}
-              <Box
-                onClick={() => setPage(Math.min(totalPages, page + 1))}
-                className={classes.testimonialNextButton}
-              >
-                <ChevronRightIcon fontSize="small" />
-              </Box>
+              <Pagination
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                onPageChange={pagination.goToPage}
+                onPrevious={pagination.goToPreviousPage}
+                onNext={pagination.goToNextPage}
+                canGoPrevious={pagination.canGoPrevious}
+                canGoNext={pagination.canGoNext}
+                className={classes.testimonialPagination}
+              />
             </Box>
           </Box>
         </Box>

@@ -1,0 +1,147 @@
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { ChevronLeft } from "@mui/icons-material";
+import { usePlansStyles } from "../sharedStyles";
+import { IMAGES, TECHNOLOGY_MAP, TRAINING_PRICE_MAP } from "./constants";
+import { formatTrainingCourse } from "./utils";
+import type {
+  StepComponentProps,
+  FormData,
+  Step2Data,
+  Step4Data,
+} from "./types";
+
+interface Step5Props extends StepComponentProps {
+  formData: FormData;
+  step2Data: Step2Data;
+  step4Data: Step4Data;
+}
+
+const Step5 = ({
+  onStepChange,
+  currentStep,
+  formData,
+  step2Data,
+  step4Data,
+}: Step5Props) => {
+  const { classes } = usePlansStyles();
+
+  const handleBackClick = () => {
+    if (onStepChange) {
+      onStepChange((currentStep || 1) - 1);
+    }
+  };
+
+  return (
+    <Box className={classes.step2Root}>
+      <Typography variant="h4" className={classes.plansHeaderTitle}>
+        Confirm Your Training Summary
+      </Typography>
+
+      <Grid container className={classes.step2Container}>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Box
+            component="img"
+            src={IMAGES.acc2}
+            alt="Training summary"
+            className={classes.step3Illustration}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }} className={classes.step3FormCol}>
+          <Box className={classes.step5Card}>
+            <Box className={classes.step5SectionHeader}>
+              <Box
+                component="img"
+                src={IMAGES.userIcon}
+                alt="User icon"
+                className={classes.step5SectionIcon}
+              />
+              <Typography className={classes.step5SectionTitleWithIcon}>
+                Your Details
+              </Typography>
+            </Box>
+            <Typography className={classes.step5DetailValue}>
+              {formData.name || "-"}
+            </Typography>
+            <Typography className={classes.step5DetailValue}>
+              {formData.phone || "-"}
+              <span className={classes.step5DetailValueSpace}> </span>
+              {formData.email && `${formData.email}`}
+            </Typography>
+            <Typography className={classes.step5DetailValue}>
+              {formData.address || "-"}
+              {formData.district ? `, ${formData.district}` : ""}
+              {formData.state ? `, ${formData.state}` : ""}
+              {formData.pincode ? `, ${formData.pincode}` : ""}
+            </Typography>
+          </Box>
+          <Box className={classes.step5Divider} />
+          <Box className={classes.step5Card}>
+            <Box className={classes.step5SectionHeader}>
+              <Box
+                component="img"
+                src={IMAGES.cartIcon}
+                alt="Cart icon"
+                className={classes.step5SectionIcon}
+              />
+              <Typography className={classes.step5SectionTitleWithIcon}>
+                Selected Training Program
+              </Typography>
+            </Box>
+            <Box className={classes.step5Grid}>
+              <Typography className={classes.step5DetailLabel}>
+                Culture
+              </Typography>
+              <Typography className={classes.step5DetailValue}>
+                {step2Data.selectedCultureType || "-"}
+              </Typography>
+              <Typography className={classes.step5DetailLabel}>
+                Technology
+              </Typography>
+              <Typography className={classes.step5DetailValue}>
+                {step4Data.technologies
+                  ? TECHNOLOGY_MAP[step4Data.technologies] ||
+                    step4Data.technologies
+                  : "-"}
+              </Typography>
+              <Typography className={classes.step5DetailLabel}>
+                R&D Faculty
+              </Typography>
+              <Typography className={classes.step5DetailValue}>
+                {step4Data.rdFaculty || "-"}
+              </Typography>
+              <Typography className={classes.step5DetailLabel}>
+                Training Course
+              </Typography>
+              <Typography className={classes.step5DetailValue}>
+                {formatTrainingCourse(step4Data.trainingCourse)}
+              </Typography>
+              <Typography className={classes.step5DetailLabel}>
+                Price
+              </Typography>
+              <Typography className={classes.step5DetailValue}>
+                {TRAINING_PRICE_MAP[step4Data.trainingCourse] || "-"} (No Taxes)
+              </Typography>
+            </Box>
+          </Box>
+          <Box className={classes.step3ButtonWrapper}>
+            <Button
+              variant="contained"
+              className={classes.plansCardButton}
+              onClick={() => onStepChange && onStepChange(6)}
+            >
+              Continue to Payment
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Box className={classes.step2BackButtonContainer}>
+        <Button onClick={handleBackClick} className={classes.step2BackButton}>
+          <ChevronLeft /> Back
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default Step5;

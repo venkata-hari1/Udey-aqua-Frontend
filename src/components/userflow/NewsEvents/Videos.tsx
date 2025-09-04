@@ -1,11 +1,9 @@
-import { Box, IconButton, Typography, Select, MenuItem } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Box, Typography, IconButton } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
-import calendarIcon2 from "../../../assets/icons/calendar.svg";
+import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 interface VideoItem {
   id: string;
@@ -75,41 +73,13 @@ const videoLibrary: ReadonlyArray<VideoItem> = [
 ];
 
 const Videos = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const { classes, cx } = useNewsEventsStyles();
+  const { classes } = useNewsEventsStyles();
 
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ] as const;
-  const years = [2024, 2025, 2026];
-  const [selMonth, setSelMonth] = useState<number>(5);
-  const [selYear, setSelYear] = useState<number>(2025);
-  const [openSelect, setOpenSelect] = useState<boolean>(false);
-
-  const prev = () =>
-    setCurrentIndex((p) => (p - 1 + heroVideos.length) % heroVideos.length);
-  const next = () => setCurrentIndex((p) => (p + 1) % heroVideos.length);
-
-  const currentVideo = heroVideos[currentIndex];
-  const pageSize = 2;
-  const totalPages = Math.ceil(videoLibrary.length / pageSize);
-  const pagedVideos = videoLibrary.slice(
-    (currentPage - 1) * pageSize,
-    (currentPage - 1) * pageSize + pageSize
-  );
+  // Use custom hooks
+  const carousel = useCarousel({ items: heroVideos });
+  const pagination = usePagination({ items: videoLibrary, itemsPerPage: 2 });
+  const calendarFilter = useCalendarFilter();
 
   const handleVideoClick = (video: VideoItem) => {
     setSelectedVideo(video);
@@ -154,82 +124,36 @@ const Videos = () => {
     return rows;
   };
 
-  const videoRows = groupVideosIntoRows(pagedVideos);
+  const videoRows = groupVideosIntoRows(pagination.currentItems);
 
   return (
     <Box className={classes.successStoriesRoot}>
-      {/* Header */}
-      <Typography variant="h4" className={classes.successStoriesHeading}>
-        Watch Our Latest Moments In Motion
-      </Typography>
-
-      {/* Hero Video Carousel - Same as SuccessStories */}
-      <Box className={classes.successStoriesCarousel}>
-        <Box
-          className={classes.successStoriesBg}
-          style={{
-            backgroundImage: `url(${getThumbnail(currentVideo.youtubeIds[0])})`,
-          }}
-        />
-
-        {/* Navigation Arrows - Same styling as SuccessStories */}
-        <IconButton
-          onClick={prev}
-          className={cx(
-            classes.successStoriesArrow,
-            classes.successStoriesArrowLeft
-          )}
-          aria-label="Previous"
-        >
-          <ChevronLeftIcon />
-        </IconButton>
-
-        <IconButton
-          onClick={next}
-          className={cx(
-            classes.successStoriesArrow,
-            classes.successStoriesArrowRight
-          )}
-          aria-label="Next"
-        >
-          <ChevronRightIcon />
-        </IconButton>
-
-        {/* Play Button Overlay */}
-        <Box
-          onClick={() => handleVideoClick(currentVideo)}
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            cursor: "pointer",
-            zIndex: 3,
-          }}
-        >
-          <Box
-            sx={{
-              width: 80,
-              height: 80,
-              backgroundColor: "#FF0000",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-            }}
-          >
-            <PlayArrowIcon sx={{ color: "white", fontSize: 40 }} />
+      <HeroCarousel
+        title="Watch Our Latest Moments In Motion"
+        currentItem={carousel.currentItem}
+        onPrevious={carousel.goToPrevious}
+        onNext={carousel.goToNext}
+        renderBackground={(item) => (
+          <Box className={classes.successStoriesBg}>
+            <Box
+              component="img"
+              src={getThumbnail(item.youtubeIds[0])}
+              alt="Hero background"
+              className={classes.successStoriesBgImg}
+            />
           </Box>
-        </Box>
-
-        {/* Title Overlay - Same as SuccessStories */}
-        <Box className={classes.successStoriesOverlay}>
-          <Typography className={classes.successStoriesTitle}>
-            {currentVideo.title}
-          </Typography>
-        </Box>
-      </Box>
+        )}
+        renderOverlay={(item) => (
+          <Box
+            onClick={() => handleVideoClick(item)}
+            className={classes.successStoriesPlayOverlay}
+          >
+            <Box className={classes.successStoriesPlayCircle}>
+              <PlayArrowIcon className={classes.videoPlayIcon} />
+            </Box>
+          </Box>
+        )}
+      />
 
       {/* Video Library Section - Same structure as News.tsx readMoreNewsSection */}
       <Box className={classes.readMoreNewsSection}>
@@ -237,64 +161,20 @@ const Videos = () => {
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
             Explore Our Video Library
           </Typography>
-          <Box className={classes.readMoreNewsHeaderRight}>
-            <Box
-              className={classes.readMoreNewsCalendarPill}
-              sx={{ cursor: "pointer" }}
-            >
-              <Box
-                component="img"
-                src={calendarIcon2}
-                alt="Calendar"
-                width={16}
-                height={16}
-              />
-              <Select
-                value={`${selMonth}-${selYear}`}
-                onChange={(e) => {
-                  const [m, y] = String(e.target.value).split("-");
-                  setSelMonth(Number(m));
-                  setSelYear(Number(y));
-                  setOpenSelect(false);
-                }}
-                open={openSelect}
-                onOpen={() => setOpenSelect(true)}
-                onClose={() => setOpenSelect(false)}
-                className={classes.readMoreNewsSelect}
-                MenuProps={{
-                  PaperProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  MenuListProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  disableScrollLock: true,
-                }}
-                renderValue={() => (
-                  <Typography variant="body2">
-                    {`${months[selMonth]} ${selYear}`}
-                  </Typography>
-                )}
-                IconComponent={KeyboardArrowDownIcon}
-              >
-                {years.map((y) =>
-                  months.map((_, mIdx) => (
-                    <MenuItem
-                      key={`${mIdx}-${y}`}
-                      value={`${mIdx}-${y}`}
-                      onClick={() => setOpenSelect(false)}
-                    >
-                      {months[mIdx]} {y}
-                    </MenuItem>
-                  ))
-                )}
-              </Select>
-            </Box>
-          </Box>
+          <CalendarFilter
+            selectedMonth={calendarFilter.selectedMonth}
+            selectedYear={calendarFilter.selectedYear}
+            openSelect={calendarFilter.openSelect}
+            months={calendarFilter.months}
+            years={calendarFilter.years}
+            onMonthYearChange={calendarFilter.handleMonthYearChange}
+            onOpenSelect={calendarFilter.setOpenSelect}
+            getDisplayValue={calendarFilter.getDisplayValue}
+          />
         </Box>
 
         {/* Video Grid - Restructured to show videos in rows with shared titles/dates */}
-        <Box className={classes.readMoreNewsGrid}>
+        <Box className={classes.readMoreVideosGrid}>
           {videoRows.map((row, rowIndex) => (
             <Box key={rowIndex} className={classes.videoRow}>
               {/* Multiple videos from youtubeIds array */}
@@ -324,7 +204,7 @@ const Videos = () => {
                             <Box className={classes.videoPlayButton}>
                               <Box className={classes.videoPlayButtonCircle}>
                                 <PlayArrowIcon
-                                  sx={{ color: "white", fontSize: 24 }}
+                                  className={classes.videoPlayIconWhite}
                                 />
                               </Box>
                             </Box>
@@ -349,39 +229,15 @@ const Videos = () => {
           ))}
         </Box>
 
-        <Box className={classes.readMoreNewsPagination}>
-          <IconButton
-            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
-            className={classes.readMoreNewsPaginationArrow}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Box
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`${classes.readMoreNewsPaginationButton} ${
-                page === currentPage
-                  ? classes.readMoreNewsPaginationButtonActive
-                  : ""
-              }`}
-            >
-              {page}
-            </Box>
-          ))}
-
-          <IconButton
-            onClick={() =>
-              setCurrentPage(Math.min(totalPages, currentPage + 1))
-            }
-            disabled={currentPage === totalPages}
-            className={classes.readMoreNewsPaginationArrow}
-          >
-            <ChevronRightIcon />
-          </IconButton>
-        </Box>
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.goToPage}
+          onPrevious={pagination.goToPreviousPage}
+          onNext={pagination.goToNextPage}
+          canGoPrevious={pagination.canGoPrevious}
+          canGoNext={pagination.canGoNext}
+        />
       </Box>
 
       {/* Video Modal */}

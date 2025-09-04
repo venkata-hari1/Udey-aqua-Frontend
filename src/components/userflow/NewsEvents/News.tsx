@@ -274,16 +274,7 @@ const News = () => {
   // Loading state
   if (loadingState.isLoading) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "400px",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
+      <Box className={classes.newsLoadingContainer}>
         <CircularProgress size={60} />
         <Typography variant="h6" color="text.secondary">
           Loading news and updates...
@@ -295,16 +286,8 @@ const News = () => {
   // Error state
   if (loadingState.error) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "400px",
-          padding: 3,
-        }}
-      >
-        <Alert severity="error" sx={{ maxWidth: 600 }}>
+      <Box className={classes.newsErrorContainer}>
+        <Alert severity="error" className={classes.newsErrorAlert}>
           <Typography variant="h6" gutterBottom>
             Error Loading News
           </Typography>
@@ -372,7 +355,7 @@ const News = () => {
           {newsData.map((news: NewsItem) => (
             <Box key={news.id}>
               <Card className={classes.newsCard}>
-                <CardContent sx={{ p: 2 }}>
+                <CardContent className={classes.newsCardContent}>
                   <Typography variant="h6" className={classes.newsTitle}>
                     {news.title}
                   </Typography>
@@ -414,8 +397,7 @@ const News = () => {
           </Typography>
           <Box className={classes.readMoreNewsHeaderRight}>
             <Box
-              className={classes.readMoreNewsCalendarPill}
-              sx={{ cursor: "pointer" }}
+              className={`${classes.readMoreNewsCalendarPill} ${classes.newsCalendarPillClickable}`}
             >
               <Box
                 component="img"
@@ -437,12 +419,8 @@ const News = () => {
                 onClose={() => setOpenSelect(false)}
                 className={classes.readMoreNewsSelect}
                 MenuProps={{
-                  PaperProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
-                  MenuListProps: {
-                    style: { maxHeight: 200, overflowY: "auto" },
-                  },
+                  PaperProps: { className: classes.newsSelectMenuPaper },
+                  MenuListProps: { className: classes.newsSelectMenuList },
                   disableScrollLock: true,
                 }}
                 renderValue={() => (
