@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import PricingCard from "./PricingCard";
 import pricingImg1 from "../../../assets/pricing/pricing_img_1.png";
@@ -9,6 +10,11 @@ import { useRef } from "react";
 import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
 import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
+import {
+  FISH_OVAL_INITIAL,
+  FISH_OVAL_ANIMATE,
+  FISH_OVAL_TRANSITION,
+} from "../Shared/animations";
 
 const pricingData = [
   {
@@ -19,8 +25,8 @@ const pricingData = [
       "End-to-end sea bass farm setup guidance",
       "Guidance: hatchery & nursery management",
       "Full-cycle farm operations with live video & export potential",
-      "Value addition & export support"
-    ]
+      "Value addition & export support",
+    ],
   },
   {
     image: pricingImg2,
@@ -30,8 +36,8 @@ const pricingData = [
       "End-to-end sea bass farm setup guidance",
       "Guidance: hatchery & nursery management",
       "Full-cycle farm operations with live video & export potential",
-      "Value addition & export support"
-    ]
+      "Value addition & export support",
+    ],
   },
   {
     image: pricingImg3,
@@ -41,9 +47,9 @@ const pricingData = [
       "End-to-end sea bass farm setup guidance",
       "Guidance: hatchery & nursery management",
       "Full-cycle farm operations with live video & export potential",
-      "Value addition & export support"
-    ]
-  }
+      "Value addition & export support",
+    ],
+  },
 ];
 
 const Pricing = () => {
@@ -54,13 +60,20 @@ const Pricing = () => {
 
   return (
     <Box className={classes.pricingRoot}>
-      <Box component="img" src={pricingTopImg} alt="Pricing Fishes" className={classes.pricingTopImg} />
+      <motion.img
+        src={pricingTopImg}
+        alt="Pricing Fishes"
+        className={classes.pricingTopImgBase}
+        initial={FISH_OVAL_INITIAL}
+        animate={FISH_OVAL_ANIMATE}
+        transition={FISH_OVAL_TRANSITION}
+      />
       <SectionTitle title="Pricing" />
       <Box
         ref={scrollRef}
         className={
           classes.pricingScroll +
-          (isOverflowing ? ' ' + classes.pricingScrollFlexStart : '')
+          (isOverflowing ? " " + classes.pricingScrollFlexStart : "")
         }
       >
         {isOverflowing && <Box style={{ marginLeft: -72 }} />}
@@ -77,4 +90,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing; 
+export default Pricing;

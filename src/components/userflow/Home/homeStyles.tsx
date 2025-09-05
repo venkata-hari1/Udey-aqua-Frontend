@@ -1043,6 +1043,22 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: 400,
     zIndex: 0,
     display: "block",
+    // Infinity (lemniscate) swim animation - transform-based for compatibility
+    animation: "$swimInfinity 30s linear infinite",
+    willChange: "transform",
+    transformOrigin: "center",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  // Base style without any animation (for framer-motion usage)
+  pricingTopImgBase: {
+    position: "absolute",
+    top: -45,
+    right: 100,
+    width: 400,
+    zIndex: 0,
+    display: "block",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },

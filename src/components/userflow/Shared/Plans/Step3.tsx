@@ -103,7 +103,10 @@ const Step3 = ({
                 error={formErrors.address}
               />
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid
+              size={{ xs: 12, md: 6 }}
+              className={`${classes.step3FormField} ${classes.step3FieldTop}`}
+            >
               <FormField
                 label="District"
                 placeholder="Select your district"
@@ -123,7 +126,10 @@ const Step3 = ({
                 error={formErrors.pincode}
               />
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid
+              size={{ xs: 12, md: 6 }}
+              className={`${classes.step3FormField} ${classes.step3FieldTop}`}
+            >
               <FormField
                 label="State"
                 placeholder="Select your state"

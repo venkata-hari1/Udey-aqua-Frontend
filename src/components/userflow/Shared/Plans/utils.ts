@@ -64,6 +64,8 @@ export const validateForm = (
 
   if (!formData.district.trim()) {
     errors.district = "District is required";
+  } else if (/^\d+$/.test(formData.district.trim())) {
+    errors.district = "Enter a valid district";
   }
 
   if (!formData.pincode.trim()) {
@@ -74,6 +76,8 @@ export const validateForm = (
 
   if (!formData.state.trim()) {
     errors.state = "State is required";
+  } else if (/^\d+$/.test(formData.state.trim())) {
+    errors.state = "Enter a valid state";
   }
 
   return {
@@ -107,7 +111,7 @@ export const validateStep4 = (
   }
 
   if (!step4Data.trainingCourse.trim()) {
-    errors.trainingCourse = "Training Course is required";
+    errors.trainingCourse = "Please choose a training course";
   }
 
   if (!step4Data.technologies.trim()) {

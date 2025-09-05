@@ -1,4 +1,10 @@
 import { Box, Typography, IconButton } from "@mui/material";
+import { motion } from "framer-motion";
+import {
+  TEAM_FISH_INITIAL,
+  TEAM_FISH_ANIMATE,
+  TEAM_FISH_TRANSITION,
+} from "../Shared/animations";
 import SectionTitle from "./SectionTitle";
 import TeamCard from "./TeamCard";
 import teamImg from "../../../assets/team/team_1.png";
@@ -79,7 +85,7 @@ interface TeamProps {
 }
 
 const Team: React.FC<TeamProps> = ({
-  showTabs = false,
+  showTabs = true,
   isTestimonialMode = false,
 }) => {
   const { classes } = useHomeStyles();
@@ -109,10 +115,13 @@ const Team: React.FC<TeamProps> = ({
     return (
       <Box className={classes.teamRoot}>
         <Box
-          component="img"
+          component={motion.img}
           src={fishesImg}
           alt="Fishes"
           className={classes.teamFishesImg}
+          initial={TEAM_FISH_INITIAL}
+          animate={TEAM_FISH_ANIMATE}
+          transition={TEAM_FISH_TRANSITION}
         />
         <SectionTitle title="Our Testimonials" />
         <Box className={classes.teamScrollWrap}>
@@ -210,10 +219,13 @@ const Team: React.FC<TeamProps> = ({
   return (
     <Box className={classes.teamRoot}>
       <Box
-        component="img"
+        component={motion.img}
         src={fishesImg}
         alt="Fishes"
         className={classes.teamFishesImg}
+        initial={TEAM_FISH_INITIAL}
+        animate={TEAM_FISH_ANIMATE}
+        transition={TEAM_FISH_TRANSITION}
       />
       <SectionTitle title="Our Directors & Advisors" />
       {showTabs && (

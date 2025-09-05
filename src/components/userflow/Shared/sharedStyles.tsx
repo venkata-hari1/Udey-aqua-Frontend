@@ -96,32 +96,61 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   footerRoot: {
     width: "100%",
-    minHeight: 550,
+    minHeight: 530,
     position: "relative",
     paddingTop: 0,
     paddingBottom: 0,
     overflow: "hidden",
+    marginTop: 50,
     [theme.breakpoints.down("lg")]: {
       minHeight: 650,
     },
   },
   footerBg: {
     position: "absolute",
-    top: 0,
+    bottom: 0,
     left: 0,
     width: "100%",
-    height: "120%",
+    height: "400px",
+    objectFit: "cover",
+    objectPosition: "top",
+    zIndex: 1,
+    [theme.breakpoints.down("lg")]: {
+      height: "530px",
+    },
+  },
+  footerBg1: {
+    position: "absolute",
+    top: 40,
+    left: 0,
+    width: "100%",
     objectFit: "cover",
     objectPosition: "top",
     zIndex: 0,
-    [theme.breakpoints.down("lg")]: {
-      height: "100%",
-    },
+  },
+  footerBg2: {
+    position: "absolute",
+    top: "40px",
+    left: 0,
+    width: "100%",
+    // height: "430px",
+    objectFit: "cover",
+    objectPosition: "top",
+    zIndex: 0,
+  },
+  footerBg3: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    objectFit: "cover",
+    objectPosition: "top",
+    zIndex: 0,
   },
   footerContent: {
     position: "relative",
-    marginTop: 100,
     zIndex: 1,
+    marginTop: "100px",
     paddingLeft: theme.spacing(8),
     paddingRight: theme.spacing(8),
     paddingTop: theme.spacing(8),
@@ -459,9 +488,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   copyrightMobile: {
     ...TYPOGRAPHY.body2(theme),
+    zIndex: "10",
   },
   copyrightDesktop: {
     ...TYPOGRAPHY.body1(theme),
+    zIndex: "10",
   },
   copyrightIcon: {
     width: 18,
@@ -1430,7 +1461,13 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
   },
   step3FieldsGrid: {
     width: "100%",
-    gap: "6px 10px",
+    gap: "6px 16px",
+  },
+  step3FieldTop: {
+    marginTop: -40,
+    [theme.breakpoints.down("md")]: {
+      marginTop: 0,
+    },
   },
   step3Field: {
     marginBottom: 8,
@@ -1632,6 +1669,9 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     gridTemplateColumns: "140px 1fr",
     rowGap: 4,
     columnGap: 16,
+  },
+  step5GridSpace: {
+    paddingLeft: 25,
   },
   step5SectionTitle: {
     ...TYPOGRAPHY.subtitle1(theme),

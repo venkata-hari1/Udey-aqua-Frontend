@@ -16,6 +16,9 @@ import InstagramIcon from "../../../assets/icons/instagram.svg";
 import CopyIcon from "../../../assets/icons/copy.svg";
 import logo from "../../../assets/logo.png";
 import footerBg from "../../../assets/home/footer.png";
+import footerBg1 from "../../../assets/home/footer1.png";
+import footerBg2 from "../../../assets/home/footer2.png";
+import footerBg3 from "../../../assets/home/footer3.png";
 import footerMap from "../../../assets/home/footer_map.png";
 import useSharedStyles from "./sharedStyles";
 
@@ -33,6 +36,24 @@ const Footer = () => {
         src={footerBg}
         alt="Footer Waves"
         className={classes.footerBg}
+      />
+      <Box
+        component="img"
+        src={footerBg1}
+        alt="Footer Waves"
+        className={classes.footerBg1}
+      />
+      <Box
+        component="img"
+        src={footerBg2}
+        alt="Footer Waves"
+        className={classes.footerBg2}
+      />
+      <Box
+        component="img"
+        src={footerBg3}
+        alt="Footer Waves"
+        className={classes.footerBg3}
       />
       <Box className={classes.footerContent}>
         {isMobile ? (
