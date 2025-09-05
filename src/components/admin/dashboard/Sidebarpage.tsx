@@ -10,7 +10,6 @@ import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import UnsubscribeOutlinedIcon from '@mui/icons-material/UnsubscribeOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-/* import LogoutIcon from '@mui/icons-material/Logout'; */
 import LogoutImg from '../../../assets/admin/logout_icon.png'
 const Sidebar = () => {
 

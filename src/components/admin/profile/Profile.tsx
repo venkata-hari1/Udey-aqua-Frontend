@@ -2,6 +2,7 @@ import { Box, Button, Card, CardContent, Typography } from "@mui/material"
 import useProfileStyles from "./ProfileStyles"
 import { useState } from "react";
 import ProfileEmailpopup from "../utils/ProfileEmailpopup";
+import Changepasswordpopup from "../utils/Changepasswordpopup";
 
 const Profile = () => {
   
@@ -17,6 +18,12 @@ const [open,setOpen]=useState(false)
 const handleClickOpen=()=>{
    setOpen(prev=>!prev)
 }
+
+//change pwd
+const [pwdOpen,setpwdOpen]=useState(false)
+const handlePsswordOpen=()=>{
+  setpwdOpen(prev=>!prev)
+}
 return (
     <Box>
     <Card className={classes.cardProfileBox} elevation={0}>
@@ -29,9 +36,12 @@ return (
           <Typography sx={{mb:4,fontSize:13}}>{profile.value}</Typography>
            {index===1&&<Typography className={classes.keyTextlabel}
            onClick={handleClickOpen}>Update</Typography>}
-           {index===2&&<Button className={classes.valueButtonlabel}variant="outlined" size="small">Change password</Button>}
+           {index===2&&<Button className={classes.valueButtonlabel}variant="outlined" size="small"
+           
+           onClick={handlePsswordOpen}>Change password</Button>}
           </Box>
           {open&&<ProfileEmailpopup open={open} handleclickopen={handleClickOpen}/>}
+          {pwdOpen&&<Changepasswordpopup pwdopen={pwdOpen} handlepsswordopen={handlePsswordOpen} />}
         </Box>
       ))}
       <Box className={classes.buttonsBox}>

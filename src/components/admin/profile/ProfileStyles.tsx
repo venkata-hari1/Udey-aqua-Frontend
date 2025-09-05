@@ -28,7 +28,7 @@ const useProfileStyles = makeStyles()((theme: Theme) => ({
    cursor:'pointer',
    [theme.breakpoints.down('sm')]:{
      padding:'2px 9px',
-     marginLeft:'5px',
+     marginLeft:'9px',
     }
   },
   buttonsBox:{
@@ -58,8 +58,8 @@ dialogContainer:{
 profileEmailBox:{
   display:'flex',
   flexDirection:'column',
-  gap:5,
-  padding:28,
+  gap:15,
+  padding:"30px",
   justifyContent:'center',
   borderRadius:"3px"
 },
@@ -73,18 +73,60 @@ profileContinuebutton:{
  background:theme.palette.primary.dark,
  padding:7,
  borderRadius:10,
+ borderWidth:'2px',
+ textDecoration:"",
+ textTransform:'capitalize'
+ 
 },
 backtoProfileBox:{
 display:'flex', 
 justifyContent:'center',
-marginTop:"10px",
+marginTop:"15px",
+
 },
 backProfiletext:{
  textDecoration:'underline',
  color:'#0A4FA4',
- cursor:'pointer' 
+ cursor:'pointer',
+ fontSize:'14px',  
 },
+profileTextfileds:{
+  
+  "& .MuiOutlinedInput-root": {
+    background: "#F9FAFB",
+    borderRadius: "8px", 
+    "& fieldset": {
+      borderColor: "#9ab8ddff", 
+    },
+    "&:hover fieldset": {
+      borderColor: "#9ab8ddff", 
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#9ab8ddff", 
+      borderWidth: "2px", 
+    },
+  },
+  "& .MuiInputBase-input::placeholder": {
+    fontSize: "13px", 
+    color: "#8A8A8A", 
+    opacity: 1, 
+  },
+  },
+  textboxIcons:{
+    fontSize:20,
+  },
 
+//changepassword
+profilePasswordChangeBox:{
+  display:'flex',
+  flexDirection:'column',
+  gap:5,
+  padding:"6px",
+  paddingLeft:"0px",
+  paddingRight:"0px",
+  justifyContent:'center',
+  borderRadius:"10px"
+},
 }));
 
 export default useProfileStyles    
