@@ -14,12 +14,13 @@ const Deletepopup = ({open,handleclickopen}:Iprops) => {
         onClose={handleclickopen}
      >
         <DialogTitle sx={{display:'flex',color:'red'}}>
-         "Are you sure you want to delete the<br/> Surya Pratap?"
+         "Are you sure you want to delete the<br/>
+          Surya Pratap?"
         </DialogTitle>
         
         <DialogActions sx={{display:'flex', justifyContent:'center',gap:5,padding:'30px 0px'}}>
-          <Button variant="outlined" sx={{border:'1px solid red',color:'red'}}onClick={handleclickopen}>cancel</Button>
-          <Button variant="contained" sx={{background:'red'}}onClick={handleclickopen} autoFocus>
+          <Button variant="outlined" sx={{border:'1px solid red',color:'red',minWidth:160,textTransform:'capitalize'}}onClick={handleclickopen}>cancel</Button>
+          <Button variant="contained" sx={{background:'red',minWidth:160,textTransform:'capitalize'}}onClick={handleclickopen} autoFocus>
            Delete
           </Button>
         </DialogActions>

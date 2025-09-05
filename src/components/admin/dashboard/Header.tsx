@@ -7,23 +7,25 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from 'react-router-dom';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import { hasGrayBackground, shouldShowbackArrow, showSearchbox } from '../utils/RouteUtils';
 
 type Iprops={
   open:boolean;
   toggleDrawer:()=>void;
 }
+
 const Header = ({toggleDrawer}:Iprops) => {
 const theme = useTheme();
 const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
 const location=useLocation()
-const path=location.pathname.split('/').pop()
+const path=location.pathname.split('/').pop() ||""
 console.log(path)
 
 const navigate=useNavigate()
+//header title
 
 let title="";
-
 switch(path){
   case "admin":
   case "dashboard":
@@ -45,8 +47,10 @@ switch(path){
   case "profile":
   title="Profile"
   break;
+  case "userend-web":
+  title="User End Website"
 }
-
+//backarrow handle
 const backarrowHandle=()=>{
   switch(path){
    case "training-registrations":
@@ -64,9 +68,10 @@ const backarrowHandle=()=>{
  }
 }
 
+
 const{classes}=useHeaderStyles()
   return (
-    <AppBar position="static" className={classes.headerAppbar} style={{background:path==='profile'?"#F7FAFC":""}}>
+    <AppBar position="static" className={classes.headerAppbar} style={{background:hasGrayBackground(path)}}>
       <Toolbar className={classes.headerToolbar}>
           {isMobile&&(
             <IconButton
@@ -80,9 +85,7 @@ const{classes}=useHeaderStyles()
           )}
          <Box className={classes.headerandSearchContainer}> 
         <Box className={classes.AdmintitleBox}>
-        {path!=="admin" && 
-        path!=="dashboard" && 
-        path!=="user-management" &&
+        {shouldShowbackArrow(path)&&
         <ArrowBackIosOutlinedIcon className={classes.backArrow}
         onClick={backarrowHandle}/>}
         <Typography variant="h6" component="div" className={classes.AdminheaderTitle}>
@@ -91,8 +94,7 @@ const{classes}=useHeaderStyles()
         </Box>    
         
         <Box className={classes.searchBox}>
-          {path!=='profile'&&
-          path!=='user-info' &&
+          {showSearchbox(path)&&
            <TextField
             className={classes.headerSearch}
             size="small"

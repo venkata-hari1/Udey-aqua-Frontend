@@ -22,10 +22,19 @@ const[open,setOpen]=useState(false);
   };
 
 const location=useLocation()
-const path=location.pathname.split('/').pop()
+const path=location.pathname.split('/').pop() ||""
 console.log(path)
 
-
+//show bg
+const hasGrayBackground=(path:string)=>{
+  switch(path){
+    case "profile":
+    case "userend-web":
+      return "#F7FAFC";
+    default:
+      return "white"    
+  }
+}
 
 return (
     <Box sx={{ display:'flex'}}>
@@ -56,7 +65,7 @@ return (
           <Header open={open} toggleDrawer={toggleDrawer}/>
         <Box component="main" 
          sx={{
-          backgroundColor:path==="profile"?"#F7FAFC":"white",
+          backgroundColor:hasGrayBackground(path),
           flexGrow:1,
           p:2,
           overflow:'auto'}}>

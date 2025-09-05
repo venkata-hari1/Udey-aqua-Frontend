@@ -12,6 +12,7 @@ import UserInformation from "../components/admin/user-management/UserInformation
 import GetintouchUsers from "../components/admin/user-management/GetintouchUsers";
 import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
+import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 
 const AppRoutes = () => {
   return (
@@ -39,9 +40,10 @@ const AppRoutes = () => {
         <Route path="user-management/training-registrations/user-info" element={<UserInformation />} />
         <Route path="user-management/getin-touch" element={<GetintouchUsers />}/>
         <Route path="user-management/subscriber" element={<Subscriber />}/>
-         <Route path="profile" element={<Profile />}/>
+        <Route path="profile" element={<Profile />}/>
+        <Route path="userend-web" element={<UserEndweb />}/>
       </Route>
-
+         
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />
