@@ -57,22 +57,22 @@ const confirmPasswordHandler=(event:any)=>{
 
 
 //error 
-const[errorvalue,setErrorvalue]=useState()
+const[errorvalue,setErrorvalue]=useState<string[]>([])
 const passwordSubmitHandler=()=>{
 
   const pwdobj={
     pwdValue:passwordValue,
     confirmpwdValue:confirmPwdvalue
   }
-
 const resultPassword=validatePassword(pwdobj)
- console.log(resultPassword)
-  
-
+ setErrorvalue(resultPassword.errors)
 }
+
 return (
    <Dialog open={pwdopen} onClose={handlepsswordopen} 
-    className={classes.dialogContainer}>
+    className={classes.dialogContainer} 
+    fullWidth
+    maxWidth="xs">
        <DialogContent>
        <Box className={classes.profilePasswordChangeBox}>
        <DialogContentText>   
@@ -89,8 +89,8 @@ return (
         type={creatPwdtype}
         className={classes.profileTextfileds}
         onChange={changePasswordHandler}
-        error={!!errorvalue}
-        
+        error={errorvalue.some(err=>err.includes("Password must"))}
+        helperText={errorvalue.find(err=>err.includes("Password must")||" ")}
         InputProps={{
         startAdornment:(
           <InputAdornment position="start">
@@ -117,6 +117,8 @@ return (
         type={confirmPwdtype}
         className={classes.profileTextfileds}
         onChange={confirmPasswordHandler}
+         error={errorvalue.some(err => err.includes("do not match"))}
+         helperText={errorvalue.find(err => err.includes("do not match")) || " "}
         InputProps={{
         startAdornment:(
           <InputAdornment position="start">

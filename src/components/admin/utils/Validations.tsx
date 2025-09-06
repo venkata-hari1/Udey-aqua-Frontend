@@ -17,7 +17,7 @@ export const validateEmail = (email: string): boolean => {
   if(!passwordRegex.test(pwdValue)){
     errors.push("Password must be at least 6 characters, include a number, a letter, and a special character.")
   }
-  if(pwdValue!==confirmpwdValue){
+  if(confirmpwdValue!==pwdValue){
     errors.push("Password do not match")
   }
   return{
