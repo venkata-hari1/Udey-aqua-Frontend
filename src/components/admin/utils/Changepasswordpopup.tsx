@@ -55,6 +55,9 @@ const confirmPasswordHandler=(event:any)=>{
    setConfirmpwdValue(event.target.value)
 }
 
+
+//error 
+const[errorvalue,setErrorvalue]=useState()
 const passwordSubmitHandler=()=>{
 
   const pwdobj={
@@ -64,12 +67,8 @@ const passwordSubmitHandler=()=>{
 
 const resultPassword=validatePassword(pwdobj)
  console.log(resultPassword)
- 
- if(resultPassword.isValid===true){
-  alert("password is correct")
- }else{
-  alert("password not matching")
- }
+  
+
 }
 return (
    <Dialog open={pwdopen} onClose={handlepsswordopen} 
@@ -90,6 +89,8 @@ return (
         type={creatPwdtype}
         className={classes.profileTextfileds}
         onChange={changePasswordHandler}
+        error={!!errorvalue}
+        
         InputProps={{
         startAdornment:(
           <InputAdornment position="start">

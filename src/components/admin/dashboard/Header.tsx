@@ -48,6 +48,7 @@ switch(path){
   title="Profile"
   break;
   case "userend-web":
+  case "userend-home":  
   title="User End Website"
 }
 //backarrow handle
@@ -65,6 +66,8 @@ const backarrowHandle=()=>{
    case "subscriber":
     navigate('/admin/user-management')
     break; 
+   case "userend-home":
+    navigate('/admin/userend-web') 
  }
 }
 

@@ -4,6 +4,7 @@ export const showSearchbox=(path:string)=>{
     case "profile":
     case "user-info":
     case "userend-web":
+    
      return false
     default:
       return true    
@@ -14,9 +15,13 @@ export const shouldShowbackArrow=(path:string)=>{
   switch(path){
     case "admin":
     case "dashboard":  
-    case "user-management":
     case "userend-web":
-    return false
+    case "user-management":
+    case "training-registrations":
+    case "subscriber":
+    case "getin-touch":  
+    case "profile":
+     return false
     default:
       return true   
   }

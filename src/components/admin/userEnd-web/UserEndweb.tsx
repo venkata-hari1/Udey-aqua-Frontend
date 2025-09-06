@@ -1,29 +1,38 @@
 import {Box, Button} from "@mui/material"
 import useUserEndwebStyles from "./UserendwebStyles"
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 const UserEndweb = () => {
 
- const navigation=["Home","About Us","Culture","Training Programs","Technologies","News & Events","Contact Us"]
+const navigate=useNavigate()
 
+const navigation=[
+{id:1,menu:"Home",path:'/admin/userend-web/userend-home'},
+{id:2,menu:"About Us",path:'/userend-about'},
+{id:3,menu:"Culture",path:'/userend-culture'},
+{id:4,menu:"Training Programs",path:'/userend-training-program'},
+{id:5,menu:"Technologies",path:'/userend-technologies'},
+{id:6,menu:"News & Events",path:'/userend-news-events'},
+{id:7,menu:"Contact Us",path:'/userend-contact-us'}
+]
   const{classes,cx}=useUserEndwebStyles();
-  const[activeIndex,setActiveIndex]=useState<number | null>(0)
+  const[activeIndex,setActiveIndex]=useState<number | null>(1)
   
-  const setNavigation=(index:number)=>{
-    console.log(activeIndex)
-     setActiveIndex(index)
+  const setNavigation=(menu:any)=>{
+    setActiveIndex(menu.id)
+     navigate(menu.path)
   }
   
   return (
     <Box>
       <Box className={classes.userEndButtonsContainer}>
-       {navigation.map((nav,index)=>(
-        <Button key={index} 
+       {navigation.map((menu)=>(
+        <Button key={menu.id} 
         className={cx(classes.userEndButton,
-          activeIndex===index && classes.Activebutton
+          activeIndex===menu.id && classes.Activebutton
         )}
-        onClick={()=>setNavigation(index)}>{nav}</Button>
+        onClick={()=>setNavigation(menu)}>{menu.menu}</Button>
        ))}
     </Box>
       
