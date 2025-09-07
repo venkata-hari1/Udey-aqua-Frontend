@@ -1033,7 +1033,6 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(6),
-    background: COLORS.WHITE,
     position: "relative",
   },
   pricingTopImg: {
@@ -1207,7 +1206,6 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(6),
-    background: COLORS.WHITE,
     position: "relative",
     overflow: "hidden",
   },

@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import NewsCard from "./NewsCard";
 import fishesImg from "../../../assets/home/news_img.png";
@@ -6,6 +7,11 @@ import { useRef } from "react";
 import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
 import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
+import {
+  NEWS_FISHES_INITIAL,
+  NEWS_FISHES_ANIMATE,
+  NEWS_FISHES_TRANSITION,
+} from "../Shared/animations";
 
 import newsImg1 from "../../../assets/news_and_blogs/news_1.jpg";
 import newsImg2 from "../../../assets/news_and_blogs/news_2.jpg";
@@ -49,11 +55,13 @@ const NewsAndBlogs = () => {
 
   return (
     <Box className={classes.newsRoot}>
-      <Box
-        component="img"
+      <motion.img
         src={fishesImg}
         alt="Fishes"
         className={classes.newsFishesImg}
+        initial={NEWS_FISHES_INITIAL}
+        animate={NEWS_FISHES_ANIMATE}
+        transition={NEWS_FISHES_TRANSITION}
       />
       <SectionTitle title="News & Blogs" />
       <Box

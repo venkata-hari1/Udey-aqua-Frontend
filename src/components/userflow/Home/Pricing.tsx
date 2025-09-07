@@ -11,9 +11,9 @@ import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
 import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
 import {
-  FISH_OVAL_INITIAL,
-  FISH_OVAL_ANIMATE,
-  FISH_OVAL_TRANSITION,
+  PARTNERS_FISH_INITIAL,
+  PARTNERS_FISH_ANIMATE,
+  PARTNERS_FISH_TRANSITION,
 } from "../Shared/animations";
 
 const pricingData = [
@@ -64,9 +64,9 @@ const Pricing = () => {
         src={pricingTopImg}
         alt="Pricing Fishes"
         className={classes.pricingTopImgBase}
-        initial={FISH_OVAL_INITIAL}
-        animate={FISH_OVAL_ANIMATE}
-        transition={FISH_OVAL_TRANSITION}
+        initial={PARTNERS_FISH_INITIAL}
+        animate={PARTNERS_FISH_ANIMATE}
+        transition={PARTNERS_FISH_TRANSITION}
       />
       <SectionTitle title="Pricing" />
       <Box

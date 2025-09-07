@@ -13,6 +13,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     left: 0,
     width: "100%",
     height: "100vh",
+    backgroundColor: "#FFFFFFE5",
+  },
+  loadingLogo: {
+    width: "250px",
   },
   layout: {
     minHeight: "100vh",
@@ -123,7 +127,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     position: "absolute",
     top: 40,
     left: 0,
-    width: "100%",
+    width: "120%",
     objectFit: "cover",
     objectPosition: "top",
     zIndex: 0,
@@ -131,8 +135,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   footerBg2: {
     position: "absolute",
     top: "40px",
-    left: 0,
-    width: "100%",
+    left: "-100px",
+    width: "120%",
     // height: "430px",
     objectFit: "cover",
     objectPosition: "top",
@@ -142,7 +146,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     position: "absolute",
     top: 0,
     left: 0,
-    width: "100%",
+    width: "120%",
     objectFit: "cover",
     objectPosition: "top",
     zIndex: 0,
@@ -1660,9 +1664,22 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     padding: theme.spacing(2),
   },
   step5Divider: {
-    borderTop: "1px dashed #57B6FF",
     margin: "12px 0",
-    height: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  step5DividerIcon: {
+    width: "100%",
+    height: "auto",
+    maxHeight: 2,
+    marginLeft: "-55px",
+    [theme.breakpoints.down("lg")]: {
+      marginLeft: "0px",
+    },
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "-55px",
+    },
   },
   step5Grid: {
     display: "grid",

@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import fishBg from "../../../assets/home/partners_img.png";
 
@@ -11,6 +12,11 @@ import { useRef } from "react";
 import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
 import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
+import {
+  PARTNERS_FISH_INITIAL,
+  PARTNERS_FISH_ANIMATE,
+  PARTNERS_FISH_TRANSITION,
+} from "../Shared/animations";
 
 const partners = [
   { src: ciba, alt: "CIBA" },
@@ -49,11 +55,13 @@ const PartnersSection = () => {
           ))}
         </Box>
       </Box>
-      <Box
-        component="img"
+      <motion.img
         src={fishBg}
         alt=""
         className={classes.partnersBgImg}
+        initial={PARTNERS_FISH_INITIAL}
+        animate={PARTNERS_FISH_ANIMATE}
+        transition={PARTNERS_FISH_TRANSITION}
       />
     </Box>
   );

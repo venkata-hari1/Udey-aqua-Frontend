@@ -7,6 +7,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import MailOutlineIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -21,6 +22,17 @@ import footerBg2 from "../../../assets/home/footer2.png";
 import footerBg3 from "../../../assets/home/footer3.png";
 import footerMap from "../../../assets/home/footer_map.png";
 import useSharedStyles from "./sharedStyles";
+import {
+  FOOTER_BG1_INITIAL,
+  FOOTER_BG1_ANIMATE,
+  FOOTER_BG1_TRANSITION,
+  FOOTER_BG2_INITIAL,
+  FOOTER_BG2_ANIMATE,
+  FOOTER_BG2_TRANSITION,
+  FOOTER_BG3_INITIAL,
+  FOOTER_BG3_ANIMATE,
+  FOOTER_BG3_TRANSITION,
+} from "./animations";
 
 const navLinks1 = ["Home", "About US", "News & Events", "Contact Us"];
 const navLinks2 = ["Cultures", "Training Program", "Technologies"];
@@ -37,23 +49,29 @@ const Footer = () => {
         alt="Footer Waves"
         className={classes.footerBg}
       />
-      <Box
-        component="img"
+      <motion.img
         src={footerBg1}
         alt="Footer Waves"
         className={classes.footerBg1}
+        initial={FOOTER_BG1_INITIAL}
+        animate={FOOTER_BG1_ANIMATE}
+        transition={FOOTER_BG1_TRANSITION}
       />
-      <Box
-        component="img"
+      <motion.img
         src={footerBg2}
         alt="Footer Waves"
         className={classes.footerBg2}
+        initial={FOOTER_BG2_INITIAL}
+        animate={FOOTER_BG2_ANIMATE}
+        transition={FOOTER_BG2_TRANSITION}
       />
-      <Box
-        component="img"
+      <motion.img
         src={footerBg3}
         alt="Footer Waves"
         className={classes.footerBg3}
+        initial={FOOTER_BG3_INITIAL}
+        animate={FOOTER_BG3_ANIMATE}
+        transition={FOOTER_BG3_TRANSITION}
       />
       <Box className={classes.footerContent}>
         {isMobile ? (

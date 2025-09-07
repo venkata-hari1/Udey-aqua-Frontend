@@ -1,14 +1,15 @@
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material";
 import useSharedStyles from "./userflow/Shared/sharedStyles";
+import logoColor from "../assets/logo_color.png";
 
 const Loading = () => {
   const { classes } = useSharedStyles();
 
   return (
-    <Box className={classes.loadingLayout} >
-      <Typography variant="h6">Loading...</Typography>
+    <Box className={classes.loadingLayout}>
+      <img src={logoColor} alt="Logo" className={classes.loadingLogo} />
     </Box>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

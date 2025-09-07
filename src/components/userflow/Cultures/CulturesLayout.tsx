@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import culturesSideFish from "../../../assets/about_us/about_sidefish.png";
 import useCulturesStyles from "./culturesStyles";
 import ContactBox from "../Shared/ContactBox";
 import CulturesHero from "./CulturesHero";
+import {
+  CULTURES_FISH_INITIAL,
+  CULTURES_FISH_ANIMATE,
+  CULTURES_FISH_TRANSITION,
+  CULTURES_SIDE_INITIAL,
+  CULTURES_SIDE_ANIMATE,
+  CULTURES_SIDE_TRANSITION,
+} from "../Shared/animations";
 import CulturesSideImg from "../../../assets/cultures/side_img.png";
 import PdfDownloadSection from "./PdfDownloadSection";
 import PlansSection from "../Shared/PlansSection";
@@ -81,7 +90,13 @@ const CulturesLayout: React.FC = () => {
               </Box>
               <ContactBox />
               <Box className={classes.culturesSidebarFish}>
-                <img src={getSidebarFishImage()} alt="Fish" />
+                <motion.img
+                  src={getSidebarFishImage()}
+                  alt="Fish"
+                  initial={CULTURES_FISH_INITIAL}
+                  animate={CULTURES_FISH_ANIMATE}
+                  transition={CULTURES_FISH_TRANSITION}
+                />
               </Box>
             </Grid>
           )}
@@ -90,10 +105,13 @@ const CulturesLayout: React.FC = () => {
             size={{ xs: 12, md: 10 }}
             className={classes.culturesMainContent}
           >
-            <img
+            <motion.img
               src={CulturesSideImg}
               alt="Cultures Side Img"
               className={classes.culturesSideImg}
+              initial={CULTURES_SIDE_INITIAL}
+              animate={CULTURES_SIDE_ANIMATE}
+              transition={CULTURES_SIDE_TRANSITION}
             />
             <Outlet />
           </Grid>

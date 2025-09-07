@@ -3,6 +3,7 @@ import { ChevronLeft } from "@mui/icons-material";
 import { usePlansStyles } from "../sharedStyles";
 import { IMAGES, TECHNOLOGY_MAP, TRAINING_PRICE_MAP } from "./constants";
 import { formatTrainingCourse } from "./utils";
+import lineIcon from "../../../../assets/icons/line.svg";
 import type {
   StepComponentProps,
   FormData,
@@ -74,7 +75,14 @@ const Step5 = ({
               {formData.pincode ? `, ${formData.pincode}` : ""}
             </Typography>
           </Box>
-          <Box className={classes.step5Divider} />
+          <Box className={classes.step5Divider}>
+            <Box
+              component="img"
+              src={lineIcon}
+              alt="Divider line"
+              className={classes.step5DividerIcon}
+            />
+          </Box>
           <Box className={classes.step5Card}>
             <Box className={classes.step5SectionHeader}>
               <Box

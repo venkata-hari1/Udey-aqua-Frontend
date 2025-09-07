@@ -1,9 +1,15 @@
-import { Box, Typography, IconButton, useMediaQuery } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useTheme } from '@mui/material/styles';
-import heroImg from '../../../assets/home/hero_img.png';
-import useHomeStyles from './homeStyles';
+import { Box, Typography, IconButton, useMediaQuery } from "@mui/material";
+import { motion } from "framer-motion";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useTheme } from "@mui/material/styles";
+import heroImg from "../../../assets/home/hero_img.png";
+import useHomeStyles from "./homeStyles";
+import {
+  CULTURES_FISH_INITIAL,
+  CULTURES_FISH_ANIMATE,
+  CULTURES_FISH_TRANSITION,
+} from "../Shared/animations";
 
 const Hero = () => {
   const theme = useTheme();
@@ -19,23 +25,25 @@ const Hero = () => {
       </Box>
       <Box className={classes.heroMain}>
         <Box className={classes.heroImgBox}>
-          <Box
-            component="img"
+          <motion.img
             src={heroImg}
             alt="Hero"
             className={classes.heroImg}
+            initial={CULTURES_FISH_INITIAL}
+            animate={CULTURES_FISH_ANIMATE}
+            transition={CULTURES_FISH_TRANSITION}
           />
         </Box>
         <Box className={classes.heroTextBoxWrap}>
           <Box className={classes.heroTextBox}>
-            <Typography 
-              variant={isMobile ? "h4" : "h2"} 
+            <Typography
+              variant={isMobile ? "h4" : "h2"}
               className={classes.heroMainTitle}
             >
               UDAY AQUA
             </Typography>
-            <Typography 
-              variant={isMobile ? "h5" : "h3"} 
+            <Typography
+              variant={isMobile ? "h5" : "h3"}
               className={classes.heroSubTitle}
             >
               – Advancing Aqua

@@ -1,8 +1,17 @@
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import useNewsEventsStyles from "./newsEventsStyles";
 import ContactBox from "../Shared/ContactBox";
 import NewsEventsHero from "./NewsEventsHero";
+import {
+  CULTURES_FISH_INITIAL,
+  CULTURES_FISH_ANIMATE,
+  CULTURES_FISH_TRANSITION,
+  PARTNERS_FISH_INITIAL,
+  PARTNERS_FISH_ANIMATE,
+  PARTNERS_FISH_TRANSITION,
+} from "../Shared/animations";
 import NewsSideImg from "../../../assets/news/sideImg.png";
 import NewsSideImgSide from "../../../assets/news/sideFishImg.png";
 
@@ -57,11 +66,13 @@ const NewsEventsLayout = () => {
                 ))}
               </Box>
               <ContactBox />
-              <Box
-                component="img"
+              <motion.img
                 src={NewsSideImg}
                 alt="News & Events"
                 style={{ width: "100%", marginTop: 16 }}
+                initial={CULTURES_FISH_INITIAL}
+                animate={CULTURES_FISH_ANIMATE}
+                transition={CULTURES_FISH_TRANSITION}
               />
             </Grid>
           )}
@@ -71,10 +82,13 @@ const NewsEventsLayout = () => {
             className={classes.newsEventsMainContent}
           >
             {!isMobile && (
-              <img
+              <motion.img
                 src={NewsSideImgSide}
                 alt="News Side Fish"
                 className={classes.newsEventsSideImg}
+                initial={PARTNERS_FISH_INITIAL}
+                animate={PARTNERS_FISH_ANIMATE}
+                transition={PARTNERS_FISH_TRANSITION}
               />
             )}
             <Outlet />
