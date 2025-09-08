@@ -226,7 +226,7 @@ const handleEmailSubmit=()=>{
             <Typography
               component="a"
               color="#0A4FA4"
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer",textDecoration:'underline' }}
             >
               Resend
             </Typography>

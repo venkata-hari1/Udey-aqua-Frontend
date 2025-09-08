@@ -14,7 +14,10 @@ import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
-import UserendHeader from "../components/admin/userEnd-web/userEndHome/UserendHeader";
+import UserendCorporates from "../components/admin/userEnd-web/userEndHome/UserendCorporates";
+import UserEndMoto from "../components/admin/userEnd-web/userEndHome/UserEndMotto";
+import UserEndMotto from "../components/admin/userEnd-web/userEndHome/UserEndMotto";
+import UserEndabout from "../components/admin/userEnd-web/userEndHome/UserEndabout";
 
 
 const AppRoutes = () => {
@@ -47,8 +50,8 @@ const AppRoutes = () => {
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
       </Route>
-         <Route path="userend-home" element={<UserEndHome />} />
-         <Route path="userend-header" element={<UserendHeader />} />
+         
+          <Route path="userend-about" element={<UserEndabout/>} />
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />

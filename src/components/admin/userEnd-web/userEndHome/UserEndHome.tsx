@@ -6,6 +6,10 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useUserEndwebStyles from "../UserendwebStyles";
 import UserendHeader from "./UserendHeader";
+import UserendHero from "./UserendHero";
+import UserendCorporates from "./UserendCorporates";
+import UserEndMotto from "./UserEndMotto";
+import UserEndabout from "./UserEndabout";
 
 
 
@@ -15,10 +19,10 @@ const{classes}=useUserEndwebStyles()
 
 const homemenudata=[
    {id:1,menu:"Header",content:<UserendHeader />} ,
-   {id:2,menu:"Header Section",content:"Header section content"} ,
-   {id:3,menu:"Our Corporates",content:""} ,
-   {id:4,menu:"Our Motto",content:""} ,
-   {id:5,menu: "About Us",content:""} ,
+   {id:2,menu:"Hero Section",content:<UserendHero />} ,
+   {id:3,menu:"Our Corporates",content:<UserendCorporates />} ,
+   {id:4,menu:"Our Motto",content:<UserEndMotto />} ,
+   {id:5,menu: "About Us",content:<UserEndabout />} ,
    {id:6,menu:"Why Choose Us",content:""} ,
    {id:7,menu:"Add Video",content:""} ,
    {id:8,menu:"Our Projects",content:""} ,
