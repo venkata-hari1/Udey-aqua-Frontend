@@ -60,7 +60,7 @@ const HeroCarousel = ({
 
         {renderOverlay && renderOverlay(currentItem)}
 
-        {title && (
+        {renderTitle && (
           <>
             <Box className={classes.successStoriesOverlay}>
               {renderTitle ? (

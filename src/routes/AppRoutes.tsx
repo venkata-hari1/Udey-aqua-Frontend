@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Layout from "../components/userflow/Shared/Layout";
 import AboutLayout from "../components/userflow/About/AboutLayout";
 import Home from "../components/userflow/Home/Home";
@@ -33,6 +34,12 @@ import Blog from "../components/userflow/NewsEvents/Blog";
 import Contact from "../components/userflow/Contact/Contact";
 
 const AppRoutes = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [location.pathname]);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

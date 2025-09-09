@@ -240,7 +240,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     width: "180px",
     height: "180px",
     borderRadius: "50%",
-    border: "4px solid white",
+    borderRight: "4px solid #F7FAFC",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -266,7 +266,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   culturePageTextContent: {
     background: "linear-gradient(135deg, #0A4FA4 0%, #041E3E 100%)",
     borderRadius: "0 16px 16px 0",
-    padding: theme.spacing(4, 6, 4, 14),
+    padding: theme.spacing(3, 6, 3, 14),
     marginLeft: "60px",
     flex: 1,
     height: "60px",
@@ -431,6 +431,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     fontSize: "2rem",
     lineHeight: 1.2,
+    textTransform: "capitalize",
     marginBottom: theme.spacing(1.5),
     color: COLORS.WHITE,
     [theme.breakpoints.down("md")]: {

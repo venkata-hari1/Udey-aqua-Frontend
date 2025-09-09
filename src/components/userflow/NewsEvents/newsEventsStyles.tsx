@@ -531,7 +531,6 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   // Detail view (reuses modal look n feel)
   storyModalContent: {
     width: "95%",
-    background: COLORS.WHITE,
     borderRadius: 12,
     overflow: "hidden",
     position: "relative",
@@ -838,7 +837,8 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     borderRadius: "12px 12px 0 0",
   },
   newsHeaderTitle: {
-    fontWeight: "bold",
+    fontWeight: 400,
+    padding: "0 15px",
     fontFamily: FONTS.DM_SERIF_DISPLAY,
   },
   newsDivider: {

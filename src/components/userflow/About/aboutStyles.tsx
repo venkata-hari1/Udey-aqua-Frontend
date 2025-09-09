@@ -98,15 +98,14 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.PRIMARY_BLUE,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontWeight: 400,
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
     fontSize: 32,
     [theme.breakpoints.down("md")]: {
       fontSize: 22,
-      marginBottom: theme.spacing(1.5),
     },
   },
   aboutCardDesc: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: 500,
     color: COLORS.DARK,
     marginBottom: theme.spacing(2),

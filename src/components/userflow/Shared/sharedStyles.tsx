@@ -336,8 +336,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   copyright: {
     width: "100%",
     borderTop: `1px solid ${COLORS.LIGHT_GRAY}`,
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     marginTop: 0,
     textAlign: "center",
     color: COLORS.WHITE,
@@ -350,6 +350,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     left: 0,
     bottom: 0,
     background: "transparent",
+    fontFamily: FONTS.INTER,
+    fontWeight: 500,
   },
   footerLogoBoxMobile: {
     display: "flex",
@@ -496,6 +498,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   copyrightDesktop: {
     ...TYPOGRAPHY.body1(theme),
+    fontSize: 14,
     zIndex: "10",
   },
   copyrightIcon: {
@@ -988,6 +991,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   contactBoxIcon: {
     color: COLORS.SECONDARY_BLUE,
     fontSize: 18,
+    width: 17,
   },
   contactBoxRow: {
     display: "flex",
@@ -1162,6 +1166,7 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 999,
     maxWidth: "fit-content",
     margin: "-80px auto 40px auto",
+    boxShadow: "0 2px 10px 0 #0463EE66",
     [theme.breakpoints.down("md")]: {
       padding: "12px 20px",
       fontSize: "14px",
@@ -1218,17 +1223,19 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     listStyle: "none",
   },
   plansCardListItem: {
-    marginBottom: 3,
+    marginBottom: 9,
     position: "relative",
     paddingLeft: "20px",
-    fontSize: "16px",
+    fontSize: "14px",
     color: COLORS.DARK,
     lineHeight: 1.4,
+    fontFamily: FONTS.POPPINS,
+    fontWeight: 400,
     "&::before": {
       content: '"•"',
       position: "absolute",
       left: 0,
-      color: COLORS.PRIMARY_BLUE,
+      color: COLORS.DARK,
       fontWeight: "bold",
     },
   },

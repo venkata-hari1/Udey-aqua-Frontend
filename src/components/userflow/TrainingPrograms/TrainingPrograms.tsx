@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useNavigate } from "react-router-dom";
 import useTrainingProgramsStyles from "./trainingProgramsStyles";
+import { useScrollWithOffset } from "../NewsEvents/hooks";
+import PlansSection from "../Shared/PlansSection";
 
 // Import images for cultures from training_fish folder
 import seaBassImg from "../../../assets/cultures/training_fish/seabass.png";
@@ -46,9 +49,14 @@ const TrainingCard: React.FC<TrainingCardProps> = ({
   );
 };
 
+type ViewMode = "both" | "cultures" | "technologies";
+
 const TrainingPrograms: React.FC = () => {
   const { classes } = useTrainingProgramsStyles();
   const navigate = useNavigate();
+  const { ref: topRef, scrollTo: scrollToTop } = useScrollWithOffset(200);
+  const [viewMode, setViewMode] = useState<ViewMode>("both");
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   const cultures = [
     {
@@ -126,52 +134,127 @@ const TrainingPrograms: React.FC = () => {
     navigate(path);
   };
 
+  const handleViewAllCultures = (): void => {
+    setViewMode("cultures");
+    scrollToTop();
+  };
+
+  const handleViewAllTechnologies = (): void => {
+    setViewMode("technologies");
+    scrollToTop();
+  };
+
   return (
     <Box className={`${classes.trainingContent} ${classes.px3}`}>
+      <Box ref={topRef} />
       <Box className={classes.trainingContent}>
-        <Box className={classes.trainingSection}>
-          <Box className={classes.flex}>
-            <Typography
-              className={`${classes.trainingSectionTitle} ${classes.extension}`}
+        {(viewMode === "both" || viewMode === "cultures") && (
+          <Box className={classes.trainingSection}>
+            <Box className={classes.flex}>
+              <Typography
+                className={`${classes.trainingSectionTitle} ${classes.extension}`}
+              >
+                Cultures
+              </Typography>
+            </Box>
+            {viewMode === "both" ? (
+              <Typography
+                onClick={handleViewAllCultures}
+                className={classes.viewAllLink}
+              >
+                View all
+              </Typography>
+            ) : (
+              <Typography
+                onClick={() => setViewMode("both")}
+                className={classes.backLink}
+              >
+                <ChevronLeftIcon
+                  fontSize="small"
+                  style={{ verticalAlign: "middle", marginRight: 4 }}
+                />
+                Back
+              </Typography>
+            )}
+            <Box
+              className={
+                viewMode === "both"
+                  ? classes.trainingGridCultures
+                  : classes.trainingGridSimple
+              }
             >
-              Cultures
-            </Typography>
+              {cultures.map((culture) => (
+                <TrainingCard
+                  key={culture.title}
+                  title={culture.title}
+                  image={culture.image}
+                  onClick={() => handleCardClick(culture.path)}
+                  className={
+                    viewMode === "both" ? culture.className : undefined
+                  }
+                />
+              ))}
+            </Box>
           </Box>
-          <Box className={classes.trainingGridCultures}>
-            {cultures.map((culture) => (
-              <TrainingCard
-                key={culture.title}
-                title={culture.title}
-                image={culture.image}
-                onClick={() => handleCardClick(culture.path)}
-                className={culture.className}
-              />
-            ))}
-          </Box>
-        </Box>
+        )}
 
         {/* Technologies Section */}
-        <Box className={classes.trainingSection}>
-          <Box className={classes.flex}>
-            <Typography
-              className={`${classes.trainingSectionTitle} ${classes.marginTopMore}`}
+        {(viewMode === "both" || viewMode === "technologies") && (
+          <Box className={classes.trainingSection}>
+            <Box className={classes.flex}>
+              <Typography
+                className={`${classes.trainingSectionTitle} ${classes.marginTopMore}`}
+              >
+                Technologies
+              </Typography>
+            </Box>
+            {viewMode === "both" ? (
+              <Typography
+                onClick={handleViewAllTechnologies}
+                className={classes.viewAllLink}
+              >
+                View all
+              </Typography>
+            ) : (
+              <Typography
+                onClick={() => setViewMode("both")}
+                className={classes.backLink}
+              >
+                <ChevronLeftIcon
+                  fontSize="small"
+                  style={{ verticalAlign: "middle", marginRight: 4 }}
+                />
+                Back
+              </Typography>
+            )}
+            <Box
+              className={
+                viewMode === "both"
+                  ? classes.trainingGridTechnologies
+                  : classes.trainingGridSimple
+              }
             >
-              Technologies
-            </Typography>
+              {technologies.map((technology) => (
+                <TrainingCard
+                  key={technology.title}
+                  title={technology.title}
+                  image={technology.image}
+                  onClick={() => handleCardClick(technology.path)}
+                  className={
+                    viewMode === "both" ? technology.className : undefined
+                  }
+                />
+              ))}
+            </Box>
           </Box>
-          <Box className={classes.trainingGridTechnologies}>
-            {technologies.map((technology) => (
-              <TrainingCard
-                key={technology.title}
-                title={technology.title}
-                image={technology.image}
-                onClick={() => handleCardClick(technology.path)}
-                className={technology.className}
-              />
-            ))}
-          </Box>
-        </Box>
+        )}
       </Box>
+      {viewMode === "both" && (
+        <PlansSection
+          currentStep={currentStep}
+          onStepChange={(step: number) => setCurrentStep(step)}
+        />
+      )}
     </Box>
   );
 };

@@ -2,7 +2,12 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
-import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import {
+  useCarousel,
+  usePagination,
+  useCalendarFilter,
+  useScrollWithOffset,
+} from "./hooks";
 import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 import blog1 from "../../../assets/news/blog/blog1.png";
@@ -115,6 +120,10 @@ const readMoreBlogData: ReadonlyArray<ReadMoreBlogItem> = [
 
 const Blog = () => {
   const { classes } = useNewsEventsStyles();
+  const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
+    useScrollWithOffset(200);
+  const { ref: detailTopRef, scrollTo: scrollToDetailTop } =
+    useScrollWithOffset(200);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     image: "",
@@ -148,11 +157,14 @@ const Blog = () => {
         "The future of aquaculture lies in balancing technological innovation with traditional wisdom. Our research continues to explore ways to make advanced farming techniques accessible to farmers of all scales while maintaining the ecological integrity of our water resources.",
       ],
     });
+    setTimeout(() => {
+      scrollToDetailTop();
+    }, 0);
   };
 
   if (detail.active) {
     return (
-      <Box className={classes.newsDetailView}>
+      <Box className={classes.newsDetailView} ref={detailTopRef}>
         <Box className={classes.newsDetailHeader}>
           <Box className={classes.newsDetailCalendarTopRight}>
             <Box
@@ -212,6 +224,7 @@ const Blog = () => {
 
       {/* Bottom Section - from News */}
       <Box className={classes.readMoreNewsSection}>
+        <Box ref={readMoreSectionRef} />
         <Box className={classes.readMoreNewsHeader}>
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
             Explore More Blog Articles
@@ -242,9 +255,18 @@ const Blog = () => {
         <Pagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
-          onPageChange={pagination.goToPage}
-          onPrevious={pagination.goToPreviousPage}
-          onNext={pagination.goToNextPage}
+          onPageChange={(p) => {
+            pagination.goToPage(p);
+            scrollToReadMore();
+          }}
+          onPrevious={() => {
+            pagination.goToPreviousPage();
+            scrollToReadMore();
+          }}
+          onNext={() => {
+            pagination.goToNextPage();
+            scrollToReadMore();
+          }}
           canGoPrevious={pagination.canGoPrevious}
           canGoNext={pagination.canGoNext}
         />

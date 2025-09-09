@@ -161,6 +161,36 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
   },
 
+  viewAllLink: {
+    cursor: "pointer",
+    textDecoration: "underline",
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.INTER,
+    fontWeight: 500,
+    fontSize: 16,
+    maxWidth: 1200,
+    margin: "0 auto 16px auto",
+    textAlign: "right",
+  },
+
+  mt10: {
+    marginTop: theme.spacing(10),
+  },
+
+  backLink: {
+    cursor: "pointer",
+    color: COLORS.PRIMARY_BLUE,
+    fontFamily: FONTS.INTER,
+    fontWeight: 500,
+    fontSize: 16,
+    maxWidth: 1200,
+    margin: "0 auto 16px auto",
+    textAlign: "left",
+    "& svg": {
+      marginTop: "-2px",
+    },
+  },
+
   trainingGridCultures: {
     display: "grid",
     gridTemplateColumns: "repeat(12, 1fr)",
@@ -190,6 +220,26 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       gap: "5px",
+    },
+  },
+  // Simple uniform grid for View All mode
+  trainingGridSimple: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: theme.spacing(20, 2),
+    maxWidth: 1200,
+    padding: "0 10px",
+    margin: "0 auto",
+    [theme.breakpoints.down("md")]: {
+      gridTemplateColumns: "repeat(2, 1fr)",
+    },
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "repeat(1, 1fr)",
+      gap: theme.spacing(1.5),
+    },
+    "& $trainingCard": {
+      gridColumn: "auto",
+      gridRow: "auto",
     },
   },
   marginTopMore: {
@@ -310,6 +360,7 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    maxHeight: "250px",
   },
   trainingCardContent: {
     position: "absolute",

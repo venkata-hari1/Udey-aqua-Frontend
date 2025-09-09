@@ -1148,6 +1148,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   pricingCardFeatureItem: {
     marginBottom: 8,
     fontSize: 18,
+    fontFamily: FONTS.POPPINS,
+    fontWeight: 400,
   },
   pricingCardButton: {
     color: theme.palette.primary.main,
@@ -1191,7 +1193,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   sectionTitleText: {
     color: theme.palette.primary.main,
-    fontSize: 40,
+    fontSize: 36,
     fontWeight: 400,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     paddingLeft: theme.spacing(2),
@@ -1224,6 +1226,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: FONTS.INTER,
+    fontWeight: 400,
     gap: theme.spacing(2),
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(2),
@@ -1231,7 +1235,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   teamTabActive: {
     color: COLORS.SECONDARY_BLUE,
     fontWeight: 500,
-    fontSize: 24,
+    fontSize: 20,
     cursor: "pointer",
     textDecoration: "underline",
   },
@@ -1245,7 +1249,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   teamTabInactive: {
     color: COLORS.DARK,
     fontWeight: 500,
-    fontSize: 24,
+    fontSize: 20,
     cursor: "pointer",
   },
   teamScrollWrap: {

@@ -2,7 +2,12 @@ import { Box, Typography, IconButton } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
-import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import {
+  useCarousel,
+  usePagination,
+  useCalendarFilter,
+  useScrollWithOffset,
+} from "./hooks";
 import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 interface VideoItem {
@@ -75,6 +80,8 @@ const videoLibrary: ReadonlyArray<VideoItem> = [
 const Videos = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
   const { classes } = useNewsEventsStyles();
+  const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
+    useScrollWithOffset(200);
 
   // Use custom hooks
   const carousel = useCarousel({ items: heroVideos });
@@ -157,6 +164,7 @@ const Videos = () => {
 
       {/* Video Library Section - Same structure as News.tsx readMoreNewsSection */}
       <Box className={classes.readMoreNewsSection}>
+        <Box ref={readMoreSectionRef} />
         <Box className={classes.readMoreNewsHeader}>
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
             Explore Our Video Library
@@ -232,9 +240,18 @@ const Videos = () => {
         <Pagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
-          onPageChange={pagination.goToPage}
-          onPrevious={pagination.goToPreviousPage}
-          onNext={pagination.goToNextPage}
+          onPageChange={(p) => {
+            pagination.goToPage(p);
+            scrollToReadMore();
+          }}
+          onPrevious={() => {
+            pagination.goToPreviousPage();
+            scrollToReadMore();
+          }}
+          onNext={() => {
+            pagination.goToNextPage();
+            scrollToReadMore();
+          }}
           canGoPrevious={pagination.canGoPrevious}
           canGoNext={pagination.canGoNext}
         />

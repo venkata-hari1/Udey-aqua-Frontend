@@ -124,11 +124,6 @@ const OurTeam = () => {
     setOpen(true);
   };
 
-  const handleTabChange = (_: any, newValue: "Directors" | "Advisors") => {
-    setActiveTab(newValue);
-    setCurrentIndex(0);
-  };
-
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
   };
@@ -196,26 +191,6 @@ const OurTeam = () => {
 
         <Box className={classes.headerIconContainer}>
           <Box component="img" src={aboutImg} className={classes.headerIcon} />
-        </Box>
-
-        <Box className={classes.tabContainer}>
-          <Box
-            className={`${classes.tabItem} ${
-              activeTab === "Directors" ? classes.tabItemActive : ""
-            }`}
-            onClick={() => handleTabChange(null, "Directors")}
-          >
-            Directors
-          </Box>
-          <Box className={classes.tabDivider} />
-          <Box
-            className={`${classes.tabItem} ${
-              activeTab === "Advisors" ? classes.tabItemActive : ""
-            }`}
-            onClick={() => handleTabChange(null, "Advisors")}
-          >
-            Advisers
-          </Box>
         </Box>
       </Box>
       <Box className={classes.sectionWrapper}>

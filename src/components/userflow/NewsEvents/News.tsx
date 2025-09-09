@@ -15,6 +15,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useState, useEffect } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
+import { useScrollWithOffset } from "./hooks";
 
 import latest1 from "../../../assets/news/latest/img0.png";
 import latest2 from "../../../assets/news/latest/img1.png";
@@ -198,6 +199,10 @@ const readMoreNewsData: ReadonlyArray<ReadMoreNewsItem> = [
 
 const News = () => {
   const { classes } = useNewsEventsStyles();
+  const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
+    useScrollWithOffset(200);
+  const { ref: detailTopRef, scrollTo: scrollToDetailTop } =
+    useScrollWithOffset(200);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
@@ -252,6 +257,7 @@ const News = () => {
 
   const handlePageChange = (page: number): void => {
     setCurrentPage(page);
+    scrollToReadMore();
   };
 
   const handleReadMore = (news: ReadMoreNewsItem): void => {
@@ -269,6 +275,9 @@ const News = () => {
         "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
       ],
     });
+    setTimeout(() => {
+      scrollToDetailTop();
+    }, 0);
   };
 
   // Loading state
@@ -299,7 +308,7 @@ const News = () => {
 
   if (detail.active) {
     return (
-      <Box className={classes.newsDetailView}>
+      <Box className={classes.newsDetailView} ref={detailTopRef}>
         <Box className={classes.newsDetailHeader}>
           <Box className={classes.newsDetailCalendarTopRight}>
             <Box
@@ -391,6 +400,7 @@ const News = () => {
       </Box>
 
       <Box className={classes.readMoreNewsSection}>
+        <Box ref={readMoreSectionRef} />
         <Box className={classes.readMoreNewsHeader}>
           <Typography variant="h4" className={classes.readMoreNewsTitle}>
             Read More News & Updates

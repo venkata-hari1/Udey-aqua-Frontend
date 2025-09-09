@@ -43,6 +43,30 @@ const teamData = [
   },
 ];
 
+const advisorsData = [
+  {
+    image: teamImg2,
+    name: "Dr. Meera Nair",
+    location: "Kochi, Kerala",
+    role: "Senior Aquaculture Advisor",
+    roleColor: "#1976d2",
+  },
+  {
+    image: teamImg3,
+    name: "Rajesh Kumar",
+    location: "Chennai, Tamil Nadu",
+    role: "Technical Advisor",
+    roleColor: "#1976d2",
+  },
+  {
+    image: teamImg,
+    name: "Anita Verma",
+    location: "Vizag, Andhra Pradesh",
+    role: "Sustainability Advisor",
+    roleColor: "#1976d2",
+  },
+];
+
 const testimonialData = [
   {
     image: teamImg,
@@ -94,6 +118,9 @@ const Team: React.FC<TeamProps> = ({
   const isOverflowing = useIsOverflowing(scrollRef);
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [showFullQuote, setShowFullQuote] = useState(false);
+  const [activeTab, setActiveTab] = useState<"directors" | "advisors">(
+    "directors"
+  );
 
   const handlePrev = () => {
     setCurrentTestimonialIndex((prev) =>
@@ -230,9 +257,29 @@ const Team: React.FC<TeamProps> = ({
       <SectionTitle title="Our Directors & Advisors" />
       {showTabs && (
         <Box className={classes.teamTabs}>
-          <Box className={classes.teamTabActive}>Directors</Box>
+          <Box
+            className={
+              activeTab === "directors"
+                ? classes.teamTabActive
+                : classes.teamTabInactive
+            }
+            onClick={() => setActiveTab("directors")}
+            style={{ cursor: "pointer" }}
+          >
+            Directors
+          </Box>
           <Box className={classes.teamTabDivider}>|</Box>
-          <Box className={classes.teamTabInactive}>Advisors</Box>
+          <Box
+            className={
+              activeTab === "advisors"
+                ? classes.teamTabActive
+                : classes.teamTabInactive
+            }
+            onClick={() => setActiveTab("advisors")}
+            style={{ cursor: "pointer" }}
+          >
+            Advisors
+          </Box>
         </Box>
       )}
       <Box className={classes.teamScrollWrap}>
@@ -250,13 +297,15 @@ const Team: React.FC<TeamProps> = ({
           }
         >
           {isOverflowing && <Box />}
-          {teamData.map((item, idx) => (
-            <Box key={idx} className={classes.teamCardOuter}>
-              <Box className={classes.teamCardInner}>
-                <TeamCard {...item} />
+          {(activeTab === "directors" ? teamData : advisorsData).map(
+            (item, idx) => (
+              <Box key={idx} className={classes.teamCardOuter}>
+                <Box className={classes.teamCardInner}>
+                  <TeamCard {...item} />
+                </Box>
               </Box>
-            </Box>
-          ))}
+            )
+          )}
           {isOverflowing && <Box />}
         </Box>
       </Box>

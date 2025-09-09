@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import useSharedStyles from "./sharedStyles";
+import phoneSvg from "../../../assets/icons/phone.svg";
 
 const HelpSection = () => {
   const { classes } = useSharedStyles();
@@ -13,12 +13,14 @@ const HelpSection = () => {
       </Typography>
       <Typography className={classes.contactBoxLabel}>Call Us Now:</Typography>
       <Box className={classes.contactBoxRow}>
-        <PhoneIcon className={classes.contactBoxIcon} />
+        <img src={phoneSvg} alt="Phone" className={classes.contactBoxIcon} />
         <Typography className={classes.contactBoxValue}>
           +91 97911-99909
         </Typography>
       </Box>
-      <Typography className={classes.contactBoxLabel}>Talk Us Now:</Typography>
+      <Typography className={classes.contactBoxLabel}>
+        Talk To Us Now:
+      </Typography>
       <Box className={classes.contactBoxRow}>
         <EmailIcon className={classes.contactBoxIcon} />
         <Typography className={classes.contactBoxValue}>

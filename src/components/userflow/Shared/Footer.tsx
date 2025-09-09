@@ -15,7 +15,7 @@ import TwitterIcon from "../../../assets/icons/twitter.svg";
 import FacebookIcon from "../../../assets/icons/facebook.svg";
 import InstagramIcon from "../../../assets/icons/instagram.svg";
 import CopyIcon from "../../../assets/icons/copy.svg";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/footer_logo.png";
 import footerBg from "../../../assets/home/footer.png";
 import footerBg1 from "../../../assets/home/footer1.png";
 import footerBg2 from "../../../assets/home/footer2.png";
@@ -34,8 +34,8 @@ import {
   FOOTER_BG3_TRANSITION,
 } from "./animations";
 
-const navLinks1 = ["Home", "About US", "News & Events", "Contact Us"];
-const navLinks2 = ["Cultures", "Training Program", "Technologies"];
+const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
+const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();

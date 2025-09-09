@@ -1,7 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
-import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import {
+  useCarousel,
+  usePagination,
+  useCalendarFilter,
+  useScrollWithOffset,
+} from "./hooks";
 import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 import awards1 from "../../../assets/news/awards/img1.png";
@@ -84,6 +89,10 @@ const awardsData: ReadonlyArray<AwardItem> = [
 
 const Awards = () => {
   const { classes } = useNewsEventsStyles();
+  const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
+    useScrollWithOffset(200);
+  const { ref: detailTopRef, scrollTo: scrollToDetailTop } =
+    useScrollWithOffset(200);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
     award: null,
@@ -99,11 +108,14 @@ const Awards = () => {
       active: true,
       award,
     });
+    setTimeout(() => {
+      scrollToDetailTop();
+    }, 0);
   };
 
   if (detail.active && detail.award) {
     return (
-      <Box className={classes.awardsRoot}>
+      <Box className={classes.awardsRoot} ref={detailTopRef}>
         <Box className={classes.awardsDetailView}>
           <Box className={classes.awardsDetailHeader}>
             <Box className={classes.awardsDetailCalendarTopRight}>
@@ -223,13 +235,22 @@ const Awards = () => {
         ))}
       </Box>
 
-      <Box className={classes.awardsPagination}>
+      <Box className={classes.awardsPagination} ref={readMoreSectionRef}>
         <Pagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}
-          onPageChange={pagination.goToPage}
-          onPrevious={pagination.goToPreviousPage}
-          onNext={pagination.goToNextPage}
+          onPageChange={(p) => {
+            pagination.goToPage(p);
+            scrollToReadMore();
+          }}
+          onPrevious={() => {
+            pagination.goToPreviousPage();
+            scrollToReadMore();
+          }}
+          onNext={() => {
+            pagination.goToNextPage();
+            scrollToReadMore();
+          }}
           canGoPrevious={pagination.canGoPrevious}
           canGoNext={pagination.canGoNext}
           className={classes.awardsPagination}

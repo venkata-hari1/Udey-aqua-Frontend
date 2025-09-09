@@ -20,7 +20,7 @@ const aboutCards = [
       "Our vision is to set the benchmark for sustainable aquaculture, ensuring food security, economic growth, and environmental stewardship for future generations.",
   },
   {
-    title: "Our Values",
+    title: "Core Values",
     smallDesc: "Integrity, Innovation, Sustainability, Community.",
     largeDesc:
       "We are committed to fostering a future where aquaculture is not only a source of livelihood but also a solution to global food security challenges. By integrating modern techniques with traditional wisdom, Uday Aqua focuses on resilience, traceability, and inclusivity in every phase of the aquaculture value chain.",
