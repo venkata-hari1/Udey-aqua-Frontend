@@ -43,7 +43,25 @@ userEndHeaderContainer:{
     color:'#0A4FA4',
     fontWeight:800,
 },
+titleText:{
+ color:'black',
+},
 
+homeBackarrowbox:{
+ display:'flex',
+ gap:"2px",
+ justifyContent:'start',
+ alignItems:'center'
+},
+UserendbackArrow:{
+ cursor:'pointer',
+ fontSize:'12px',
+ paddingBottom:"18px",
+ color:theme.palette.primary.dark,
+ [theme.breakpoints.down('sm')]:{
+  fontSize:'15px',
+}
+},
 useHeaderTextfiled:{
      width:"400px",
      "& .MuiOutlinedInput-root":{
@@ -87,7 +105,12 @@ headerCancelButton:{
 useHerocontainer:{
   display:"flex",
   flexDirection:"column",
-   gap:3
+   gap:3,
+   paddingRight:"30px",
+   [theme.breakpoints.down('md')]:{
+     paddingRight:"0px",
+    
+   }
 },
 addSlidestack:{
  display:"flex",
@@ -98,6 +121,7 @@ justifyContent:"space-between",
 heroSave:{
  backgroundColor:"#0A4FA4",
  textTransform:'capitalize',
+ 
 },
 heroDelete:{
 border:'1px solid red',
@@ -178,7 +202,8 @@ heroDivider:{
 corporateStack1:{
   display:"flex",
   flexDirection:'row',
-  justifyContent:"space-between" 
+  justifyContent:"space-between" ,
+  paddingRight:"20px",
 },
 corporateImageBox:{
  display:"flex",
@@ -232,7 +257,8 @@ corporateCancel:{
 //userendMotto start
 
 MottoBoxText:{
- textDecoration:'underline'
+ textDecoration:'underline',
+ color:'black'
 },
 //userend-About start
 
@@ -245,6 +271,47 @@ flexDirection:'row',
   flexDirection:'column',
   gap:5,
 },
+},
+
+//userend Projects start
+dropDownSelect:{
+  
+  "& .MuiInputBase-input": {
+      color: "#0A4FA4",  
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0A4FA4",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0A4FA4",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0A4FA4",
+      borderWidth: "2px",
+    },
+    borderRadius: "6px",
+},
+projectsUploadContentbox:{
+display:"flex",
+justifyContent:"flex-start",
+gap:220,
+flexDirection:'row',
+[theme.breakpoints.down('md')]:{
+  flexDirection:'column',
+  gap:5,
+},
+},
+
+FormCurageBox:{
+display:'flex',
+width:'100%',
+justifyContent:'space-between',
+
+},
+headingDescbox:{
+ display:'flex',
+flexDirection:"column",
+gap:13,
 },
 
 }));

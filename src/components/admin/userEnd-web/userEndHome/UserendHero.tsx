@@ -11,14 +11,13 @@ const UserendHero = () => {
    <Box>    
    <Box className={classes.useHerocontainer}>
    
-   <Stack className={classes.addSlidestack}>
-   <Typography></Typography>
-   <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Slide</Button>
-   </Stack>
+   <Box display="flex" justifyContent="end">
+    <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Slide</Button>
+   </Box>
    {/* 2nd */}
    <Box mt={2}>
    <Stack className={classes.slideAndButtons}>
-    <Typography>Slide1</Typography>
+    <Typography className={classes.titleText}>Slide1</Typography>
     <Box display="flex" gap={2}>
     <Button variant="contained" className={classes.heroSave}>Save</Button>
     <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
@@ -27,7 +26,7 @@ const UserendHero = () => {
    
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
-     <Typography>Image</Typography>
+     <Typography className={classes.titleText}>Image</Typography>
      <Button variant="outlined" className={classes.uploadHerobutton}
       component="label" endIcon={<FileUploadOutlinedIcon />}>
       <input type="file"
@@ -44,7 +43,7 @@ const UserendHero = () => {
      <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
      </Stack>
      <Stack>
-     <Typography>Heading Content</Typography>
+     <Typography className={classes.titleText}>Heading Content</Typography>
      <TextField className={classes.heroTextfiled}
       fullWidth
      multiline
@@ -57,7 +56,7 @@ const UserendHero = () => {
   {/* test */}
     <Box mt={2}>
    <Stack className={classes.slideAndButtons}>
-    <Typography>Slide2</Typography>
+    <Typography className={classes.titleText}>Slide2</Typography>
     <Box display="flex" gap={2}>
     <Button variant="contained" className={classes.heroSave}>Save</Button>
     <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
@@ -66,7 +65,7 @@ const UserendHero = () => {
    
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
-     <Typography>Image</Typography>
+     <Typography className={classes.titleText}>Image</Typography>
      <Button variant="outlined" className={classes.uploadHerobutton}
       component="label" endIcon={<FileUploadOutlinedIcon />}>
       <input type="file"
@@ -83,7 +82,7 @@ const UserendHero = () => {
      <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
      </Stack>
      <Stack>
-     <Typography>Heading Content</Typography>
+     <Typography className={classes.titleText}>Heading Content</Typography>
      <TextField className={classes.heroTextfiled}
      
      fullWidth

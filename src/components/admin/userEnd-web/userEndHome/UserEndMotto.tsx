@@ -39,7 +39,7 @@ const UserEndMotto = () => {
    
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
-     <Typography>Image</Typography>
+     <Typography className={classes.titleText}>Image</Typography>
      <Button variant="outlined" className={classes.uploadHerobutton}
       component="label" endIcon={<FileUploadOutlinedIcon />}>
       <input type="file"
@@ -56,7 +56,7 @@ const UserEndMotto = () => {
      <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
      </Stack>
      <Stack>
-     <Typography>Heading Content</Typography>
+     <Typography className={classes.titleText}>Heading Content</Typography>
      <TextField className={classes.heroTextfiled}
      
      fullWidth
@@ -81,7 +81,7 @@ const UserEndMotto = () => {
    
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
-     <Typography>Image</Typography>
+     <Typography className={classes.titleText}>Image</Typography>
      <Button variant="outlined" className={classes.uploadHerobutton}
       component="label" endIcon={<FileUploadOutlinedIcon />}>
       <input type="file"
@@ -98,7 +98,7 @@ const UserEndMotto = () => {
      <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
      </Stack>
      <Stack>
-     <Typography>Heading Content</Typography>
+     <Typography className={classes.titleText}>Heading Content</Typography>
      <TextField className={classes.heroTextfiled}
      
      fullWidth

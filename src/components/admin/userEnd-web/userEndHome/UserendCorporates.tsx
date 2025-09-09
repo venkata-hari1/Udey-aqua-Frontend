@@ -16,7 +16,7 @@ const corporatedata=[
 return (
    <Box>
     <Stack className={classes.corporateStack1}>
-    <Typography>Logos</Typography>
+    <Typography className={classes.titleText}>Logos</Typography>
     <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
     </Stack>
     <Box className={classes.corporateImageBox}>
@@ -33,7 +33,7 @@ return (
       {corporatedata.map((data,index)=>
      <>
       <Box key={index} className={classes.corporateCountImgBox}>  
-      <Typography>{data.count}</Typography>
+      <Typography className={classes.titleText}>{data.count}</Typography>
       <img src={data.image} width="100px" height="40px"/>
       <CancelIcon className={classes.corporateImgCancelIcon}/>
       </Box>

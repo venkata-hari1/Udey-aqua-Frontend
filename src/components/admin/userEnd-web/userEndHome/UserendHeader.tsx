@@ -11,7 +11,7 @@ const UserendHeader = () => {
     <Grid container spacing={2} alignItems="center" mx="10px">
        {/* email */}
        <Grid size={{xs:12, md:2}}>
-         <Typography>Email</Typography>   
+         <Typography className={classes.titleText}>Email</Typography>   
         </Grid>
        <Grid size={{xs:12,md:10}}>
          <TextField 
@@ -23,7 +23,7 @@ const UserendHeader = () => {
 
         {/* phone */}
         <Grid size={{xs:12, md:2}}>
-         <Typography>Phone</Typography>   
+         <Typography className={classes.titleText}>Phone</Typography>   
         </Grid>
         <Grid size={{xs:12,md:10}}>
          <TextField className={classes.useHeaderTextfiled}
@@ -34,7 +34,7 @@ const UserendHeader = () => {
         </Grid>
         {/* Address */}
         <Grid size={{xs:12, md:2}}>
-         <Typography>Address</Typography>   
+         <Typography className={classes.titleText}>Address</Typography>   
         </Grid>
         <Grid size={{xs:12,md:10}}>
          <TextField className={classes.useHeaderTextfiled}
@@ -46,7 +46,7 @@ const UserendHeader = () => {
     </Grid>
     <Box className={classes.buttonContainer}>
      <Button className={classes.headerSaveButton}>Save</Button>
-     <Button className={classes.headerCancelButton}>Canel</Button>  
+     <Button className={classes.headerCancelButton}>Cancel</Button>  
     </Box>
     </Box>
     </Box>

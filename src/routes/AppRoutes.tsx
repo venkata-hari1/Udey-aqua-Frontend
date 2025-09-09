@@ -14,10 +14,11 @@ import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
-import UserendCorporates from "../components/admin/userEnd-web/userEndHome/UserendCorporates";
-import UserEndMoto from "../components/admin/userEnd-web/userEndHome/UserEndMotto";
-import UserEndMotto from "../components/admin/userEnd-web/userEndHome/UserEndMotto";
 import UserEndabout from "../components/admin/userEnd-web/userEndHome/UserEndabout";
+import UserendWhychoose from "../components/admin/userEnd-web/userEndHome/UserendWhychoose";
+import UserEndAddvideo from "../components/admin/userEnd-web/userEndHome/UserEndAddvideo";
+import UserendHero from "../components/admin/userEnd-web/userEndHome/UserendHero";
+import UserEndProjects from "../components/admin/userEnd-web/userEndHome/UserEndProjects";
 
 
 const AppRoutes = () => {
@@ -51,7 +52,9 @@ const AppRoutes = () => {
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
       </Route>
          
-          <Route path="userend-about" element={<UserEndabout/>} />
+          <Route path="userend-whychoose" element={<UserendWhychoose/>} />
+           <Route path="userend-hero" element={<UserendHero/>} />
+            <Route path="userend-project" element={<UserEndProjects/>} />
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />

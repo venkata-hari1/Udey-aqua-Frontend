@@ -10,22 +10,26 @@ import UserendHero from "./UserendHero";
 import UserendCorporates from "./UserendCorporates";
 import UserEndMotto from "./UserEndMotto";
 import UserEndabout from "./UserEndabout";
-
+import UserendWhychoose from "./UserendWhychoose";
+import UserEndAddvideo from "./UserEndAddvideo";
+import UserEndProjects from "./UserEndProjects";
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import { useNavigate } from "react-router-dom";
 
 
 const UserEndHome = () => {
 
 const{classes}=useUserEndwebStyles()
-
+const navigate=useNavigate()
 const homemenudata=[
    {id:1,menu:"Header",content:<UserendHeader />} ,
    {id:2,menu:"Hero Section",content:<UserendHero />} ,
    {id:3,menu:"Our Corporates",content:<UserendCorporates />} ,
    {id:4,menu:"Our Motto",content:<UserEndMotto />} ,
    {id:5,menu: "About Us",content:<UserEndabout />} ,
-   {id:6,menu:"Why Choose Us",content:""} ,
-   {id:7,menu:"Add Video",content:""} ,
-   {id:8,menu:"Our Projects",content:""} ,
+   {id:6,menu:"Why Choose Us",content:<UserendWhychoose />} ,
+   {id:7,menu:"Add Video",content:<UserEndAddvideo />} ,
+   {id:8,menu:"Our Projects",content:<UserEndProjects />} ,
    {id:9,menu:"Testimonials",content:""} , 
    {id:9,menu:"News & Events",content:""} , 
    {id:9,menu:"Pricing",content:""} , 
@@ -34,9 +38,18 @@ const homemenudata=[
    {id:9,menu:"Footer",content:""} , 
 ]
 
+const handleBackarrow=()=>{
+ navigate('/admin/userend-web')
+}
  return (
     <Box>
-     <Typography color="#0A4FA4" mb={2}>Home</Typography> 
+      <Box className={classes.homeBackarrowbox}>
+      <ArrowBackIosOutlinedIcon className={classes.UserendbackArrow}
+      onClick={handleBackarrow}/>
+      <Typography color="#0A4FA4" mb={2}>Home</Typography>
+      </Box>
+      
+     
      {homemenudata.map((menu,index)=>(
         <Accordion key={index} className={classes.userEndHeaderContainer}>
         <AccordionSummary
