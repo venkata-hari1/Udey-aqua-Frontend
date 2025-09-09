@@ -67,7 +67,7 @@ return (
          sx={{
           backgroundColor:hasGrayBackground(path),
           flexGrow:1,
-          p:2,
+          p:1,
           overflow:'auto'}}>
           <Outlet />
         </Box>

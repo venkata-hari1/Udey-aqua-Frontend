@@ -1,4 +1,4 @@
-import { Box, Button,FormControl,InputLabel,MenuItem,Select,Stack, TextField, Typography } from "@mui/material"
+import { Box, Button,FormControl,MenuItem,Select,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
@@ -16,12 +16,11 @@ const UserEndProjects = () => {
     <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Project</Button>
    </Box>
    <Box className={classes.FormCurageBox}>
-    <FormControl size="small" sx={{minWidth:'170px'}}>
-      <InputLabel id="demo-simple-select-label">Curage Culture</InputLabel>
+    <FormControl size="small" sx={{minWidth:{md:'170px',xs:'120px'} }}>
      <Select
       labelId="demo-simple-select-label"
      id="demo-simple-select"
-     label="Curage Culture"
+     /* label="Curage Culture" */
      value="Curage Culture"
      className={classes.dropDownSelect}>
     <MenuItem value="Curage Culture">Curage Culture</MenuItem>
@@ -30,7 +29,7 @@ const UserEndProjects = () => {
   </Select>
   </FormControl>
 
-   <Box display="flex" gap={2}>
+   <Box display="flex" gap={2} mt={{xs:2}}>
     <Button variant="contained" className={classes.heroSave}>Save</Button>
     <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
     </Box>

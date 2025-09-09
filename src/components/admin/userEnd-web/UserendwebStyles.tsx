@@ -290,6 +290,7 @@ dropDownSelect:{
       borderWidth: "2px",
     },
     borderRadius: "6px",
+    
 },
 projectsUploadContentbox:{
 display:"flex",
@@ -306,6 +307,9 @@ FormCurageBox:{
 display:'flex',
 width:'100%',
 justifyContent:'space-between',
+[theme.breakpoints.down('sm')]:{
+  flexDirection:'column',
+}
 
 },
 headingDescbox:{
