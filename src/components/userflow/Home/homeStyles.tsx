@@ -410,6 +410,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       width: "100%",
     },
   },
+  newsCardAuto: {
+    width: "auto",
+  },
   newsCardImgWrap: {
     position: "relative",
     height: 400,
@@ -454,7 +457,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   newsBody: {
     borderRadius: "12px 12px 0 0",
-    marginTop: "-100px",
+    position: "absolute",
+    bottom: 0,
     zIndex: 20,
   },
   newsCardContent: {
@@ -1180,6 +1184,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
     border: `3px ${COLORS.SECONDARY_BLUE}`,
+  },
+  sectionTitleNoBg: {
+    backgroundColor: "transparent",
   },
   sectionTitleImg: {
     height: 2,

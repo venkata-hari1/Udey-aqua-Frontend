@@ -1731,6 +1731,26 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     color: "white",
     fontSize: 24,
   },
+
+  backButtonContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  backButton: {
+    background: COLORS.SECONDARY_BLUE,
+    color: COLORS.WHITE,
+    padding: "8px",
+    borderRadius: 999,
+    cursor: "pointer",
+    margin: theme.spacing(3, 0),
+    transition: "all 0.3s ease",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    "& svg": {
+      fontSize: 16,
+    },
+  },
 }));
 
 export default useNewsEventsStyles;

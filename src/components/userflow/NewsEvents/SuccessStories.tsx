@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
@@ -263,6 +264,16 @@ const SuccessStories = () => {
                   ))}
                 </Box>
               )}
+            </Box>
+            <Box
+              className={classes.backButtonContainer}
+              onClick={() =>
+                setDetail({ active: false, image: "", title: "", body: [] })
+              }
+            >
+              <Box className={classes.backButton}>
+                <ArrowBack />
+              </Box>
             </Box>
           </Box>
         </Box>

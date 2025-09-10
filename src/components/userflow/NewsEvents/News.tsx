@@ -12,6 +12,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useState, useEffect } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
@@ -346,6 +347,24 @@ const News = () => {
           <Typography className={classes.newsDetailAuthor}>
             {detail.author}
           </Typography>
+          <Box
+            className={classes.backButtonContainer}
+            onClick={() =>
+              setDetail({
+                active: false,
+                image: "",
+                title: "",
+                date: "",
+                description: "",
+                author: "",
+                body: [],
+              })
+            }
+          >
+            <Box className={classes.backButton}>
+              <ArrowBack />
+            </Box>
+          </Box>
         </Box>
       </Box>
     );
@@ -457,7 +476,7 @@ const News = () => {
         <Box className={classes.readMoreNewsGrid}>
           {currentNews.map((news: ReadMoreNewsItem) => (
             <Box key={news.id} onClick={() => handleReadMore(news)}>
-              <NewsCard {...news} />
+              <NewsCard autoWidth {...news} />
             </Box>
           ))}
         </Box>

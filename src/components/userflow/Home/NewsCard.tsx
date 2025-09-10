@@ -8,6 +8,7 @@ export interface NewsCardProps {
   description: string;
   author: string;
   authorLink?: string;
+  autoWidth?: boolean;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
@@ -17,11 +18,16 @@ const NewsCard: React.FC<NewsCardProps> = ({
   description,
   author,
   authorLink,
+  autoWidth = false,
 }) => {
   const [day, month, year] = date.split(" ");
   const { classes } = useHomeStyles();
   return (
-    <Box className={classes.newsCardRoot}>
+    <Box
+      className={`${classes.newsCardRoot} ${
+        autoWidth ? classes.newsCardAuto : ""
+      }`}
+    >
       <Box className={classes.newsCardImgWrap}>
         <Box
           component="img"

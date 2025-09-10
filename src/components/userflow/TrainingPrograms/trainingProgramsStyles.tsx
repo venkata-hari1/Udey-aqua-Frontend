@@ -360,6 +360,8 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+  },
+  trainingCardSmall: {
     maxHeight: "250px",
   },
   trainingCardContent: {

@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
@@ -202,6 +203,25 @@ const Blog = () => {
           <Typography className={classes.newsDetailAuthor}>
             {detail.author}
           </Typography>
+
+          <Box
+            className={classes.backButtonContainer}
+            onClick={() =>
+              setDetail({
+                active: false,
+                image: "",
+                title: "",
+                date: "",
+                description: "",
+                author: "",
+                body: [],
+              })
+            }
+          >
+            <Box className={classes.backButton}>
+              <ArrowBack />
+            </Box>
+          </Box>
         </Box>
       </Box>
     );
@@ -247,7 +267,7 @@ const Blog = () => {
         <Box className={classes.readMoreNewsGrid}>
           {pagination.currentItems.map((blog: ReadMoreBlogItem) => (
             <Box key={blog.id} onClick={() => handleReadMore(blog)}>
-              <NewsCard {...blog} />
+              <NewsCard {...blog} autoWidth />
             </Box>
           ))}
         </Box>

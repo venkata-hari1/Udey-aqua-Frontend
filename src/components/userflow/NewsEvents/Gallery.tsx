@@ -1,6 +1,7 @@
 import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import {
@@ -415,6 +416,24 @@ const Gallery = () => {
                 />
               </Box>
             ))}
+          </Box>
+
+          {/* Back above pagination */}
+          <Box
+            className={classes.backButtonContainer}
+            onClick={() =>
+              setDetail({
+                active: false,
+                image: "",
+                title: "",
+                date: "",
+                moreImages: [],
+              })
+            }
+          >
+            <Box className={classes.backButton}>
+              <ArrowBack />
+            </Box>
           </Box>
 
           {/* Detail View Pagination */}

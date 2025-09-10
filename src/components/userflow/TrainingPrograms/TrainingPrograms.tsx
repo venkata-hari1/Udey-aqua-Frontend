@@ -26,6 +26,7 @@ interface TrainingCardProps {
   image: string;
   onClick: () => void;
   className?: string;
+  imageClassName?: string;
 }
 
 const TrainingCard: React.FC<TrainingCardProps> = ({
@@ -33,6 +34,7 @@ const TrainingCard: React.FC<TrainingCardProps> = ({
   image,
   onClick,
   className,
+  imageClassName,
 }) => {
   const { classes } = useTrainingProgramsStyles();
 
@@ -41,7 +43,11 @@ const TrainingCard: React.FC<TrainingCardProps> = ({
       className={`${classes.trainingCard} ${className || ""}`}
       onClick={onClick}
     >
-      <img src={image} alt={title} className={classes.trainingCardImage} />
+      <img
+        src={image}
+        alt={title}
+        className={`${classes.trainingCardImage} ${imageClassName || ""}`}
+      />
       <Box className={classes.trainingCardContent}>
         <Typography className={classes.trainingCardTitle}>{title}</Typography>
       </Box>
@@ -192,6 +198,9 @@ const TrainingPrograms: React.FC = () => {
                   className={
                     viewMode === "both" ? culture.className : undefined
                   }
+                  imageClassName={
+                    viewMode !== "both" ? classes.trainingCardSmall : undefined
+                  }
                 />
               ))}
             </Box>
@@ -242,6 +251,9 @@ const TrainingPrograms: React.FC = () => {
                   onClick={() => handleCardClick(technology.path)}
                   className={
                     viewMode === "both" ? technology.className : undefined
+                  }
+                  imageClassName={
+                    viewMode !== "both" ? classes.trainingCardSmall : undefined
                   }
                 />
               ))}

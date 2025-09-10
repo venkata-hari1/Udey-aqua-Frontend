@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import useNewsEventsStyles from "./newsEventsStyles";
 import {
   useCarousel,
@@ -162,6 +163,14 @@ const Awards = () => {
               aquaculture practices while ensuring economic viability for
               farmers and contributing to food security in our region.
             </Typography>
+            <Box
+              className={classes.backButtonContainer}
+              onClick={() => setDetail({ active: false, award: null })}
+            >
+              <Box className={classes.backButton}>
+                <ArrowBack />
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>

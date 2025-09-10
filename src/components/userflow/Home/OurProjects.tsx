@@ -18,37 +18,42 @@ const categories = [
   "Pond Culture",
   "Sea Weed",
   "Recirculatory Aquaculture System (RAS)",
-  "Circulatory Aquaculture System (CAS)"
+  "Circulatory Aquaculture System (CAS)",
 ];
 
 const projects = [
   {
     title: "Our Journey and Mission",
-    shortDescription: "Uday Aqua has been at the forefront of sustainable aquaculture.",
+    shortDescription:
+      "Uday Aqua has been at the forefront of sustainable aquaculture.",
     longDescription: `Uday Aqua has been at the forefront of sustainable aquaculture since its inception, dedicated to educating and guiding fish farmers and entrepreneurs. Our mission is to promote responsible seafood farming through innovative techniques, expert consulting and comprehensive training programs.`,
     img: project1,
-    highlight: false
-  },{
+    highlight: false,
+  },
+  {
     title: "Uday Aqua sustainable water projects in Hyderabad",
-    shortDescription: "Uday Aqua has been at the forefront of sustainable aquaculture.",
+    shortDescription:
+      "Uday Aqua has been at the forefront of sustainable aquaculture.",
     longDescription: `Our Journey and Mission Uday Aqua has been at the forefront of sustainable aquaculture since its inception, dedicated to educating and guiding fish farmers and entrepreneurs. Our mission is to promote responsible seafood farming through innovative techniques, expert consulting. Our Journey and Mission Uday Aqua has been at the forefront of sustainable aquaculture since its inception, dedicated to educating and guiding fish farmers`,
     img: project2,
-    highlight: true
+    highlight: true,
   },
   {
     title: "Our Journey and Mission",
-    shortDescription: "Uday Aqua has been at the forefront of sustainable aquaculture.",
+    shortDescription:
+      "Uday Aqua has been at the forefront of sustainable aquaculture.",
     longDescription: `Uday Aqua has been at the forefront of sustainable aquaculture since its inception, dedicated to educating and guiding fish farmers and entrepreneurs. Our mission is to promote responsible seafood farming through innovative techniques, expert consulting and comprehensive training programs.`,
     img: project3,
-    highlight: false
+    highlight: false,
   },
   {
     title: "Our Journey and Mission",
-    shortDescription: "Uday Aqua has been at the forefront of sustainable aquaculture.",
+    shortDescription:
+      "Uday Aqua has been at the forefront of sustainable aquaculture.",
     longDescription: `Uday Aqua has been at the forefront of sustainable aquaculture since its inception, dedicated to educating and guiding fish farmers and entrepreneurs. Our mission is to promote responsible seafood farming through innovative techniques, expert consulting and comprehensive training programs.`,
     img: project4,
-    highlight: false
-  }
+    highlight: false,
+  },
 ];
 
 const OurProjects = () => {
@@ -59,7 +64,7 @@ const OurProjects = () => {
 
   return (
     <Box className={classes.ourProjectsRoot}>
-      <SectionTitle title="Our Projects" />
+      <SectionTitle title="Our Projects" whiteBg={false} />
       <Box className={classes.ourProjectsInner}>
         <Box className={classes.ourProjectsCategories}>
           {categories.map((cat, idx) => (
@@ -67,7 +72,7 @@ const OurProjects = () => {
               key={cat}
               className={
                 classes.ourProjectsCategory +
-                (idx === 0 ? ' ' + classes.ourProjectsCategoryActive : '')
+                (idx === 0 ? " " + classes.ourProjectsCategoryActive : "")
               }
             >
               {cat}
@@ -78,13 +83,13 @@ const OurProjects = () => {
           ref={scrollRef}
           className={
             classes.ourProjectsScroll +
-            (isOverflowing ? ' ' + classes.ourProjectsScrollFlexStart : '')
+            (isOverflowing ? " " + classes.ourProjectsScrollFlexStart : "")
           }
         >
           {isOverflowing && <Box />}
           {projects.map((project, idx) => (
             <Box key={idx} className={classes.ourProjectsCardOuter}>
-                <ProjectCard {...project} />
+              <ProjectCard {...project} />
             </Box>
           ))}
           {isOverflowing && <Box />}

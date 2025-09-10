@@ -246,7 +246,6 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "center",
     background: "linear-gradient(135deg, #0A4FA4 0%, #041E3E 100%)",
     zIndex: 3,
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
     [theme.breakpoints.down("md")]: {
       width: "100px",
       height: "100px",
