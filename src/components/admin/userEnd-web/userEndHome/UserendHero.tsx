@@ -1,27 +1,21 @@
 import { Box, Button, Divider,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-import AddIcon from '@mui/icons-material/Add';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
+import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton } from "./UserEndButtons";
 const UserendHero = () => {
 
    const{classes}=useUserEndwebStyles() 
     return (
    <Box>    
    <Box className={classes.useHerocontainer}>
-   
-   <Box display="flex" justifyContent="end">
-    <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Slide</Button>
-   </Box>
+   <AddingButton />
    {/* 2nd */}
    <Box mt={2}>
    <Stack className={classes.slideAndButtons}>
     <Typography className={classes.titleText}>Slide1</Typography>
-    <Box display="flex" gap={2}>
-    <Button variant="contained" className={classes.heroSave}>Save</Button>
-    <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
-    </Box>
+    <UserendSaveDeleteButtons />
    </Stack>
    
    <Stack className={classes.Uploadandheadingbox}>
@@ -91,6 +85,7 @@ const UserendHero = () => {
      </Stack>
    </Stack>
    <Divider className={classes.heroDivider}/> 
+   <UserEndSaveCancelButtons />
    </Box>
 
   {/* testend */}

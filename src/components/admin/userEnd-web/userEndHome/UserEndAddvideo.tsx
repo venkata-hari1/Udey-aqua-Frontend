@@ -4,6 +4,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
+import { UserEndSaveCancelButtons } from "./UserEndButtons";
 
 const UserEndAddvideo = () => {
      const{classes}=useUserEndwebStyles() 
@@ -33,10 +34,7 @@ const UserEndAddvideo = () => {
         <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
         </Stack>
       </Stack>
-      <Stack className={classes.corporateSaveCancel} style={{marginTop:5}}>
-            <Button variant="contained" className={classes.corporateSave}>Save</Button>
-            <Button variant="contained" className={classes.corporateCancel}>Cancel</Button>  
-          </Stack>
+      <UserEndSaveCancelButtons />
   </Box>
   </Box>
     </Box>

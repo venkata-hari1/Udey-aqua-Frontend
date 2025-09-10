@@ -49,13 +49,13 @@ titleText:{
 
 homeBackarrowbox:{
  display:'flex',
- gap:"2px",
+ gap:"5px",
  justifyContent:'start',
  alignItems:'center'
 },
 UserendbackArrow:{
  cursor:'pointer',
- fontSize:'12px',
+ fontSize:'18px',
  paddingBottom:"18px",
  color:theme.palette.primary.dark,
  [theme.breakpoints.down('sm')]:{
@@ -88,17 +88,17 @@ buttonContainer:{
 },
 headerSaveButton:{
  background:"#0A4FA4",
- px:10,
  color:'white',
  textTransform:'capitalize',
- padding:"0px 40px" 
+ padding:"7px 40px",
+ borderRadius:'9px', 
 },
 headerCancelButton:{
  background:"#FF3326",
- px:10,
  color:'white',
  textTransform:'capitalize',
- padding:"6px 40px" 
+ padding:"7px 30px",
+ borderRadius:'9px', 
 },   
 
 //userEnd Hero Section page
@@ -118,17 +118,31 @@ justifyContent:"space-between",
  flexDirection:"row",
  alignItems:'center', 
 },
-heroSave:{
+addingButtonBox:{
+ display:"flex",
+justifyContent:"end"
+},
+AddingButton:{
  backgroundColor:"#0A4FA4",
+ borderRadius:'7px',
  textTransform:'capitalize',
- 
+},
+heroSave:{
+  borderRadius:'7px',
+  backgroundColor:"#0A4FA4",
+ textTransform:'capitalize',
+ height:'38px',
+ padding:'0px 25px',
+ color:'white',
 },
 heroDelete:{
 border:'1px solid red',
 color:'red',
+height:'37px',
+ padding:'0px 22px',
 textTransform:'capitalize',
 background:'#F7FAFC',
-
+borderRadius:'7px',
 },
 slideAndButtons:{
   display:"flex",
@@ -151,7 +165,7 @@ UploadImageStack:{
  gap:14,
 },
 uploadHerobutton:{
- maxWidth:120,
+ maxWidth:100,
  borderRadius:'8px',
  textTransform:'capitalize',
  borderColor:'#0A4FA4',
@@ -162,15 +176,22 @@ herouploadImageBox:{
   width:150
 },
 herouploadImage:{
-width:"140px",
-height:"80px",
+width:"90px",
+height:"60px",
 borderRadius:'10px'
 },
 cancelImgIcon:{
  position:'absolute',
  top:-6,
- right:0,
+ right:50,
  color:"red"
+},
+avtcancelImgIcon:{
+  fontSize:15,
+  position:'absolute',
+  top:-6,
+  left:40,
+  color:"red"
 },
 errorUpload:{
  color:"red",
@@ -230,7 +251,7 @@ corporateImgCancelIcon:{
    position:'absolute',
    top:-12,
    color:'red',
-   right:0
+   right:10
 },
 corporatePlusbutton:{
   background:"#F7FAFC",
@@ -265,7 +286,7 @@ MottoBoxText:{
 UploadandAboutbox:{
 display:"flex",
 justifyContent:"flex-start",
-gap:440,
+gap:200,
 flexDirection:'row',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',
@@ -307,7 +328,7 @@ FormCurageBox:{
 display:'flex',
 width:'100%',
 justifyContent:'space-between',
-[theme.breakpoints.down('sm')]:{
+[theme.breakpoints.down('md')]:{
   flexDirection:'column',
 }
 
@@ -318,6 +339,105 @@ flexDirection:"column",
 gap:13,
 },
 
+//UserendTestimonials
+testimonialTextbox:{
+  display:"flex",
+   gap:40,
+  marginBottom:2,
+  flexDirection:'row',
+  [theme.breakpoints.down('md')]:{
+    gap:10,
+    flexDirection:'column',
+    marginBottom:12,
+  }
+},
+textfiledTestimonial:{
+ width:280,
+
+     "& .MuiOutlinedInput-root":{
+            "& fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&:hover fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&. Mui-focused fieldset":{
+                borderColor:'#0A4FA4',
+            }},
+       [theme.breakpoints.down('md')]:{
+         width:'100%'
+       }     
+},
+//userend News and Events
+dropDownSelectBlog:{
+   width:'120px',
+  "& .MuiInputBase-input": {
+      color: "#0A4FA4",  
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0A4FA4",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0A4FA4",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0A4FA4",
+      borderWidth: "2px",
+    },
+    borderRadius: "6px",
+},
+textfiledTestimonialblog:{
+ width:'600px',
+       "& .MuiOutlinedInput-root":{
+            "& fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&:hover fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&. Mui-focused fieldset":{
+                borderColor:'#0A4FA4',
+            }},
+        [theme.breakpoints.down('md')]:{
+          width:'100%',
+        } ,   
+},
+
+dateTextfield:{
+     "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "blue",
+      },
+      "&:hover fieldset": {
+        borderColor: "blue",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "blue",
+      },
+    },
+    "& input": {
+      color: "black",
+    },  
+},
+
+
+FormNewsblogBox:{
+display:'flex',
+width:'100%',
+marginTop:2,
+justifyContent:'space-between',
+[theme.breakpoints.down('md')]:{
+  flexDirection:'column',
+}
+},
+
+dateTextfieldbox:{
+ display:"flex",
+  gap:"16px",
+  [theme.breakpoints.down('md')]:{
+    marginTop:"10px",
+  }
+},
 }));
 
 export default useUserEndwebStyles;

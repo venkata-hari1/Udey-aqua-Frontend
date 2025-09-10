@@ -4,6 +4,7 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/ciba.png'
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
+import { DeleteButton, UserEndSaveCancelButtons } from "./UserEndButtons";
 const UserendCorporates = () => {
 
 const{classes}=useUserEndwebStyles() 
@@ -17,7 +18,7 @@ return (
    <Box>
     <Stack className={classes.corporateStack1}>
     <Typography className={classes.titleText}>Logos</Typography>
-    <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
+    <DeleteButton />
     </Stack>
     <Box className={classes.corporateImageBox}>
 
@@ -34,7 +35,7 @@ return (
      <>
       <Box key={index} className={classes.corporateCountImgBox}>  
       <Typography className={classes.titleText}>{data.count}</Typography>
-      <img src={data.image} width="100px" height="40px"/>
+      <img src={data.image} width="90px" height="40px"/>
       <CancelIcon className={classes.corporateImgCancelIcon}/>
       </Box>
      {index!==corporatedata.length-1 &&
@@ -51,10 +52,7 @@ return (
      <Typography className={classes.errorUpload}>*Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)</Typography>
      <Typography className={classes.errorUpload}>Image Must be 5MB</Typography> 
      </Box>
-    <Stack className={classes.corporateSaveCancel}>
-      <Button variant="contained" className={classes.corporateSave}>Save</Button>
-      <Button variant="contained" className={classes.corporateCancel}>Cancel</Button>  
-    </Stack>
+     <UserEndSaveCancelButtons />
  
 
 

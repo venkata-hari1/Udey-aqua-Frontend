@@ -1,5 +1,6 @@
-import { Box,Button,Grid, TextField, Typography } from "@mui/material"
+import { Box,Grid, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
+import {UserEndSaveCancelButtons} from "./UserEndButtons"
 
 const UserendHeader = () => {
 
@@ -44,10 +45,7 @@ const UserendHeader = () => {
           />
         </Grid>
     </Grid>
-    <Box className={classes.buttonContainer}>
-     <Button className={classes.headerSaveButton}>Save</Button>
-     <Button className={classes.headerCancelButton}>Cancel</Button>  
-    </Box>
+    <UserEndSaveCancelButtons />
     </Box>
     </Box>
   )

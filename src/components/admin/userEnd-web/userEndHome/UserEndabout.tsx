@@ -1,9 +1,10 @@
-import { Box, Button, Stack, TextField, Typography } from "@mui/material"
+import { Box, Button, Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
+import { DeleteButton, Textfiledbox, UserEndSaveCancelButtons } from "./UserEndButtons";
 
 const UserEndabout = () => {
 
@@ -13,7 +14,7 @@ const UserEndabout = () => {
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
+       <DeleteButton />
    </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>
@@ -35,17 +36,10 @@ const UserEndabout = () => {
         </Stack>
         <Stack display="flex" justifyContent="flex-start">
         <Typography className={classes.titleText}>Content</Typography>
-        <TextField className={classes.useHeaderTextfiled}
-        
-        fullWidth
-        multiline
-        minRows={5}/>   
+        <Textfiledbox />   
         </Stack>
       </Stack>
-      <Stack className={classes.corporateSaveCancel} style={{marginTop:5}}>
-            <Button variant="contained" className={classes.corporateSave}>Save</Button>
-            <Button variant="contained" className={classes.corporateCancel}>Cancel</Button>  
-          </Stack>
+      <UserEndSaveCancelButtons />
   </Box>
   </Box>
     </Box>

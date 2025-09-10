@@ -14,11 +14,10 @@ import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
-import UserEndabout from "../components/admin/userEnd-web/userEndHome/UserEndabout";
-import UserendWhychoose from "../components/admin/userEnd-web/userEndHome/UserendWhychoose";
-import UserEndAddvideo from "../components/admin/userEnd-web/userEndHome/UserEndAddvideo";
-import UserendHero from "../components/admin/userEnd-web/userEndHome/UserendHero";
-import UserEndProjects from "../components/admin/userEnd-web/userEndHome/UserEndProjects";
+import UserendTestimonials from "../components/admin/userEnd-web/userEndHome/UserendTestimonials";
+import UserendNewsEvents from "../components/admin/userEnd-web/userEndHome/UserendNewsEvents";
+import UserendPricing from "../components/admin/userEnd-web/userEndHome/UserendPricing";
+import UserendDirectors from "../components/admin/userEnd-web/userEndHome/UserendDirectors";
 
 
 const AppRoutes = () => {
@@ -52,9 +51,10 @@ const AppRoutes = () => {
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
       </Route>
          
-          <Route path="userend-whychoose" element={<UserendWhychoose/>} />
-           <Route path="userend-hero" element={<UserendHero/>} />
-            <Route path="userend-project" element={<UserEndProjects/>} />
+          <Route path="userend-test" element={<UserendTestimonials/>} />
+          <Route path="addnews" element={<UserendNewsEvents/>} />
+          <Route path="price" element={<UserendPricing />} />
+            <Route path="director" element={<UserendDirectors />} />
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />

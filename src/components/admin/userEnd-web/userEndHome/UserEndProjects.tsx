@@ -1,9 +1,10 @@
-import { Box, Button,FormControl,MenuItem,Select,Stack, TextField, Typography } from "@mui/material"
+import { Box, Button,Divider,FormControl,MenuItem,Select,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Textfiledbox, UserendSaveDeleteButtons,UserEndSaveCancelButtons } from "./UserEndButtons";
 
 const UserEndProjects = () => {
  
@@ -21,23 +22,19 @@ const UserEndProjects = () => {
       labelId="demo-simple-select-label"
      id="demo-simple-select"
      /* label="Curage Culture" */
-     value="Curage Culture"
+     value="Cage Culture"
      className={classes.dropDownSelect}>
-    <MenuItem value="Curage Culture">Curage Culture</MenuItem>
+    <MenuItem value="Cage Culture">Cage Culture</MenuItem>
     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
-    
-  </Select>
+    </Select>
   </FormControl>
 
-   <Box display="flex" gap={2} mt={{xs:2}}>
-    <Button variant="contained" className={classes.heroSave}>Save</Button>
-    <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
-    </Box>
+   <UserendSaveDeleteButtons />
    </Box>
     
    <Stack className={classes.projectsUploadContentbox}>
      <Stack className={classes.UploadImageStack}>
-     <Typography className={classes.titleText}>Image</Typography>
+     <Typography className={classes.titleText} mt={2}>Image</Typography>
      <Button variant="outlined" className={classes.uploadHerobutton}
       component="label" endIcon={<FileUploadOutlinedIcon />}>
       <input type="file"
@@ -55,21 +52,19 @@ const UserEndProjects = () => {
      </Stack>
     <Box className={classes.headingDescbox}> 
      <Stack>
-     <Typography className={classes.titleText}>Heading</Typography>
+     <Typography className={classes.titleText} >Heading</Typography>
      <TextField className={classes.heroTextfiled}
       fullWidth
      size="small"/>   
      </Stack>
      <Stack>
      <Typography className={classes.titleText}>Description</Typography>
-     <TextField className={classes.heroTextfiled}
-      fullWidth
-     multiline
-     minRows={5}/>   
+     <Textfiledbox />
      </Stack>
      </Box>
    </Stack> 
-    
+   <Divider sx={{border:'1px solid rgba(94, 190, 237, 0)'}}/>
+    <UserEndSaveCancelButtons /> 
     
     </Box> 
     </Box>

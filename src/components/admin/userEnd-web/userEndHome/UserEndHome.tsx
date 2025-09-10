@@ -13,8 +13,12 @@ import UserEndabout from "./UserEndabout";
 import UserendWhychoose from "./UserendWhychoose";
 import UserEndAddvideo from "./UserEndAddvideo";
 import UserEndProjects from "./UserEndProjects";
-import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
+import UserendTestimonials from "./UserendTestimonials";
+import UserendNewsEvents from "./UserendNewsEvents";
+import UserendPricing from "./UserendPricing";
+import UserendDirectors from "./UserendDirectors";
 
 
 const UserEndHome = () => {
@@ -30,12 +34,12 @@ const homemenudata=[
    {id:6,menu:"Why Choose Us",content:<UserendWhychoose />} ,
    {id:7,menu:"Add Video",content:<UserEndAddvideo />} ,
    {id:8,menu:"Our Projects",content:<UserEndProjects />} ,
-   {id:9,menu:"Testimonials",content:""} , 
-   {id:9,menu:"News & Events",content:""} , 
-   {id:9,menu:"Pricing",content:""} , 
-   {id:9,menu:"Our Directors & Advisors",content:""} ,
-   {id:9,menu:"Get In Touch",content:""} ,  
-   {id:9,menu:"Footer",content:""} , 
+   {id:9,menu:"Testimonials",content:<UserendTestimonials />} , 
+   {id:10,menu:"News & Events",content:<UserendNewsEvents />} , 
+   {id:11,menu:"Pricing",content:<UserendPricing />} , 
+   {id:12,menu:"Our Directors & Advisors",content:<UserendDirectors />} ,
+   {id:13,menu:"Get In Touch",content:""} ,  
+   {id:14,menu:"Footer",content:""} , 
 ]
 
 const handleBackarrow=()=>{
@@ -44,7 +48,7 @@ const handleBackarrow=()=>{
  return (
     <Box>
       <Box className={classes.homeBackarrowbox}>
-      <ArrowBackIosOutlinedIcon className={classes.UserendbackArrow}
+      <ArrowBackIcon className={classes.UserendbackArrow}
       onClick={handleBackarrow}/>
       <Typography color="#0A4FA4" mb={2}>Home</Typography>
       </Box>

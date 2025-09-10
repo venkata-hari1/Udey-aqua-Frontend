@@ -4,37 +4,28 @@ import AddIcon from '@mui/icons-material/Add';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import CorpCard from './../../../../assets/admin/Corpcard.png'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useState } from "react";
-import Deletepopup from "../../utils/DeleteMottopop";
 
+
+import { UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndButtons";
 const UserEndMotto = () => {
   
   const{classes}=useUserEndwebStyles() 
 
- const[open,setOpen]=useState(false)
+ 
 
-  const handleDeleteMotto=()=>{
-   setOpen((prev)=>!prev)
-
- }
   return (
    
       <Box>    
    <Box className={classes.useHerocontainer}>
-   
-   <Stack className={classes.addSlidestack}>
-   <Typography></Typography>
-   <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Motto</Button>
-   </Stack>
+    <Box className={classes.addingButtonBox}>
+    <Button variant="contained" startIcon={<AddIcon />} className={classes.AddingButton}>Add Motto</Button>
+   </Box>
    {/* 2nd */}
+
    <Box mt={2}>
    <Stack className={classes.slideAndButtons}>
     <Typography className={classes.MottoBoxText}>Box1</Typography>
-    <Box display="flex" gap={2}>
-    <Button variant="contained" className={classes.heroSave}>Save</Button>
-    <Button variant="outlined" className={classes.heroDelete}
-    onClick={handleDeleteMotto}>Delete</Button>
-    </Box>
+   <UserendSaveDeleteButtons />
    </Stack>
    
    <Stack className={classes.Uploadandheadingbox}>
@@ -71,14 +62,8 @@ const UserEndMotto = () => {
     <Box mt={2}>
    <Stack className={classes.slideAndButtons}>
     <Typography className={classes.MottoBoxText}>Box2</Typography>
-    <Box display="flex" gap={2}>
-    <Button variant="contained" className={classes.heroSave}>Save</Button>
-    <Button variant="outlined" className={classes.heroDelete}
-    onClick={handleDeleteMotto}>Delete</Button>
-    </Box>
-    {open&& <Deletepopup open={open} handleclickopen={handleDeleteMotto}/>}
-   </Stack>
-   
+    <UserendSaveDeleteButtons />
+    </Stack>
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText}>Image</Typography>
@@ -107,8 +92,9 @@ const UserEndMotto = () => {
      </Stack>
    </Stack>
    <Divider className={classes.heroDivider}/> 
+   <UserEndSaveCancelButtons />
    </Box>
-
+    
   {/* testend */}
  </Box>
  </Box>
