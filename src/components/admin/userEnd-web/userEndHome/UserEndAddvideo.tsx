@@ -4,7 +4,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { UserEndSaveCancelButtons } from "./UserEndButtons";
+import { DeleteButton, UserEndSaveCancelButtons } from "./UserEndButtons";
 
 const UserEndAddvideo = () => {
      const{classes}=useUserEndwebStyles() 
@@ -13,7 +13,7 @@ const UserEndAddvideo = () => {
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
+       <DeleteButton message="Are you sure want to delete Video?"/>
    </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>

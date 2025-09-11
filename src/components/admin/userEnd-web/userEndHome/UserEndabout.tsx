@@ -14,7 +14,7 @@ const UserEndabout = () => {
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <DeleteButton />
+       <DeleteButton message="Are you sure want to delte the image?"/>
    </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>

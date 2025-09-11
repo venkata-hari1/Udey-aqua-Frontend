@@ -43,6 +43,11 @@ userEndHeaderContainer:{
     color:'#0A4FA4',
     fontWeight:800,
 },
+
+titleHeading:{
+  color:'black',
+  marginBottom:"10px",
+},
 titleText:{
  color:'black',
 },
@@ -175,6 +180,12 @@ herouploadImageBox:{
   position:'relative',
   width:150
 },
+
+herouploadImageBox1:{
+  display:'flex',
+  position:'relative',
+  width:150
+},
 herouploadImage:{
 width:"90px",
 height:"60px",
@@ -182,9 +193,10 @@ borderRadius:'10px'
 },
 cancelImgIcon:{
  position:'absolute',
- top:-6,
- right:50,
- color:"red"
+ top:-12,
+ right:44,
+ color:"red",
+ 
 },
 avtcancelImgIcon:{
   fontSize:15,
@@ -226,6 +238,11 @@ corporateStack1:{
   justifyContent:"space-between" ,
   paddingRight:"20px",
 },
+
+userEnddelete:{
+display:"flex",
+justifyContent:"flex-end"
+},
 corporateImageBox:{
  display:"flex",
  gap:12,
@@ -256,6 +273,15 @@ corporateImgCancelIcon:{
 corporatePlusbutton:{
   background:"#F7FAFC",
   color:'black'
+},
+corporatePlusbutton1:{
+  display:'flex',
+  background:"#F7FAFC",
+  color:'black',
+  width:'20px',
+  height:'50px',
+  marginTop:'6px',
+  marginLeft:'20px',
 },
 corporateSaveCancel:{
   display:'flex',
@@ -311,7 +337,9 @@ dropDownSelect:{
       borderWidth: "2px",
     },
     borderRadius: "6px",
-    
+  [theme.breakpoints.down('md')]:{
+    marginBottom:'12px',
+  }  
 },
 projectsUploadContentbox:{
 display:"flex",
@@ -343,7 +371,7 @@ gap:13,
 testimonialTextbox:{
   display:"flex",
    gap:40,
-  marginBottom:2,
+  marginBottom:4,
   flexDirection:'row',
   [theme.breakpoints.down('md')]:{
     gap:10,
@@ -370,6 +398,7 @@ textfiledTestimonial:{
 },
 //userend News and Events
 dropDownSelectBlog:{
+   
    width:'120px',
   "& .MuiInputBase-input": {
       color: "#0A4FA4",  
@@ -424,7 +453,7 @@ dateTextfield:{
 FormNewsblogBox:{
 display:'flex',
 width:'100%',
-marginTop:2,
+alignItems:'center',
 justifyContent:'space-between',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',
@@ -434,6 +463,7 @@ justifyContent:'space-between',
 dateTextfieldbox:{
  display:"flex",
   gap:"16px",
+  marginTop:"5px",
   [theme.breakpoints.down('md')]:{
     marginTop:"10px",
   }

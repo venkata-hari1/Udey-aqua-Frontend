@@ -15,10 +15,10 @@ const UserendNewsEvents = () => {
       <Box className={classes.useHerocontainer}>
        <Box className={classes.addingButtonBox}>
        <Button variant="contained" startIcon={<AddIcon />} className={classes.AddingButton}>Add Blog</Button>
-       </Box>
+      </Box>
        
     <Box className={classes.FormNewsblogBox} >
-    <FormControl size="small" sx={{minWidth:{md:'170px',xs:'120px'} }}>
+    <FormControl size="small" sx={{minWidth:{md:'170px',xs:'120px',mt:2}}}>
      <Select
       labelId="demo-simple-select-label"
      id="demo-simple-select"
@@ -34,13 +34,13 @@ const UserendNewsEvents = () => {
     type="date" 
     size="small" 
     className={classes.dateTextfield}/>
-    <UserendSaveDeleteButtons />
+    <UserendSaveDeleteButtons message="Are you sure want to delete blog?"/>
     </Box>
   </Box>
 
    <Stack className={classes.Uploadandheadingbox}>
        <Stack className={classes.UploadImageStack}>
-       <Typography className={classes.titleText}>Image</Typography>
+       <Typography className={classes.titleText} mt={1} ml={1}>Image</Typography>
        <Button variant="outlined" className={classes.uploadHerobutton}
         component="label" endIcon={<FileUploadOutlinedIcon />}>
         <input type="file"

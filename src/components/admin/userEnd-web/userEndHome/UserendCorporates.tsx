@@ -18,7 +18,7 @@ return (
    <Box>
     <Stack className={classes.corporateStack1}>
     <Typography className={classes.titleText}>Logos</Typography>
-    <DeleteButton />
+    <DeleteButton message="Are you use you want to delete Logo?"/>
     </Stack>
     <Box className={classes.corporateImageBox}>
 

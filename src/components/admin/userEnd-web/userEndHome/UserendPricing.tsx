@@ -21,17 +21,17 @@ return (
    <Box>
        <Box className={classes.useHerocontainer}>
        <Box display="flex" justifyContent="end" mb={2}>
-       <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Project</Button>
+       <Button variant="contained" startIcon={<AddIcon />} className={classes.heroSave}>Add Pricing</Button>
       </Box>
 
       {pricedata.map((price,index)=>(
           <Fragment>
-      <Box className={classes.FormCurageBox} key={index}>
-       <Typography className={classes.titleText}>{price.price}</Typography>
-      <UserendSaveDeleteButtons />
+      <Box className={classes.userEnddelete} >
+       <UserendSaveDeleteButtons message={`Are you want to delete ${price.price}?`}/>
       </Box>
-       
-      <Stack className={classes.projectsUploadContentbox}>
+       <Typography className={classes.titleText}>{price.price}</Typography>      
+       <Stack className={classes.projectsUploadContentbox}>
+
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
         <Button variant="outlined" className={classes.uploadHerobutton}

@@ -20,16 +20,16 @@ const UserEndProjects = () => {
     <FormControl size="small" sx={{minWidth:{md:'170px',xs:'120px'} }}>
      <Select
       labelId="demo-simple-select-label"
-     id="demo-simple-select"
-     /* label="Curage Culture" */
-     value="Cage Culture"
+      id="demo-simple-select"
+      /* label="Curage Culture" */
+      value="Cage Culture"
+     
      className={classes.dropDownSelect}>
     <MenuItem value="Cage Culture">Cage Culture</MenuItem>
     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
     </Select>
   </FormControl>
-
-   <UserendSaveDeleteButtons />
+  <UserendSaveDeleteButtons message="Are you want to delete the Project?"/>
    </Box>
     
    <Stack className={classes.projectsUploadContentbox}>

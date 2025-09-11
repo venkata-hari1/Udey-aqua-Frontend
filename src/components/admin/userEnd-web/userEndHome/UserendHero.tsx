@@ -4,20 +4,30 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
 import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton } from "./UserEndButtons";
+import { Fragment } from "react/jsx-runtime";
 const UserendHero = () => {
 
-   const{classes}=useUserEndwebStyles() 
-    return (
+const{classes}=useUserEndwebStyles() 
+const heroslides=[
+  {id:1,name:"Slide1"},
+  {id:2,name:"Slide2"},
+]
+
+
+return (
    <Box>    
    <Box className={classes.useHerocontainer}>
    <AddingButton />
-   {/* 2nd */}
-   <Box mt={2}>
-   <Stack className={classes.slideAndButtons}>
-    <Typography className={classes.titleText}>Slide1</Typography>
-    <UserendSaveDeleteButtons />
-   </Stack>
    
+   {
+    heroslides.map((slide,index)=>(
+
+      <Fragment>
+            <Box mt={2}>
+   <Stack className={classes.slideAndButtons}>
+    <Typography className={classes.titleText}>{slide.name}</Typography>
+    <UserendSaveDeleteButtons message={`Are you sure want to delete ${slide.name} ?`}/>
+   </Stack>
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText}>Image</Typography>
@@ -44,51 +54,14 @@ const UserendHero = () => {
      minRows={5}/>   
      </Stack>
    </Stack>
-   <Divider className={classes.heroDivider}/> 
+   {index!==heroslides.length-1&&<Divider className={classes.heroDivider}/>}
+ 
    </Box>
-  
-  {/* test */}
-    <Box mt={2}>
-   <Stack className={classes.slideAndButtons}>
-    <Typography className={classes.titleText}>Slide2</Typography>
-    <Box display="flex" gap={2}>
-    <Button variant="contained" className={classes.heroSave}>Save</Button>
-    <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
-    </Box>
-   </Stack>
-   
-   <Stack className={classes.Uploadandheadingbox}>
-     <Stack className={classes.UploadImageStack}>
-     <Typography className={classes.titleText}>Image</Typography>
-     <Button variant="outlined" className={classes.uploadHerobutton}
-      component="label" endIcon={<FileUploadOutlinedIcon />}>
-      <input type="file"
-      accept="image/*"
-      hidden
-      /> Upload</Button>   
-     <Box className={classes.herouploadImageBox}>
-     <img src={fishImg} className={classes.herouploadImage}/>
-     <CancelIcon className={classes.cancelImgIcon}/>
-     </Box>  
-     <Typography className={classes.errorUpload}>
-        *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
-     </Typography>
-     <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
-     </Stack>
-     <Stack>
-     <Typography className={classes.titleText}>Heading Content</Typography>
-     <TextField className={classes.heroTextfiled}
-     
-     fullWidth
-     multiline
-     minRows={5}/>   
-     </Stack>
-   </Stack>
-   <Divider className={classes.heroDivider}/> 
-   <UserEndSaveCancelButtons />
-   </Box>
+      </Fragment>
+    ))
+   }
 
-  {/* testend */}
+   <UserEndSaveCancelButtons />
  </Box>
  </Box>
   )

@@ -4,7 +4,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Textfiledbox,UserEndSaveCancelButtons } from "./UserEndButtons";
+import { DeleteButton, Textfiledbox,UserEndSaveCancelButtons } from "./UserEndButtons";
 
 
 const UserendWhychoose = () => {
@@ -14,7 +14,7 @@ const UserendWhychoose = () => {
       <Box className={classes.useHerocontainer}> 
       <Box mt={2}>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-          <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
+          <DeleteButton message="Are you sure want to delete the Image?"/>
       </Box>
      <Stack className={classes.UploadandAboutbox}>
            <Stack className={classes.UploadImageStack}>

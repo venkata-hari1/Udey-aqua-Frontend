@@ -2,7 +2,7 @@ import { Box,Button, TextField,} from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
-import Deletepopup from "../../utils/DeleteMottopop";
+import UserendDeletepopup from "../../utils/UserendDeletepop";
 
 export const UserEndSaveCancelButtons = () => {
 
@@ -17,23 +17,30 @@ export const UserEndSaveCancelButtons = () => {
   )
 }
 
-export const UserendSaveDeleteButtons=()=>{
-
+export const UserendSaveDeleteButtons=({message}:{message:string})=>{
 
 const[open,setOpen]=useState(false)
 
-  const handleDeleteMotto=()=>{
-   setOpen((prev)=>!prev)
+const handleToggle=()=>{
+  setOpen((prev)=>!prev)
 }
 
+const handleConfirmDelete=()=>{
+   console.log("Deleted",message);
+   setOpen(false)
+}
 
-    const{classes}=useUserEndwebStyles() 
-    
-    return(
+const{classes}=useUserEndwebStyles() 
+
+return(
     <Box display="flex" gap={2}>
      <Button  className={classes.heroSave} >Save</Button>
-     <Button  className={classes.heroDelete} onClick={handleDeleteMotto}>Delete</Button>
-    {open&& <Deletepopup open={open} handleclickopen={handleDeleteMotto}/>} 
+     <Button  className={classes.heroDelete} onClick={handleToggle}>Delete</Button>
+    {open&& <UserendDeletepopup 
+    open={open} 
+    message={message}
+    onClose={handleToggle}
+    onDelete={handleConfirmDelete}/>} 
    </Box>
   )
 
@@ -52,12 +59,28 @@ export const AddingButton=()=>{
     ) 
 }
 
-export const DeleteButton=()=>{
+export const DeleteButton=({message}:{message:string})=>{
 
-  const{classes}=useUserEndwebStyles() 
-  return (
+const{classes}=useUserEndwebStyles() 
+
+const[open,setOpen]=useState(false)
+
+const handleToggle=()=>{
+  setOpen((prev)=>!prev)
+}
+const handleConfirmDelete=()=>{
+  console.log("Delete",message)
+}
+
+return (
     <Box>
-     <Button variant="outlined" className={classes.heroDelete}>Delete</Button>
+     <Button variant="outlined" className={classes.heroDelete}
+     onClick={handleToggle}>Delete</Button>
+    <UserendDeletepopup 
+    open={open}
+    message={message}
+    onClose={handleToggle}
+    onDelete={handleConfirmDelete}/>
     </Box>
   )
 }

@@ -25,7 +25,7 @@ return (
 { testimonialdata.map((test,index)=>(
   <Fragment>
   <Box sx={{display:'flex',justifyContent:'end',mt:2}}>
-  <UserendSaveDeleteButtons />
+  <UserendSaveDeleteButtons message={`Are you sure wnant to delete ${test.test}`}/>
   </Box>
 
   <Stack className={classes.Uploadandheadingbox}>
@@ -57,7 +57,7 @@ return (
       <TextField size="small" className={classes.textfiledTestimonial}/> 
      </Stack>
       </Box>
-     <Typography className={classes.titleText}>Heading Content</Typography>
+     <Typography className={classes.titleText}>Content</Typography>
      <Textfiledbox />   
      </Stack>
     </Stack> 

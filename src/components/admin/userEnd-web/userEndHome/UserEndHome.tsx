@@ -19,6 +19,8 @@ import UserendTestimonials from "./UserendTestimonials";
 import UserendNewsEvents from "./UserendNewsEvents";
 import UserendPricing from "./UserendPricing";
 import UserendDirectors from "./UserendDirectors";
+import UserendGetintouch from "./UserendGetintouch";
+import UserendFooter from "./UserendFooter";
 
 
 const UserEndHome = () => {
@@ -38,8 +40,8 @@ const homemenudata=[
    {id:10,menu:"News & Events",content:<UserendNewsEvents />} , 
    {id:11,menu:"Pricing",content:<UserendPricing />} , 
    {id:12,menu:"Our Directors & Advisors",content:<UserendDirectors />} ,
-   {id:13,menu:"Get In Touch",content:""} ,  
-   {id:14,menu:"Footer",content:""} , 
+   {id:13,menu:"Get In Touch",content:<UserendGetintouch />} ,  
+   {id:14,menu:"Footer",content:<UserendFooter />}, 
 ]
 
 const handleBackarrow=()=>{
@@ -49,7 +51,7 @@ const handleBackarrow=()=>{
     <Box>
       <Box className={classes.homeBackarrowbox}>
       <ArrowBackIcon className={classes.UserendbackArrow}
-      onClick={handleBackarrow}/>
+       onClick={handleBackarrow}/>
       <Typography color="#0A4FA4" mb={2}>Home</Typography>
       </Box>
       

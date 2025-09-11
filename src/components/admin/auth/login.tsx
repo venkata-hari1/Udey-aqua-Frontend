@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-// Remove Material-UI Visibility icons as we're using custom image
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-// import Visibility from '@mui/icons-material/Visibility';
+import { useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
@@ -9,7 +6,7 @@ import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
 import emailIconPng from '../../../assets/admin/mail.png';
 import lockIconPng from '../../../assets/admin/lock.png';
-import eyeIconPng from '../../../assets/admin/eye-off.png'; // Import your custom eye-off icon
+import eyeIconPng from '../../../assets/admin/eye-off.png'; 
 
 import {
   StyledLoginRoot,
@@ -25,7 +22,7 @@ import {
   StyledForgotPasswordLink,
   StyledLink,
   StyledLoginButton,
-} from '../styles/Logins.styles'; // Ensure this path is correct after consolidation
+} from '../styles/Logins.styles'; 
 
 const Login = () => {
   const navigate = useNavigate();

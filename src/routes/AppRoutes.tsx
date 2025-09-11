@@ -14,10 +14,9 @@ import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
-import UserendTestimonials from "../components/admin/userEnd-web/userEndHome/UserendTestimonials";
-import UserendNewsEvents from "../components/admin/userEnd-web/userEndHome/UserendNewsEvents";
+import UserendGetintouch from "../components/admin/userEnd-web/userEndHome/UserendGetintouch";
 import UserendPricing from "../components/admin/userEnd-web/userEndHome/UserendPricing";
-import UserendDirectors from "../components/admin/userEnd-web/userEndHome/UserendDirectors";
+import UserendFooter from "../components/admin/userEnd-web/userEndHome/UserendFooter";
 
 
 const AppRoutes = () => {
@@ -50,11 +49,8 @@ const AppRoutes = () => {
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
       </Route>
-         
-          <Route path="userend-test" element={<UserendTestimonials/>} />
-          <Route path="addnews" element={<UserendNewsEvents/>} />
-          <Route path="price" element={<UserendPricing />} />
-            <Route path="director" element={<UserendDirectors />} />
+
+        <Route path="footer" element={<UserendFooter />}/> 
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />
