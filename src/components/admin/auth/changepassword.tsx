@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
   InputAdornment,
   IconButton,
-  Typography,
+  
 } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
@@ -137,9 +137,7 @@ const ChangePassword = () => {
 
           <StyledForgotPasswordLink>
             <StyledLink
-              component={RouterLink}
               to="/admin/forgotpassword"
-              underline="hover"
             >
               Forgot Password?
             </StyledLink>

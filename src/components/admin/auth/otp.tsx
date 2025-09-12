@@ -4,7 +4,6 @@ import { Typography } from '@mui/material'; // Only import Typography directly
 import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
 
-// Import ALL necessary styled components from the consolidated Login.styles.ts
 import {
   StyledLoginRoot,
   StyledLoginLeft,
@@ -18,7 +17,7 @@ import {
   StyledOtpTextField,
   StyledResendLinkContainer,
   StyledResendLink,
-} from '../styles/Logins.styles'; // Correct path to your consolidated styles file
+} from '../styles/logins.styles'; // Correct path to your consolidated styles file
 
 const OTP = () => {
   const navigate = useNavigate();
@@ -119,7 +118,7 @@ const OTP = () => {
 
           {/* Reusing StyledResendLinkContainer and StyledResendLink */}
           <StyledResendLinkContainer>
-            <StyledResendLink href="#" underline="hover">
+            <StyledResendLink to="/changepassword">
               Resend code
             </StyledResendLink>
           </StyledResendLinkContainer>

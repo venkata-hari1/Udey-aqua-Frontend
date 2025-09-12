@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-// import EmailIcon from '@mui/icons-material/Email'; // REMOVE this import as we're using a custom image
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InputAdornment } from '@mui/material';
 
@@ -7,7 +6,6 @@ import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
 import mail from '../../../assets/admin/mail.png'; // Import your custom image icon
 
-// Import ALL necessary styled components, including the ones for custom icons
 import {
   StyledLoginRoot,
   StyledLoginLeft,

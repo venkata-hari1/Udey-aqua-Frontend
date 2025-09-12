@@ -14,9 +14,6 @@ import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
-import UserendGetintouch from "../components/admin/userEnd-web/userEndHome/UserendGetintouch";
-import UserendPricing from "../components/admin/userEnd-web/userEndHome/UserendPricing";
-import UserendFooter from "../components/admin/userEnd-web/userEndHome/UserendFooter";
 
 
 const AppRoutes = () => {
@@ -50,7 +47,7 @@ const AppRoutes = () => {
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
       </Route>
 
-        <Route path="footer" element={<UserendFooter />}/> 
+
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />

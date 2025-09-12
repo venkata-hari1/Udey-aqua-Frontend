@@ -1,5 +1,7 @@
+import { Box, Typography, TextField, Button} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Box, Typography, TextField, Button, Link } from '@mui/material';
+import { Link as RouterLink, type LinkProps as RouterLinkProps } from 'react-router-dom';
+
 
 export const StyledLoginRoot = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -21,7 +23,7 @@ export const StyledLoginLeft = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledLoginRight = styled(Box)(({ theme }) => ({
+export const StyledLoginRight = styled(Box)(() => ({
   flexGrow: 1,
   flexShrink: 0,
   flexBasis: '50%',
@@ -50,7 +52,7 @@ export const StyledLoginForm = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledLoginLogo = styled('img')(({ theme }) => ({
+export const StyledLoginLogo = styled('img')(() => ({
   marginTop: '60px',
   height: '170px',
   objectFit: 'contain',
@@ -58,7 +60,7 @@ export const StyledLoginLogo = styled('img')(({ theme }) => ({
   alignSelf: 'center',
 }));
 
-export const StyledTitle = styled(Typography)(({ theme }) => ({
+export const StyledTitle = styled(Typography)(() => ({
   fontSize: '2rem',
   fontWeight: 600,
   marginBottom: '0',
@@ -105,25 +107,25 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export const StyledCustomIcon = styled('img')(({ theme }) => ({
+export const StyledCustomIcon = styled('img')(() => ({
   width: '20px',
   height: '20px',
   objectFit: 'contain',
 }));
 
-export const StyledInputAdornmentIcon = styled(Box)(({ theme }) => ({
+export const StyledInputAdornmentIcon = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   marginRight: '8px',
 }));
 
-export const StyledForgotPasswordLink = styled(Box)(({ theme }) => ({
+export const StyledForgotPasswordLink = styled(Box)(() => ({
   alignSelf: 'flex-end',
   marginTop: '0px',
   marginBottom: '10px',
 }));
 
-export const StyledLink = styled(Link)(({ theme }) => ({
+export const StyledLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
   textDecoration: 'none',
   fontSize: '0.875rem',
   color: theme.palette.primary.main,
@@ -198,7 +200,7 @@ export const StyledResendLinkContainer = styled(Box)(({ theme }) => ({
   alignSelf: 'center',
 }));
 
-export const StyledResendLink = styled(Link)(({ theme }) => ({
+export const StyledResendLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
   textDecoration: 'underline', // Added underline by default
   fontSize: '15px',
   fontFamily: 'roboto',

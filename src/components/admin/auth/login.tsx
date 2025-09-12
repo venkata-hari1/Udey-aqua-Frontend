@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React,{useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
@@ -22,9 +22,9 @@ import {
   StyledForgotPasswordLink,
   StyledLink,
   StyledLoginButton,
-} from '../styles/Logins.styles'; 
+} from '../styles/logins.styles'; 
 
-const Login = () => {
+const Login:React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +40,7 @@ const Login = () => {
     if (!email) {
       setEmailError('Email is required');
       isValid = false;
-    } else if (!/\S+@\S+\.\S/.test(email)) { // Corrected regex: \S+@\S+\.\S+
+    } else if (!/\S+@\S+\.\S+/.test(email)) { // Corrected regex: \S+@\S+\.\S+
       setEmailError('Enter a valid email');
       isValid = false;
     }
@@ -117,9 +117,7 @@ const Login = () => {
           />
           <StyledForgotPasswordLink>
             <StyledLink
-              component={RouterLink}
               to="/admin/forgotpassword"
-              underline="hover"
             >
               Forgot Password?
             </StyledLink>
