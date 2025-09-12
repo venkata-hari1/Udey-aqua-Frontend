@@ -22,6 +22,7 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
        display:'flex',
        flexDirection:'column',
        justifyContent:'center',
+       
      },
      AdminTitle:{
         fontFamily:"DM Serif Display",
@@ -46,7 +47,8 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
       marginRight:50,
       color:'#f15556',
       textDecoration:'underline',
-      fontFamily:'Inter'
+      fontFamily:'Inter',
+      cursor:'pointer'
     },
     menuItem:{
       display:'flex',

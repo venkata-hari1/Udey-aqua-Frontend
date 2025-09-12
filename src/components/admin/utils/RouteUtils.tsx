@@ -4,7 +4,7 @@ export const showSearchbox=(path:string)=>{
     case "profile":
     case "user-info":
     case "userend-web":
-    
+    case "logout":
      return false
     default:
       return true    
@@ -21,6 +21,7 @@ export const shouldShowbackArrow=(path:string)=>{
     case "subscriber":
     case "getin-touch":  
     case "profile":
+    case "logout":  
      return false
     default:
       return true   
@@ -32,6 +33,7 @@ export const hasGrayBackground=(path:string)=>{
   switch(path){
     case "profile":
     case "userend-web":
+    case "logout":
     return "#F7FAFC" 
     default:
     return "white" 

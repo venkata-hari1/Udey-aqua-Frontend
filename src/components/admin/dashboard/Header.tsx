@@ -50,6 +50,9 @@ switch(path){
   case "userend-web":
   case "userend-home":  
   title="User End Website"
+  break;
+  case "logout":
+    title="Logout"
 }
 //backarrow handle
 const backarrowHandle=()=>{

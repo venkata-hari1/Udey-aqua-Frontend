@@ -30,6 +30,7 @@ const hasGrayBackground=(path:string)=>{
   switch(path){
     case "profile":
     case "userend-web":
+    case "logout":  
       return "#F7FAFC";
     default:
       return "white"    

@@ -14,6 +14,7 @@ import Subscriber from "../components/admin/user-management/Subscriber";
 import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
+import Logout from "../components/admin/auth/Logout";
 
 
 const AppRoutes = () => {
@@ -45,8 +46,9 @@ const AppRoutes = () => {
         <Route path="profile" element={<Profile />}/>
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
+        <Route path="logout" element={<Logout />} />  
       </Route>
-
+      
 
       
       
