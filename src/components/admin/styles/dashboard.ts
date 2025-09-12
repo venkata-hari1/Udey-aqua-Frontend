@@ -8,7 +8,6 @@ const ACCENT_BLUE = '#1a73e8';
 const LIGHT_GREY = '#e0e0e0';
 const DARK_GREY_TEXT = '#333';
 const MEDIUM_GREY_TEXT = '#666';
-const LIGHTER_GREY_BORDER = '#eee';
 const DM_SERIF_DISPLAY_FONT = '"DM Serif Display", serif';
 const INTER_FONT = '"Inter", sans-serif';
 
@@ -152,7 +151,7 @@ export const StyledStatCardContent = styled(CardContent)(({ theme }) => ({
   },
 }));
 
-export const StyledStatIconBox = styled(Box)(({ theme }) => ({
+export const StyledStatIconBox = styled(Box)(() => ({
   fontSize: '24px',
   color: PRIMARY_BLUE,
   display: 'flex',
