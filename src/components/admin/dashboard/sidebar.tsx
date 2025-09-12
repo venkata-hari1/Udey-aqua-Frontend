@@ -1,13 +1,12 @@
-import { ListItemIcon, ListItemText, Grid } from '@mui/material';
-
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-
+import { ListItemIcon, ListItemText, Grid} from '@mui/material';
 // Import image paths
 import Logo from '../../../assets/admin/logo.png';
 import LogoutIcon from '../../../assets/admin/ri_logout-circle-r-line.png';
 import DashboardImg from '../../../assets/admin/mage_dashboard.png'; // Renamed to avoid conflict with component naming convention
 import WebImg from '../../../assets/admin/icon-park-outline_editor (1).png'; // Renamed
 import PersonImg from '../../../assets/admin/heroicons-solid_users.png'; // Renamed
+import { Link as RouterLink } from 'react-router-dom';
+
 
 import {
   StyledSidebarContainer,
@@ -19,21 +18,24 @@ import {
   StyledSidebarLogoutItem,
 } from '../styles/sidebar';
 
+import { useLocation } from 'react-router-dom';
+
 const DashboardSidebar = () => {
+
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <StyledSidebarContainer container direction="column" justifyContent="space-between">
-      <Grid item>
+      <Grid>
         <StyledSidebarTopSection>
           <StyledSidebarLogo src={Logo} alt="Uday Aqua Logo" />
-          <StyledSidebarTitle component="div">Admin</StyledSidebarTitle>
+          <StyledSidebarTitle component="div" >Admin</StyledSidebarTitle>
 
           <StyledSidebarNavList>
             <StyledSidebarNavItem
-              component={RouterLink}
+              component={RouterLink} 
               to="/admin/dashboard"
               active={isActive('/admin/dashboard')}
             >
@@ -44,7 +46,7 @@ const DashboardSidebar = () => {
             </StyledSidebarNavItem>
 
             <StyledSidebarNavItem
-              component={RouterLink}
+               component={RouterLink} 
               to="/admin/user-end-web"
               active={isActive('/admin/user-end-web')}
             >
@@ -55,7 +57,6 @@ const DashboardSidebar = () => {
             </StyledSidebarNavItem>
 
             <StyledSidebarNavItem
-              component={RouterLink}
               to="/admin/profile"
               active={isActive('/admin/profile')}
             >
@@ -68,7 +69,7 @@ const DashboardSidebar = () => {
         </StyledSidebarTopSection>
       </Grid>
 
-      <Grid item>
+      <Grid >
         <StyledSidebarNavList>
           <StyledSidebarLogoutItem onClick={() => window.location.href = '/admin/login'}>
             <ListItemIcon>

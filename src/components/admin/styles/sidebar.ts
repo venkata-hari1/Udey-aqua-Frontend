@@ -1,5 +1,8 @@
+import { Box,  List, ListItemButton, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Box, Typography, List, ListItemButton, Grid } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import Typography from "@mui/material/Typography";
+import type { TypographyProps } from "@mui/material/Typography";
 
 export const StyledSidebarContainer = styled(Grid)(({ theme }) => ({
   marginLeft: theme.spacing(1.25),
@@ -24,12 +27,11 @@ export const StyledSidebarLogo = styled('img')({
   marginBottom: 0,
 });
 
-export const StyledSidebarTitle = styled(Typography)(({ theme }) => ({
-  fontFamily: '"DM Serif Display", serif',
-  fontWeight: 700,
-  fontSize: '40px',
-  color: '#144887',
-  marginBottom: theme.spacing(2.5),
+export const StyledSidebarTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
+  fontWeight: 600,
+  fontSize: "1.2rem",
+  marginBottom: theme.spacing(2),
+  color: "#144887",
 }));
 
 export const StyledSidebarNavList = styled(List)({
@@ -41,6 +43,8 @@ export const StyledSidebarNavList = styled(List)({
 
 interface StyledSidebarNavItemProps {
   active?: boolean;
+  to?:string;
+  component?:typeof RouterLink;
 }
 
 export const StyledSidebarNavItem = styled(ListItemButton)<StyledSidebarNavItemProps>(({ theme, active }) => ({

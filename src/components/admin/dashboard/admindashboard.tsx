@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography, InputAdornment, Box, CardContent, Grid } from '@mui/material';
+
+import {InputAdornment, Box, CardContent, Grid } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 // Corrected: Import as an image path (e.g., PeopleImg)
 import PeopleImg from '../../../assets/admin/fa-solid_users.png';
@@ -65,7 +65,7 @@ const Dashboard = () => {
   return (
     <StyledDashboardContainer>
       <StyledDashboardHeader>
-        <StyledDashboardTitle component="h1">Admin Dashboard</StyledDashboardTitle>
+        <StyledDashboardTitle>Admin Dashboard</StyledDashboardTitle>
         <StyledSearchInput
           placeholder="Search..."
           variant="outlined"
@@ -83,14 +83,13 @@ const Dashboard = () => {
       <StyledBannerAndStatsWrapper>
         <StyledImageCard>
           <StyledCardMedia
-            component="img"
+            /* component="img" */
             image={bannerImage}
-            alt="Dashboard Banner"
           />
         </StyledImageCard>
 
         <StyledStatsGrid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid>
             <StyledStatCard>
               <StyledStatCardContent>
                 <StyledStatIconBox>
@@ -104,7 +103,7 @@ const Dashboard = () => {
               </StyledStatCardContent>
             </StyledStatCard>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid>
             <StyledStatCard>
               <StyledStatCardContent>
                 <StyledStatIconBox>
@@ -122,7 +121,7 @@ const Dashboard = () => {
       </StyledBannerAndStatsWrapper>
 
       <StyledChartsGrid container spacing={3}>
-        <Grid item xs={12} md={8}>
+        <Grid>
           <StyledChartCard>
             <CardContent>
               <StyledChartTitle>Training Program Registrations</StyledChartTitle>
@@ -152,7 +151,7 @@ const Dashboard = () => {
           </StyledChartCard>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid>
           <StyledRegisterCard>
             <CardContent>
               <StyledRegisterHeader>
