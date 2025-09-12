@@ -49,7 +49,7 @@ const AboutLayout = () => {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: "none"}}
                     className={() =>
                       cx(classes.aboutSidebarNavItem, {
                         active: location.pathname === item.path,

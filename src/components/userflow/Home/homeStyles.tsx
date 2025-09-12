@@ -851,6 +851,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
   },
   ourProjectsCategories: {
+    fontFamily: FONTS.INTER,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
@@ -1109,7 +1110,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   pricingCardRoot: {
     width: 360,
     boxShadow: SHADOWS.CARD,
-    background: COLORS.WHITE,
+    background: COLORS.BLUE_GRAY,
     padding: theme.spacing(3),
     borderTopLeftRadius: "50% 25%",
     borderTopRightRadius: "50% 25%",
@@ -1200,7 +1201,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   sectionTitleText: {
     color: theme.palette.primary.main,
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 400,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     paddingLeft: theme.spacing(2),

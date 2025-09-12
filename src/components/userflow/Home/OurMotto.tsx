@@ -5,8 +5,8 @@ import card3 from "../../../assets/motto/card_3.png";
 import { Box } from "@mui/material";
 import MottoCard from "./MottoCard";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
-import useIsOverflowing from "./UseIsOverflowing";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 const mottoData = [

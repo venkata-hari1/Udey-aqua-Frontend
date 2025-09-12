@@ -6,6 +6,8 @@ import img from "../../../assets/about_us/milestones.png";
 import img2019 from "../../../assets/about_us/milestone_2019.png";
 import img2020 from "../../../assets/about_us/milestone_2019.png";
 import img2021 from "../../../assets/about_us/milestone_2019.png";
+import { ArrowBack } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface MilestoneItem {
   year: string;
@@ -57,6 +59,7 @@ const milestonesData: MilestoneItem[] = [
 
 const Milestones = () => {
   const { classes } = useAboutStyles();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -130,6 +133,11 @@ const Milestones = () => {
               </Box>
             );
           })}
+        </Box>
+        <Box className={classes.backButtonWrapper} onClick={() => navigate(-1)}>
+          <Box className={classes.backButton}>
+            <ArrowBack />
+          </Box>
         </Box>
       </Box>
     </>
