@@ -78,11 +78,14 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   marginBottom: '0',
   alignSelf: 'center',
   width: '100%',
+   paddingRight: '12px', 
+    paddingLeft: '12px',
   '& .MuiInputBase-root': {
     height: '50px',
     borderRadius: '8px',
     fontSize: '16px',
     backgroundColor: '#F9F9F9',
+    boxSizing: 'border-box',
   },
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: '#E0E0E0',
