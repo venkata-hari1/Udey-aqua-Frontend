@@ -5,8 +5,8 @@ import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
 import emailIconPng from '../../../assets/admin/mail.png';
 import lockIconPng from '../../../assets/admin/lock.png';
-import eyeIconPng from '../../../assets/admin/eye-off.png'; 
-
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   StyledLoginRoot,
   StyledLoginLeft,
@@ -67,7 +67,9 @@ const isvalidateInputs=()=>{
      setEmailError("");
      isValid=true;
    }
- //password valid
+
+  //password valid
+  
   if(password){
 
   const validPassword=validatePassword(password)
@@ -112,7 +114,6 @@ const isvalidateInputs=()=>{
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            
             error={!!emailError}
             helperText={emailError || null}
             
@@ -130,7 +131,7 @@ const isvalidateInputs=()=>{
             fullWidth
             FormHelperTextProps={{
             sx: {
-              whiteSpace: "normal", // allow wrapping instead of expanding
+              whiteSpace: "normal",
               overflow: "hidden",
               textOverflow: "ellipsis",
             },
@@ -153,10 +154,10 @@ const isvalidateInputs=()=>{
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}
-                    >
+                  <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
                     {/* Using your custom eye-off icon regardless of state */}
-                    <StyledCustomIcon src={eyeIconPng} alt={showPassword ? "Hide password" : "Show password"} />
+                    {/* <StyledCustomIcon src={showPassword? VisibilityOutlinedIcon:VisibilityOffOutlinedIcon} alt={showPassword ? "Hide password" : "Show password"} /> */}
+                    {showPassword?<VisibilityOutlinedIcon sx={{fontSize:'18px'}}/>: <VisibilityOffOutlinedIcon sx={{fontSize:'18px'}}/>}
                   </IconButton>
                 </InputAdornment>
               ),
