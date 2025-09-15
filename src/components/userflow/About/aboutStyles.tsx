@@ -710,6 +710,36 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     height: 120,
     opacity: 0.8,
   },
+  autoHeaderTabWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "16px",
+  },
+  
+  autoHeaderTab: {
+    fontSize: 22,
+    fontFamily:FONTS.DM_SERIF_DISPLAY,
+    fontWeight: 400,
+    color: theme.palette.text.secondary,
+    paddingBottom: 4,
+    position: "relative",
+  },
+  
+  autoHeaderTabActive: {
+    fontWeight: 600,
+    color:COLORS.SECONDARY_BLUE ,
+    textDecoration: "underline",
+    textUnderlineOffset:2, 
+    textDecorationThickness: 2,
+  },
+  
+  autoHeaderTabSeparator: {
+    fontSize: 22,
+    color: theme.palette.text.secondary,
+    fontWeight: 500,
+  },
+  
   tabContainer: {
     display: "flex",
     alignItems: "center",
@@ -1052,10 +1082,41 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
 
   // Testimonials Styles
+  
   testimonialCarouselWrapper: {
     maxWidth: 1200,
     margin: "40px auto",
     position: "relative",
+  },
+testimonialRoot: {
+    width: "100%",
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
+    position: "relative",
+    [theme.breakpoints.down("md")]: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
+  },
+  testimonialFishesImg: {
+    position: "absolute",
+    right:-150,
+    top: -70,
+    zIndex: 100,
+    display: "block",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  testimonialFishesImg2: {
+    position: "absolute",
+    left:-600,
+    bottom:80,
+    zIndex: 100,
+    display: "block",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
   testimonialCarouselCard: {
     background: COLORS.WHITE,
@@ -1379,12 +1440,14 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   testimonialWideCards: {
+    position:"relative",
     width: "100%",
     display: "flex",
     gap: 24,
     overflowX: "auto",
     paddingLeft: 64,
     paddingRight: 64,
+    zIndex:101,
     scrollbarWidth: "none",
     "&::-webkit-scrollbar": {
       display: "none",

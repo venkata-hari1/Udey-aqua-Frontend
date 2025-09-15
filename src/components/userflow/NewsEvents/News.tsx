@@ -202,8 +202,6 @@ const News = () => {
   const { classes } = useNewsEventsStyles();
   const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
     useScrollWithOffset(200);
-  const { ref: detailTopRef, scrollTo: scrollToDetailTop } =
-    useScrollWithOffset(200);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
@@ -276,9 +274,10 @@ const News = () => {
         "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
       ],
     });
+    // Scroll to top of page instead of using the ref
     setTimeout(() => {
-      scrollToDetailTop();
-    }, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
   };
 
   // Loading state
@@ -309,7 +308,7 @@ const News = () => {
 
   if (detail.active) {
     return (
-      <Box className={classes.newsDetailView} ref={detailTopRef}>
+      <Box className={classes.newsDetailView}>
         <Box className={classes.newsDetailHeader}>
           <Box className={classes.newsDetailCalendarTopRight}>
             <Box

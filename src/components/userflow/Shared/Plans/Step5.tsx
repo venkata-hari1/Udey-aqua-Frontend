@@ -64,7 +64,7 @@ const Step5 = ({
               {formData.name || "-"}
             </Typography>
             <Typography className={classes.step5DetailValue}>
-              {formData.phone || "-"}
+              {formData.phone ? `+91${formData.phone}` : "-"}
               <span className={classes.step5DetailValueSpace}> </span>
               {formData.email && `${formData.email}`}
             </Typography>
@@ -135,7 +135,33 @@ const Step5 = ({
             <Button
               variant="contained"
               className={classes.plansCardButton}
-              onClick={() => onStepChange && onStepChange(6)}
+              onClick={() => {
+                // Log all details from Step1 to current (Step5) before payment
+                console.log("Plans flow submission (Steps 1-5):", {
+                  step1: {
+                    name: formData.name?.trim(),
+                    phone: formData.phone ? `+91${formData.phone}` : "",
+                    email: formData.email?.trim(),
+                    address: formData.address?.trim(),
+                    district: formData.district?.trim(),
+                    pincode: formData.pincode,
+                    state: formData.state?.trim(),
+                  },
+                  step2: {
+                    culture: step2Data.selectedCultureType,
+                  },
+                  step4: {
+                    rdFaculty: step4Data.rdFaculty,
+                    availableSlotFrom: step4Data.availableSlotFrom,
+                    availableSlotTo: step4Data.availableSlotTo,
+                    trainingCourse: step4Data.trainingCourse,
+                    technologies: step4Data.technologies,
+                    termsAccepted: step4Data.termsAccepted,
+                  },
+                  step5SummaryShown: true,
+                });
+                onStepChange && onStepChange(6);
+              }}
             >
               Continue to Payment
             </Button>

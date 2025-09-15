@@ -430,7 +430,6 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 400,
     fontSize: "2rem",
     lineHeight: 1.2,
-    textTransform: "capitalize",
     marginBottom: theme.spacing(1.5),
     color: COLORS.WHITE,
     [theme.breakpoints.down("md")]: {

@@ -5,6 +5,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTheme } from "@mui/material/styles";
 import heroImg from "../../../assets/home/hero_img.png";
 import useHomeStyles from "./homeStyles";
+import ParticlesBackground from "./ParticlesBackground";
 import {
   CULTURES_FISH_INITIAL,
   CULTURES_FISH_ANIMATE,
@@ -24,6 +25,9 @@ const Hero = () => {
         </IconButton>
       </Box>
       <Box className={classes.heroMain}>
+        <Box sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
+          <ParticlesBackground />
+        </Box>
         <Box className={classes.heroImgBox}>
           <motion.img
             src={heroImg}

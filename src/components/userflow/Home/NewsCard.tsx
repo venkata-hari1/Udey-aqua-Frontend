@@ -1,4 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
 
 export interface NewsCardProps {
@@ -22,6 +23,11 @@ const NewsCard: React.FC<NewsCardProps> = ({
 }) => {
   const [day, month, year] = date.split(" ");
   const { classes } = useHomeStyles();
+  const navigate = useNavigate();
+
+  const handleReadMoreClick = () => {
+    navigate('/news-events');
+  };
   return (
     <Box
       className={`${classes.newsCardRoot} ${
@@ -60,7 +66,11 @@ const NewsCard: React.FC<NewsCardProps> = ({
           </Typography>
         </Box>
         <Box className={classes.newsCardFooter}>
-          <Button variant="outlined" className={classes.newsCardButton}>
+          <Button 
+            variant="outlined" 
+            className={classes.newsCardButton}
+            onClick={handleReadMoreClick}
+          >
             Read More
           </Button>
         </Box>

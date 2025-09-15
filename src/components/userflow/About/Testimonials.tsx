@@ -6,6 +6,8 @@ import {
   useTheme,
   IconButton,
 } from "@mui/material";
+import { motion } from "framer-motion";
+import fishesImg from "../../../assets/home/news_img.png";
 import { NavLink, useLocation } from "react-router-dom";
 import useAboutStyles from "./aboutStyles";
 import AboutHero from "./AboutHero";
@@ -20,6 +22,11 @@ import person2 from "../../../assets/testimonials/person_2.jpg";
 import person3 from "../../../assets/testimonials/person_3.jpg";
 import person4 from "../../../assets/testimonials/person_4.jpg";
 import person5 from "../../../assets/testimonials/person_5.jpg";
+import {
+  NEWS_FISHES_INITIAL,
+  NEWS_FISHES_ANIMATE,
+  NEWS_FISHES_TRANSITION,
+} from "../Shared/animations";
 import { useState, useEffect, useRef } from "react";
 
 const sidebarItems = [
@@ -318,6 +325,20 @@ const Testimonials = () => {
                   )}
                 </Box>
               </Box>
+                            {/* Fish animation for Read More */}
+              {isReadMoreMode && (
+                <Box className={classes.testimonialRoot}>
+                  <motion.img
+                    src={fishesImg}
+                    alt="Fishes"
+                    className={classes.testimonialFishesImg2}
+                    initial={NEWS_FISHES_INITIAL}
+                    animate={NEWS_FISHES_ANIMATE}
+                    transition={NEWS_FISHES_TRANSITION}
+                  />
+                </Box>
+              )}
+
 
               {/* Back to overview button - bottom right, only in Read More mode */}
               {isReadMoreMode && (
@@ -387,6 +408,16 @@ const Testimonials = () => {
         {!isReadMoreMode && (
           <Grid size={{ xs: 12 }}>
             <Box className={classes.testimonialBottomWrapper}>
+            <Box className={classes.testimonialRoot}>
+            <motion.img
+              src={fishesImg}
+              alt="Fishes"
+              className={classes.testimonialFishesImg}
+              initial={NEWS_FISHES_INITIAL}
+              animate={NEWS_FISHES_ANIMATE}
+              transition={NEWS_FISHES_TRANSITION}
+            />
+            </Box>
               <Box
                 ref={bottomCardsRef}
                 className={classes.testimonialWideCards}

@@ -1,4 +1,5 @@
 import { Box, Typography, Button, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
 
 export interface PricingCardProps {
@@ -9,6 +10,11 @@ export interface PricingCardProps {
 
 const PricingCard: React.FC<PricingCardProps> = ({ image, title, features }) => {
   const { classes } = useHomeStyles();
+  const navigate = useNavigate();
+
+  const handleLearnMoreClick = () => {
+    navigate('/cultures');
+  };
 
   return (
     <Grid container className={classes.pricingCardRoot}>
@@ -24,7 +30,11 @@ const PricingCard: React.FC<PricingCardProps> = ({ image, title, features }) => 
         ))}
       </Grid>
       <Grid size={{ xs: 12 }}>
-        <Button variant="outlined" className={classes.pricingCardButton}>
+        <Button 
+          variant="outlined" 
+          className={classes.pricingCardButton}
+          onClick={handleLearnMoreClick}
+        >
           Learn More
         </Button>
       </Grid>

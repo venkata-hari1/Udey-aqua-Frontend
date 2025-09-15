@@ -37,10 +37,35 @@ const Step3 = ({
   };
 
   const handleContinue = () => {
-    const { isValid, errors } = validateForm(formData);
+    const digitsOnly = (formData.phone || "").replace(/[^0-9]/g, "");
+    const normalizedPhone = /^\+91\d{10}$/.test(formData.phone)
+      ? formData.phone
+      : /^\d{10}$/.test(digitsOnly)
+      ? `+91${digitsOnly}`
+      : formData.phone;
+
+    const normalizedForm = { ...formData, phone: normalizedPhone };
+
+    const { isValid, errors } = validateForm(normalizedForm);
     setFormErrors(errors);
 
-    if (isValid && onStepChange) {
+    if (!isValid) {
+      console.warn("Step3 form validation failed:", { errors, data: normalizedForm });
+      return;
+    }
+
+    // Print submitted details to console
+    console.log("Step3 form submitted:", {
+      name: normalizedForm.name.trim(),
+      phone: normalizedForm.phone,
+      email: normalizedForm.email.trim(),
+      address: normalizedForm.address.trim(),
+      district: normalizedForm.district.trim(),
+      pincode: normalizedForm.pincode,
+      state: normalizedForm.state.trim(),
+    });
+
+    if (onStepChange) {
       onStepChange(4);
     }
   };
@@ -75,10 +100,16 @@ const Step3 = ({
             <Grid size={{ xs: 12, md: 6 }}>
               <FormField
                 label="Phone"
-                placeholder="+91"
+                placeholder="+91 9876543210"
                 required
-                value={formData.phone}
-                onChange={(value) => handleInputChange("phone", value)}
+                value={`+91 ${formData.phone || ""}`}
+                onChange={(value) => {
+                  // Keep +91 prefix visible; store only 10 local digits
+                  const digitsOnly = value.replace(/\D/g, "");
+                  const withoutCountry = digitsOnly.startsWith("91") ? digitsOnly.slice(2) : digitsOnly;
+                  const tenDigits = withoutCountry.slice(0, 10);
+                  handleInputChange("phone", tenDigits);
+                }}
                 error={formErrors.phone}
               />
             </Grid>

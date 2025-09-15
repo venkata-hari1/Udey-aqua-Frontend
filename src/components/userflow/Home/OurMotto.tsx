@@ -21,13 +21,15 @@ const mottoData = [
     img: card2,
     fishText: "NH-16",
     title: "Creating Coastal Aqua Corridor",
-    button: false,
+    button: true,
+    buttonText: "LEARN MORE",
   },
   {
     img: card3,
     fishText: "99 acre",
     title: "Mulapolam, Srikakulam",
-    button: false,
+    button: true,
+    buttonText: "LEARN MORE",
   },
 ];
 
@@ -40,7 +42,9 @@ const OurMotto = () => {
   return (
     <Box className={classes.ourMottoRoot}>
       <Box className={classes.ourMottoTitleWrap}>
+        <Box className={classes.ourMottoTitle}>
         <SectionTitle title="Our Motto" />
+        </Box>
       </Box>
       <Box
         ref={scrollRef}

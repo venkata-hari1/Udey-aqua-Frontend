@@ -11,30 +11,66 @@ const Contact = ({ title = true }: { title?: boolean }) => {
 
   const maxMessageLength = 500;
 
+  // Validation functions
   const isValidPhone = (value: string) => {
     const digitsOnly = value.replace(/[^0-9]/g, "");
-    return digitsOnly.length >= 10 && digitsOnly.length <= 15;
+    return digitsOnly.length === 10;
   };
 
-  const nameError = submitted && !form.name ? "First name is required" : "";
+  const containsOnlyNumbers = (value: string) => {
+    return /^\d+$/.test(value);
+  };
+
+  const isValidName = (value: string) => {
+    return value.trim().length > 0 && !containsOnlyNumbers(value);
+  };
+
+  const isValidMessage = (value: string) => {
+    return value.trim().length > 0 && !containsOnlyNumbers(value);
+  };
+
+  const nameError = submitted 
+    ? !form.name 
+      ? "First name is required" 
+      : !isValidName(form.name)
+      ? "Name cannot contain only numbers"
+      : ""
+    : "";
   const phoneError = submitted
     ? !form.phone
       ? "Enter a valid phone number"
       : !isValidPhone(form.phone)
-      ? "Enter a valid phone number"
+      ? "Phone number must be exactly 10 digits"
       : ""
     : "";
-  const messageError = submitted && !form.message ? "Message is required" : "";
+  const messageError = submitted 
+    ? !form.message 
+      ? "Message is required" 
+      : !isValidMessage(form.message)
+      ? "Message cannot contain only numbers"
+      : ""
+    : "";
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    
     if (name === "message") {
       const limited = value.slice(0, maxMessageLength);
       setForm({ ...form, message: limited });
       return;
     }
+    
+    if (name === "phone") {
+      // Keep +91 visible; store only the 10 local digits in state
+      const digitsOnly = value.replace(/\D/g, "");
+      const withoutCountry = digitsOnly.startsWith("91") ? digitsOnly.slice(2) : digitsOnly;
+      const tenDigits = withoutCountry.slice(0, 10);
+      setForm({ ...form, phone: tenDigits });
+      return;
+    }
+    
     setForm({ ...form, [name]: value });
   };
 
@@ -42,9 +78,19 @@ const Contact = ({ title = true }: { title?: boolean }) => {
     e.preventDefault();
     setSubmitted(true);
 
-    if (form.name && form.phone && form.message) {
+    if (isValidName(form.name) && isValidPhone(form.phone) && isValidMessage(form.message)) {
+      console.log({
+        name: form.name.trim(),
+        phone: `+91${form.phone}`,
+        message: form.message.trim(),
+      });
       setSubmitted(false);
       setForm({ name: "", phone: "", message: "" });
+    } else {
+      console.warn({
+        errors: { nameError, phoneError, messageError },
+        data: form,
+      });
     }
   };
 
@@ -113,14 +159,15 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                   </Box>
                   <TextField
                     name="phone"
-                    value={form.phone}
+                    value={`+91 ${form.phone}`}
                     onChange={handleChange}
-                    placeholder="+1 800 123-34-45"
+                    placeholder="+91 9876543210"
                     fullWidth
                     variant="outlined"
                     size="small"
                     className={classes.contactTextField}
                     error={Boolean(phoneError)}
+                    inputProps={{ maxLength: 15 }}
                   />
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>
@@ -148,7 +195,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     variant="outlined"
                     className={classes.contactTextField}
                     error={Boolean(messageError)}
-                    placeholder={"Message can’t be more than 500 characters"}
+                    placeholder={"Message can't be more than 500 characters"}
                     inputProps={{ maxLength: maxMessageLength }}
                   />
                 </Grid>

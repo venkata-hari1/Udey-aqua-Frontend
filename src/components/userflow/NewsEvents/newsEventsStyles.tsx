@@ -185,9 +185,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   // Side image styles
   newsEventsSideImg: {
     position: "absolute",
-    top: -30,
-    right: 80,
-    width: 120,
+    top: -50,
+    right: 50,
+    width: 190,
     height: "auto",
     zIndex: 0,
     [theme.breakpoints.down("md")]: {

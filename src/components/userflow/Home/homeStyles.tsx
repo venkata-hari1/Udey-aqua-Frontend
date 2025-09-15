@@ -274,6 +274,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     overflow: "hidden",
     padding: 0,
     marginBottom: theme.spacing(2),
+    cursor: "pointer",
+    "&:hover .mottoCardButtonWrap": {
+      transform: "translateY(0)",
+    },
   },
   mottoCardImgWrap: {
     width: "100%",
@@ -299,6 +303,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     height: 48,
+    transform: "translateY(100%)",
+    transition: "transform 0.3s ease-in-out",
   },
   mottoCardButton: {
     width: "100%",
@@ -528,15 +534,20 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     overflowY: "visible",
     position: "relative",
+
   },
   ourMottoTitleWrap: {
     position: "absolute",
     top: -25,
-    marginBottom: "10px",
     [theme.breakpoints.down("md")]: {
       top: -15,
     },
   },
+  ourMottoTitle:{
+    boxShadow:SHADOWS.CARD,
+    borderRadius:50,
+  },
+
   ourMottoScrollWrap: {
     display: "flex",
     gap: theme.spacing(12),
@@ -1042,9 +1053,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   pricingTopImg: {
     position: "absolute",
-    top: -45,
-    right: 100,
-    width: 400,
+    top: -80,
+    right:0,
+    width: 369,
+    height:209,
     zIndex: 0,
     display: "block",
     // Infinity (lemniscate) swim animation - transform-based for compatibility
@@ -1058,9 +1070,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   // Base style without any animation (for framer-motion usage)
   pricingTopImgBase: {
     position: "absolute",
-    top: -45,
-    right: 100,
-    width: 400,
+    top: -80,
+    right:0,
+    width: 369,
+    height:209,
     zIndex: 0,
     display: "block",
     [theme.breakpoints.down("md")]: {
@@ -1178,7 +1191,6 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   sectionTitleInner: {
     borderRadius: 999,
     backgroundColor: COLORS.WHITE,
-    // boxShadow: SHADOWS.CARD,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

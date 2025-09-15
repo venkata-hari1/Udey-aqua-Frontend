@@ -65,7 +65,7 @@ const Milestones = () => {
     <>
       <AboutHero currentLabel="Milestones" />
 
-      <Typography className={classes.mileStoneHeader}>Milestone</Typography>
+      <Typography className={classes.mileStoneHeader}>Milestones</Typography>
       <Typography className={classes.mileStoneSubtitle}>
         Our Journey in Aquaculture Innovation
       </Typography>

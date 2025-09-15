@@ -24,6 +24,11 @@ const FormField = ({
 }: FormFieldProps) => {
   const { classes } = usePlansStyles();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    onChange?.(newValue);
+  };
+
   return (
     <Box className={classes.step3FormField}>
       <Typography className={classes.step3Label}>
@@ -32,7 +37,7 @@ const FormField = ({
       </Typography>
       <TextField
         value={value}
-        onChange={(e) => onChange?.(e.target.value)}
+        onChange={handleChange}
         placeholder={placeholder}
         multiline={multiline}
         rows={rows}

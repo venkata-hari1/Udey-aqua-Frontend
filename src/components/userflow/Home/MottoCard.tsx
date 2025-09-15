@@ -1,4 +1,5 @@
 import { Grid, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import mottoHead from "../../../assets/home/motto_head.svg";
 import useHomeStyles from "./homeStyles";
 
@@ -12,6 +13,11 @@ interface MottoCardProps {
 
 const MottoCard = ({ img, fishText, title, button, buttonText }: MottoCardProps) => {
   const { classes } = useHomeStyles();
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/about');
+  };
 
   return (
     <Grid container className={classes.mottoCardRoot} direction="column" alignItems="center" spacing={2} size={{ xs: 12 }}>
@@ -22,8 +28,12 @@ const MottoCard = ({ img, fishText, title, button, buttonText }: MottoCardProps)
       <Grid className={classes.mottoCardBox} size={{ xs: 12 }}>
         <img src={img} alt={title} className={classes.mottoCardImg} />
         {button && (
-          <div className={classes.mottoCardButtonWrap}>
-            <Button variant="contained" className={classes.mottoCardButton}>
+          <div className={`${classes.mottoCardButtonWrap} mottoCardButtonWrap`}>
+            <Button 
+              variant="contained" 
+              className={classes.mottoCardButton}
+              onClick={handleButtonClick}
+            >
               {buttonText}
             </Button>
           </div>

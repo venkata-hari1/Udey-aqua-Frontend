@@ -44,6 +44,8 @@ export const validateForm = (
 
   if (!formData.name.trim()) {
     errors.name = "Name is required";
+  } else if (/^\d+$/.test(formData.name.trim())) {
+    errors.name = "Name cannot contain only numbers";
   }
 
   if (!formData.phone.trim()) {
@@ -60,6 +62,8 @@ export const validateForm = (
 
   if (!formData.address.trim()) {
     errors.address = "Enter a valid address";
+  } else if (/^\d+$/.test(formData.address.trim())) {
+    errors.address = "Address cannot contain only numbers";
   }
 
   if (!formData.district.trim()) {

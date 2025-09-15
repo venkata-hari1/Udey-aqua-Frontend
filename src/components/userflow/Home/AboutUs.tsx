@@ -1,5 +1,6 @@
 import { Box, Typography, Button, Grid } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/home/about_image.png";
 import aboutVideo from "../../../assets/home/video.mp4";
 import useHomeStyles from "./homeStyles";
@@ -7,6 +8,11 @@ import useHomeStyles from "./homeStyles";
 const AboutUs = () => {
   const { classes } = useHomeStyles();
   const [activeSection, setActiveSection] = useState("about");
+  const navigate = useNavigate();
+
+  const handleLearnMoreClick = () => {
+    navigate('/about');
+  };
 
   return (
     <>
@@ -41,7 +47,11 @@ const AboutUs = () => {
               ? "Uday Aqua has been at the forefront of sustainable aquaculture since its inception, dedicated to educating and guiding fish farmers and entrepreneurs. Our mission is to promote responsible seafood farming through innovative techniques, expert consulting, and comprehensive training programs."
               : "Choose Uday Aqua for our proven expertise in sustainable aquaculture, cutting-edge technologies, training programs, and dedicated support. We offer customized solutions, industry-leading practices, and a commitment to environmental responsibility that sets us apart in the aquaculture sector."}
           </Typography>
-          <Button variant="outlined" className={classes.aboutUsBtn}>
+          <Button 
+            variant="outlined" 
+            className={classes.aboutUsBtn}
+            onClick={handleLearnMoreClick}
+          >
             Learn More
           </Button>
         </Grid>

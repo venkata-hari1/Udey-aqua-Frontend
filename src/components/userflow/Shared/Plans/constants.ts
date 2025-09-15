@@ -130,6 +130,6 @@ export const VALIDATION_PATTERNS = {
 
 // Auto-transition timers
 export const TRANSITION_TIMERS = {
-  STEP6_TO_STEP7: 2000, // 2 seconds
-  STEP7_TO_STEP8: 5000, // 5 seconds
+  STEP6_TO_STEP7: 2000, 
+  STEP7_TO_STEP8: 5000, 
 };

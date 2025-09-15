@@ -157,6 +157,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   sideFish: {
     position: "absolute",
     top: "-30px",
+    width:190,
     right: "60px",
   },
   technologiesSidebarNavItem: {

@@ -23,7 +23,7 @@ const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
   // Form data state
   const [formData, setFormData] = useState<FormData>({
     name: "",
-    phone: "+91",
+    phone: "",
     email: "",
     address: "",
     district: "",

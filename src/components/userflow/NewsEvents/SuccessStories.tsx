@@ -316,7 +316,7 @@ const SuccessStories = () => {
                   )}
                   <Box
                     className={classes.storyButton}
-                    onClick={() =>
+                    onClick={() => {
                       setDetail({
                         active: true,
                         image: it.image,
@@ -328,8 +328,11 @@ const SuccessStories = () => {
                         ],
                         author: "Sunitha",
                         images: it.images,
-                      })
-                    }
+                      });
+                      setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }, 100);
+                    }}
                   >
                     Read More
                   </Box>

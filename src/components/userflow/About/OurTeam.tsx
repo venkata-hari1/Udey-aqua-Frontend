@@ -189,9 +189,32 @@ const OurTeam = () => {
           Leading With Vision, Guided By Expertise
         </Typography>
 
-        <Box className={classes.headerIconContainer}>
-          <Box component="img" src={aboutImg} className={classes.headerIcon} />
-        </Box>
+        {!open ? (
+  <Box className={classes.headerIconContainer}>
+    <Box component="img" src={aboutImg} className={classes.headerIcon} />
+  </Box>
+) : (
+  <Box className={classes.autoHeaderTabWrapper}>
+    <Typography
+      className={`${classes.autoHeaderTab} ${
+        currentMember.category === "Directors" ? classes.autoHeaderTabActive : ""
+      }`}
+    >
+      Directors
+    </Typography>
+
+    <Typography className={classes.autoHeaderTabSeparator}>|</Typography>
+
+    <Typography
+      className={`${classes.autoHeaderTab} ${
+        currentMember.category === "Advisors" ? classes.autoHeaderTabActive : ""
+      }`}
+    >
+      Advisors
+    </Typography>
+  </Box>
+)}
+
       </Box>
       <Box className={classes.sectionWrapper}>
         {!open ? (

@@ -80,7 +80,7 @@ const getPdfContent = (label: string): PdfContent => {
     },
     "Pearl Spot": {
       image: pearlSpotImg,
-      title: "Unlock The Secrets Of Pearl Spot Aquaculture",
+      title: "Unlock the Secrets of Pearl Spot Aquaculture",
       description:
         "Download our detailed Pearl Spot Farming Guide (PDF) to explore habitat preferences, feeding schedules, disease control, and growth cycles.",
     },
