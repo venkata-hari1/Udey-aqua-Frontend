@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material'; // Only import Typography directly
-import bgimg from '../../../assets/admin/Group 39739.png';
-import logo from '../../../assets/admin/logo.png';
+import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
+import bgimg from "../../../assets/admin/Group 39739.png";
+import logo from "../../../assets/admin/logo.png";
 
 import {
   StyledLoginRoot,
@@ -17,76 +17,88 @@ import {
   StyledOtpTextField,
   StyledResendLinkContainer,
   StyledResendLink,
-} from '../styles/logins.styles'; // Correct path to your consolidated styles file
+} from "../styles/logins.styles";
 
 const OTP = () => {
   const navigate = useNavigate();
-  // Using an array of refs, one for each input field
-  const inputs = Array(4)
-    .fill(null)
-    .map(() => useRef<HTMLInputElement>(null));
+  const inputs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
 
-  const [otpValues, setOtpValues] = useState(['', '', '', '']);
-  const [otpError, setOtpError] = useState('');
+  const [otpValues, setOtpValues] = useState(["", "", "", ""]);
+  const [otpError, setOtpError] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
 
+  // Timer for resend
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsResendDisabled(false);
+    }
+  }, [timeLeft]);
+
+  // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const { value } = e.target;
-    // Allow only single digit numbers or empty string
-    if (!/^\d*$/.test(value) || value.length > 1) {
-      return;
-    }
+    if (!/^\d*$/.test(value) || value.length > 1) return;
 
     const newOtp = [...otpValues];
     newOtp[index] = value;
     setOtpValues(newOtp);
 
-    // Move focus to next input if a digit is entered
-    if (value.length === 1 && index < inputs.length - 1) {
+    if (value && index < inputs.length - 1) {
       inputs[index + 1].current?.focus();
-    }
-    // Clear error if user starts typing
-    if (otpError) {
-      setOtpError('');
     }
   };
 
+  // Handle backspace
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    // Move focus to previous input on Backspace if current is empty
-    if (e.key === 'Backspace' && otpValues[index] === '' && index > 0) {
+    if (e.key === "Backspace" && otpValues[index] === "" && index > 0) {
       inputs[index - 1].current?.focus();
     }
   };
 
+  // Verify OTP
   const handleVerify = () => {
-    const isComplete = otpValues.every((digit) => digit.trim() !== '');
-    if (!isComplete) {
-      setOtpError('Please enter all 4 digits');
-      return;
-    }
+    const otp = otpValues.join("");
+    const CORRECT_OTP = "1234"; // mock correct OTP
 
-    const otp = otpValues.join('');
-    console.log('Verifying OTP:', otp);
-    // In a real application, you would send this OTP to your backend for verification
-    // On successful verification, navigate:
-    navigate('/admin/changepassword');
+    if (otp === CORRECT_OTP) {
+      setOtpError(false);
+      navigate("/admin/changepassword");
+    } else {
+      setOtpError(true);
+    }
   };
+
+  // Resend OTP
+  const handleResend = () => {
+    if (isResendDisabled) return;
+    setOtpValues(["", "", "", ""]);
+    setOtpError(false);
+    setTimeLeft(30);
+    setIsResendDisabled(true);
+  };
+
+  const isOtpComplete = otpValues.every((digit) => digit.trim() !== "");
 
   return (
     <StyledLoginRoot>
       <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
 
       <StyledLoginRight>
-        <StyledLoginForm>
+        <StyledLoginForm sx={{ width: "100%", maxWidth: 400 }}>
           <StyledLoginLogo src={logo} alt="Logo" />
 
-          {/* Reusing StyledTitle and StyledSubtitle */}
           <StyledTitle variant="h5" fontWeight="bold">
             Verification
           </StyledTitle>
-          <StyledSubtitle variant="body2" textAlign="center">
-            Please enter the 4-digit verification code that was sent to your email.
+          <StyledSubtitle variant="body2" textAlign="center" color="#64748B" >
+            Please enter the 4-digit verification code sent to your email.
           </StyledSubtitle>
 
+          {/* OTP Inputs */}
           <StyledOtpInputContainer>
             {inputs.map((ref, index) => (
               <StyledOtpTextField
@@ -95,39 +107,42 @@ const OTP = () => {
                 value={otpValues[index]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
                 onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e, index)}
-                inputProps={{
-                  maxLength: 1,
-                  inputMode: 'numeric',
-                }}
-                error={!!otpError}
+                inputProps={{ maxLength: 1, inputMode: "numeric" }}
+                error={otpError}
               />
             ))}
           </StyledOtpInputContainer>
 
-          {/* Using Typography for error message, styled to align with form flow */}
+          {/* Error Message */}
           {otpError && (
-            <Typography variant="caption" color="error" sx={{ mt: -2, alignSelf: 'center' }}>
-              {otpError}
+            <Typography variant="caption" color="error" sx={{ mt: -2, alignSelf: "center" }}>
+              Invalid OTP, please try again
             </Typography>
           )}
 
-          {/* Reusing Typography for the text, aligning it centrally */}
-          <Typography variant="body2" color="text.secondary" alignSelf="center">
-            Didn't receive the code?
+          <Typography variant="body2" color="#64748B" alignSelf="center">
+            Didn’t receive the code?
           </Typography>
 
-          {/* Reusing StyledResendLinkContainer and StyledResendLink */}
+          {/* Resend Link / Timer */}
           <StyledResendLinkContainer>
-            <StyledResendLink to="/changepassword">
-              Resend code
-            </StyledResendLink>
+            {isResendDisabled ? (
+              <Typography variant="body2" color="text.secondary">
+                Resend in {timeLeft}s
+              </Typography>
+            ) : (
+              <StyledResendLink as="button" onClick={handleResend}>
+                Resend code
+              </StyledResendLink>
+            )}
           </StyledResendLinkContainer>
 
-          {/* Reusing StyledLoginButton */}
+          {/* Verify Button */}
           <StyledLoginButton
             variant="contained"
             fullWidth
             onClick={handleVerify}
+            disabled={!isOtpComplete}
           >
             Verify
           </StyledLoginButton>

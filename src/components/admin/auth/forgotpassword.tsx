@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InputAdornment } from '@mui/material';
 
@@ -19,27 +19,40 @@ import {
   StyledCustomIcon,       // <-- IMPORT THIS
   StyledInputAdornmentIcon, // <-- IMPORT THIS
 } from '../styles/logins.styles'; // Ensure this path is correct
+import { validateEmail } from '../utils/Validations';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  const validateEmail = (value: string) => {
-    if (!value) return 'Email is required';
-    if (!/\S+@\S+\.\S+/.test(value)) return 'Enter a valid email';
-    return '';
-  };
+  useEffect(()=>{
+    inputsValidation()
+  },[email])
 
-  const handleEmailBlur = () => {
-    setEmailError(validateEmail(email));
-  };
+  const inputsValidation=()=>{
+    let isValid=true;
+   if(email){
+     const validemail=validateEmail(email)
+    if(!validemail){
+     setEmailError("Enter Valid Email ID")
+     isValid=false;
+    }else{
+      setEmailError("")
+    }
+   }else{
+    isValid=true;
+   } 
+    
+   return isValid;
+  }
 
   const validateAndContinue = () => {
-    const error = validateEmail(email);
-    setEmailError(error);
-
-    if (!error) navigate('/admin/OTP');
+    const validateInputs=inputsValidation()
+    if(validateInputs){
+      navigate('/admin/otp')
+    }
+  
   };
 
   return (
@@ -62,9 +75,9 @@ const ForgotPassword = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onBlur={handleEmailBlur}
+            
             error={!!emailError}
-            helperText={emailError}
+            helperText={emailError ||null}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

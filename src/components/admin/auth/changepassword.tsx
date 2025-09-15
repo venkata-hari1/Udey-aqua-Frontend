@@ -22,53 +22,41 @@ import {
   StyledTextField,
   StyledCustomIcon,
   StyledInputAdornmentIcon,
-  StyledForgotPasswordLink,
-  StyledLink,
   StyledLoginButton,
 } from '../styles/logins.styles';
+import { validatePassword } from '../utils/Validations';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmError, setConfirmError] = useState('');
+
+  const[errorvalue,setErrorvalue]=useState<string[]>([])
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleValidation = () => {
-    let valid = true;
-    setPasswordError('');
-    setConfirmError('');
-
-    if (!password) {
-      setPasswordError('Password is required');
-      valid = false;
-    }
-
-    if (!confirmPassword) {
-      setConfirmError('Please confirm your password');
-      valid = false;
-    } else if (password !== confirmPassword) {
-      setConfirmError('Passwords do not match');
-      valid = false;
-    }
-
-    return valid;
-  };
-
   const handleSubmit = () => {
-    if (handleValidation()) {
-      navigate('/admin/login');
-    }
+      
+   const pwdvalues={
+    pwdValue:password,
+    confirmpwdValue:confirmPassword
+   }
+  const validpwds=validatePassword(pwdvalues)
+  
+  if(!validpwds.isValid){
+    setErrorvalue(validpwds.errors);
+  }else{
+    console.log(pwdvalues)
+     navigate('/admin/login')
+  }
   };
 
   return (
-    <StyledLoginRoot>
+    <StyledLoginRoot >
       <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
 
       <StyledLoginRight>
-        <StyledLoginForm>
+        <StyledLoginForm sx={{ width: "100%", maxWidth: 400 }}>
           <StyledLoginLogo src={logo} alt="Logo" />
 
           <StyledTitle variant="h5" fontWeight="bold">
@@ -84,9 +72,8 @@ const ChangePassword = () => {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onBlur={handleValidation}
-            error={!!passwordError}
-            helperText={passwordError}
+            error={errorvalue.some(err=>err.includes("Password must"))}
+            helperText={errorvalue.find(err=>err.includes("Password must")||" ")}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -111,9 +98,8 @@ const ChangePassword = () => {
             type={showConfirmPassword ? 'text' : 'password'}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            onBlur={handleValidation}
-            error={!!confirmError}
-            helperText={confirmError}
+            error={errorvalue.some(err => err.includes("do not match"))}
+            helperText={errorvalue.find(err => err.includes("do not match")) || " "}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -135,15 +121,7 @@ const ChangePassword = () => {
             }}
           />
 
-          <StyledForgotPasswordLink>
-            <StyledLink
-              to="/admin/forgotpassword"
-            >
-              Forgot Password?
-            </StyledLink>
-          </StyledForgotPasswordLink>
-
-          <StyledLoginButton
+         <StyledLoginButton
             variant="contained"
             fullWidth
             onClick={handleSubmit}

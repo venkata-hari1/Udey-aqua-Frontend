@@ -41,7 +41,7 @@ const Login:React.FC = () => {
 
 
 const validatePassword=(password:any)=>{
-  const passwordRegex =/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#^()\-_=+{}[\]|;:'",.<>\/?])[A-Za-z\d@$!%*?&#^()\-_=+{}[\]|;:'",.<>\/?]{6,}$/;
+  const passwordRegex =/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&#^()\-_=+{}[\]|;:'",.<>\/?])[A-Za-z\d@$!%*?&#^()\-_=+{}[\]|;:'",.<>\/?]{8,}$/;
  
   const passwordverify=passwordRegex.test(password)
    if(!passwordverify){
@@ -56,9 +56,8 @@ const isvalidateInputs=()=>{
 
   if(email){
     const validemail=validateEmail(email);
-    
     if(!validemail){
-      setEmailError("Enter Valid Email ID");
+      console.log(setEmailError("Enter Valid Email ID"));
       isValid=false;
     }else{
       setEmailError("")
@@ -68,14 +67,14 @@ const isvalidateInputs=()=>{
      isValid=true;
    }
 
-  //password valid
+  //password validation
   
   if(password){
 
   const validPassword=validatePassword(password)
     
    if(!validPassword){
-    setPasswordError("Password must be at least 6 characters, include a number, a letter, and a special character.")
+    setPasswordError("Password must be at least 8 characters, include a number, a letter, and a special character.")
     isValid=false;
     }else{
     setPasswordError("")
@@ -106,8 +105,8 @@ const isvalidateInputs=()=>{
       <StyledLoginRight>
         <StyledLoginForm sx={{ width: "100%", maxWidth: 400 }}>
           <StyledLoginLogo src={logo} alt="Logo" />
-          <StyledTitle variant="h6">Log In to Your Account!</StyledTitle>
-          <StyledSubtitle variant="body2">Welcome back! please enter your detail</StyledSubtitle>
+          <StyledTitle variant="h6" sx={{textAlign:{xs:'center'}}}>Log In to Your Account!</StyledTitle>
+          <StyledSubtitle variant="body2" sx={{textAlign:{xs:'center'}, fontSize:{xs:'15px'}}}>Welcome back! please enter your details</StyledSubtitle>
           
           <StyledTextField
             fullWidth

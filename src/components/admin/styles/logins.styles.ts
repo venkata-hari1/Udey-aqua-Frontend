@@ -65,10 +65,11 @@ export const StyledTitle = styled(Typography)(() => ({
   fontWeight: 600,
   marginBottom: '0',
   alignSelf: 'center',
+ 
 }));
 
 export const StyledSubtitle = styled(Typography)(({ theme }) => ({
-  fontSize: '1rem',
+  fontSize: '14px',
   color: theme.palette.text.secondary,
   marginBottom: '24px',
   alignSelf: 'center',
@@ -131,6 +132,7 @@ export const StyledForgotPasswordLink = styled(Box)(() => ({
 export const StyledLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
   textDecoration: 'none',
   fontSize: '0.875rem',
+  fontFamily:'Inter',
   color: theme.palette.primary.main,
   '&:hover': {
     textDecoration: 'underline',
@@ -141,7 +143,7 @@ export const StyledLoginButton = styled(Button)(({ theme }) => ({
   height: '50px',
   borderRadius: '8px',
   boxShadow: 'none',
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.primary.dark,
   color: '#FFFFFF',
   textTransform: 'none',
   fontSize: '1rem',
@@ -166,34 +168,30 @@ export const StyledOtpInputContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledOtpTextField = styled(TextField)(({ theme }) => ({
-  width: '60px',
-  '& .MuiInputBase-root': {
-    height: '60px',
-    borderRadius: '8px',
-    fontSize: '24px',
-    textAlign: 'center',
-    backgroundColor: '#F9F9F9',
-    border: '1px solid #E0E0E0',
-    '&.Mui-error': {
-      borderColor: theme.palette.error.main,
+  width: "60px",
+  "& .MuiOutlinedInput-root": {
+    height: "60px",
+    borderRadius: "12px",
+    fontSize: "24px",
+    backgroundColor: "#F9F9F9",
+    "& fieldset": {
+      borderColor: "#c9c7c7ff", // default
+    },
+    "&:hover fieldset": {
+      borderColor: "#A0A0A0",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
+    },
+    "&.Mui-error fieldset": {
+      borderColor: "#E62310", 
     },
   },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'transparent',
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'transparent',
-  },
-  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'transparent',
-  },
-  '& input': {
-    textAlign: 'center',
+  "& input": {
+    textAlign: "center",
     padding: 0,
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    fontSize: "24px",
   },
 }));
 
@@ -201,9 +199,10 @@ export const StyledResendLinkContainer = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
   marginBottom: theme.spacing(4),
   alignSelf: 'center',
+  cursor:'pointer'
 }));
 
-export const StyledResendLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
+export const StyledResendLink = styled("button")(({ theme }) => ({
   textDecoration: 'underline', // Added underline by default
   fontSize: '15px',
   fontFamily: 'roboto',
