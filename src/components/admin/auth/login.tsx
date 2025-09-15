@@ -75,7 +75,7 @@ const isvalidateInputs=()=>{
   const validPassword=validatePassword(password)
     
    if(!validPassword){
-    setPasswordError("Password must be at least 8 characters, include a number, a letter, and a special character.")
+    setPasswordError("Password must be at least 6 characters, include a number, a letter, and a special character.")
     isValid=false;
     }else{
     setPasswordError("")
