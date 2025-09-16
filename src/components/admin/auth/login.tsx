@@ -52,37 +52,30 @@ const validatePassword=(password:any)=>{
 }
 //isvalidateInputs
 const isvalidateInputs=()=>{
+  
   let isValid=true;
-
-  if(email){
-    const validemail=validateEmail(email);
-    if(!validemail){
-      console.log(setEmailError("Enter Valid Email ID"));
-      isValid=false;
-    }else{
-      setEmailError("")
-    }
-   }else{
-     setEmailError("");
-     isValid=true;
-   }
-
+  if(!email){
+    setEmailError("Email is Required");
+    isValid=false;
+  }else if(!validateEmail(email)){
+      setEmailError("Enter a valid email address");
+      isValid=false;  
+  }else{
+    setEmailError("");
+  }  
+  
   //password validation
   
-  if(password){
-
-  const validPassword=validatePassword(password)
-    
-   if(!validPassword){
-    setPasswordError("Password must be at least 8 characters, include a number, a letter, and a special character.")
+  if(!password){
+   setPasswordError("Password cannot be empty");
+   isValid=false;
+  }else if(!validatePassword(password)){
+    setPasswordError("Password must be atleast 8 charecters,include a number, a letter and a special charecter");
     isValid=false;
-    }else{
-    setPasswordError("")
-   }
   }else{
-     setPasswordError("")
-     isValid=true;
-  } 
+    setPasswordError("")
+  }
+
   return isValid;
 }
 

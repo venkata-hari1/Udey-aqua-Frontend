@@ -1,8 +1,7 @@
 import { Box, Button, Divider, Stack,  TextField,  Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
-import { Textfiledbox, UserendSaveDeleteButtons,UserEndSaveCancelButtons } from "./UserEndButtons";
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows } from "./UserEndCommonButtons";
 import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
 import Avatar from '@mui/material/Avatar';
@@ -31,12 +30,7 @@ return (
   <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText}>{test.test}</Typography>
-     <Button variant="outlined" className={classes.uploadHerobutton}
-      component="label" endIcon={<FileUploadOutlinedIcon />}>
-      <input type="file"
-      accept="image/*"
-      hidden
-      /> Upload</Button>   
+     <Uploadbutton />   
      <Box className={classes.herouploadImageBox}>
      <Avatar src={CorpCard2} />
      <CancelIcon className={classes.avtcancelImgIcon}/>
@@ -58,7 +52,7 @@ return (
      </Stack>
       </Box>
      <Typography className={classes.titleText}>Content</Typography>
-     <Textfiledbox />   
+     <TextFieldManyRows />  
      </Stack>
     </Stack> 
      {index!==testimonialdata.length-1&& <Divider sx={{border:'1px solid #0A4FA4',mt:2}}/>}

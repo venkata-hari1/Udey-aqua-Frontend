@@ -27,6 +27,7 @@ const UserEndHome = () => {
 
 const{classes}=useUserEndwebStyles()
 const navigate=useNavigate()
+
 const homemenudata=[
    {id:1,menu:"Header",content:<UserendHeader />} ,
    {id:2,menu:"Hero Section",content:<UserendHero />} ,
@@ -54,9 +55,7 @@ const handleBackarrow=()=>{
        onClick={handleBackarrow}/>
       <Typography color="#0A4FA4" mb={2}>Home</Typography>
       </Box>
-      
-     
-     {homemenudata.map((menu,index)=>(
+      {homemenudata.map((menu,index)=>(
         <Accordion key={index} className={classes.userEndHeaderContainer}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

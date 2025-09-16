@@ -1,10 +1,8 @@
-import { Box, Button,Stack, TextField, Typography } from "@mui/material"
+import { Box,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons, DeleteButton } from "./UserEndButtons";
+import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton } from "./UserEndCommonButtons";
 
 const UserendGetintouch = () => {
       const{classes}=useUserEndwebStyles() 
@@ -20,12 +18,7 @@ const UserendGetintouch = () => {
        <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Button variant="outlined" className={classes.uploadHerobutton}
-         component="label" endIcon={<FileUploadOutlinedIcon />}>
-         <input type="file"
-         accept="image/*"
-         hidden
-         /> Upload</Button>   
+        <Uploadbutton />   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>

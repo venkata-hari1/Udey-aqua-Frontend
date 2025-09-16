@@ -1,10 +1,10 @@
-import { Box, Button, Divider,Stack, TextField, Typography } from "@mui/material"
+import { Box,Divider,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton } from "./UserEndButtons";
+import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton, Uploadbutton, TextFieldManyRows } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
+
 const UserendHero = () => {
 
 const{classes}=useUserEndwebStyles() 
@@ -31,12 +31,7 @@ return (
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText}>Image</Typography>
-     <Button variant="outlined" className={classes.uploadHerobutton}
-      component="label" endIcon={<FileUploadOutlinedIcon />}>
-      <input type="file"
-      accept="image/*"
-      hidden
-      /> Upload</Button>   
+     <Uploadbutton />   
      <Box className={classes.herouploadImageBox}>
      <img src={fishImg} className={classes.herouploadImage}/>
      <CancelIcon className={classes.cancelImgIcon}/>
@@ -48,10 +43,7 @@ return (
      </Stack>
      <Stack>
      <Typography className={classes.titleText}>Heading Content</Typography>
-     <TextField className={classes.heroTextfiled}
-      fullWidth
-     multiline
-     minRows={5}/>   
+     <TextFieldManyRows />   
      </Stack>
    </Stack>
    {index!==heroslides.length-1&&<Divider className={classes.heroDivider}/>}

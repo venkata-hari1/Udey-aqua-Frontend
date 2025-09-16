@@ -48,7 +48,8 @@ switch(path){
   title="Profile"
   break;
   case "userend-web":
-  case "userend-home":  
+  case "userend-home":
+  case "userend-culture":    
   title="User End Website"
   break;
   case "logout":

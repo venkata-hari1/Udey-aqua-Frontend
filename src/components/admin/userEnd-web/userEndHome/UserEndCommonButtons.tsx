@@ -3,17 +3,20 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 
 export const UserEndSaveCancelButtons = () => {
 
     const{classes}=useUserEndwebStyles()  
   
     return (
-    
+   
     <Box className={classes.buttonContainer}>
          <Button className={classes.headerSaveButton}>Save</Button>
          <Button className={classes.headerCancelButton}>Cancel</Button>  
     </Box>
+
+    
   )
 }
 
@@ -95,5 +98,28 @@ export const Textfiledbox=()=>{
             fullWidth
             multiline
             minRows={5}/>
+  )
+}
+
+export const Uploadbutton=()=>{
+  const{classes}=useUserEndwebStyles() 
+  
+  return(
+    <Button variant="outlined" className={classes.uploadHerobutton}
+          component="label" endIcon={<FileUploadOutlinedIcon />}>
+          <input type="file"
+          accept="image/*"
+          hidden
+          /> Upload</Button>
+   )
+}
+
+export const TextFieldManyRows=()=>{
+  const{classes}=useUserEndwebStyles() 
+  return(
+    <TextField className={classes.heroTextfiled}
+          fullWidth
+         multiline
+         minRows={5}/>
   )
 }

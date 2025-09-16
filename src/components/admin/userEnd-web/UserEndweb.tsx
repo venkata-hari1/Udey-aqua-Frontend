@@ -10,7 +10,7 @@ const navigate=useNavigate()
 const navigation=[
 {id:1,menu:"Home",path:'/admin/userend-web/userend-home'},
 {id:2,menu:"About Us",path:'/userend-about'},
-{id:3,menu:"Cultures",path:'/userend-culture'},
+{id:3,menu:"Cultures",path:'/admin/userend-web/userend-culture'},
 {id:4,menu:"Training Programs",path:'/userend-training-program'},
 {id:5,menu:"Technologies",path:'/userend-technologies'},
 {id:6,menu:"News & Events",path:'/userend-news-events'},

@@ -1,6 +1,6 @@
 import { Box,Grid, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-import {UserEndSaveCancelButtons} from "./UserEndButtons"
+import {UserEndSaveCancelButtons} from "./UserEndCommonButtons"
 
 const UserendHeader = () => {
 

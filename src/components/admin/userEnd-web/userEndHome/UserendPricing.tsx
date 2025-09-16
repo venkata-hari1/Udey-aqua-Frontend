@@ -1,10 +1,9 @@
 import { Box, Button,Divider,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Textfiledbox, UserendSaveDeleteButtons,UserEndSaveCancelButtons } from "./UserEndButtons";
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
 
 const UserendPricing = () => {
@@ -34,12 +33,7 @@ return (
 
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Button variant="outlined" className={classes.uploadHerobutton}
-         component="label" endIcon={<FileUploadOutlinedIcon />}>
-         <input type="file"
-         accept="image/*"
-         hidden
-         /> Upload</Button>   
+        <Uploadbutton />   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
@@ -58,7 +52,7 @@ return (
         </Stack>
         <Stack>
         <Typography className={classes.titleText}>Description</Typography>
-        <Textfiledbox />
+        <TextFieldManyRows />
         </Stack>
         </Box>
       </Stack> 

@@ -156,7 +156,7 @@ slideAndButtons:{
 },
 Uploadandheadingbox:{
 display:"flex",
-justifyContent:"flex-start",
+justifyContent:"space-between",
 gap:140,
 flexDirection:'row',
 [theme.breakpoints.down('md')]:{
@@ -398,8 +398,7 @@ textfiledTestimonial:{
 },
 //userend News and Events
 dropDownSelectBlog:{
-   
-   width:'120px',
+  display:'flex',
   "& .MuiInputBase-input": {
       color: "#0A4FA4",  
     },
@@ -414,6 +413,10 @@ dropDownSelectBlog:{
       borderWidth: "2px",
     },
     borderRadius: "6px",
+    [theme.breakpoints.down('md')]:{
+      width:'150px',
+    }
+   
 },
 textfiledTestimonialblog:{
  width:'600px',
@@ -433,6 +436,7 @@ textfiledTestimonialblog:{
 },
 
 dateTextfield:{
+  paddingRight:'10px',
      "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: "blue",
@@ -447,27 +451,78 @@ dateTextfield:{
     "& input": {
       color: "black",
     },  
-},
+  [theme.breakpoints.down('md')]:{
+   marginBottom:'10px',
+ },
 
+},
 
 FormNewsblogBox:{
 display:'flex',
 width:'100%',
-alignItems:'center',
+
 justifyContent:'space-between',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',
+  justifyContent:'flex-start',
+  gap:5,
 }
 },
 
 dateTextfieldbox:{
  display:"flex",
-  gap:"16px",
-  marginTop:"5px",
-  [theme.breakpoints.down('md')]:{
+ justifyContent:'space-evenly',
+ marginTop:"5px",
+[theme.breakpoints.down('md')]:{
     marginTop:"10px",
+    marginBottom:"10px",
+    flexWrap:'wrap',
+    justifyContent:'flex-start',
   }
 },
+
+//..............CULTURES PAGES:..................//
+
+cultureHomebox:{
+  display:'flex',
+  justifyContent:'space-between',
+  alignContents:'center',
+  paddingRight:'12px',
+  paddingBottom:"8px",
+},
+culturebackarrowbox:{
+ display:"flex",
+justifyContent:"center", 
+alignItems:"center",
+gap:'10px',
+},
+cultureTitle:{
+ color:"#0A4FA4"
+},
+culturebackbutton:{
+  color:"#0A4FA4",
+  fontSize:'16px',
+  cursor:'pointer',
+},
+addSubpagebutton:{
+  background:'#0A4FA4',
+  color:'white',
+  textTransform:'capitalize',
+  
+  textAlign:'center',
+  fontSize:'12px'
+},
+//culture Hero page
+
+cultureheroBox2:{
+  display:"flex",
+  justifyContent:"space-between",
+  flexDirection:'row',
+  [theme.breakpoints.down('md')]:{
+    flexDirection:'column',
+  }
+}
+
 }));
 
 export default useUserEndwebStyles;

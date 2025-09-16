@@ -2,8 +2,7 @@ import { Box, Button, Divider, FormControl, MenuItem, Select, Stack,  TextField,
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Textfiledbox, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndButtons";
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import { TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
 import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 
 
@@ -41,12 +40,7 @@ const UserendNewsEvents = () => {
    <Stack className={classes.Uploadandheadingbox}>
        <Stack className={classes.UploadImageStack}>
        <Typography className={classes.titleText} mt={1} ml={1}>Image</Typography>
-       <Button variant="outlined" className={classes.uploadHerobutton}
-        component="label" endIcon={<FileUploadOutlinedIcon />}>
-        <input type="file"
-        accept="image/*"
-        hidden
-        /> Upload</Button>   
+       <Uploadbutton />   
        <Box className={classes.herouploadImageBox}>
         <img src={CorpCard2} className={classes.herouploadImage}/>
        <CancelIcon className={classes.cancelImgIcon}/>
@@ -64,7 +58,7 @@ const UserendNewsEvents = () => {
        </Stack>
       </Box>
        <Typography className={classes.titleText}>Description</Typography>
-       <Textfiledbox />   
+       <TextFieldManyRows />   
        </Stack>
     </Stack> 
     <Divider sx={{border:'1px solid rgba(97, 177, 218, 0)'}}/>

@@ -1,11 +1,10 @@
-import { Box, Button, Divider,Stack, TextField, Typography } from "@mui/material"
+import { Box, Button, Divider,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import CorpCard from './../../../../assets/admin/Corpcard.png'
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import { UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndButtons";
+import { TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
 const UserEndMotto = () => {
   
 const{classes}=useUserEndwebStyles() 
@@ -28,21 +27,18 @@ const{classes}=useUserEndwebStyles()
      <Box mt={2} key={index}>
    <Stack className={classes.slideAndButtons}>
     <Typography className={classes.MottoBoxText}>{moto.boxname}</Typography>
-   <UserendSaveDeleteButtons message={`Are you sure you want to delete ${moto.boxname} ? `}/>
+   <UserendSaveDeleteButtons message={`Are you sure you want to delete ${moto.boxname} in Motto? `}/>
    </Stack>
    
    <Stack className={classes.Uploadandheadingbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText}>Image</Typography>
-     <Button variant="outlined" className={classes.uploadHerobutton}
-      component="label" endIcon={<FileUploadOutlinedIcon />}>
-      <input type="file"
-      accept="image/*"
-      hidden
-      /> Upload</Button>   
+     <Uploadbutton />   
      <Box className={classes.herouploadImageBox}>
-     <img src={CorpCard} className={classes.herouploadImage}/>
-     <CancelIcon className={classes.cancelImgIcon}/>
+     <Box className={classes.herouploadImageBox}>
+      <img src={CorpCard} className={classes.herouploadImage}/>
+      <CancelIcon className={classes.cancelImgIcon}/>
+     </Box>
      </Box>  
      <Typography className={classes.errorUpload}>
         *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
@@ -51,11 +47,7 @@ const{classes}=useUserEndwebStyles()
      </Stack>
      <Stack>
      <Typography className={classes.titleText}>Heading Content</Typography>
-     <TextField className={classes.heroTextfiled}
-     
-     fullWidth
-     multiline
-     minRows={5}/>   
+     <TextFieldManyRows />   
      </Stack>
    </Stack>
    {index!==mottodata.length-1&& <Divider className={classes.heroDivider}/>}

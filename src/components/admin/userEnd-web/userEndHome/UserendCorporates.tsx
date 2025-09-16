@@ -1,10 +1,9 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import fishImg from './../../../../assets/admin/ciba.png'
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
-import { DeleteButton, UserEndSaveCancelButtons } from "./UserEndButtons";
+import { DeleteButton, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 const UserendCorporates = () => {
 
 const{classes}=useUserEndwebStyles() 
@@ -21,13 +20,7 @@ return (
     <DeleteButton message="Are you use you want to delete Logo?"/>
     </Stack>
     <Box className={classes.corporateImageBox}>
-
-     <Button variant="outlined" className={classes.uploadHerobutton}
-      component="label" endIcon={<FileUploadOutlinedIcon />}>
-      <input type="file"
-      accept="image/*"
-      hidden
-      /> Upload</Button>  
+    <Uploadbutton />  
      
      <Stack className={classes.CorporateuploadImageStack}>
       
@@ -35,8 +28,11 @@ return (
      <>
       <Box key={index} className={classes.corporateCountImgBox}>  
       <Typography className={classes.titleText}>{data.count}</Typography>
-      <img src={data.image} width="90px" height="40px"/>
-      <CancelIcon className={classes.corporateImgCancelIcon}/>
+      <Box className={classes.herouploadImageBox}>
+      <img src={data.image}  className={classes.herouploadImage}/>
+      <CancelIcon className={classes.corporateImgCancelIcon}/>  
+      </Box>
+      
       </Box>
      {index!==corporatedata.length-1 &&
      <Divider sx={{border:'1px solid blue'}} />}

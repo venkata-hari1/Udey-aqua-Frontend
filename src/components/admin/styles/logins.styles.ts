@@ -30,7 +30,8 @@ export const StyledLoginRight = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: 'transparent',
+  background: 'transparent'
+  
 }));
 
 export const StyledLoginForm = styled(Box)(({ theme }) => ({

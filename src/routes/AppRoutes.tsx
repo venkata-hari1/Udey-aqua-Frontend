@@ -15,6 +15,8 @@ import Profile from "../components/admin/profile/Profile";
 import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
 import Logout from "../components/admin/auth/Logout";
+import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
+import CultureHero from "../components/admin/userEnd-web/userEnd-Cultures/CultureHero";
 
 
 const AppRoutes = () => {
@@ -46,10 +48,12 @@ const AppRoutes = () => {
         <Route path="profile" element={<Profile />}/>
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
+        <Route path="userend-web/userend-culture" element={<CultureHome />} />        
+         
         <Route path="logout" element={<Logout />} />  
       </Route>
-      
 
+              <Route path="culturehero" element={<CultureHero />} /> 
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />
