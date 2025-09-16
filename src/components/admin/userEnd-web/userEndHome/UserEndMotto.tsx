@@ -1,7 +1,8 @@
 import { Box, Button, Divider,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
-import CorpCard from './../../../../assets/admin/Corpcard.png'
+import fishImg from './../../../../assets/admin/fishImg.jpg'
+
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import { TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
@@ -36,7 +37,7 @@ const{classes}=useUserEndwebStyles()
      <Uploadbutton />   
      <Box className={classes.herouploadImageBox}>
      <Box className={classes.herouploadImageBox}>
-      <img src={CorpCard} className={classes.herouploadImage}/>
+      <img src={fishImg} className={classes.herouploadImage}/>
       <CancelIcon className={classes.cancelImgIcon}/>
      </Box>
      </Box>  

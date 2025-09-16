@@ -71,7 +71,11 @@ const backarrowHandle=()=>{
     navigate('/admin/user-management')
     break; 
    case "userend-home":
-    navigate('/admin/userend-web') 
+   case "userend-culture":
+   navigate('/admin/userend-web') 
+   
+   
+
  }
 }
 

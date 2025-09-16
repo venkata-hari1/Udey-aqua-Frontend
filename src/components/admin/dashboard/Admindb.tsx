@@ -34,8 +34,8 @@ const chartdata=[
   {month:'Dec',value:'34'},
 ]
 const carddata=[
-  {id:1,icon:<GroupsIcon sx={{color:"#0A4FA4",fontSize:"30px"}}/>,count:2500,label:'Total Subscribers'},
-  {id:2,icon:<PersonAddIcon sx={{color:"#0A4FA4",fontSize:"30px"}}/>,count:530,label:'Training Program Registered'}
+  {id:1,icon:<GroupsIcon sx={{color:"#0A4FA4",fontSize:"30px"}}/>,count:`2,500`,label:'Total Subscribers'},
+  {id:2,icon:<PersonAddIcon sx={{color:"#0A4FA4",fontSize:"30px"}}/>,count:`530`,label:'Training Program Registered'}
 ]
 
 const trainingprogram=[

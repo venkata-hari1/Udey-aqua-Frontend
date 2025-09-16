@@ -45,7 +45,9 @@ const UserendGetintouch = () => {
          <Typography className={classes.titleText} >Message</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
-         size="small"/>
+         size="small" 
+         multiline
+         minRows={3}/>
         </Stack> 
       </Box>
       </Stack> 

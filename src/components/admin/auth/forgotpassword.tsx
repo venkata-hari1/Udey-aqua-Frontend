@@ -32,19 +32,15 @@ const ForgotPassword = () => {
 
   const inputsValidation=()=>{
     let isValid=true;
-   if(email){
-     const validemail=validateEmail(email)
-    if(!validemail){
-     setEmailError("Enter Valid Email ID")
-     isValid=false;
+    if(!email){
+        setEmailError("Email is Required");
+        isValid=false;
+    }else if(!validateEmail(email)){
+      setEmailError("Enter a valid email address")
     }else{
       setEmailError("")
     }
-   }else{
-    isValid=true;
-   } 
-    
-   return isValid;
+    return isValid;
   }
 
   const validateAndContinue = () => {
