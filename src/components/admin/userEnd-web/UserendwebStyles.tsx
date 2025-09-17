@@ -19,13 +19,13 @@ const useUserEndwebStyles = makeStyles()((theme: Theme) => ({
 userEndButton: {
     justifySelf: "center",
     width: "auto",
-    minWidth: "220px",
+    minWidth: "300px",
     border:"1px solid #0A4FA4",
     color:'#0A4FA4',
     textTransform:'capitalize',
     fontSize:16,
     [theme.breakpoints.down('sm')]:{
-      minWidth:"200px",
+      minWidth:"230px",
       gap:4,
     }
   },
@@ -207,7 +207,7 @@ avtcancelImgIcon:{
 },
 errorUpload:{
  color:"red",
- fontSize:'14px'
+ fontSize:'13px'
 },
 heroTextfiled:{
  width:'600px',
@@ -311,7 +311,7 @@ MottoBoxText:{
 
 UploadandAboutbox:{
 display:"flex",
-justifyContent:"flex-start",
+justifyContent:"space-between",
 gap:200,
 flexDirection:'row',
 [theme.breakpoints.down('md')]:{
@@ -343,7 +343,7 @@ dropDownSelect:{
 },
 projectsUploadContentbox:{
 display:"flex",
-justifyContent:"flex-start",
+justifyContent:"space-between",
 gap:220,
 flexDirection:'row',
 [theme.breakpoints.down('md')]:{
@@ -521,7 +521,104 @@ cultureheroBox2:{
   [theme.breakpoints.down('md')]:{
     flexDirection:'column',
   }
-}
+},
+
+//CULUTURE SEABASS
+SeaBassContainer:{
+  display: "flex", 
+  flexDirection: "column", 
+  gap:"10px"
+},
+
+newsectionStack:{
+display:"flex",
+justifyContent:"space-between",
+flexDirection:'row'
+},
+
+sectionSeabassBox:{
+  display:"flex",
+  justifyContent:"space-between",
+  flexDirection:"row",
+  [theme.breakpoints.down('md')]:{
+    flexDirection:'column'
+  }
+},
+
+leftsideSectionbox:{
+  display: "flex", 
+  flexDirection: "column", 
+  gap: "15px" 
+},
+
+Seabassstack:{
+  display:'flex',
+  flexDirection:'row',
+  justifyContent:'end',
+  gap:"6px"
+},
+
+pdfButtonbox:{
+  display:'flex',
+  background:"#e7edf6",
+  color:'black',
+  width:'20px',
+  height:'50px',
+  marginTop:'6px',
+  marginLeft:'20px',
+},
+
+bannerStacktitle:{
+  display:"flex", 
+  justifyContent:"space-between",
+   flexDirection:"row",
+  [theme.breakpoints.down('md')]:{
+    marginTop:'10px'
+  }
+},
+bannerImagebox:{
+  display:"flex",
+   justifyContent:"space-between",
+   flexDirection:"row",
+   [theme.breakpoints.down('md')]:{
+    flexDirection:'column'
+   }
+},
+bannerImgboxleft:{
+  display:"flex", 
+  flexDirection: "column", 
+  gap: 3 
+},
+bannerImageStack:{
+  display: "flex", 
+  flexDirection: "column", 
+  gap: "16px"
+},
+bannerUploadbox:{
+  display:"flex",
+  justifyContent:"space-between",
+  marginTop:14,
+  flexDirection:'row',
+  [theme.breakpoints.down('md')]:{
+     flexDirection:'column'
+  }
+},
+bannerLeftsidebox:{
+  display: "flex", 
+  flexDirection: "column", 
+  gap: 1,
+},
+banerLeftsideStack:{
+  display: "flex", 
+  flexDirection: "column", 
+  gap: 12,
+},
+
+bannerRightsidestack:{
+  display:'flex',
+  flexDirection:"column",
+   gap:"10px"
+},
 
 }));
 

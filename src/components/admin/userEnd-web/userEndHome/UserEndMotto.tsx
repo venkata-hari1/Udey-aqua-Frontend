@@ -5,7 +5,7 @@ import fishImg from './../../../../assets/admin/fishImg.jpg'
 
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import { TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
+import { ErrorMessages, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
 const UserEndMotto = () => {
   
 const{classes}=useUserEndwebStyles() 
@@ -41,10 +41,8 @@ const{classes}=useUserEndwebStyles()
       <CancelIcon className={classes.cancelImgIcon}/>
      </Box>
      </Box>  
-     <Typography className={classes.errorUpload}>
-        *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
-     </Typography>
-     <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
+     <ErrorMessages />
+     
      </Stack>
      <Stack>
      <Typography className={classes.titleText}>Heading Content</Typography>

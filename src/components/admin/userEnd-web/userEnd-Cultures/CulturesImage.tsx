@@ -1,17 +1,18 @@
 import { Box, Button,Stack,Typography} from "@mui/material"
-import { DeleteButton, ErrorMessages, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons } from "../userEndHome/UserEndCommonButtons"
+import { DeleteButton, ErrorMessages, TextFieldManyRows, Uploadbutton, } from "../userEndHome/UserEndCommonButtons"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
 
-const CultureHero = () => {
+const CulturesImage = () => {
 
-const {classes}=useUserEndwebStyles()
+ const {classes}=useUserEndwebStyles()
 
-    return (
+  return (
     <Box>
-     <Box sx={{display:'flex', justifyContent:'end'}}>
+     <Box sx={{display:'flex', justifyContent:'space-between'}}>
+      <Typography className={classes.MottoBoxText}>Header Section</Typography>
        <DeleteButton message=""/>
      </Box>
       <Box className={classes.cultureheroBox2}>  
@@ -33,10 +34,12 @@ const {classes}=useUserEndwebStyles()
       <TextFieldManyRows />
      </Box>
      </Box>
-     <UserEndSaveCancelButtons />
+     <Box className={classes.buttonContainer}>
+         <Button className={classes.headerSaveButton}>Update Header</Button>
+         <Button className={classes.headerCancelButton}>Cancel</Button>  
      </Box>
-
-)
+     </Box>
+  )
 }
 
-export default CultureHero
+export default CulturesImage

@@ -8,6 +8,8 @@ import AddIcon from '@mui/icons-material/Add';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from "react-router-dom";
 import CultureHero from "./CultureHero";
+import CulturesImage from "./CulturesImage";
+import CultureSeabass from "./CultureSeabass";
 
 const CultureHome = () => {
 
@@ -17,8 +19,8 @@ const CultureHome = () => {
   const culturemenudata=[
    
    {id:1,menu:"Hero Section",content:<CultureHero />} ,
-   {id:2,menu:"Culture Image",content:'Culture Image'} ,
-   {id:3,menu:"Sae Bass",content:''} ,
+   {id:2,menu:"Cultures Image",content:<CulturesImage />} ,
+   {id:3,menu:"Sae Bass",content:<CultureSeabass />} ,
    {id:4,menu:"Pear Spot",content:''} ,
    {id:5,menu: "Mud Crab",content:''} ,
    {id:6,menu:"Murrel",content:''} ,

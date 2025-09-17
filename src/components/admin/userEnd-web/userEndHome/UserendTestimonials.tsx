@@ -1,12 +1,12 @@
 import { Box, Button, Divider, Stack,  TextField,  Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
-import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows } from "./UserEndCommonButtons";
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages } from "./UserEndCommonButtons";
 import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
 import Avatar from '@mui/material/Avatar';
 import { Fragment } from "react/jsx-runtime";
-Divider
+
 const UserendTestimonials = () => {
   
  const testimonialdata=[
@@ -35,10 +35,8 @@ return (
      <Avatar src={CorpCard2} />
      <CancelIcon className={classes.avtcancelImgIcon}/>
      </Box>  
-     <Typography className={classes.errorUpload}>
-        *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
-     </Typography>
-     <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
+     <ErrorMessages />
+     
      </Stack>
      <Stack>
      <Box className={classes.testimonialTextbox}>

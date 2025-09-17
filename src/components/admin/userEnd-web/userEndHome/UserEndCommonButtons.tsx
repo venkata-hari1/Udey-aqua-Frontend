@@ -1,4 +1,4 @@
-import { Box,Button, TextField,} from "@mui/material"
+import { Box,Button, TextField, Typography,} from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
@@ -51,7 +51,7 @@ return(
 
 export const AddingButton=()=>{
 
-    const{classes}=useUserEndwebStyles() 
+  const{classes}=useUserEndwebStyles() 
     
     return(
        <Box className={classes.addingButtonBox}>
@@ -121,5 +121,15 @@ export const TextFieldManyRows=()=>{
           fullWidth
          multiline
          minRows={5}/>
+  )
+}
+
+export const ErrorMessages=()=>{
+  const{classes}=useUserEndwebStyles() 
+  return (
+   <Typography className={classes.errorUpload}>
+                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
+               <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
+              </Typography>
   )
 }

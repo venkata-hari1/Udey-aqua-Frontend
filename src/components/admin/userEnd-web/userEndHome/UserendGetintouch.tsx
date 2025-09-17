@@ -2,7 +2,7 @@ import { Box,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton } from "./UserEndCommonButtons";
+import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages } from "./UserEndCommonButtons";
 
 const UserendGetintouch = () => {
       const{classes}=useUserEndwebStyles() 
@@ -23,10 +23,8 @@ const UserendGetintouch = () => {
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
         </Box>  
-        <Typography className={classes.errorUpload}>
-           *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
-        </Typography>
-        <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
+        <ErrorMessages />
+        
         </Stack>
        <Box className={classes.headingDescbox}> 
         <Stack>

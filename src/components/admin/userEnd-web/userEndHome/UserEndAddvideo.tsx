@@ -23,8 +23,9 @@ const UserEndAddvideo = () => {
         </Box>  
         <Typography className={classes.errorUpload}>
           *Recommended formats: MP4, MOV 
-        </Typography>
         <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
+        </Typography>
+        
         </Stack>
       </Stack>
       <UserEndSaveCancelButtons />

@@ -2,7 +2,7 @@ import { Box, Button, Divider, FormControl, MenuItem, Select, Stack,  TextField,
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
+import { ErrorMessages, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
 import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 
 
@@ -45,11 +45,8 @@ const UserendNewsEvents = () => {
         <img src={CorpCard2} className={classes.herouploadImage}/>
        <CancelIcon className={classes.cancelImgIcon}/>
        </Box>  
-       <Typography className={classes.errorUpload}>
-          *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
-       </Typography>
-       <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
-       </Stack>
+       <ErrorMessages />
+      </Stack>
        <Stack>
        <Box className={classes.testimonialTextbox}>
        <Stack direction="column">

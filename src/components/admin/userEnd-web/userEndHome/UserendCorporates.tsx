@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/ciba.png'
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
-import { DeleteButton, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
+import { DeleteButton, ErrorMessages, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 const UserendCorporates = () => {
 
 const{classes}=useUserEndwebStyles() 
@@ -45,8 +45,7 @@ return (
      </Button>
      </Stack>
      <Box>
-     <Typography className={classes.errorUpload}>*Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)</Typography>
-     <Typography className={classes.errorUpload}>Image Must be 5MB</Typography> 
+      <ErrorMessages /> 
      </Box>
      <UserEndSaveCancelButtons />
  

@@ -17,6 +17,8 @@ import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome
 import Logout from "../components/admin/auth/Logout";
 import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
 import CultureHero from "../components/admin/userEnd-web/userEnd-Cultures/CultureHero";
+import CulturesImage from "../components/admin/userEnd-web/userEnd-Cultures/CulturesImage";
+import CultureSeabass from "../components/admin/userEnd-web/userEnd-Cultures/CultureSeabass";
 
 
 const AppRoutes = () => {
@@ -53,7 +55,7 @@ const AppRoutes = () => {
         <Route path="logout" element={<Logout />} />  
       </Route>
 
-              <Route path="culturehero" element={<CultureHero />} /> 
+              <Route path="seabass" element={<CultureSeabass />} /> 
       
       
     <Route path="*" element={<div>404 - Page Not Found</div>} />

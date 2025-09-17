@@ -2,7 +2,7 @@ import { Box,Divider,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton, Uploadbutton, TextFieldManyRows } from "./UserEndCommonButtons";
+import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton, Uploadbutton, TextFieldManyRows, ErrorMessages } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
 
 const UserendHero = () => {
@@ -36,10 +36,7 @@ return (
      <img src={fishImg} className={classes.herouploadImage}/>
      <CancelIcon className={classes.cancelImgIcon}/>
      </Box>  
-     <Typography className={classes.errorUpload}>
-        *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
-     </Typography>
-     <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
+     <ErrorMessages />
      </Stack>
      <Stack>
      <Typography className={classes.titleText}>Heading Content</Typography>
