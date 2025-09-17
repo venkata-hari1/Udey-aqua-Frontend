@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -7,6 +8,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import MailOutlineIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -41,6 +43,39 @@ const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { classes } = useSharedStyles();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const isValidEmail = (v: string) => /\S+@\S+\.\S+/.test(v);
+  const emailHasError = emailTouched && !isValidEmail(email);
+
+  const handleNavigation = (link: string) => {
+    switch (link) {
+      case "Home":
+        navigate("/");
+        break;
+      case "About Us":
+        navigate("/about");
+        break;
+      case "News & Events":
+        navigate("/news-events");
+        break;
+      case "Contact Us":
+        navigate("/contact");
+        break;
+      case "Cultures":
+        navigate("/cultures");
+        break;
+      case "Training Programs":
+        navigate("/training-programs");
+        break;
+      case "Technologies":
+        navigate("/technologies");
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <Box className={classes.footerRoot}>
       <Box
@@ -88,17 +123,20 @@ const Footer = () => {
               <Box className={classes.subscribeBox}>
                 <InputBase
                   placeholder="Enter Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   endAdornment={
                     <InputAdornment position="end">
                       <Button
                         variant="contained"
                         className={`${classes.subscribeButton}`}
+                        onClick={() => setEmailTouched(true)}
                       >
                         Subscribe
                       </Button>
                     </InputAdornment>
                   }
-                  className={`${classes.subscribeInput}  ${classes.hideInBig}`}
+                  className={`${classes.subscribeInput}  ${classes.hideInBig} ${emailHasError ? classes.subscribeInputError : ''}`}
                 />
               </Box>
             </Box>
@@ -108,6 +146,8 @@ const Footer = () => {
                   <Typography
                     key={link}
                     className={`${classes.navLink} ${classes.navLinkMobile}`}
+                    onClick={() => handleNavigation(link)}
+                    style={{ cursor: "pointer" }}
                   >
                     {link}
                   </Typography>
@@ -120,6 +160,8 @@ const Footer = () => {
                   <Typography
                     key={link}
                     className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile}`}
+                    onClick={() => handleNavigation(link)}
+                    style={{ cursor: "pointer" }}
                   >
                     {link}
                   </Typography>
@@ -131,49 +173,70 @@ const Footer = () => {
                 >
                   Contact Us
                 </Typography>
-                <Box className={classes.contactRow}>
+                <Box
+                  className={classes.contactRow}
+                  style={{ display: "flex", alignItems: "center", gap: 8 }}
+                >
                   <MailOutlineIcon fontSize="small" />
-                  <Typography
-                    className={`${classes.contactText} ${classes.contactTextMobile}`}
-                  >
-                    info@Uday.com
-                  </Typography>
+                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>info@Uday.com</Typography>
                 </Box>
-                <Box className={classes.contactRow}>
+                <Box
+                  className={classes.contactRow}
+                  style={{ display: "flex", alignItems: "center", gap: 8 }}
+                >
                   <PhoneIcon fontSize="small" />
-                  <Typography
-                    className={`${classes.contactText} ${classes.contactTextMobile}`}
-                  >
-                    +91 97911-99909
-                  </Typography>
+                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>+91 97911-99909</Typography>
                 </Box>
-                <Box className={classes.contactRow}>
+                <Box
+                  className={classes.contactRow}
+                  style={{ display: "flex", alignItems: "center", gap: 8 }}
+                >
                   <LocationOnIcon fontSize="small" />
-                  <Typography
-                    className={`${classes.contactText} ${classes.contactTextMobile}`}
-                  >
-                    Mulapolam, Srikakulam
-                  </Typography>
+                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>Mulapolam, Srikakulam</Typography>
                 </Box>
                 <Box className={classes.socialIconsMobile}>
                   <Box
-                    component="img"
-                    src={TwitterIcon}
-                    alt="Twitter"
-                    className={classes.footerSocialIconWhite}
-                  />
+                    component="a"
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Box
+                      component="img"
+                      src={TwitterIcon}
+                      alt="Twitter"
+                      className={classes.footerSocialIconWhite}
+                    />
+                  </Box>
                   <Box
-                    component="img"
-                    src={FacebookIcon}
-                    alt="Facebook"
-                    className={classes.footerSocialIconWhite}
-                  />
+                    component="a"
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Box
+                      component="img"
+                      src={FacebookIcon}
+                      alt="Facebook"
+                      className={classes.footerSocialIconWhite}
+                    />
+                  </Box>
                   <Box
-                    component="img"
-                    src={InstagramIcon}
-                    alt="Instagram"
-                    className={classes.footerSocialIconWhite}
-                  />
+                    component="a"
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Box
+                      component="img"
+                      src={InstagramIcon}
+                      alt="Instagram"
+                      className={classes.footerSocialIconWhite}
+                    />
+                  </Box>
                 </Box>
               </Box>
               <Box className={classes.mapBoxMobile}>
@@ -212,17 +275,20 @@ const Footer = () => {
               <Box className={classes.subscribeBox}>
                 <InputBase
                   placeholder="Enter Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   endAdornment={
                     <InputAdornment position="end">
                       <Button
                         variant="contained"
                         className={`${classes.subscribeButton}`}
+                        onClick={() => setEmailTouched(true)}
                       >
                         Subscribe
                       </Button>
                     </InputAdornment>
                   }
-                  className={`${classes.subscribeInput}`}
+                  className={`${classes.subscribeInput} ${emailHasError ? classes.subscribeInputError : ''}`}
                 />
               </Box>
               <Box className={classes.linksFlex}>
@@ -233,6 +299,8 @@ const Footer = () => {
                     <Typography
                       key={link}
                       className={`${classes.navLink} ${classes.navLinkDesktop}`}
+                      onClick={() => handleNavigation(link)}
+                      style={{ cursor: "pointer" }}
                     >
                       {link}
                     </Typography>
@@ -245,6 +313,8 @@ const Footer = () => {
                     <Typography
                       key={link}
                       className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop}`}
+                      onClick={() => handleNavigation(link)}
+                      style={{ cursor: "pointer" }}
                     >
                       {link}
                     </Typography>
@@ -260,49 +330,70 @@ const Footer = () => {
               >
                 Contact Us
               </Typography>
-              <Box className={classes.contactRow}>
+              <Box
+                className={classes.contactRow}
+                style={{ display: "flex", alignItems: "center", gap: 8 }}
+              >
                 <MailOutlineIcon fontSize="small" />
-                <Typography
-                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
-                >
-                  info@Uday.com
-                </Typography>
+                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>info@Uday.com</Typography>
               </Box>
-              <Box className={classes.contactRow}>
+              <Box
+                className={classes.contactRow}
+                style={{ display: "flex", alignItems: "center", gap: 8 }}
+              >
                 <PhoneIcon fontSize="small" />
-                <Typography
-                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
-                >
-                  +91 97911-99909
-                </Typography>
+                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>+91 97911-99909</Typography>
               </Box>
-              <Box className={classes.contactRow}>
+              <Box
+                className={classes.contactRow}
+                style={{ display: "flex", alignItems: "center", gap: 8 }}
+              >
                 <LocationOnIcon fontSize="small" />
-                <Typography
-                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
-                >
-                  Mulapolam, Srikakulam
-                </Typography>
+                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>Mulapolam, Srikakulam</Typography>
               </Box>
               <Box className={classes.socialIconsDesktop}>
                 <Box
-                  component="img"
-                  src={TwitterIcon}
-                  alt="Twitter"
-                  className={classes.footerSocialIconWhite}
-                />
+                  component="a"
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ cursor: "pointer" }}
+                >
+                  <Box
+                    component="img"
+                    src={TwitterIcon}
+                    alt="Twitter"
+                    className={classes.footerSocialIconWhite}
+                  />
+                </Box>
                 <Box
-                  component="img"
-                  src={FacebookIcon}
-                  alt="Facebook"
-                  className={classes.footerSocialIconWhite}
-                />
+                  component="a"
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ cursor: "pointer" }}
+                >
+                  <Box
+                    component="img"
+                    src={FacebookIcon}
+                    alt="Facebook"
+                    className={classes.footerSocialIconWhite}
+                  />
+                </Box>
                 <Box
-                  component="img"
-                  src={InstagramIcon}
-                  alt="Instagram"
-                  className={classes.footerSocialIconWhite}
-                />
+                  component="a"
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ cursor: "pointer" }}
+                >
+                  <Box
+                    component="img"
+                    src={InstagramIcon}
+                    alt="Instagram"
+                    className={classes.footerSocialIconWhite}
+                  />
+                </Box>
               </Box>
             </Box>
             <Box className={classes.mapBoxDesktop}>

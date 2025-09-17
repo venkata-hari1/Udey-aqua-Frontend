@@ -6,7 +6,7 @@ import type { Engine, Container } from "@tsparticles/engine";
 const ParticlesBackground: React.FC = () => {
   const [init, setInit] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     initParticlesEngine(async (engine: Engine) => {
       await loadSlim(engine);

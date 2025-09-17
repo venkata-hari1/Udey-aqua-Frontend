@@ -197,8 +197,10 @@ const OurTeam = () => {
   <Box className={classes.autoHeaderTabWrapper}>
     <Typography
       className={`${classes.autoHeaderTab} ${
-        currentMember.category === "Directors" ? classes.autoHeaderTabActive : ""
+        activeTab === "Directors" ? classes.autoHeaderTabActive : ""
       }`}
+      onClick={() => { setActiveTab("Directors"); setCurrentIndex(0); }}
+      style={{ cursor: "pointer" }}
     >
       Directors
     </Typography>
@@ -207,8 +209,10 @@ const OurTeam = () => {
 
     <Typography
       className={`${classes.autoHeaderTab} ${
-        currentMember.category === "Advisors" ? classes.autoHeaderTabActive : ""
+        activeTab === "Advisors" ? classes.autoHeaderTabActive : ""
       }`}
+      onClick={() => { setActiveTab("Advisors"); setCurrentIndex(0); }}
+      style={{ cursor: "pointer" }}
     >
       Advisors
     </Typography>

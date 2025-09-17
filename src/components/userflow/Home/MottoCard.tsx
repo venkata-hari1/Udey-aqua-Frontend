@@ -9,14 +9,19 @@ interface MottoCardProps {
   title: string;
   button?: boolean;
   buttonText?: string;
+  aboutCard?: string;
 }
 
-const MottoCard = ({ img, fishText, title, button, buttonText }: MottoCardProps) => {
+const MottoCard = ({ img, fishText, title, button, buttonText, aboutCard }: MottoCardProps) => {
   const { classes } = useHomeStyles();
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/about');
+    if (aboutCard) {
+      navigate(`/about?card=${encodeURIComponent(aboutCard)}`);
+    } else {
+      navigate('/about');
+    }
   };
 
   return (

@@ -244,9 +244,12 @@ const Header = () => {
                 container
                 alignItems="center"
                 className={classes.desktopContact}
+                component="a"
+                href="mailto:info@Uday.com"
+                style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
               >
                 <MailIcon fontSize="small" />
-                <Typography variant="body2">info@Uday.com</Typography>
+                <Typography variant="body2" style={{ textDecoration: "none" }}>info@Uday.com</Typography>
               </Grid>
               <Grid
                 size={{ xs: 1 }}
@@ -260,9 +263,12 @@ const Header = () => {
                 container
                 alignItems="center"
                 className={classes.desktopContact}
+                component="a"
+                href="tel:+919791199909"
+                style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
               >
                 <PhoneIcon fontSize="small" />
-                <Typography variant="body2">+91 97911 99909</Typography>
+                <Typography variant="body2" style={{ textDecoration: "none" }}>+91 97911 99909</Typography>
               </Grid>
               <Grid
                 size={{ xs: 1 }}
@@ -276,14 +282,22 @@ const Header = () => {
                 container
                 alignItems="center"
                 className={classes.desktopContact}
+                component="a"
+                href="https://www.google.com/maps/search/?api=1&query=Hyderabad"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
               >
                 <LocationOnIcon fontSize="small" />
-                <Typography variant="body2">Hyderabad</Typography>
+                <Typography variant="body2" style={{ textDecoration: "none" }}>Hyderabad</Typography>
               </Grid>
             </Grid>
             <Grid size={{ xs: 4 }} container justifyContent="flex-end">
               <Paper
                 component="form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
                 className={clsx(
                   classes.desktopSearchPaper,
                   (trigger || !isHome) && classes.desktopSearchPaperTrigger

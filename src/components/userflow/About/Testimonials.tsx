@@ -17,8 +17,6 @@ import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import aboutImg from "../../../assets/about_us/testimonials.png";
-import person1 from "../../../assets/testimonials/person_1.jpg";
-import person2 from "../../../assets/testimonials/person_2.jpg";
 import person3 from "../../../assets/testimonials/person_3.jpg";
 import person4 from "../../../assets/testimonials/person_4.jpg";
 import person5 from "../../../assets/testimonials/person_5.jpg";
@@ -75,7 +73,7 @@ const testimonials = [
     id: 4,
     name: "Krishna Reddy",
     designation: "Aquaculture Entrepreneur",
-    image: person1,
+    image: person4,
     title: "Comprehensive Training & Support",
     quotes: [
       "Uday Aqua Connect's comprehensive training programs and ongoing support have been instrumental in scaling my aquaculture business. Their practical approach makes complex concepts accessible.",
@@ -85,7 +83,7 @@ const testimonials = [
     id: 5,
     name: "Anita Patel",
     designation: "Research Scientist, Marine Biology",
-    image: person2,
+    image: person5,
     title: "Innovative Methodologies",
     quotes: [
       "Working with Uday Aqua Connect has opened new possibilities in aquaculture research. Their innovative methodologies and commitment to scientific excellence are setting new industry standards.",

@@ -26,6 +26,7 @@ const CulturePage = ({
 }: CulturePageProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastScrollYRef = useRef<number | null>(null);
   const location = useLocation();
   const { classes } = useCulturesStyles();
 
@@ -78,8 +79,15 @@ const CulturePage = ({
             onExpand={() => {
               if (openIndex === idx) {
                 setOpenIndex(null);
+                if (lastScrollYRef.current !== null) {
+                  const y = lastScrollYRef.current;
+                  requestAnimationFrame(() => {
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                  });
+                }
                 return;
               }
+              lastScrollYRef.current = window.scrollY;
               setOpenIndex(idx);
             }}
           />

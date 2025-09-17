@@ -206,6 +206,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     flex: 1,
     borderRadius: 999,
     background: COLORS.WHITE,
+    border: `1px solid transparent`,
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
@@ -226,6 +227,9 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
       marginBottom: 10,
       padding: "1.5px 0px 1.5px 10px",
     },
+  },
+  subscribeInputError: {
+    border: `1px solid #d32f2f`,
   },
   subscribeButton: {
     ...baseStyles.button(theme),
@@ -262,7 +266,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     ...TYPOGRAPHY.body1(theme),
     marginBottom: 4,
     cursor: "pointer",
-    "&:hover": { textDecoration: "underline" },
+    textDecoration: "none",
   },
   navLinks2: {
     display: "flex",
@@ -276,7 +280,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 500,
     marginBottom: 4,
     cursor: "pointer",
-    "&:hover": { textDecoration: "underline" },
+    textDecoration: "none",
   },
   contactBox: {
     display: "flex",
@@ -302,6 +306,13 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     gap: 8,
     color: COLORS.WHITE,
     marginBottom: 4,
+  },
+  footerContactLink: {
+    color: COLORS.WHITE,
+    textDecoration: "none",
+    '&:hover': { color: COLORS.WHITE, textDecoration: "none" },
+    '&:visited': { color: COLORS.WHITE, textDecoration: "none" },
+    '&:active': { color: COLORS.WHITE, textDecoration: "none" },
   },
   contactText: {
     ...TYPOGRAPHY.body2(theme),

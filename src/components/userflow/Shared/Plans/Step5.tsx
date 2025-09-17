@@ -100,7 +100,10 @@ const Step5 = ({
                 Culture
               </Typography>
               <Typography className={classes.step5DetailValue}>
-                {step2Data.selectedCultureType || "-"}
+                {(() => {
+                  const saved = localStorage.getItem("plans_type");
+                  return saved || step2Data.selectedCultureType || "-";
+                })()}
               </Typography>
               <Typography className={classes.step5DetailLabel}>
                 Technology
@@ -127,7 +130,11 @@ const Step5 = ({
                 Price
               </Typography>
               <Typography className={classes.step5DetailValue}>
-                {TRAINING_PRICE_MAP[step4Data.trainingCourse] || "-"} (No Taxes)
+                {(() => {
+                  const price = localStorage.getItem("plans_price");
+                  if (price) return `₹${price} (No Taxes)`;
+                  return TRAINING_PRICE_MAP[step4Data.trainingCourse] || "-";
+                })()}
               </Typography>
             </Box>
           </Box>

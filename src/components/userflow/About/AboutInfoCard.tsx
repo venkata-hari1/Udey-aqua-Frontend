@@ -20,9 +20,13 @@ const AboutInfoCard = ({
   onExpand,
 }: AboutInfoCardProps) => {
   const { classes } = useAboutStyles();
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
   return (
-    <Box className={classes.aboutCard}>
+    <Box className={classes.aboutCard} id={`card-${slug}`}>
       <Typography className={classes.aboutCardTitle}>{title}</Typography>
       {!expanded && (
         <Typography className={classes.aboutCardDesc}>{smallDesc}</Typography>

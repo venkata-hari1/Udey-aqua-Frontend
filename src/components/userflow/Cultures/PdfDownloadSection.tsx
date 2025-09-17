@@ -113,7 +113,12 @@ const getPdfContent = (label: string): PdfContent => {
   return contentMap[label] || contentMap["Sea Bass"];
 };
 
-const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
+interface PdfDownloadSectionProps {
+  currentLabel: string;
+  onContinuePayment?: () => void;
+}
+
+const PdfDownloadSection = ({ currentLabel, onContinuePayment }: PdfDownloadSectionProps) => {
   const { classes } = useCulturesStyles();
   const content = getPdfContent(currentLabel);
   const [open, setOpen] = useState(false);
@@ -200,8 +205,20 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
                     className={classes.pdfDialogPrimaryButtonIconImg}
                   />
                 }
+                onClick={() => {
+                  try {
+                    localStorage.setItem(
+                      "plans_pref",
+                      JSON.stringify({ selectedCultureType: "Freshwater", price: 99 })
+                    );
+                    localStorage.setItem("plans_price", "99");
+                    localStorage.setItem("plans_type", "Freshwater");
+                  } catch {}
+                  setOpen(false);
+                  onContinuePayment && onContinuePayment();
+                }}
               >
-                Access This Premium Guide For Just ₹89
+                Access This Premium Guide For Just ₹99
               </Button>
             </Box>
             <Box className={classes.pdfDialogFlex}>
@@ -209,6 +226,18 @@ const PdfDownloadSection = ({ currentLabel }: PdfDownloadSectionProps) => {
                 variant="contained"
                 fullWidth
                 className={`${classes.pdfDialogTitlePill} ${classes.pdfDialogTitlePillFloat}`}
+                onClick={() => {
+                  try {
+                    localStorage.setItem(
+                      "plans_pref",
+                      JSON.stringify({ selectedCultureType: "Freshwater", price: 99 })
+                    );
+                    localStorage.setItem("plans_price", "99");
+                    localStorage.setItem("plans_type", "Freshwater");
+                  } catch {}
+                  setOpen(false);
+                  onContinuePayment && onContinuePayment();
+                }}
               >
                 Continue to Payment
               </Button>

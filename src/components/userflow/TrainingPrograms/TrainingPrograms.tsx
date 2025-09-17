@@ -68,7 +68,7 @@ const TrainingPrograms: React.FC = () => {
     {
       title: "Sea Bass",
       image: seaBassImg,
-      path: "/cultures/sea-bass",
+      path: "/cultures",
       className: classes.seaBassCard,
     },
     {
@@ -107,7 +107,7 @@ const TrainingPrograms: React.FC = () => {
     {
       title: "RAS",
       image: rasImg,
-      path: "/technologies/ras",
+      path: "/technologies",
       className: classes.rasCard,
     },
     {

@@ -9,6 +9,9 @@ const Contact = ({ title = true }: { title?: boolean }) => {
   const [submitted, setSubmitted] = useState(false);
   const { classes } = useHomeStyles();
 
+  const NAME_MIN = 3;
+  const NAME_MAX = 200;
+  const MESSAGE_MIN = 5;
   const maxMessageLength = 500;
 
   // Validation functions
@@ -22,17 +25,21 @@ const Contact = ({ title = true }: { title?: boolean }) => {
   };
 
   const isValidName = (value: string) => {
-    return value.trim().length > 0 && !containsOnlyNumbers(value);
+    const len = value.trim().length;
+    return len >= NAME_MIN && len <= NAME_MAX && !containsOnlyNumbers(value);
   };
 
   const isValidMessage = (value: string) => {
-    return value.trim().length > 0 && !containsOnlyNumbers(value);
+    const len = value.trim().length;
+    return len >= MESSAGE_MIN && len <= maxMessageLength && !containsOnlyNumbers(value);
   };
 
   const nameError = submitted 
     ? !form.name 
       ? "First name is required" 
-      : !isValidName(form.name)
+      : form.name.trim().length < NAME_MIN || form.name.trim().length > NAME_MAX
+      ? `Name must be ${NAME_MIN}-${NAME_MAX} characters`
+      : containsOnlyNumbers(form.name)
       ? "Name cannot contain only numbers"
       : ""
     : "";
@@ -46,7 +53,9 @@ const Contact = ({ title = true }: { title?: boolean }) => {
   const messageError = submitted 
     ? !form.message 
       ? "Message is required" 
-      : !isValidMessage(form.message)
+      : form.message.trim().length < MESSAGE_MIN || form.message.trim().length > maxMessageLength
+      ? `Message must be ${MESSAGE_MIN}-${maxMessageLength} characters`
+      : containsOnlyNumbers(form.message)
       ? "Message cannot contain only numbers"
       : ""
     : "";

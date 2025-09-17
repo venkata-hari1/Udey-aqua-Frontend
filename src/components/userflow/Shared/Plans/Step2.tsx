@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { ChevronLeft } from "@mui/icons-material";
 import { usePlansStyles } from "../sharedStyles";
 import { AQUACULTURE_TYPES } from "./constants";
@@ -9,8 +10,18 @@ interface Step2Props extends StepComponentProps {
   setStep2Data: React.Dispatch<React.SetStateAction<Step2Data>>;
 }
 
-const Step2 = ({ onStepChange, currentStep, setStep2Data }: Step2Props) => {
+const Step2 = ({ onStepChange, currentStep, step2Data, setStep2Data }: Step2Props) => {
   const { classes } = usePlansStyles();
+
+  // Prefill from plans_pref if present (e.g., after PDF dialog Continue)
+  useEffect(() => {
+    try {
+      const type = localStorage.getItem("plans_type");
+      if (type && !step2Data.selectedCultureType) {
+        setStep2Data({ selectedCultureType: type });
+      }
+    } catch {}
+  }, [setStep2Data, step2Data.selectedCultureType]);
 
   const handleBackClick = () => {
     if (onStepChange) {

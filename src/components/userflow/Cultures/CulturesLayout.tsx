@@ -62,6 +62,23 @@ const CulturesLayout: React.FC = () => {
     setCurrentStep(step);
   };
 
+  const scrollToPlans = () => {
+    try {
+      const el = document.getElementById("plans-section");
+      if (el) {
+        const currentScrollY = window.scrollY;
+        const elementRect = el.getBoundingClientRect();
+        const headerOffset = 180; 
+                const targetScrollY = currentScrollY + elementRect.top - headerOffset;
+        
+        window.scrollTo({
+          top: Math.max(0, targetScrollY),
+          behavior: "smooth"
+        });
+      }
+    } catch {}
+  };
+
   return (
     <Grid container className={classes.culturesLayoutRoot} direction="column">
       <Grid size={{ xs: 12 }}>
@@ -118,8 +135,16 @@ const CulturesLayout: React.FC = () => {
         </Grid>
       </Grid>
 
-      <PdfDownloadSection currentLabel={currentLabel} />
-      <PlansSection currentStep={currentStep} onStepChange={handleStepChange} />
+      <PdfDownloadSection
+        currentLabel={currentLabel}
+        onContinuePayment={() => {
+          setCurrentStep(3);
+          setTimeout(scrollToPlans, 0);
+        }}
+      />
+      <Box id="plans-section">
+        <PlansSection currentStep={currentStep} onStepChange={handleStepChange} />
+      </Box>
     </Grid>
   );
 };

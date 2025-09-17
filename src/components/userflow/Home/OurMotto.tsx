@@ -16,6 +16,7 @@ const mottoData = [
     title: "Creating Fresh Water Aqua Corridor",
     button: true,
     buttonText: "LEARN MORE",
+    aboutCard: "NH-44",
   },
   {
     img: card2,
@@ -23,6 +24,7 @@ const mottoData = [
     title: "Creating Coastal Aqua Corridor",
     button: true,
     buttonText: "LEARN MORE",
+    aboutCard: "NH-16",
   },
   {
     img: card3,
@@ -30,6 +32,7 @@ const mottoData = [
     title: "Mulapolam, Srikakulam",
     button: true,
     buttonText: "LEARN MORE",
+    aboutCard: "99 Acres",
   },
 ];
 
