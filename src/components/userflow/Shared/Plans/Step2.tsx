@@ -13,14 +13,9 @@ interface Step2Props extends StepComponentProps {
 const Step2 = ({ onStepChange, currentStep, step2Data, setStep2Data }: Step2Props) => {
   const { classes } = usePlansStyles();
 
-  // Prefill from plans_pref if present (e.g., after PDF dialog Continue)
+  // Prefill now handled via props from PlansSection (initialCulture)
   useEffect(() => {
-    try {
-      const type = localStorage.getItem("plans_type");
-      if (type && !step2Data.selectedCultureType) {
-        setStep2Data({ selectedCultureType: type });
-      }
-    } catch {}
+    // No-op: retained to preserve effect signature if needed later
   }, [setStep2Data, step2Data.selectedCultureType]);
 
   const handleBackClick = () => {

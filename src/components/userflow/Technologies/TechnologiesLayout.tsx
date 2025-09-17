@@ -32,6 +32,7 @@ const TechnologiesLayout: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useTechnologiesStyles();
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [fromPdf, setFromPdf] = useState<boolean>(false);
 
   const currentLabel =
     sidebarItems.find((item) =>
@@ -42,6 +43,19 @@ const TechnologiesLayout: React.FC = () => {
 
   const handleStepChange = (step: number) => {
     setCurrentStep(step);
+  };
+
+  const scrollToPlans = () => {
+    try {
+      const el = document.getElementById("plans-section");
+      if (el) {
+        const currentScrollY = window.scrollY;
+        const elementRect = el.getBoundingClientRect();
+        const headerOffset = 180;
+        const targetScrollY = currentScrollY + elementRect.top - headerOffset;
+        window.scrollTo({ top: Math.max(0, targetScrollY), behavior: "smooth" });
+      }
+    } catch {}
   };
 
   return (
@@ -110,8 +124,25 @@ const TechnologiesLayout: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
-      <PdfDownloadSection currentLabel={currentLabel} />
-      <PlansSection currentStep={currentStep} onStepChange={handleStepChange} />
+      <PdfDownloadSection
+        currentLabel={currentLabel}
+        price={99}
+        culture={"Freshwater"}
+        onContinuePayment={() => {
+          setCurrentStep(3);
+          setFromPdf(true);
+          setTimeout(scrollToPlans, 0);
+        }}
+      />
+      <Box id="plans-section">
+        <PlansSection
+          currentStep={currentStep}
+          onStepChange={handleStepChange}
+          initialCulture={"Freshwater"}
+          initialPrice={99}
+          skipStep4FromPdf={fromPdf}
+        />
+      </Box>
     </Grid>
   );
 };

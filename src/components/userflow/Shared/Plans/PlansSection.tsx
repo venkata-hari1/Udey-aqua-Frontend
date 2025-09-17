@@ -19,7 +19,7 @@ import type {
   Step4Errors,
 } from "./types";
 
-const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
+const PlansSection = ({ onStepChange, currentStep = 1, initialCulture, initialPrice, skipStep4FromPdf }: PlansSectionProps) => {
   // Form data state
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -35,8 +35,11 @@ const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
 
   // Step 2 data state
   const [step2Data, setStep2Data] = useState<Step2Data>({
-    selectedCultureType: "",
+    selectedCultureType: initialCulture || "",
   });
+
+  const [overridePrice, setOverridePrice] = useState<number | undefined>(initialPrice);
+  const [hasVisitedStep3, setHasVisitedStep3] = useState<boolean>(false);
 
   // Step 4 data state
   const [step4Data, setStep4Data] = useState<Step4Data>({
@@ -63,6 +66,19 @@ const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
     }
   }, [currentStep, onStepChange]);
 
+  // Sync props to state if they change
+  useEffect(() => {
+    if (initialCulture) {
+      setStep2Data((prev) => ({ ...prev, selectedCultureType: initialCulture }));
+    }
+  }, [initialCulture]);
+
+  useEffect(() => {
+    if (typeof initialPrice !== "undefined") {
+      setOverridePrice(initialPrice);
+    }
+  }, [initialPrice]);
+
   // Auto-transition from Step 7 to Step 8 after 5 seconds
   useEffect(() => {
     if (currentStep === 7) {
@@ -75,6 +91,31 @@ const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
       return () => clearTimeout(timer);
     }
   }, [currentStep, onStepChange]);
+
+  // Track first visit to Step 3 to allow one render before skipping
+  useEffect(() => {
+    if (currentStep === 3 && !hasVisitedStep3) {
+      setHasVisitedStep3(true);
+    }
+  }, [currentStep, hasVisitedStep3]);
+
+  // On step change (1-5), scroll to the top of the plans section smoothly
+  useEffect(() => {
+    if (currentStep && currentStep >= 1 && currentStep <= 5) {
+      try {
+        const el = document.getElementById("plans-section");
+        if (el) {
+          const currentScrollY = window.scrollY;
+          const elementRect = el.getBoundingClientRect();
+          const headerOffset = 180;
+          const targetScrollY = currentScrollY + elementRect.top - headerOffset;
+          window.scrollTo({ top: Math.max(0, targetScrollY), behavior: "smooth" });
+        }
+      } catch {}
+    }
+  }, [currentStep]);
+
+  // Remove auto-skip here; Step 3 will decide the next step based on skip flag
 
   // Render appropriate step component
   const renderStep = () => {
@@ -104,6 +145,7 @@ const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
             setFormData={setFormData}
             formErrors={formErrors}
             setFormErrors={setFormErrors}
+            skipStep4FromPdf={skipStep4FromPdf}
           />
         );
 
@@ -125,6 +167,7 @@ const PlansSection = ({ onStepChange, currentStep = 1 }: PlansSectionProps) => {
             formData={formData}
             step2Data={step2Data}
             step4Data={step4Data}
+            overridePrice={overridePrice}
           />
         );
 

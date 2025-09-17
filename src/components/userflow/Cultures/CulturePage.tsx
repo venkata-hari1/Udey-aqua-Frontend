@@ -35,16 +35,22 @@ const CulturePage = ({
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpenIndex(null);
-      }
+      try {
+        if (openIndex === null) return;
+        const openTitle = cards[openIndex]?.title || "";
+        const slug = openTitle
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
+        const openEl = document.getElementById(`card-${slug}`);
+        if (openEl && !openEl.contains(e.target as Node)) {
+          setOpenIndex(null);
+        }
+      } catch {}
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+  }, [openIndex, cards]);
 
   return (
     <Box>

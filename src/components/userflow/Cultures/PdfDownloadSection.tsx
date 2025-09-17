@@ -35,6 +35,9 @@ interface PdfContent {
 
 interface PdfDownloadSectionProps {
   currentLabel: string;
+  price?: number;
+  culture?: string;
+  onContinuePayment?: (args?: { price?: number; culture?: string }) => void;
 }
 
 const getPdfContent = (label: string): PdfContent => {
@@ -113,12 +116,7 @@ const getPdfContent = (label: string): PdfContent => {
   return contentMap[label] || contentMap["Sea Bass"];
 };
 
-interface PdfDownloadSectionProps {
-  currentLabel: string;
-  onContinuePayment?: () => void;
-}
-
-const PdfDownloadSection = ({ currentLabel, onContinuePayment }: PdfDownloadSectionProps) => {
+const PdfDownloadSection = ({ currentLabel, price = 99, culture = "Freshwater", onContinuePayment }: PdfDownloadSectionProps) => {
   const { classes } = useCulturesStyles();
   const content = getPdfContent(currentLabel);
   const [open, setOpen] = useState(false);
@@ -206,16 +204,8 @@ const PdfDownloadSection = ({ currentLabel, onContinuePayment }: PdfDownloadSect
                   />
                 }
                 onClick={() => {
-                  try {
-                    localStorage.setItem(
-                      "plans_pref",
-                      JSON.stringify({ selectedCultureType: "Freshwater", price: 99 })
-                    );
-                    localStorage.setItem("plans_price", "99");
-                    localStorage.setItem("plans_type", "Freshwater");
-                  } catch {}
                   setOpen(false);
-                  onContinuePayment && onContinuePayment();
+                  onContinuePayment && onContinuePayment({ price, culture });
                 }}
               >
                 Access This Premium Guide For Just ₹99
@@ -227,16 +217,8 @@ const PdfDownloadSection = ({ currentLabel, onContinuePayment }: PdfDownloadSect
                 fullWidth
                 className={`${classes.pdfDialogTitlePill} ${classes.pdfDialogTitlePillFloat}`}
                 onClick={() => {
-                  try {
-                    localStorage.setItem(
-                      "plans_pref",
-                      JSON.stringify({ selectedCultureType: "Freshwater", price: 99 })
-                    );
-                    localStorage.setItem("plans_price", "99");
-                    localStorage.setItem("plans_type", "Freshwater");
-                  } catch {}
                   setOpen(false);
-                  onContinuePayment && onContinuePayment();
+                  onContinuePayment && onContinuePayment({ price, culture });
                 }}
               >
                 Continue to Payment

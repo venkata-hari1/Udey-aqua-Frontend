@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import ProjectCard from "./ProjectCard";
 import { useRef, useState } from "react";
-import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
-import useIsOverflowing from "./UseIsOverflowing";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 import project1 from "../../../assets/projects/project_1.jpg";

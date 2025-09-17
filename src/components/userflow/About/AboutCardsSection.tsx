@@ -13,11 +13,7 @@ export interface CardData {
   img?: string;
 }
 
-const toSlug = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+// slug util not used after scroll behavior change
 
 interface Props {
   headerTitle: string;
@@ -37,21 +33,28 @@ const AboutCardsSection = ({
   const { classes } = useAboutStyles();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastScrollYRef = useRef<number>(0);
   const location = useLocation();
   const { ref: scrollRef, scrollTo } = useScrollWithOffset250();
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpenIndex(null);
-      }
+      try {
+        if (openIndex === null) return;
+        const openTitle = cards[openIndex]?.title || "";
+        const slug = openTitle
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "");
+        const openEl = document.getElementById(`card-${slug}`);
+        if (openEl && !openEl.contains(e.target as Node)) {
+          setOpenIndex(null);
+        }
+      } catch {}
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+  }, [openIndex, cards]);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const cardTitle = params.get("card");
@@ -105,27 +108,21 @@ const AboutCardsSection = ({
                 setOpenIndex((prev) => {
                   const isClosing = prev === idx;
                   if (isClosing) {
-                    const slug = toSlug(card.title);
-                    let attempts = 0;
-                    const maxAttempts = 8;
-                    const tryScroll = () => {
-                      const el = document.getElementById(`card-${slug}`);
-                      if (el) {
-                        (
-                          scrollRef as unknown as {
-                            current: HTMLElement | null;
-                          }
-                        ).current = el as HTMLElement;
-                        scrollTo();
-                      } else if (attempts < maxAttempts) {
-                        attempts += 1;
-                        setTimeout(tryScroll, 150);
-                      }
-                    };
-                    // Allow MUI Collapse to finish its auto-duration transition
-                    setTimeout(tryScroll, 400);
+                    // Restore exact previous scroll position shortly after close starts
+                    setTimeout(() => {
+                      try {
+                        window.scrollTo({
+                          top: Math.max(0, lastScrollYRef.current || 0),
+                          behavior: "smooth",
+                        });
+                      } catch {}
+                    }, 60);
                     return null;
                   }
+                  // Capture current scroll before expanding so we can restore on close
+                  try {
+                    lastScrollYRef.current = window.scrollY;
+                  } catch {}
                   return idx;
                 });
               }}

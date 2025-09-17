@@ -7,8 +7,8 @@ import pricingImg2 from "../../../assets/pricing/pricing_img_2.png";
 import pricingImg3 from "../../../assets/pricing/pricing_img_3.png";
 import pricingTopImg from "../../../assets/home/pricing_image.png";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
-import useIsOverflowing from "./UseIsOverflowing";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
 import {
   PARTNERS_FISH_INITIAL,

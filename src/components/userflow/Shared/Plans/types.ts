@@ -76,6 +76,10 @@ export interface TrainingPriceMap {
 export interface PlansSectionProps {
   onStepChange?: (step: number) => void;
   currentStep?: number;
+  initialCulture?: string;
+  initialPrice?: number;
+  skipStep4FromPdf?: boolean;
+  onSkipConsumed?: () => void;
 }
 
 export interface StepComponentProps {
@@ -91,4 +95,6 @@ export interface StepComponentProps {
   setStep4Data?: React.Dispatch<React.SetStateAction<Step4Data>>;
   step4Errors?: Step4Errors;
   setStep4Errors?: React.Dispatch<React.SetStateAction<Step4Errors>>;
+  overridePrice?: number;
+  skipStep4FromPdf?: boolean;
 }

@@ -7,15 +7,6 @@ const Step1 = ({ onStepChange }: StepComponentProps) => {
   const { classes } = usePlansStyles();
 
   const handleBookNow = () => {
-    try {
-      const raw = localStorage.getItem("plans_pref");
-      if (!raw) {
-        localStorage.setItem("plans_pref", JSON.stringify({ price: 99 }));
-      } else {
-        const pref = JSON.parse(raw);
-        localStorage.setItem("plans_pref", JSON.stringify({ ...pref, price: 99 }));
-      }
-    } catch {}
     if (onStepChange) {
       onStepChange(2);
     }

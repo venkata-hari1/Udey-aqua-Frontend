@@ -39,6 +39,7 @@ const CulturesLayout: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useCulturesStyles();
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [fromPdf, setFromPdf] = useState<boolean>(false);
 
   const currentLabel =
     sidebarItems.find((item) =>
@@ -137,13 +138,22 @@ const CulturesLayout: React.FC = () => {
 
       <PdfDownloadSection
         currentLabel={currentLabel}
+        price={99}
+        culture={"Freshwater"}
         onContinuePayment={() => {
           setCurrentStep(3);
+          setFromPdf(true);
           setTimeout(scrollToPlans, 0);
         }}
       />
       <Box id="plans-section">
-        <PlansSection currentStep={currentStep} onStepChange={handleStepChange} />
+        <PlansSection
+          currentStep={currentStep}
+          onStepChange={handleStepChange}
+          initialCulture={"Freshwater"}
+          initialPrice={99}
+          skipStep4FromPdf={fromPdf}
+        />
       </Box>
     </Grid>
   );

@@ -15,6 +15,7 @@ interface Step5Props extends StepComponentProps {
   formData: FormData;
   step2Data: Step2Data;
   step4Data: Step4Data;
+  overridePrice?: number;
 }
 
 const Step5 = ({
@@ -23,6 +24,7 @@ const Step5 = ({
   formData,
   step2Data,
   step4Data,
+  overridePrice,
 }: Step5Props) => {
   const { classes } = usePlansStyles();
 
@@ -100,10 +102,7 @@ const Step5 = ({
                 Culture
               </Typography>
               <Typography className={classes.step5DetailValue}>
-                {(() => {
-                  const saved = localStorage.getItem("plans_type");
-                  return saved || step2Data.selectedCultureType || "-";
-                })()}
+                {step2Data.selectedCultureType || "-"}
               </Typography>
               <Typography className={classes.step5DetailLabel}>
                 Technology
@@ -130,11 +129,9 @@ const Step5 = ({
                 Price
               </Typography>
               <Typography className={classes.step5DetailValue}>
-                {(() => {
-                  const price = localStorage.getItem("plans_price");
-                  if (price) return `₹${price} (No Taxes)`;
-                  return TRAINING_PRICE_MAP[step4Data.trainingCourse] || "-";
-                })()}
+                {typeof overridePrice !== "undefined"
+                  ? `₹${overridePrice} (No Taxes)`
+                  : TRAINING_PRICE_MAP[step4Data.trainingCourse] || "-"}
               </Typography>
             </Box>
           </Box>

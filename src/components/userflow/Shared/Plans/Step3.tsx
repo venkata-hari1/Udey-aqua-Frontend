@@ -33,7 +33,8 @@ const Step3 = ({
   setFormData,
   formErrors,
   setFormErrors,
-}: Step3Props) => {
+  skipStep4FromPdf,
+}: Step3Props & { skipStep4FromPdf?: boolean }) => {
   const { classes } = usePlansStyles();
 
   const [statesList, setStatesList] = useState<string[]>(ALL_INDIA_STATES);
@@ -218,7 +219,7 @@ const Step3 = ({
     });
 
     if (onStepChange) {
-      onStepChange(4);
+      onStepChange(skipStep4FromPdf ? 5 : 4);
     }
   };
 

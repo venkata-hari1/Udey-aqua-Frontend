@@ -9,8 +9,8 @@ import nfdb from "../../../assets/partners/ngdb.png";
 import nabard from "../../../assets/partners/nabard.png";
 import icar from "../../../assets/partners/icar.png";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
-import useIsOverflowing from "./UseIsOverflowing";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
 import {
   PARTNERS_FISH_INITIAL,

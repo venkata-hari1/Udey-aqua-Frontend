@@ -4,8 +4,8 @@ import SectionTitle from "./SectionTitle";
 import NewsCard from "./NewsCard";
 import fishesImg from "../../../assets/home/news_img.png";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
-import useIsOverflowing from "./UseIsOverflowing";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
 import {
   NEWS_FISHES_INITIAL,
