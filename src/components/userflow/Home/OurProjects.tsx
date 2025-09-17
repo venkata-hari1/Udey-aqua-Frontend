@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import ProjectCard from "./ProjectCard";
 import { useRef, useState } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
-import useIsOverflowing from "./useIsOverflowing";
+import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
+import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 import project1 from "../../../assets/projects/project_1.jpg";
@@ -56,7 +56,6 @@ const projects = [
   },
 ];
 
-
 const OurProjects = () => {
   const { classes } = useHomeStyles();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -68,20 +67,21 @@ const OurProjects = () => {
     <Box className={classes.ourProjectsRoot}>
       <SectionTitle title="Our Projects" whiteBg={false} />
       <Box className={classes.ourProjectsInner}>
-      <Box className={classes.ourProjectsCategories}>
-    {categories.map((cat, idx) => (
-      <Box
-        key={cat}
-        onClick={() => {
-          setActiveIdx(idx)}}
-        className={`${classes.ourProjectsCategory} ${
-          activeIdx === idx ? classes.ourProjectsCategoryActive : ""
-        }`}
-      >
-        {cat}
-      </Box>
-    ))}
-  </Box>
+        <Box className={classes.ourProjectsCategories}>
+          {categories.map((cat, idx) => (
+            <Box
+              key={cat}
+              onClick={() => {
+                setActiveIdx(idx);
+              }}
+              className={`${classes.ourProjectsCategory} ${
+                activeIdx === idx ? classes.ourProjectsCategoryActive : ""
+              }`}
+            >
+              {cat}
+            </Box>
+          ))}
+        </Box>
         <Box
           ref={scrollRef}
           className={

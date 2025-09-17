@@ -3,8 +3,8 @@ import SectionTitle from "./SectionTitle";
 import TestimonialCard from "./TestimonialCard";
 import type { Testimonial } from "./TestimonialCard";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
-import useIsOverflowing from "./useIsOverflowing";
+import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
+import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 import img1 from "../../../assets/testimonials/person_1.jpg";

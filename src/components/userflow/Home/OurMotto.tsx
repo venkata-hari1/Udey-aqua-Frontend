@@ -5,8 +5,8 @@ import card3 from "../../../assets/motto/card_3.png";
 import { Box } from "@mui/material";
 import MottoCard from "./MottoCard";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
-import useIsOverflowing from "./useIsOverflowing";
+import useAutoHorizontalScroll from "./UseAutoHorizontalScroll";
+import useIsOverflowing from "./UseIsOverflowing";
 import useHomeStyles from "./homeStyles";
 
 const mottoData = [
@@ -46,23 +46,27 @@ const OurMotto = () => {
     <Box className={classes.ourMottoRoot}>
       <Box className={classes.ourMottoTitleWrap}>
         <Box className={classes.ourMottoTitle}>
-        <SectionTitle title="Our Motto" />
+          <SectionTitle title="Our Motto" />
         </Box>
       </Box>
       <Box
         ref={scrollRef}
         className={
           classes.ourMottoScrollWrap +
-          (isOverflowing ? ' ' + classes.ourMottoScrollFlexStart : '')
+          (isOverflowing ? " " + classes.ourMottoScrollFlexStart : "")
         }
       >
-        {isOverflowing && <Box className={classes.ourMottoOverflowBoxLeft}></Box>}
+        {isOverflowing && (
+          <Box className={classes.ourMottoOverflowBoxLeft}></Box>
+        )}
         {mottoData.map((card, idx) => (
           <Box key={idx}>
             <MottoCard {...card} />
           </Box>
         ))}
-        {isOverflowing && <Box className={classes.ourMottoOverflowBoxRight}></Box>}
+        {isOverflowing && (
+          <Box className={classes.ourMottoOverflowBoxRight}></Box>
+        )}
       </Box>
     </Box>
   );
