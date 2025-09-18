@@ -49,13 +49,15 @@ const UserendNewsEvents = () => {
       </Stack>
        <Stack>
        <Box className={classes.testimonialTextbox}>
-       <Stack direction="column">
+       <Stack direction="column" gap={1}>
         <Typography className={classes.titleText}>Heading</Typography>
         <TextField size="small" className={classes.textfiledTestimonialblog} />
        </Stack>
       </Box>
+      <Stack gap={1} mt={2}>
        <Typography className={classes.titleText}>Description</Typography>
        <TextFieldManyRows />   
+       </Stack>
        </Stack>
     </Stack> 
     <Divider sx={{border:'1px solid rgba(97, 177, 218, 0)'}}/>

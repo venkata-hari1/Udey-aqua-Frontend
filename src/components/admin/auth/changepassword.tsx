@@ -1,15 +1,14 @@
-import  { useState } from 'react';
+import { useState } from "react";
 import {
   InputAdornment,
   IconButton,
-  
-} from '@mui/material';
-import {useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-import bgimg from '../../../assets/admin/Group 39739.png';
-import logo from '../../../assets/admin/logo.png';
-import lockIconPng from '../../../assets/admin/lock.png';
-import eyeIconPng from '../../../assets/admin/eye-off.png';
+import bgimg from "../../../assets/admin/Group 39739.png";
+import logo from "../../../assets/admin/logo.png";
+import lockIconPng from "../../../assets/admin/lock.png";
+import eyeIconPng from "../../../assets/admin/eye-off.png";
 
 import {
   StyledLoginRoot,
@@ -23,36 +22,64 @@ import {
   StyledCustomIcon,
   StyledInputAdornmentIcon,
   StyledLoginButton,
-} from '../styles/logins.styles';
-import { validatePassword } from '../utils/Validations';
+} from "../styles/logins.styles";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const[errorvalue,setErrorvalue]=useState<string[]>([])
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorConfirm, setErrorConfirm] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+const passwordRegex =
+    
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  const validatePassword = (value: string): boolean => {
+    if (!value) {
+      setErrorPassword("Password can't be empty");
+      return false;
+    }
+    if (!passwordRegex.test(value)) {
+      setErrorPassword(
+        "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character"
+      );
+      return false;
+    }
+    setErrorPassword("");
+    return true;
+  };
+
+  const validateConfirmPassword = (value: string): boolean => {
+    if (!value) {
+      setErrorConfirm("Confirm password can't be empty");
+      return false;
+    }
+    if (value !== password) {
+      setErrorConfirm("Passwords do not match");
+      return false;
+    }
+    setErrorConfirm("");
+    return true;
+  };
+
   const handleSubmit = () => {
-      
-   const pwdvalues={
-    pwdValue:password,
-    confirmpwdValue:confirmPassword
-   }
-  const validpwds=validatePassword(pwdvalues)
-  
-  if(!validpwds.isValid){
-    setErrorvalue(validpwds.errors);
-  }else{
-    console.log(pwdvalues)
-     navigate('/admin/login')
-  }
+    const pwdOk = validatePassword(password);
+    const confirmOk = validateConfirmPassword(confirmPassword);
+
+    if (pwdOk && confirmOk) {
+      console.log({ password, confirmPassword });
+      navigate("/admin/login");
+    }
   };
 
   return (
-    <StyledLoginRoot >
+    <StyledLoginRoot>
       <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
 
       <StyledLoginRight>
@@ -69,37 +96,14 @@ const ChangePassword = () => {
           <StyledTextField
             fullWidth
             placeholder="New Password"
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={errorvalue.some(err=>err.includes("Password must"))}
-            helperText={errorvalue.find(err=>err.includes("Password must")||" ")}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <StyledInputAdornmentIcon>
-                    <StyledCustomIcon src={lockIconPng} alt="Lock" />
-                  </StyledInputAdornmentIcon>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
-                    <StyledCustomIcon src={eyeIconPng} alt={showPassword ? "Hide password" : "Show password"} />
-                  </IconButton>
-                </InputAdornment>
-              ),
+            onChange={(e) => {
+              setPassword(e.target.value);
+              validatePassword(e.target.value); 
             }}
-          />
-
-          <StyledTextField
-            fullWidth
-            placeholder="Confirm New Password"
-            type={showConfirmPassword ? 'text' : 'password'}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            error={errorvalue.some(err => err.includes("do not match"))}
-            helperText={errorvalue.find(err => err.includes("do not match")) || " "}
+            error={errorPassword !== ""}
+            helperText={errorPassword || " "}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -112,16 +116,59 @@ const ChangePassword = () => {
                 <InputAdornment position="end">
                   <IconButton
                     edge="end"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-                    <StyledCustomIcon src={eyeIconPng} alt={showConfirmPassword ? "Hide password" : "Show password"} />
+                    <StyledCustomIcon
+                      src={eyeIconPng}
+                      alt={showPassword ? "Hide password" : "Show password"}
+                    />
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
 
-         <StyledLoginButton
+          {/* Confirm Password */}
+          <StyledTextField
+            fullWidth
+            placeholder="Confirm New Password"
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              validateConfirmPassword(e.target.value); 
+            }}
+            error={errorConfirm !== ""}
+            helperText={errorConfirm || " "}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <StyledInputAdornmentIcon>
+                    <StyledCustomIcon src={lockIconPng} alt="Lock" />
+                  </StyledInputAdornmentIcon>
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    edge="end"
+                    onClick={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }
+                  >
+                    <StyledCustomIcon
+                      src={eyeIconPng}
+                      alt={
+                        showConfirmPassword ? "Hide password" : "Show password"
+                      }
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <StyledLoginButton
             variant="contained"
             fullWidth
             onClick={handleSubmit}

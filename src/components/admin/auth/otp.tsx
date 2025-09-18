@@ -25,16 +25,17 @@ const OTP = () => {
 
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [otpError, setOtpError] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
-  const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const [isOtpExpired, setIsOtpExpired] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30); 
 
-  // Timer for resend
+  // Timer (hidden)
   useEffect(() => {
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else {
-      setIsResendDisabled(false);
+      setIsOtpExpired(true);
+      setOtpError(true); // automatically show expired message
     }
   }, [timeLeft]);
 
@@ -61,8 +62,13 @@ const OTP = () => {
 
   // Verify OTP
   const handleVerify = () => {
+    if (isOtpExpired) {
+      setOtpError(true);
+      return;
+    }
+
     const otp = otpValues.join("");
-    const CORRECT_OTP = "1234"; // mock correct OTP
+    const CORRECT_OTP = "1234"; 
 
     if (otp === CORRECT_OTP) {
       setOtpError(false);
@@ -74,11 +80,11 @@ const OTP = () => {
 
   // Resend OTP
   const handleResend = () => {
-    if (isResendDisabled) return;
     setOtpValues(["", "", "", ""]);
     setOtpError(false);
+    setIsOtpExpired(false);
     setTimeLeft(30);
-    setIsResendDisabled(true);
+    inputs[0].current?.focus();
   };
 
   const isOtpComplete = otpValues.every((digit) => digit.trim() !== "");
@@ -94,7 +100,7 @@ const OTP = () => {
           <StyledTitle variant="h5" fontWeight="bold">
             Verification
           </StyledTitle>
-          <StyledSubtitle variant="body2" textAlign="center" color="#64748B" >
+          <StyledSubtitle variant="body2" textAlign="center" color="#64748B">
             Please enter the 4-digit verification code sent to your email.
           </StyledSubtitle>
 
@@ -116,25 +122,21 @@ const OTP = () => {
           {/* Error Message */}
           {otpError && (
             <Typography variant="caption" color="error" sx={{ mt: -2, alignSelf: "center" }}>
-              Invalid OTP, please try again
+              {isOtpExpired
+                ? "OTP has expired, please click on resend."
+                : "Invalid OTP, please try again."}
             </Typography>
           )}
 
-          <Typography variant="body2" color="#64748B" alignSelf="center">
+          <Typography variant="body2" color="#64748B" alignSelf="center" sx={{ mt: 1 }}>
             Didn’t receive the code?
           </Typography>
 
-          {/* Resend Link / Timer */}
+          {/* Resend Link - always visible */}
           <StyledResendLinkContainer>
-            {isResendDisabled ? (
-              <Typography variant="body2" color="text.secondary">
-                Resend in {timeLeft}s
-              </Typography>
-            ) : (
-              <StyledResendLink as="button" onClick={handleResend}>
-                Resend code
-              </StyledResendLink>
-            )}
+            <StyledResendLink as="button" onClick={handleResend}>
+              Resend code
+            </StyledResendLink>
           </StyledResendLinkContainer>
 
           {/* Verify Button */}

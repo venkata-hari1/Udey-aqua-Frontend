@@ -50,21 +50,14 @@ const {classes}=useUsermanagementStyles()
           </TableHead>
             <TableBody>
             {getinuserdata.map(tdata=>(
-              <TableRow key={tdata.id} sx={{
-               borderTop:'1px solid #0A4FA4',
-               border: "1px solid #0463EE29",   
-                "& td": {
-                  borderBottom: "none", 
-                  fontSize:"14px",
-                },
-              }}>
+              <TableRow key={tdata.id} className={classes.tablebodyRow}>
               <TableCell padding="checkbox" align="left" >
                <Checkbox className={classes.trainingCheckbox}/>
                {tdata.id}
                 </TableCell>
                 <TableCell >{tdata.name}</TableCell>
                 <TableCell >{tdata.phone}</TableCell>
-                <TableCell >{tdata.message}</TableCell>
+                <TableCell className={classes.tabelCellAdress}>{tdata.message}</TableCell>
                 <TableCell >{tdata.date}</TableCell>
                 <TableCell >
                   <img src={Delete_Img} style={{width:"30px",height:"30px",paddingLeft:'10px' }}/>

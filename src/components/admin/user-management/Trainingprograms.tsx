@@ -18,7 +18,7 @@ const Trainingprograms = () => {
     {id:1,label:'S.No'},
     {id:2,label:'Name'},
     {id:3,label:'Email'},
-    {id:4,label:'Phone'},
+    {id:4,label:'Phone Number'},
     {id:5,label:'Adress'},
     {id:6,label:'Plan'},
     {id:7,label:'Aqua Culture'},
@@ -81,37 +81,34 @@ return (
           }}>
              {tableheading.map((heading)=>(
                 <TableCell key={heading.id}align="left"
-                sx={{color:'#0A4FA4',
-                borderBottom:'1px solid #0A4FA4'}}>{heading.label}</TableCell>
+                className={classes.tabelHeadingCell}
+                >{heading.label}</TableCell>
              ))}
             </TableRow>
           </TableHead>
             <TableBody>
             {tablebodydata.map(tdata=>(
-              <TableRow key={tdata.id} sx={{
-               borderTop:'1px solid #0A4FA4',
-               border: "1px solid #0463EE29",   
-                "& td": {
-                  borderBottom: "none",
-                  fontSize: "13px",
-                },
-              }}>
+              <TableRow key={tdata.id} 
+              className={classes.tablebodyRow}
+              >
               <TableCell padding="checkbox" >
                <Checkbox className={classes.trainingCheckbox} />
                {tdata.id}
                 </TableCell>
-                <TableCell sx={{cursor:'pointer'}}
+                <TableCell className={classes.trainingTablecellName}
                  onClick={()=>navigate('user-info')}>{tdata.name}</TableCell>
                 <TableCell>{tdata.email}</TableCell>
                 <TableCell>{tdata.phone}</TableCell>
-                <TableCell>{tdata.address}</TableCell>
+                <TableCell className={classes.tabelCellAdress}>{tdata.address}</TableCell>
                 <TableCell>{tdata.plan}</TableCell>
                 <TableCell>{tdata.culture}</TableCell>
                 <TableCell>{tdata.program}</TableCell>
-                <TableCell>{tdata.availability}</TableCell>
+                <TableCell sx={{ whiteSpace: "none",
+    wordBreak: "break-word",
+    maxWidth: 100,}}>{tdata.availability}</TableCell>
                 <TableCell>{tdata.payment}</TableCell>
                 <TableCell>
-                  <Box sx={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                  <Box sx={{display:'flex', justifyContent:'center',alignItems:'center',gap:'8px'}}>
                   <VisibilityOutlinedIcon sx={{fontSize:"20px",cursor:'pointer'}}/>
                   <img src={Delete_Img} style={{width:"24px",height:"25px",paddingTop:'3px',cursor:'pointer' }}
                   onClick={handleClickOpen}/>

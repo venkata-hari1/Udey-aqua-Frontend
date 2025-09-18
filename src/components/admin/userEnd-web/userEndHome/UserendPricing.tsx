@@ -41,13 +41,13 @@ return (
         <ErrorMessages />
         </Stack>
        <Box className={classes.headingDescbox}> 
-        <Stack>
+        <Stack gap={1}>
         <Typography className={classes.titleText} >Heading</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
         size="small"/>   
         </Stack>
-        <Stack>
+        <Stack gap={1}>
         <Typography className={classes.titleText}>Description</Typography>
         <TextFieldManyRows />
         </Stack>

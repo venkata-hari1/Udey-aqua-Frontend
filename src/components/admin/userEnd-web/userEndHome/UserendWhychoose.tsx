@@ -25,7 +25,7 @@ const UserendWhychoose = () => {
             <ErrorMessages />
 
            </Stack>
-           <Stack display="flex" justifyContent="flex-start">
+           <Stack display="flex" justifyContent="flex-start" gap={1}>
            <Typography className={classes.titleText}>Content</Typography>
            <TextFieldManyRows />
            </Stack>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InputAdornment } from '@mui/material';
 
@@ -26,29 +26,24 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  useEffect(()=>{
-    inputsValidation()
-  },[email])
+  
 
-  const inputsValidation=()=>{
+  const validateAndContinue = () => {
     let isValid=true;
     if(!email){
-        setEmailError("Email is Required");
-        isValid=false;
+      setEmailError("Email is required");
+      isValid=false;
+
     }else if(!validateEmail(email)){
-      setEmailError("Enter a valid email address")
+       setEmailError("Enter a valid email address");
+       isValid=false;
     }else{
       setEmailError("")
     }
-    return isValid;
-  }
-
-  const validateAndContinue = () => {
-    const validateInputs=inputsValidation()
-    if(validateInputs){
+   
+    if(isValid){
       navigate('/admin/otp')
     }
-  
   };
 
   return (
@@ -70,7 +65,18 @@ const ForgotPassword = () => {
             fullWidth
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+             const value=e.target.value;
+             setEmail(value)
+             if(!value){
+              setEmailError("Email is required")
+             }else if(!validateEmail(value)){
+              setEmailError("Enter a valid email address");
+             }else{
+              setEmailError("")
+             } 
+            }
+            }
             
             error={!!emailError}
             helperText={emailError ||null}

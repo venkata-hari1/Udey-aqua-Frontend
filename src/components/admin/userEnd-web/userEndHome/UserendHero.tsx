@@ -38,7 +38,7 @@ return (
      </Box>  
      <ErrorMessages />
      </Stack>
-     <Stack>
+     <Stack gap={1}>
      <Typography className={classes.titleText}>Heading Content</Typography>
      <TextFieldManyRows />   
      </Stack>

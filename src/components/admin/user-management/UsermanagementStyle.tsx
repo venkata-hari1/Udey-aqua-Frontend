@@ -53,6 +53,28 @@ const useUsermanagementStyles = makeStyles()((theme: Theme) => ({
       fill:"#0A4FA4"
     },
 },
+
+//training program page
+tabelHeadingCell:{
+ color:'#0A4FA4',
+ borderBottom:'1px solid #0A4FA4'
+},
+tablebodyRow:{
+borderTop:'1px solid #0A4FA4',
+border: "1px solid #0463EE29",   
+"& td": {
+  borderBottom: "none",
+  fontSize: "13px",
+},
+},
+trainingTablecellName:{
+  cursor:'pointer'
+},
+tabelCellAdress:{
+ whiteSpace: "normal",
+ wordBreak: "break-word",
+ maxWidth: 200
+},
 //userInformtion page
 downLoadreport:{
   color:theme.palette.primary.dark,
@@ -105,6 +127,7 @@ valueInfo:{
   minWidth:'350px',
   maringBottom:"14px",
   fontSize:"14px",
+  fontWeight:500,
   [theme.breakpoints.down('sm')]:{
    minWidth:'180px',
    marginBottom:"14px",

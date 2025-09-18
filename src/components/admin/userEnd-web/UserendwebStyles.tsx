@@ -159,6 +159,7 @@ display:"flex",
 justifyContent:"space-between",
 gap:140,
 flexDirection:'row',
+marginTop:"20px",
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',
   gap:5,
@@ -345,6 +346,7 @@ projectsUploadContentbox:{
 display:"flex",
 justifyContent:"space-between",
 gap:220,
+
 flexDirection:'row',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',
@@ -371,7 +373,7 @@ gap:13,
 testimonialTextbox:{
   display:"flex",
    gap:40,
-  marginBottom:4,
+  marginTop:5,
   flexDirection:'row',
   [theme.breakpoints.down('md')]:{
     gap:10,
@@ -398,6 +400,7 @@ textfiledTestimonial:{
 },
 //userend News and Events
 dropDownSelectBlog:{
+  width:'120px',
   display:'flex',
   "& .MuiInputBase-input": {
       color: "#0A4FA4",  
@@ -460,7 +463,7 @@ dateTextfield:{
 FormNewsblogBox:{
 display:'flex',
 width:'100%',
-
+marginTop:'20px',
 justifyContent:'space-between',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',

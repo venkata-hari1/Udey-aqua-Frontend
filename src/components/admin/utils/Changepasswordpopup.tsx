@@ -1,158 +1,243 @@
-import { Box, DialogActions, DialogContent, DialogContentText, FormControl, InputAdornment, TextField, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import useProfileStyles from '../profile/ProfileStyles';
-import LockOutlineIcon from '@mui/icons-material/LockOutline';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useState } from 'react';
-import { validatePassword } from './Validations';
+import {
+  Box,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  FormControl,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import useProfileStyles from "../profile/ProfileStyles";
+import LockOutlineIcon from "@mui/icons-material/LockOutline";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { useState } from "react";
 
+type Iprops = {
+  pwdopen: boolean;
+  handlepsswordopen: () => void;
+};
 
-type Iprops={
-    pwdopen:boolean;
-    handlepsswordopen:()=>void;
-}
+const Changepasswordpopup = ({ pwdopen, handlepsswordopen }: Iprops) => {
+  const { classes } = useProfileStyles();
 
-const Changepasswordpopup = ({pwdopen,handlepsswordopen}:Iprops) => {
-const{classes}=useProfileStyles()
+  // password visibility
+  const [createPwdOpen, setCreatePwdOpen] = useState(false);
+  const [createPwdType, setCreatePwdType] = useState("password");
 
-//create password
-const[createPwdopen,setCreatePwdopen]=useState(false)
-const[creatPwdtype,setcreatePwdType]=useState("password")
+  const [confirmPwdOpen, setConfirmPwdOpen] = useState(false);
+  const [confirmPwdType, setConfirmPwdType] = useState("password");
 
-const[confirmPwdopen,setConfirmPwdopen]=useState(false)
-const[confirmPwdtype,setConfirmPwdtype]=useState("password")
+  const toggleCreatePassword = () => {
+     setCreatePwdOpen((prev) => !prev);
+     setCreatePwdType((prev) => (prev === "password" ? "text" : "password"));
+  };
 
-const handleCreatepassword=()=>{
-  if(createPwdopen===false){
-    setCreatePwdopen(true)
-    setcreatePwdType("text")
-  }
-  else{
-    setCreatePwdopen(false)
-    setcreatePwdType("password")
-  }  
-}
-const handleConfirmpassword=()=>{
-  if(confirmPwdopen===false){
-    setConfirmPwdopen(true)
-    setConfirmPwdtype("text")
-  }else{
-    setConfirmPwdopen(false)
-    setConfirmPwdtype("password")
-  }
-}
+  const toggleConfirmPassword = () => {
+   setConfirmPwdOpen((prev) => !prev);
+   setConfirmPwdType((prev) => (prev === "password" ? "text" : "password"));
+  };
 
-//pwdvalue
-const[passwordValue,setPasswordValue]=useState("")
-const[confirmPwdvalue,setConfirmpwdValue]=useState("")
-const changePasswordHandler=(event:any)=>{
-   setPasswordValue(event.target.value)
-}
-const confirmPasswordHandler=(event:any)=>{
-   setConfirmpwdValue(event.target.value)
-}
+  const [passwordValue, setPasswordValue] = useState("");
+  const [confirmPwdValue, setConfirmPwdValue] = useState("");
 
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorConfirm, setErrorConfirm] = useState("");
 
-//error 
-const[errorvalue,setErrorvalue]=useState<string[]>([])
-const passwordSubmitHandler=()=>{
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  const pwdobj={
-    pwdValue:passwordValue,
-    confirmpwdValue:confirmPwdvalue
-  }
-const resultPassword=validatePassword(pwdobj)
- setErrorvalue(resultPassword.errors)
-}
+  const validatePassword = (value: string): boolean => {
+    if (!value) {
+      setErrorPassword("Password can't be empty");
+      return false;
+    }
+    if (!passwordRegex.test(value)) {
+      setErrorPassword(
+        "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character"
+      );
+      return false;
+    }
+    setErrorPassword("");
+    return true;
+  };
 
-return (
-   <Dialog open={pwdopen} onClose={handlepsswordopen} 
-    className={classes.dialogContainer} 
-    fullWidth
-    maxWidth="xs">
-       <DialogContent>
-       <Box className={classes.profilePasswordChangeBox}>
-       <DialogContentText>   
-       <Typography className={classes.updateEmailText}>New Password</Typography>
-       <Typography fontSize="13px">Set the new password or your account to you login.</Typography>
-       </DialogContentText>
-       </Box>
-       <DialogContent>
-       <Box display="flex" flexDirection="column" gap={2}>
-       <FormControl fullWidth sx={{m:0}}>
-       <TextField fullWidth
-        placeholder="Create Password"
-        size="small"
-        type={creatPwdtype}
-        className={classes.profileTextfileds}
-        onChange={changePasswordHandler}
-        error={errorvalue.some(err=>err.includes("Password must"))}
-        helperText={errorvalue.find(err=>err.includes("Password must")||" ")}
-        InputProps={{
-        startAdornment:(
-          <InputAdornment position="start">
-            {createPwdopen?<LockOpenIcon className={classes.textboxIcons} onClick={handleCreatepassword}/> :<LockOutlineIcon className={classes.textboxIcons}
-            onClick={handleCreatepassword}/>}
-          </InputAdornment>
-       ),
-       endAdornment:(
-        <InputAdornment position="end">
-          {createPwdopen?<VisibilityOutlinedIcon 
-          onClick={handleCreatepassword} className={classes.textboxIcons}/>:<VisibilityOffOutlinedIcon className={classes.textboxIcons}
-          onClick={handleCreatepassword}/>}
-             
-         </InputAdornment>
-       )
-       }}
-       />
-      </FormControl>
+  const validateConfirmPassword = (value: string): boolean => {
+    if (!value) {
+      setErrorConfirm("Confirm password can't be empty");
+      return false;
+    }
+    if (value !== passwordValue) {
+      setErrorConfirm("Passwords do not match");
+      return false;
+    }
+    setErrorConfirm("");
+    return true;
+  };
 
-      <FormControl fullWidth sx={{m:0}}>
-       <TextField fullWidth
-        placeholder="Confirm Password"
-        size="small"
-        type={confirmPwdtype}
-        className={classes.profileTextfileds}
-        onChange={confirmPasswordHandler}
-         error={errorvalue.some(err => err.includes("do not match"))}
-         helperText={errorvalue.find(err => err.includes("do not match")) || " "}
-        InputProps={{
-        startAdornment:(
-          <InputAdornment position="start">
-            {confirmPwdopen?<LockOpenIcon className={classes.textboxIcons}
-            onClick={handleConfirmpassword}/>
-            :<LockOutlineIcon className={classes.textboxIcons}
-            onClick={handleConfirmpassword}/>}
-             
-         </InputAdornment>
-       ),
-       endAdornment:(
-        <InputAdornment position="end">
-          {confirmPwdopen?<VisibilityOutlinedIcon className={classes.textboxIcons} 
-          onClick={handleConfirmpassword}/>:<VisibilityOffOutlinedIcon className={classes.textboxIcons}
-          onClick={handleConfirmpassword}/>} 
-         </InputAdornment>
-       )
-       }}
-       />
-      </FormControl> 
-      </Box>
+  const passwordSubmitHandler = () => {
+    const pwdOk = validatePassword(passwordValue);
+    const confirmOk = validateConfirmPassword(confirmPwdValue);
+
+    if (pwdOk && confirmOk) {
+      console.log({ passwordValue, confirmPwdValue });
+      handlepsswordopen(); // close dialog after success
+    }
+  };
+
+  return (
+    <Dialog
+      open={pwdopen}
+      onClose={handlepsswordopen}
+      className={classes.dialogContainer}
+      fullWidth
+      maxWidth="xs"
+    >
+      <DialogContent>
+        <Box className={classes.profilePasswordChangeBox}>
+          <DialogContentText>
+            <Typography className={classes.updateEmailText}>
+              New Password
+            </Typography>
+            <Typography fontSize="13px">
+              Set the new password for your account to login.
+            </Typography>
+          </DialogContentText>
+        </Box>
+
+        <DialogContent>
+          <Box display="flex" flexDirection="column" gap={2}>
+            {/* Create Password */}
+            <FormControl fullWidth sx={{ m: 0 }}>
+              <TextField
+                fullWidth
+                placeholder="Create Password"
+                size="small"
+                type={createPwdType}
+                className={classes.profileTextfileds}
+                value={passwordValue}
+                onChange={(e) => {
+                  setPasswordValue(e.target.value);
+                  validatePassword(e.target.value);
+                }}
+                error={errorPassword !== ""}
+                helperText={errorPassword || " "}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      {createPwdOpen ? (
+                        <LockOpenIcon
+                          className={classes.textboxIcons}
+                          onClick={toggleCreatePassword}
+                        />
+                      ) : (
+                        <LockOutlineIcon
+                          className={classes.textboxIcons}
+                          onClick={toggleCreatePassword}
+                        />
+                      )}
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {createPwdOpen ? (
+                        <VisibilityOutlinedIcon
+                          onClick={toggleCreatePassword}
+                          className={classes.textboxIcons}
+                        />
+                      ) : (
+                        <VisibilityOffOutlinedIcon
+                          onClick={toggleCreatePassword}
+                          className={classes.textboxIcons}
+                        />
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+
+            {/* Confirm Password */}
+            <FormControl fullWidth sx={{ m: 0 }}>
+              <TextField
+                fullWidth
+                placeholder="Confirm Password"
+                size="small"
+                type={confirmPwdType}
+                className={classes.profileTextfileds}
+                value={confirmPwdValue}
+                onChange={(e) => {
+                  setConfirmPwdValue(e.target.value);
+                  validateConfirmPassword(e.target.value);
+                }}
+                error={errorConfirm !== ""}
+                helperText={errorConfirm || " "}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      {confirmPwdOpen ? (
+                        <LockOpenIcon
+                          className={classes.textboxIcons}
+                          onClick={toggleConfirmPassword}
+                        />
+                      ) : (
+                        <LockOutlineIcon
+                          className={classes.textboxIcons}
+                          onClick={toggleConfirmPassword}
+                        />
+                      )}
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {confirmPwdOpen ? (
+                        <VisibilityOutlinedIcon
+                          onClick={toggleConfirmPassword}
+                          className={classes.textboxIcons}
+                        />
+                      ) : (
+                        <VisibilityOffOutlinedIcon
+                          onClick={toggleConfirmPassword}
+                          className={classes.textboxIcons}
+                        />
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+          </Box>
+        </DialogContent>
+
+        <DialogActions sx={{ p: 3 }}>
+          <Button
+            variant="contained"
+            className={classes.profileContinuebutton}
+            fullWidth
+            onClick={passwordSubmitHandler}
+          >
+            Update Password
+          </Button>
+        </DialogActions>
+
+        <Box className={classes.backtoProfileBox}>
+          <Typography fontSize="14px">
+            Back to{" "}
+            <span
+              className={classes.backProfiletext}
+              onClick={handlepsswordopen}
+            >
+              Profile
+            </span>
+          </Typography>
+        </Box>
       </DialogContent>
-      <DialogActions sx={{ p: 3 }}>
-      <Button variant="contained" className={classes.profileContinuebutton} 
-      fullWidth onClick={passwordSubmitHandler}>
-       Update Password
-      </Button>
-      </DialogActions>
-       <Box className={classes.backtoProfileBox}>
-           <Typography fontSize="14px">Back to <span className={classes.backProfiletext} onClick={handlepsswordopen}>Profile</span></Typography>  
-       </Box>
-      </DialogContent> 
     </Dialog>
-  )
-}
+  );
+};
 
-export default Changepasswordpopup
+export default Changepasswordpopup;

@@ -12,9 +12,15 @@ const Deletepopup = ({open,handleclickopen}:Iprops) => {
    <Dialog
         open={open}
         onClose={handleclickopen}
-     >
+        PaperProps={{
+        sx:{
+         padding:"30px",  
+        }}}
+        sx={{background:'#8f8f8f80',
+        }}
+  >
         <DialogTitle sx={{display:'flex',color:'red'}}>
-         "Are you sure you want to delete the<br/>
+         "Are you sure you want to delete the<br />
           Surya Pratap?"
         </DialogTitle>
         

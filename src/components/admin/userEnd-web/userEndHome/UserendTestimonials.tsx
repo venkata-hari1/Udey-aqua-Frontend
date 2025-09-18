@@ -40,11 +40,11 @@ return (
      </Stack>
      <Stack>
      <Box className={classes.testimonialTextbox}>
-     <Stack direction="column">
+     <Stack direction="column" gap={1}>
       <Typography className={classes.titleText}> Name</Typography>
       <TextField size="small" className={classes.textfiledTestimonial} />
      </Stack>
-     <Stack direction="column">
+     <Stack direction="column" gap={1}>
        <Typography className={classes.titleText}> Occupation</Typography>
       <TextField size="small" className={classes.textfiledTestimonial}/> 
      </Stack>
