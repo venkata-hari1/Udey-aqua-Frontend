@@ -99,6 +99,7 @@ const{classes}=useHeaderStyles()
         {shouldShowbackArrow(path)&&
         <ArrowBackIosOutlinedIcon className={classes.backArrow}
         onClick={backarrowHandle}/>}
+        
         <Typography variant="h6" component="div" className={classes.AdminheaderTitle}>
           {title}
         </Typography>

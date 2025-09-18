@@ -63,7 +63,9 @@ color:"#0A4FA4",
 },
 backArrow:{
  cursor:'pointer',
- fontSize:'18px',
+ fontSize:'24px',
+ fontWeight:100,
+ paddingLeft:'-9px',
  [theme.breakpoints.down('sm')]:{
   fontSize:'15px',
  }
@@ -72,6 +74,7 @@ AdminheaderTitle:{
   color:theme.palette.primary.dark,
   fontFamily:"DM Serif Display",
   fontSize:25,
+  marginLeft:'5px',
   [theme.breakpoints.down('md')]:{
     fontSize:15,
 

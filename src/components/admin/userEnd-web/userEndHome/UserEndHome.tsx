@@ -53,21 +53,24 @@ const handleBackarrow=()=>{
       <Box className={classes.homeBackarrowbox}>
       <ArrowBackIcon className={classes.UserendbackArrow}
        onClick={handleBackarrow}/>
-      <Typography color="#0A4FA4" mb={2}>Home</Typography>
+      <Typography className={classes.userEndHomeTitle}>Home</Typography>
       </Box>
+      <Box className={classes.UserEndMaincontainerbox}>
       {homemenudata.map((menu,index)=>(
         <Accordion key={index} className={classes.userEndHeaderContainer}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
-          id="panel1-header">
-         <Typography component="span">{menu.menu}</Typography>
+          id="panel1-header"
+          >
+         <Typography component="span" className={classes.accardianTypoMenu}>{menu.menu}</Typography>
          </AccordionSummary>
          <AccordionDetails>
            {menu.content}
          </AccordionDetails>
          </Accordion>
         ))}
+        </Box>
      </Box>
   )
 }

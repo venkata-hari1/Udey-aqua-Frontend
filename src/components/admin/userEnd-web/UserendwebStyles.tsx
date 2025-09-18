@@ -2,6 +2,7 @@ import { makeStyles } from "tss-react/mui"
 import type { Theme } from "@mui/material/styles"
 
 const useUserEndwebStyles = makeStyles()((theme: Theme) => ({
+  
   userEndButtonsContainer: {
    display:'grid',
    gridTemplateColumns:"repeat(3, 1fr)",
@@ -16,6 +17,30 @@ const useUserEndwebStyles = makeStyles()((theme: Theme) => ({
      rowGap:30,
   }
   },
+
+UserEndMaincontainerbox:{
+    marginLeft:'40px',
+    [theme.breakpoints.down('md')]:{
+      marginLeft:'0px',
+    },
+  },
+
+userEndHomeTitle:{
+  color:"#0A4FA4",
+   marginBottom:"10px",
+    marginLeft:"10px",
+    fontWeight:500,
+    fontSize:20,
+  [theme.breakpoints.down('md')]:{
+     marginLeft:"0px",
+     paddingLeft:'0px',
+  }
+}, 
+
+accardianTypoMenu:{
+ fontSize:'16px',
+ fontWeight:500,
+},
 userEndButton: {
     justifySelf: "center",
     width: "auto",
@@ -24,6 +49,7 @@ userEndButton: {
     color:'#0A4FA4',
     textTransform:'capitalize',
     fontSize:16,
+    background:'white',
     [theme.breakpoints.down('sm')]:{
       minWidth:"230px",
       gap:4,
@@ -54,14 +80,16 @@ titleText:{
 
 homeBackarrowbox:{
  display:'flex',
- gap:"5px",
  justifyContent:'start',
- alignItems:'center'
+ alignItems:'center',
+ gap:10,
+ 
 },
 UserendbackArrow:{
  cursor:'pointer',
  fontSize:'18px',
  paddingBottom:"18px",
+
  color:theme.palette.primary.dark,
  [theme.breakpoints.down('sm')]:{
   fontSize:'15px',
