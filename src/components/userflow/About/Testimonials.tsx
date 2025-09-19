@@ -184,7 +184,6 @@ const Testimonials = () => {
                     <NavLink
                       key={item.path}
                       to={item.path}
-                      style={{ textDecoration: "none" }}
                       className={() =>
                         cx(classes.aboutSidebarNavItem, {
                           active: location.pathname === item.path,
@@ -213,7 +212,7 @@ const Testimonials = () => {
                   </Typography>
                 </Grid>
                 {!isMobile && (
-                  <Grid size={{ xs: 3 }} style={{ placeItems: "center" }}>
+                  <Grid size={{ xs: 3 }} className={classes.aboutHeaderSideGrid}>
                     <Box
                       component="img"
                       src={aboutImg}
@@ -243,10 +242,14 @@ const Testimonials = () => {
                         isReadMoreMode &&
                           classes.testimonialReadMoreImageContainer
                       )}
-                      style={{
-                        backgroundImage: `url(${currentTestimonial.image})`,
-                      }}
-                    />
+                    >
+                      <Box
+                        component="img"
+                        src={currentTestimonial.image}
+                        alt={currentTestimonial.name}
+                        className={classes.testimonialImage}
+                      />
+                    </Box>
                     <Box
                       className={cx(
                         classes.testimonialTextContainer,
@@ -419,15 +422,18 @@ const Testimonials = () => {
               <Box
                 ref={bottomCardsRef}
                 className={classes.testimonialWideCards}
-                style={{ overflowX: "auto", scrollBehavior: "smooth" }}
               >
                 {bottomCards.map((t) => (
                   <Box key={t.id} className={classes.testimonialWideCard}>
                     <Box className={classes.testimonialWideContent}>
-                      <Box
-                        className={classes.testimonialWideImageContainer}
-                        style={{ backgroundImage: `url(${t.image})` }}
-                      />
+                      <Box className={classes.testimonialWideImageContainer}>
+                        <Box
+                          component="img"
+                          src={t.image}
+                          alt={t.name}
+                          className={classes.testimonialImage}
+                        />
+                      </Box>
                       <Box className={classes.testimonialWideTextBox}>
                         <Typography className={classes.testimonialWideQuote}>
                           "{((t as any).quotes?.[0] || "").slice(0, 150)}..."

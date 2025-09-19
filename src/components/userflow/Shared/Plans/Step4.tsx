@@ -67,7 +67,7 @@ const Step4 = ({
             <Grid size={{ xs: 12, md: 6 }}>
               <Box className={classes.step4FormField}>
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span>R&D Faculty
+                  <Typography component="span" className={classes.step3Asterisk}>*</Typography>R&D Faculty
                 </Typography>
                 <Select
                   value={step4Data.rdFaculty}
@@ -101,7 +101,7 @@ const Step4 = ({
             <Grid size={{ xs: 12, md: 6 }}>
               <Box className={classes.step4FormField}>
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span>Training
+                  <Typography component="span" className={classes.step3Asterisk}>*</Typography>Training
                   Course
                 </Typography>
                 <Select
@@ -138,7 +138,7 @@ const Step4 = ({
             <Grid size={{ xs: 12, md: 6 }}>
               <Box className={classes.step4FormField}>
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span>Available Slot
+                  <Typography component="span" className={classes.step3Asterisk}>*</Typography>Available Slot
                 </Typography>
                 <Box className={classes.step4AvailableGroup}>
                   <Box className={classes.step4DateField}>
@@ -222,7 +222,7 @@ const Step4 = ({
             <Grid size={{ xs: 12, md: 6 }}>
               <Box className={classes.step4FormField}>
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span>Technologies
+                  <Typography component="span" className={classes.step3Asterisk}>*</Typography>Technologies
                 </Typography>
                 <Select
                   value={step4Data.technologies}

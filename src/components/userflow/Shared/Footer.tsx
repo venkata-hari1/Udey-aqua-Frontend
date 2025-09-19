@@ -46,7 +46,7 @@ const Footer = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [emailTouched, setEmailTouched] = useState(false);
-  const isValidEmail = (v: string) => /\S+@\S+\.\S+/.test(v);
+  const isValidEmail = (v: string) => /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/.test(v);
   const emailHasError = emailTouched && !isValidEmail(email);
 
   const handleNavigation = (link: string) => {
@@ -145,9 +145,8 @@ const Footer = () => {
                 {navLinks1.map((link) => (
                   <Typography
                     key={link}
-                    className={`${classes.navLink} ${classes.navLinkMobile}`}
+                    className={`${classes.navLink} ${classes.navLinkMobile} ${classes.cursorPointer}`}
                     onClick={() => handleNavigation(link)}
-                    style={{ cursor: "pointer" }}
                   >
                     {link}
                   </Typography>
@@ -159,9 +158,8 @@ const Footer = () => {
                 {navLinks2.map((link) => (
                   <Typography
                     key={link}
-                    className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile}`}
+                    className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile} ${classes.cursorPointer}`}
                     onClick={() => handleNavigation(link)}
-                    style={{ cursor: "pointer" }}
                   >
                     {link}
                   </Typography>
@@ -174,22 +172,19 @@ const Footer = () => {
                   Contact Us
                 </Typography>
                 <Box
-                  className={classes.contactRow}
-                  style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  className={`${classes.contactRow} ${classes.contactRowInline}`}
                 >
                   <MailOutlineIcon fontSize="small" />
                   <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>info@Uday.com</Typography>
                 </Box>
                 <Box
-                  className={classes.contactRow}
-                  style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  className={`${classes.contactRow} ${classes.contactRowInline}`}
                 >
                   <PhoneIcon fontSize="small" />
                   <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>+91 97911-99909</Typography>
                 </Box>
                 <Box
-                  className={classes.contactRow}
-                  style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  className={`${classes.contactRow} ${classes.contactRowInline}`}
                 >
                   <LocationOnIcon fontSize="small" />
                   <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>Mulapolam, Srikakulam</Typography>
@@ -200,7 +195,7 @@ const Footer = () => {
                     href="https://twitter.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ cursor: "pointer" }}
+                    className={classes.cursorPointer}
                   >
                     <Box
                       component="img"
@@ -214,7 +209,7 @@ const Footer = () => {
                     href="https://facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ cursor: "pointer" }}
+                    className={classes.cursorPointer}
                   >
                     <Box
                       component="img"
@@ -228,7 +223,7 @@ const Footer = () => {
                     href="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ cursor: "pointer" }}
+                    className={classes.cursorPointer}
                   >
                     <Box
                       component="img"
@@ -251,17 +246,7 @@ const Footer = () => {
           </>
         ) : (
           <Box
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "nowrap",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              marginTop: 16,
-              gap: 32,
-              marginBottom: 16,
-            }}
+            className={classes.footerDesktopRow}
           >
             <Box className={classes.logoBoxDesktop}>
               <Box
@@ -298,9 +283,8 @@ const Footer = () => {
                   {navLinks1.map((link) => (
                     <Typography
                       key={link}
-                      className={`${classes.navLink} ${classes.navLinkDesktop}`}
+                      className={`${classes.navLink} ${classes.navLinkDesktop} ${classes.cursorPointer}`}
                       onClick={() => handleNavigation(link)}
-                      style={{ cursor: "pointer" }}
                     >
                       {link}
                     </Typography>
@@ -312,9 +296,8 @@ const Footer = () => {
                   {navLinks2.map((link) => (
                     <Typography
                       key={link}
-                      className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop}`}
+                      className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop} ${classes.cursorPointer}`}
                       onClick={() => handleNavigation(link)}
-                      style={{ cursor: "pointer" }}
                     >
                       {link}
                     </Typography>
@@ -331,22 +314,19 @@ const Footer = () => {
                 Contact Us
               </Typography>
               <Box
-                className={classes.contactRow}
-                style={{ display: "flex", alignItems: "center", gap: 8 }}
+                className={`${classes.contactRow} ${classes.contactRowInline}`}
               >
                 <MailOutlineIcon fontSize="small" />
                 <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>info@Uday.com</Typography>
               </Box>
               <Box
-                className={classes.contactRow}
-                style={{ display: "flex", alignItems: "center", gap: 8 }}
+                className={`${classes.contactRow} ${classes.contactRowInline}`}
               >
                 <PhoneIcon fontSize="small" />
                 <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>+91 97911-99909</Typography>
               </Box>
               <Box
-                className={classes.contactRow}
-                style={{ display: "flex", alignItems: "center", gap: 8 }}
+                className={`${classes.contactRow} ${classes.contactRowInline}`}
               >
                 <LocationOnIcon fontSize="small" />
                 <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>Mulapolam, Srikakulam</Typography>
@@ -357,7 +337,7 @@ const Footer = () => {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ cursor: "pointer" }}
+                  className={classes.cursorPointer}
                 >
                   <Box
                     component="img"
@@ -371,7 +351,7 @@ const Footer = () => {
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ cursor: "pointer" }}
+                  className={classes.cursorPointer}
                 >
                   <Box
                     component="img"
@@ -385,7 +365,7 @@ const Footer = () => {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ cursor: "pointer" }}
+                  className={classes.cursorPointer}
                 >
                   <Box
                     component="img"
@@ -414,14 +394,14 @@ const Footer = () => {
             : `${classes.copyright} ${classes.copyrightDesktop}`
         }
       >
-        <span>Copyright</span>
+        <Typography component="span">Copyright</Typography>
         <Box
           component="img"
           src={CopyIcon}
           alt="Copyright"
           className={classes.copyrightIcon}
         />
-        <span>Uday Aqua all rights reserved.</span>
+        <Typography component="span">Uday Aqua all rights reserved.</Typography>
       </Box>
     </Box>
   );

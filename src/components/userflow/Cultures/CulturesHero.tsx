@@ -25,7 +25,6 @@ const CulturesHero = ({ currentLabel }: CulturesHeroProps) => {
         <Typography
           variant="h2"
           className={classes.culturesHeroTitle}
-          style={{ fontSize: isMobile ? 28 : 64 }}
         >
           Cultures
         </Typography>

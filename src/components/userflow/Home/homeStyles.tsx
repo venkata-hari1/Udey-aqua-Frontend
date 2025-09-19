@@ -16,6 +16,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       minHeight: "40vh",
     },
   },
+  particles: {
+    height:"100%",
+    width:"100%",
+  },
   heroLeftArrowBox: {
     position: "absolute",
     left: 0,
@@ -242,6 +246,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   mottoCardRoot: {
     textAlign: "center",
     width: 300,
+  },
+  spanColor:{
+    color:"red",
   },
   mottoCardHeadWrap: {
     position: "relative",
@@ -620,6 +627,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     transition: "all 0.2s",
     textAlign: "center",
     minWidth: "unset",
+    cursor: "pointer",
     [theme.breakpoints.down("md")]: {
       fontSize: 16,
       minWidth: 90,
@@ -639,6 +647,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.SECONDARY_BLUE,
     fontWeight: 700,
     fontSize: 40,
+    cursor: "pointer",
     border: `2px solid ${COLORS.LIGHT_GRAY}`,
     boxShadow: SHADOWS.CARD,
     transition: "all 0.2s",
@@ -936,6 +945,15 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
+  projectCardBgImg: {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    zIndex: 1,
+    display: "block",
+  },
   projectCardHighlight: {
     position: "absolute",
     inset: 0,
@@ -1044,6 +1062,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+  },
+  priceOverflow: {
+    marginLeft:-72,
   },
   pricingRoot: {
     width: "100%",

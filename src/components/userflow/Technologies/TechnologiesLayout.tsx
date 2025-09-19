@@ -82,11 +82,14 @@ const TechnologiesLayout: React.FC = () => {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    style={{ textDecoration: "none" }}
                     className={() =>
-                      cx(classes.technologiesSidebarNavItem, {
-                        active: location.pathname === item.path,
-                      })
+                      cx(
+                        classes.technologiesSidebarLink,
+                        classes.technologiesSidebarNavItem,
+                        {
+                          active: location.pathname === item.path,
+                        }
+                      )
                     }
                   >
                     {item.label}

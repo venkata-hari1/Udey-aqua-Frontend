@@ -28,7 +28,7 @@ import type { ReactNode } from "react";
 import Drawer from "@mui/material/Drawer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import sidebarIcon from "../../../assets/home/sidebar_btn.svg";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import useSharedStyles from "./sharedStyles";
 import clsx from "clsx";
 
@@ -101,7 +101,10 @@ const Header = () => {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const location = useLocation();
+  const navigate = useNavigate();
   const { classes } = useSharedStyles();
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -173,23 +176,41 @@ const Header = () => {
   const isItemExpanded = (itemLabel: string): boolean =>
     expandedItems.includes(itemLabel);
 
-  const renderHighlighted = (text: string): ReactNode => {
-    if (!searchTerm) return text;
-    const lower = text.toLowerCase();
-    const query = searchTerm.toLowerCase();
-    const idx = lower.indexOf(query);
-    if (idx === -1) return text;
-    const before = text.slice(0, idx);
-    const match = text.slice(idx, idx + searchTerm.length);
-    const after = text.slice(idx + searchTerm.length);
-    return (
-      <>
-        {before}
-        <span className={classes.sidebarHighlight}>{match}</span>
-        {after}
-      </>
-    );
+  const flatSuggestions: Array<{ label: string; link: string }> = (() => {
+    const items: Array<{ label: string; link: string }> = [];
+    for (const n of navItems) {
+      items.push({ label: n.label, link: n.link });
+      if (Array.isArray((n as any).subcategories)) {
+        for (const s of (n as any).subcategories) {
+          items.push({ label: s.label, link: s.link });
+        }
+      }
+    }
+    return items;
+  })();
+
+  const filtered = (() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return [] as Array<{ label: string; link: string }>;
+    return flatSuggestions.filter((it) => it.label.toLowerCase().includes(q)).slice(0, 8);
+  })();
+
+  const submitSearch = (item?: { label: string; link: string }) => {
+    const target = item || filtered[activeIndex] || null;
+    if (!target) return;
+    setShowSuggestions(false);
+    setSearchTerm("");
+    navigate(target.link);
   };
+
+  const renderHighlighted = (text: string): ReactNode => text;
+
+  const toTitleCase = (s: string) =>
+    s
+      .toLowerCase()
+      .split(" ")
+      .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+      .join(" ");
 
   return (
     <AppBar
@@ -243,13 +264,12 @@ const Header = () => {
                 size={{ xs: 4 }}
                 container
                 alignItems="center"
-                className={classes.desktopContact}
+                className={`${classes.desktopContact} ${classes.headerContactLink}`}
                 component="a"
                 href="mailto:info@Uday.com"
-                style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
               >
                 <MailIcon fontSize="small" />
-                <Typography variant="body2" style={{ textDecoration: "none" }}>info@Uday.com</Typography>
+                <Typography variant="body2" className={classes.headerContactText}>info@Uday.com</Typography>
               </Grid>
               <Grid
                 size={{ xs: 1 }}
@@ -262,13 +282,12 @@ const Header = () => {
                 size={{ xs: 4 }}
                 container
                 alignItems="center"
-                className={classes.desktopContact}
+                className={`${classes.desktopContact} ${classes.headerContactLink}`}
                 component="a"
                 href="tel:+919791199909"
-                style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
               >
                 <PhoneIcon fontSize="small" />
-                <Typography variant="body2" style={{ textDecoration: "none" }}>+91 97911 99909</Typography>
+                <Typography variant="body2" className={classes.headerContactText}>+91 97911 99909</Typography>
               </Grid>
               <Grid
                 size={{ xs: 1 }}
@@ -281,46 +300,86 @@ const Header = () => {
                 size={{ xs: 2 }}
                 container
                 alignItems="center"
-                className={classes.desktopContact}
+                className={`${classes.desktopContact} ${classes.headerContactLink}`}
                 component="a"
                 href="https://www.google.com/maps/search/?api=1&query=Hyderabad"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
               >
                 <LocationOnIcon fontSize="small" />
-                <Typography variant="body2" style={{ textDecoration: "none" }}>Hyderabad</Typography>
+                <Typography variant="body2" className={classes.headerContactText}>Hyderabad</Typography>
               </Grid>
             </Grid>
             <Grid size={{ xs: 4 }} container justifyContent="flex-end">
-              <Paper
-                component="form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
-                className={clsx(
-                  classes.desktopSearchPaper,
-                  (trigger || !isHome) && classes.desktopSearchPaperTrigger
-                )}
-              >
-                <IconButton className={classes.desktopSearchIcon}>
-                  <SearchIcon
-                    className={
-                      trigger || !isHome
-                        ? classes.headerSearchIconTrigger
-                        : classes.headerSearchIcon
-                    }
-                  />
-                </IconButton>
-                <InputBase
-                  className={classes.desktopSearchInput}
-                  placeholder="Search Here....."
-                  inputProps={{
-                    "aria-label": "search",
-                    style: { color: trigger || !isHome ? "#000" : "#fff" },
+              <Box className={classes.searchSuggestWrapper}>
+                <Paper
+                  component="form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitSearch();
                   }}
-                />
-              </Paper>
+                  className={clsx(
+                    classes.desktopSearchPaper,
+                    (trigger || !isHome) && classes.desktopSearchPaperTrigger
+                  )}
+                >
+                  <IconButton className={classes.desktopSearchIcon}>
+                    <SearchIcon
+                      className={
+                        trigger || !isHome
+                          ? classes.headerSearchIconTrigger
+                          : classes.headerSearchIcon
+                      }
+                    />
+                  </IconButton>
+                  <InputBase
+                    className={classes.desktopSearchInput}
+                    placeholder="Search Here....."
+                    inputProps={{
+                      "aria-label": "search",
+                      style: { color: trigger || !isHome ? "#000" : "#fff" },
+                    }}
+                    value={searchTerm}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      setShowSuggestions(!!e.target.value.trim());
+                      setActiveIndex(0);
+                    }}
+                    onKeyDown={(e) => {
+                      if (!filtered.length) return;
+                      if (e.key === "ArrowDown") {
+                        e.preventDefault();
+                        setActiveIndex((i) => Math.min(filtered.length - 1, i + 1));
+                      } else if (e.key === "ArrowUp") {
+                        e.preventDefault();
+                        setActiveIndex((i) => Math.max(0, i - 1));
+                      } else if (e.key === "Enter") {
+                        e.preventDefault();
+                        submitSearch();
+                      }
+                    }}
+                  />
+                </Paper>
+                {showSuggestions && filtered.length > 0 && (
+                  <Box className={classes.searchSuggestBox}>
+                    {filtered.map((it, i) => (
+                      <Box
+                        key={`${it.label}-${i}`}
+                        className={clsx(
+                          classes.searchSuggestItem,
+                          i === activeIndex && classes.searchSuggestActive
+                        )}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => submitSearch(it)}
+                      >
+                        <Typography component="span" className={classes.searchSuggestText}>{toTitleCase(it.label)}</Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                )}
+              </Box>
             </Grid>
           </Grid>
           <Toolbar className={classes.desktopToolbar}>
@@ -351,7 +410,7 @@ const Header = () => {
                 return (
                   <Link
                     to={navItem.link}
-                    style={{ textDecoration: "none" }}
+                    className={classes.headerContactText}
                     key={navItem.label}
                   >
                     <Typography

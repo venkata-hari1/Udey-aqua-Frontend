@@ -10,7 +10,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
   const { classes } = useHomeStyles();
 
   const NAME_MIN = 3;
-  const NAME_MAX = 200;
+  const NAME_MAX = 30;
   const MESSAGE_MIN = 5;
   const maxMessageLength = 500;
 
@@ -131,7 +131,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     alignItems="center"
                   >
                     <Typography className={classes.contactLabel}>
-                      <span style={{ color: "red" }}>*</span> First Name
+                      <Typography component="span" className={classes.spanColor}>*</Typography> First Name
                     </Typography>
                     {nameError && (
                       <Typography color="error" fontSize={16}>
@@ -158,7 +158,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     alignItems="center"
                   >
                     <Typography className={classes.contactLabel}>
-                      <span style={{ color: "red" }}>*</span> Phone
+                      <Typography component="span" className={classes.spanColor}>*</Typography> Phone
                     </Typography>
                     {phoneError && (
                       <Typography color="error" fontSize={16}>
@@ -186,7 +186,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     alignItems="center"
                   >
                     <Typography className={classes.contactLabel}>
-                      <span style={{ color: "red" }}>*</span> Message
+                      <Typography component="span" className={classes.spanColor}>*</Typography> Message
                     </Typography>
                     {messageError && (
                       <Typography color="error" fontSize={16}>

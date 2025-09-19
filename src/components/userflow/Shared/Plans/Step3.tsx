@@ -14,6 +14,8 @@ import FormField from "../FormField";
 import { IMAGES } from "./constants";
 import { validateForm } from "./utils";
 import type { StepComponentProps, FormData, FormErrors } from "./types";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 const PIN_API_BASE =
   "https://api.data.gov.in/resource/5c2f62fe-5afa-4119-a499-fec9d604d5bd";
 const PIN_API_KEY = "579b464db66ec23bdd000001c7d253bb9fed4440689f354ac31fa38f";
@@ -36,6 +38,8 @@ const Step3 = ({
   skipStep4FromPdf,
 }: Step3Props & { skipStep4FromPdf?: boolean }) => {
   const { classes } = usePlansStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [statesList, setStatesList] = useState<string[]>(ALL_INDIA_STATES);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
@@ -293,11 +297,10 @@ const Step3 = ({
               className={`${classes.step3FormField} ${classes.step3FieldTop}`}
             >
               <Box
-                className={classes.step3FormField}
-                style={{ display: "flex", flexDirection: "column" }}
+                className={`${classes.step3FormField} ${classes.step3FlexColumn}`}
               >
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span> State
+                  <Typography component="span" className={classes.step3Asterisk}>*</Typography> State
                 </Typography>
                 <Select
                   value={formData.state || ""}
@@ -330,17 +333,118 @@ const Step3 = ({
                 )}
               </Box>
             </Grid>
-
+            {isMobile ? (
+              <>
+                {/* District first on mobile */}
+                <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField}`}>
+                  <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
+                    <Typography className={classes.step3Label}>
+                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
+                    </Typography>
+                    <Select
+                      value={formData.district || ""}
+                      onChange={(e) =>
+                        handleDistrictChange(e.target.value as string)
+                      }
+                      className={classes.step3Field}
+                      error={!!formErrors.district}
+                      disabled={!formData.state || loadingDistricts}
+                      IconComponent={KeyboardArrowDown}
+                      MenuProps={{
+                        PaperProps: { className: classes.step4MenuPaper },
+                      }}
+                      displayEmpty
+                      renderValue={(selected) =>
+                        (selected as string)
+                          ? (selected as string)
+                          : "Select District"
+                      }
+                      fullWidth
+                    >
+                      <MenuItem value="" disabled>
+                        Select District
+                      </MenuItem>
+                      {Object.keys(stateDistrictPin[formData.state] || {}).map(
+                        (name) => (
+                          <MenuItem key={name} value={name}>
+                            {name}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                    {formErrors.district && (
+                      <Typography className={classes.step3Error}>
+                        {formErrors.district}
+                      </Typography>
+                    )}
+                  </Box>
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField}`}>
+                  <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
+                    <Typography className={classes.step3Label}>
+                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> Pincode
+                    </Typography>
+                    <TextField
+                      value={formData.pincode || ""}
+                      onChange={(e) => {
+                        const digits = (e.target.value || "")
+                          .replace(/\D/g, "")
+                          .slice(0, 6);
+                        const availablePins = Array.from(
+                          (stateDistrictPin[formData.state] || {})[
+                            formData.district
+                          ] || []
+                        );
+                        setFormData((prev) => ({ ...prev, pincode: digits }));
+                        if (!/^\d{6}$/.test(digits)) {
+                          setFormErrors((prev) => ({
+                            ...prev,
+                            pincode: "Enter a valid 6-digit pincode",
+                          }));
+                        } else if (
+                          availablePins.length > 0 &&
+                          !availablePins.includes(digits)
+                        ) {
+                          setFormErrors((prev) => ({
+                            ...prev,
+                            pincode: "Invalid Pincode for area",
+                          }));
+                        } else {
+                          setFormErrors((prev) => ({
+                            ...prev,
+                            pincode: undefined,
+                          }));
+                        }
+                      }}
+                      placeholder="Enter 6-digit pincode"
+                      className={classes.step3Field}
+                      error={!!formErrors.pincode}
+                      helperText={formErrors.pincode}
+                      disabled={
+                        !formData.state || !formData.district || loadingDistricts
+                      }
+                      inputProps={{
+                        inputMode: "numeric",
+                        pattern: "[0-9]*",
+                        maxLength: 6,
+                      }}
+                      fullWidth
+                    />
+                  </Box>
+                </Grid>
+              </>
+            ) : (
+              <>
+                {/* Desktop: Pincode then District (original order) */}
             <Grid
               size={{ xs: 12, md: 6 }}
               className={`${classes.step3FormField}`}
             >
               <Box
-                className={classes.step3FormField}
-                style={{ display: "flex", flexDirection: "column" }}
+                    className={`${classes.step3FormField} ${classes.step3FlexColumn}`}
               >
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span> Pincode
+                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> Pincode
                 </Typography>
                 <TextField
                   value={formData.pincode || ""}
@@ -390,13 +494,10 @@ const Step3 = ({
                 />
               </Box>
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box
-                className={`${classes.step3FormField} ${classes.step3FieldTop}`}
-                style={{ display: "flex", flexDirection: "column" }}
-              >
+                <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField} ${classes.step3FieldTop}`}>
+                  <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
                 <Typography className={classes.step3Label}>
-                  <span className={classes.step3Asterisk}>*</span> District
+                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
                 </Typography>
                 <Select
                   value={formData.district || ""}
@@ -436,6 +537,8 @@ const Step3 = ({
                 )}
               </Box>
             </Grid>
+              </>
+            )}
             <Grid size={{ xs: 12 }}>
               <Box className={classes.step3ButtonWrapper}>
                 <Button

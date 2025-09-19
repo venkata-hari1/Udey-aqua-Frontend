@@ -185,10 +185,14 @@ const Awards = () => {
         onPrevious={carousel.goToPrevious}
         onNext={carousel.goToNext}
         renderBackground={(item) => (
-          <Box
-            className={classes.awardsBg}
-            style={{ backgroundImage: `url(${item.image})` }}
-          />
+          <Box className={classes.awardsBg}>
+            <Box
+              component="img"
+              src={item.image}
+              alt={item.title}
+              className={classes.awardsBgImg}
+            />
+          </Box>
         )}
         renderTitle={(item) => (
           <Typography variant="h3" className={classes.awardsTitle}>

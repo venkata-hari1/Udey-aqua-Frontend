@@ -120,7 +120,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     objectPosition: "top",
     zIndex: 1,
     [theme.breakpoints.down("lg")]: {
-      height: "530px",
+      height: "560px",
+    },
+    [theme.breakpoints.down("md")]: {
+      height: "580px",
     },
   },
   footerBg1: {
@@ -131,6 +134,9 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     objectFit: "cover",
     objectPosition: "top",
     zIndex: 0,
+    [theme.breakpoints.down("md")]: {
+      width:"140%",
+    },
   },
   footerBg2: {
     position: "absolute",
@@ -442,9 +448,31 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: 180,
     marginBottom: 16,
   },
+  footerDesktopRow: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginTop: 16,
+    gap: 32,
+    marginBottom: 16,
+  },
   navLinkMobile: {
     ...TYPOGRAPHY.body1(theme),
     marginBottom: 4,
+  },
+  cursorPointer: {
+    cursor: "pointer",
+  },
+  headerContactLink: {
+    textDecoration: "none",
+    color: "inherit",
+    cursor: "pointer",
+  },
+  headerContactText: {
+    textDecoration: "none",
   },
   navLinkBoldMobile: {
     ...TYPOGRAPHY.subtitle1(theme),
@@ -460,6 +488,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     fontSize: 16,
     fontWeight: 500,
     marginBottom: 4,
+  },
+  contactRowInline: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
   },
   contactTitleMobile: {
     ...TYPOGRAPHY.subtitle1(theme),
@@ -662,6 +695,55 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     boxShadow: "none",
     background: "transparent",
     transition: "background 0.3s, border 0.3s",
+  },
+  searchSuggestWrapper: {
+    position: "relative",
+    width: 300,
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  // When suggestions are open, flatten the Paper bottom so it merges with the dropdown
+  searchSuggestOpenPaper: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    position: "relative",
+    zIndex: 3001,
+  },
+  searchSuggestBox: {
+    position: "absolute",
+    right: 0,
+    top: 43,
+    zIndex: 3000,
+    background: COLORS.WHITE,
+    color: COLORS.DARK,
+    borderRadius: "8px",
+    boxShadow: SHADOWS.MEDIUM,
+    width: "100%",
+    maxHeight: 300,
+    overflowY: "auto",
+    border: `1px solid ${COLORS.LGRAY}`,
+    borderTop: "none",
+  },
+  searchSuggestItem: {
+    padding: "6px 10px",
+    cursor: "pointer",
+    fontFamily: FONTS.INTER,
+    fontSize: 12,
+    lineHeight: 1.4,
+    "&:hover": {
+      textDecoration: "none",
+    },
+  },
+  searchSuggestActive: {
+    fontWeight: 600,
+    textDecoration: "none",
+  },
+  searchSuggestText: {
+    color: "inherit",
+    textDecoration: "none",
+    fontFamily: FONTS.INTER,
+    fontSize: 12,
+    lineHeight: 1.4,
   },
   desktopSearchPaperTrigger: {
     border: `1.5px solid ${theme.palette.primary.main}`,
@@ -1667,6 +1749,10 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
   step3FormField: {
     marginBottom: theme.spacing(0.5),
   },
+  step3FlexColumn: {
+    display: "flex",
+    flexDirection: "column",
+  },
 
   step3Error: {
     color: "#E62310",
@@ -1880,6 +1966,31 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
     border: "none",
     cursor: "pointer",
     boxShadow: SHADOWS.MEDIUM,
+  },
+  desktopSearchResults: {
+    position: "absolute",
+    top: 44,
+    right: 8,
+    minWidth: 260,
+    maxWidth: 420,
+    maxHeight: 320,
+    overflowY: "auto",
+    background: COLORS.WHITE,
+    borderRadius: 8,
+    boxShadow: SHADOWS.DARK_CARD,
+    zIndex: 300,
+  },
+  desktopSearchResultItem: {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 12px",
+    cursor: "pointer",
+    color: COLORS.DARK,
+    fontFamily: FONTS.INTER,
+    fontSize: 14,
+    "&:hover": {
+      background: COLORS.WHITE_GRAY,
+    },
   },
 }));
 

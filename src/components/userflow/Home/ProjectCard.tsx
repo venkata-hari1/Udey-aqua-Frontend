@@ -16,8 +16,8 @@ const ProjectCard = ({ img, title, shortDescription, longDescription, highlight 
       container
       spacing={2}
       className={classes.projectCardRoot}
-      style={{ backgroundImage: `url(${img})` }}
     >
+      <img src={img} alt={title} className={classes.projectCardBgImg} />
       {highlight ? (
         <Grid size={{ xs: 12 }} className={classes.projectCardHighlight}>
           <Typography variant="h6" className={classes.projectCardHighlightTitle}>{title}</Typography>

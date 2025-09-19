@@ -54,7 +54,6 @@ const NewsEventsLayout = () => {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    style={{ textDecoration: "none" }}
                     className={() =>
                       cx(classes.newsEventsSidebarNavItem, {
                         active: location.pathname === item.path,
@@ -69,7 +68,7 @@ const NewsEventsLayout = () => {
               <motion.img
                 src={NewsSideImg}
                 alt="News & Events"
-                style={{ width: "100%", marginTop: 16 }}
+                className={classes.newsEventsSidebarFish}
                 initial={CULTURES_FISH_INITIAL}
                 animate={CULTURES_FISH_ANIMATE}
                 transition={CULTURES_FISH_TRANSITION}

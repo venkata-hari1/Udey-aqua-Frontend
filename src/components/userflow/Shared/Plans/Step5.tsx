@@ -67,7 +67,7 @@ const Step5 = ({
             </Typography>
             <Typography className={classes.step5DetailValue}>
               {formData.phone ? `+91${formData.phone}` : "-"}
-              <span className={classes.step5DetailValueSpace}> </span>
+              <Typography component="span" className={classes.step5DetailValueSpace}> </Typography>
               {formData.email && `${formData.email}`}
             </Typography>
             <Typography className={classes.step5DetailValue}>

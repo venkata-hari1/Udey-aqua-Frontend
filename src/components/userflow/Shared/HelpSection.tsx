@@ -13,10 +13,9 @@ const HelpSection = () => {
       </Typography>
       <Typography className={classes.contactBoxLabel}>Call Us Now:</Typography>
       <Box
-        className={classes.contactBoxRow}
         component="a"
         href="tel:+919791199909"
-        style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+        className={`${classes.contactBoxRow} ${classes.headerContactLink}`}
       >
         <img src={phoneSvg} alt="Phone" className={classes.contactBoxIcon} />
         <Typography className={classes.contactBoxValue}>+91 97911-99909</Typography>
@@ -25,10 +24,9 @@ const HelpSection = () => {
         Talk To Us Now:
       </Typography>
       <Box
-        className={classes.contactBoxRow}
         component="a"
         href="mailto:info@Uday.com"
-        style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
+        className={`${classes.contactBoxRow} ${classes.headerContactLink}`}
       >
         <EmailIcon className={classes.contactBoxIcon} />
         <Typography className={classes.contactBoxValue}>info@Uday.com</Typography>

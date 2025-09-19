@@ -46,6 +46,10 @@ export const validateForm = (
     errors.name = "Name is required";
   } else if (/^\d+$/.test(formData.name.trim())) {
     errors.name = "Name cannot contain only numbers";
+  } else if (formData.name.trim().length < 3) {
+    errors.name = "Name must be at least 3 characters";
+  } else if (formData.name.trim().length > 30) {
+    errors.name = "Name cannot exceed 30 characters";
   }
 
   if (!formData.phone.trim()) {
@@ -64,6 +68,10 @@ export const validateForm = (
     errors.address = "Enter a valid address";
   } else if (/^\d+$/.test(formData.address.trim())) {
     errors.address = "Address cannot contain only numbers";
+  } else if (formData.address.trim().length < 3) {
+    errors.address = "Address must be at least 3 characters";
+  } else if (formData.address.trim().length > 500) {
+    errors.address = "Address cannot exceed 500 characters";
   }
 
   if (!formData.district.trim()) {

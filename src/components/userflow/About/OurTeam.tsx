@@ -200,7 +200,6 @@ const OurTeam = () => {
         activeTab === "Directors" ? classes.autoHeaderTabActive : ""
       }`}
       onClick={() => { setActiveTab("Directors"); setCurrentIndex(0); }}
-      style={{ cursor: "pointer" }}
     >
       Directors
     </Typography>
@@ -212,7 +211,6 @@ const OurTeam = () => {
         activeTab === "Advisors" ? classes.autoHeaderTabActive : ""
       }`}
       onClick={() => { setActiveTab("Advisors"); setCurrentIndex(0); }}
-      style={{ cursor: "pointer" }}
     >
       Advisors
     </Typography>
@@ -344,7 +342,7 @@ const OurTeam = () => {
                   onClick={() => setOpen(false)}
                   className={classes.backButton}
                 >
-                  <ArrowBack style={{ fontSize: 18 }} />
+                  <ArrowBack className={classes.backIconSmall} />
                 </IconButton>
               </Box>
             </Box>
@@ -354,13 +352,13 @@ const OurTeam = () => {
         {open && (
           <Box className={classes.dotsWrapperCustom}>
             {selectedMembers.map((_, i) => (
-              <span
+              <Typography
+                component="span"
                 key={i}
                 className={`${classes.dot} ${
                   i === currentIndex ? classes.activeDot : ""
                 }`}
                 onClick={() => setCurrentIndex(i)}
-                style={{ cursor: "pointer" }}
               />
             ))}
           </Box>

@@ -99,7 +99,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   culturesHeroTitle: {
     color: COLORS.WHITE,
     fontWeight: 400,
-    fontSize: 48,
+    fontSize: 64,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     margin: theme.spacing(5, 0, 2, 0),
     textAlign: "center",
@@ -177,6 +177,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     fontFamily: "Roboto",
     background: "transparent",
     color: COLORS.WHITE,
+    textDecoration: "none",
     transition: "300ms ease",
     "&.active": {
       background: COLORS.WHITE,

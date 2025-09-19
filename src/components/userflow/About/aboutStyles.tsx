@@ -77,6 +77,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       marginTop: theme.spacing(3),
     },
   },
+  aboutHeaderSideGrid: {
+    display: "grid",
+    placeItems: "center",
+  },
   aboutCard: {
     background: COLORS.WHITE_GRAY,
     borderRadius: 12,
@@ -225,7 +229,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutHeroTitle: {
     color: COLORS.WHITE,
     fontWeight: 400,
-    fontSize: 48,
+    fontSize: 64,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     margin: theme.spacing(5, 0, 2, 0),
     textAlign: "center",
@@ -300,6 +304,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.INTER,
     background: "transparent",
     color: COLORS.WHITE,
+    textDecoration: "none",
     transition: "300ms ease",
     "&.active": {
       background: COLORS.WHITE,
@@ -656,6 +661,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
+  backIconSmall: {
+    fontSize: 18,
+  },
   carouselDetailsWrapper: {
     display: "flex",
   },
@@ -724,6 +732,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     color: theme.palette.text.secondary,
     paddingBottom: 4,
     position: "relative",
+    cursor: "pointer",
   },
   
   autoHeaderTabActive: {
@@ -1317,6 +1326,7 @@ testimonialRoot: {
     border: `2px solid ${COLORS.PRIMARY_BLUE}`,
     opacity: 1,
     transform: "scale(1.1)",
+    cursor: "pointer",
   },
   testimonialBottomSection: {
     marginTop: 48,

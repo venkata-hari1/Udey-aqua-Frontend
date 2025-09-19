@@ -88,7 +88,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   technologiesHeroTitle: {
     color: COLORS.WHITE,
     fontWeight: 400,
-    fontSize: 48,
+    fontSize: 64,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     margin: theme.spacing(5, 0, 2, 0),
     textAlign: "center",
@@ -153,6 +153,9 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 700,
     fontSize: 36,
     margin: theme.spacing(1),
+  },
+  technologiesSidebarLink: {
+    textDecoration: "none",
   },
   sideFish: {
     position: "absolute",

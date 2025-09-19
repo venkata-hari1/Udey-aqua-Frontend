@@ -124,7 +124,7 @@ export const IMAGES = {
 // Form validation patterns
 export const VALIDATION_PATTERNS = {
   phone: /^\+91\d{10}$/,
-  email: /\S+@\S+\.\S+/,
+  email: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
   pincode: /^\d{6}$/,
 };
 

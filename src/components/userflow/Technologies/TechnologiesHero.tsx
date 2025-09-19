@@ -24,7 +24,6 @@ const TechnologiesHero = ({ currentLabel }: TechnologiesHeroProps) => {
         <Typography
           variant="h2"
           className={classes.technologiesHeroTitle}
-          style={{ fontSize: isMobile ? 28 : 64 }}
         >
           Technologies
         </Typography>

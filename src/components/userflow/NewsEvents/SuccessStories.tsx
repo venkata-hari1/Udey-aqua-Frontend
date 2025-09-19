@@ -142,10 +142,14 @@ const SuccessStories = () => {
           onPrevious={carousel.goToPrevious}
           onNext={carousel.goToNext}
           renderBackground={(item) => (
-            <Box
-              className={classes.successStoriesBg}
-              style={{ backgroundImage: `url(${item.image})` }}
-            />
+            <Box className={classes.successStoriesBg}>
+              <Box
+                component="img"
+                src={item.image}
+                alt={item.title}
+                className={classes.successStoriesBgImg}
+              />
+            </Box>
           )}
         />
       )}
@@ -214,29 +218,29 @@ const SuccessStories = () => {
               )}
               <Box className={classes.storyMetaList}>
                 <Typography className={classes.storyMetaItem}>
-                  <span className={classes.storyMetaLabel}>
-                    Entrepreneur Name:
-                  </span>{" "}
+                  <Typography component="span" className={classes.storyMetaLabel}>
+                    Name:
+                  </Typography>{" "}
                   Eluru Demo Unit
                 </Typography>
                 <Typography className={classes.storyMetaItem}>
-                  <span className={classes.storyMetaLabel}>Business Type:</span>{" "}
+                  <Typography component="span" className={classes.storyMetaLabel}>Business Type:</Typography>{" "}
                   Aquaculture
                 </Typography>
                 <Typography className={classes.storyMetaItem}>
-                  <span className={classes.storyMetaLabel}>
-                    Year of Establishment:
-                  </span>{" "}
+                  <Typography component="span" className={classes.storyMetaLabel}>
+                    Address:
+                  </Typography>{" "}
                   2025
                 </Typography>
                 <Typography className={classes.storyMetaItem}>
-                  <span className={classes.storyMetaLabel}>Activity:</span>{" "}
+                  <Typography component="span" className={classes.storyMetaLabel}>Activity:</Typography>{" "}
                   Circulatory Aquaculture System (CAS)
                 </Typography>
                 <Typography className={classes.storyMetaItem}>
-                  <span className={classes.storyMetaLabel}>
-                    Total Fish Production per Crop:
-                  </span>{" "}
+                  <Typography component="span" className={classes.storyMetaLabel}>
+                    Experience:
+                  </Typography>{" "}
                   1 Ton
                 </Typography>
               </Box>

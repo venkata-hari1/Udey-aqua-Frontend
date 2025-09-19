@@ -63,9 +63,7 @@ const ParticlesBackground: React.FC = () => {
       <Particles
         id="tsparticles"
         particlesLoaded={particlesLoaded}
-        // Restrict to container size
-        style={{ width: "100%", height: "100%" }}
-        // Cast to unknown to avoid over-strict type defs across versions
+        className="particles"
         options={particlesOptions as unknown as object}
       />
     )

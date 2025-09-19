@@ -1,5 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
+import { useScrollWithOffset } from "../NewsEvents/hooks";
 import { useLocation } from "react-router-dom";
 import AboutInfoCard from "../About/AboutInfoCard";
 import useCulturesStyles from "./culturesStyles";
@@ -29,6 +30,7 @@ const CulturePage = ({
   const lastScrollYRef = useRef<number | null>(null);
   const location = useLocation();
   const { classes } = useCulturesStyles();
+  const { ref: scrollRef, scrollTo } = useScrollWithOffset(200);
 
   // Check if the current path contains "murrel"
   const isMurrelPage = location.pathname.includes("murrel");
@@ -84,13 +86,19 @@ const CulturePage = ({
             expanded={openIndex === idx}
             onExpand={() => {
               if (openIndex === idx) {
+                try {
+                  const openTitle = cards[idx]?.title || "";
+                  const slug = openTitle
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-")
+                    .replace(/(^-|-$)/g, "");
+                  const el = document.getElementById(`card-${slug}`);
+                  if (el) {
+                    (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
+                    scrollTo();
+                  }
+                } catch {}
                 setOpenIndex(null);
-                if (lastScrollYRef.current !== null) {
-                  const y = lastScrollYRef.current;
-                  requestAnimationFrame(() => {
-                    window.scrollTo({ top: y, behavior: "smooth" });
-                  });
-                }
                 return;
               }
               lastScrollYRef.current = window.scrollY;

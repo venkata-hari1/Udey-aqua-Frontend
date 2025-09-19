@@ -235,10 +235,14 @@ const Blog = () => {
         onPrevious={carousel.goToPrevious}
         onNext={carousel.goToNext}
         renderBackground={(item) => (
-          <Box
-            className={classes.successStoriesBg}
-            style={{ backgroundImage: `url(${item.image})` }}
-          />
+          <Box className={classes.successStoriesBg}>
+            <Box
+              component="img"
+              src={item.image}
+              alt={item.title}
+              className={classes.successStoriesBgImg}
+            />
+          </Box>
         )}
       />
 

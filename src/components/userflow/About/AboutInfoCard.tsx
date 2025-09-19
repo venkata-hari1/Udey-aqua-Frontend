@@ -9,6 +9,7 @@ interface AboutInfoCardProps {
   img?: string;
   expanded: boolean;
   onExpand: () => void;
+  onCloseComplete?: () => void;
 }
 
 const AboutInfoCard = ({
@@ -18,6 +19,7 @@ const AboutInfoCard = ({
   img,
   expanded,
   onExpand,
+  onCloseComplete,
 }: AboutInfoCardProps) => {
   const { classes } = useAboutStyles();
   const slug = title
@@ -31,7 +33,7 @@ const AboutInfoCard = ({
       {!expanded && (
         <Typography className={classes.aboutCardDesc}>{smallDesc}</Typography>
       )}
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout={450} unmountOnExit onExited={onCloseComplete}>
         {img && (
           <Box component="img" src={img} className={classes.aboutCardImg} />
         )}
@@ -47,7 +49,6 @@ const AboutInfoCard = ({
         <IconButton onClick={onExpand} className={classes.aboutCardExpandBtn}>
           <ExpandMoreIcon
             className={`${classes.Upicon} ${classes.downIcon}`}
-            style={{ transform: "rotate(180deg)" }}
           />
         </IconButton>
       )}

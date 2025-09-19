@@ -183,7 +183,6 @@ const Team: React.FC<TeamProps> = ({
                     <Typography
                       className={classes.testimonialReadMore}
                       onClick={() => setShowFullQuote(true)}
-                      style={{ cursor: "pointer", textDecoration: "underline" }}
                     >
                       Read More
                     </Typography>
@@ -222,7 +221,8 @@ const Team: React.FC<TeamProps> = ({
             {/* Pagination Dots */}
             <Box className={classes.testimonialDotsWrapper}>
               {testimonialData.map((_, i) => (
-                <span
+                <Typography
+                  component="span"
                   key={i}
                   className={`${classes.testimonialDot} ${
                     i === currentTestimonialIndex
@@ -233,7 +233,6 @@ const Team: React.FC<TeamProps> = ({
                     setCurrentTestimonialIndex(i);
                     setShowFullQuote(false);
                   }}
-                  style={{ cursor: "pointer" }}
                 />
               ))}
             </Box>
@@ -264,7 +263,6 @@ const Team: React.FC<TeamProps> = ({
                 : classes.teamTabInactive
             }
             onClick={() => setActiveTab("directors")}
-            style={{ cursor: "pointer" }}
           >
             Directors
           </Box>
@@ -276,7 +274,6 @@ const Team: React.FC<TeamProps> = ({
                 : classes.teamTabInactive
             }
             onClick={() => setActiveTab("advisors")}
-            style={{ cursor: "pointer" }}
           >
             Advisors
           </Box>

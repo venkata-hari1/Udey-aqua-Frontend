@@ -17,16 +17,20 @@ const TechnologiesCard = ({
   onExpand,
 }: TechnologiesCardProps) => {
   const { classes } = useTechnologiesStyles();
+  const slug = (title || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
   return (
-    <Box className={classes.technologiesCard}>
+    <Box className={classes.technologiesCard} id={`card-${slug}`}>
       <Typography className={classes.technologiesCardTitle}>{title}</Typography>
       {!expanded && (
         <Typography className={classes.technologiesCardDesc}>
           {smallDesc}
         </Typography>
       )}
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout={450} unmountOnExit>
         {img && (
           <Box
             component="img"
@@ -63,7 +67,6 @@ const TechnologiesCard = ({
         >
           <ExpandMoreIcon
             className={`${classes.technologiesUpIcon} ${classes.technologiesDownIcon}`}
-            style={{ transform: "rotate(180deg)" }}
           />
         </IconButton>
       )}

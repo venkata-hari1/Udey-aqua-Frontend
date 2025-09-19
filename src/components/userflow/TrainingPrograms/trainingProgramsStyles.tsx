@@ -190,6 +190,10 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
       marginTop: "-2px",
     },
   },
+  backIconInline: {
+    verticalAlign: "middle",
+    marginRight: 4,
+  },
 
   trainingGridCultures: {
     display: "grid",

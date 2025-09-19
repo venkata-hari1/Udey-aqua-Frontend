@@ -108,18 +108,20 @@ const AboutCardsSection = ({
                 setOpenIndex((prev) => {
                   const isClosing = prev === idx;
                   if (isClosing) {
-                    // Restore exact previous scroll position shortly after close starts
-                    setTimeout(() => {
-                      try {
-                        window.scrollTo({
-                          top: Math.max(0, lastScrollYRef.current || 0),
-                          behavior: "smooth",
-                        });
-                      } catch {}
-                    }, 60);
+                    try {
+                      const openTitle = cards[idx]?.title || "";
+                      const slug = openTitle
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, "-")
+                        .replace(/(^-|-$)/g, "");
+                      const el = document.getElementById(`card-${slug}`);
+                      if (el) {
+                        (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
+                        scrollTo();
+                      }
+                    } catch {}
                     return null;
                   }
-                  // Capture current scroll before expanding so we can restore on close
                   try {
                     lastScrollYRef.current = window.scrollY;
                   } catch {}

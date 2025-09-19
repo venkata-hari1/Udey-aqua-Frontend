@@ -23,7 +23,7 @@ const AboutHeader = ({ title, subtitle, img, aboutImg }: AboutHeaderProps) => {
           </Typography>
         </Grid>
         {!isMobile && (
-          <Grid size={{ xs: 3 }} style={{ placeItems: "center" }}>
+          <Grid size={{ xs: 3 }} className={classes.aboutHeaderSideGrid}>
             <Box component="img" src={aboutImg} className={classes.sideImg} />
           </Grid>
         )}

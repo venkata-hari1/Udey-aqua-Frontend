@@ -96,7 +96,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   newsEventsHeroTitle: {
     color: COLORS.WHITE,
     fontWeight: 400,
-    fontSize: 48,
+    fontSize: 64,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     margin: theme.spacing(5, 0, 2, 0),
     textAlign: "center",
@@ -170,6 +170,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 600,
     fontFamily: FONTS.INTER,
     fontSize: 14,
+    textDecoration:"none",
     padding: theme.spacing(1.5, 2),
     borderRadius: 999,
     transition: "all 0.3s ease",
@@ -193,6 +194,10 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+  },
+  newsEventsSidebarFish: {
+    width: "100%",
+    marginTop: 16,
   },
 
   // Page styles
@@ -1220,6 +1225,14 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
     transition: "background-image 300ms ease",
+  },
+  awardsBgImg: {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    zIndex: 1,
   },
   awardsArrow: {
     position: "absolute",

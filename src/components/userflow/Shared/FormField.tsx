@@ -32,7 +32,7 @@ const FormField = ({
   return (
     <Box className={classes.step3FormField}>
       <Typography className={classes.step3Label}>
-        {required && <span className={classes.step3Asterisk}>*</span>}
+        {required && <Typography component="span" className={classes.step3Asterisk}>*</Typography>}
         {label}
       </Typography>
       <TextField

@@ -26,7 +26,6 @@ const AboutUs = () => {
                   : classes.aboutUsTitle2
               }
               onClick={() => setActiveSection("about")}
-              style={{ cursor: "pointer" }}
             >
               About Us
             </Box>
@@ -37,7 +36,6 @@ const AboutUs = () => {
                   : classes.aboutUsTitle2
               }
               onClick={() => setActiveSection("why")}
-              style={{ cursor: "pointer" }}
             >
               Why Choose Us
             </Box>

@@ -25,7 +25,6 @@ const NewsEventsHero = ({ currentLabel }: NewsEventsHeroProps) => {
         <Typography
           variant="h2"
           className={classes.newsEventsHeroTitle}
-          style={{ fontSize: isMobile ? 28 : 64 }}
         >
           News & Events
         </Typography>

@@ -76,7 +76,7 @@ const Pricing = () => {
           (isOverflowing ? " " + classes.pricingScrollFlexStart : "")
         }
       >
-        {isOverflowing && <Box style={{ marginLeft: -72 }} />}
+        {isOverflowing && <Box className="priceOverflow" />}
         {pricingData.map((item, idx) => (
           <Box key={idx} className={classes.pricingCardOuter}>
             <Box className={classes.pricingCardInner}>

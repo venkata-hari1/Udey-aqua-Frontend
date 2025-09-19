@@ -481,10 +481,14 @@ const Gallery = () => {
         onPrevious={carousel.goToPrevious}
         onNext={carousel.goToNext}
         renderBackground={(item) => (
-          <Box
-            className={classes.successStoriesBg}
-            style={{ backgroundImage: `url(${item.image})` }}
-          />
+          <Box className={classes.successStoriesBg}>
+            <Box
+              component="img"
+              src={item.image}
+              alt={`Gallery hero ${item.id}`}
+              className={classes.successStoriesBgImg}
+            />
+          </Box>
         )}
       />
 

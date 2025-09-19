@@ -95,7 +95,6 @@ const CulturesLayout: React.FC = () => {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    style={{ textDecoration: "none" }}
                     className={() =>
                       cx(classes.culturesSidebarNavItem, {
                         active: location.pathname === item.path,

@@ -4,6 +4,7 @@ import TechnologiesCard from "./TechnologiesCard";
 import { useState, useRef, useEffect } from "react";
 import type { TechnologyCardsSectionProps, TechnologyCard } from "./types";
 import useTechnologiesStyles from "./technologiesStyles";
+import { useScrollWithOffset } from "../NewsEvents/hooks";
 
 const TechnologiesCardsSection = ({
   headerTitle,
@@ -14,6 +15,7 @@ const TechnologiesCardsSection = ({
   const { classes } = useTechnologiesStyles();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { ref: scrollRef, scrollTo } = useScrollWithOffset(200);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -43,6 +45,18 @@ const TechnologiesCardsSection = ({
             expanded={openIndex === idx}
             onExpand={() => {
               if (openIndex === idx) {
+                try {
+                  const title = card.title || "";
+                  const slug = title
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-")
+                    .replace(/(^-|-$)/g, "");
+                  const el = document.getElementById(`card-${slug}`);
+                  if (el) {
+                    (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
+                    scrollTo();
+                  }
+                } catch {}
                 setOpenIndex(null);
                 return;
               }

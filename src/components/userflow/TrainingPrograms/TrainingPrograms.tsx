@@ -177,7 +177,7 @@ const TrainingPrograms: React.FC = () => {
               >
                 <ChevronLeftIcon
                   fontSize="small"
-                  style={{ verticalAlign: "middle", marginRight: 4 }}
+                  className={classes.backIconInline}
                 />
                 Back
               </Typography>
@@ -231,7 +231,7 @@ const TrainingPrograms: React.FC = () => {
               >
                 <ChevronLeftIcon
                   fontSize="small"
-                  style={{ verticalAlign: "middle", marginRight: 4 }}
+                  className={classes.backIconInline}
                 />
                 Back
               </Typography>
