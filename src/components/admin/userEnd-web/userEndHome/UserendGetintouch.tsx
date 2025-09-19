@@ -2,7 +2,7 @@ import { Box,Stack, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages } from "./UserEndCommonButtons";
+import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages, ErrormsgTitle, ErrormsgContent } from "./UserEndCommonButtons";
 
 const UserendGetintouch = () => {
       const{classes}=useUserEndwebStyles() 
@@ -31,13 +31,15 @@ const UserendGetintouch = () => {
         <Typography className={classes.titleText} >Name</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
-         size="small"/>   
+         size="small"/>  
+         <ErrormsgTitle /> 
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Phone</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>
+         <ErrormsgTitle />
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Message</Typography>
@@ -46,6 +48,7 @@ const UserendGetintouch = () => {
          size="small" 
          multiline
          minRows={3}/>
+         <ErrormsgContent />
         </Stack> 
       </Box>
       </Stack> 

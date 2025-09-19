@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages } from "./UserEndCommonButtons";
+import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages, ErrormsgTitle, TextFieldManyRows, ErrormsgContent } from "./UserEndCommonButtons";
 
 const UserendFooter = () => {
 
@@ -37,19 +37,20 @@ const UserendFooter = () => {
         <Typography className={classes.titleText} >Name</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
-         size="small"/>   
+         size="small"/>  
+         <ErrormsgTitle /> 
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Email</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>
+         <ErrormsgTitle />
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Address</Typography>
-        <TextField className={classes.heroTextfiled}
-         fullWidth
-         size="small"/>
+        <TextFieldManyRows />
+         <ErrormsgContent />
         </Stack> 
       </Box>
       </Stack> 

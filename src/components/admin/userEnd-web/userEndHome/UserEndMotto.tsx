@@ -5,7 +5,7 @@ import fishImg from './../../../../assets/admin/fishImg.jpg'
 
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import { ErrorMessages, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
+import { ErrorMessages, ErrormsgContent, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
 const UserEndMotto = () => {
   
 const{classes}=useUserEndwebStyles() 
@@ -47,6 +47,7 @@ const{classes}=useUserEndwebStyles()
      <Stack gap={1}>
      <Typography className={classes.titleText}>Heading Content</Typography>
      <TextFieldManyRows />   
+     <ErrormsgContent />
      </Stack>
    </Stack>
    {index!==mottodata.length-1&& <Divider className={classes.heroDivider}/>}

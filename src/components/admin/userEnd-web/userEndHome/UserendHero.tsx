@@ -2,7 +2,7 @@ import { Box,Divider,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton, Uploadbutton, TextFieldManyRows, ErrorMessages } from "./UserEndCommonButtons";
+import { UserEndSaveCancelButtons, UserendSaveDeleteButtons,AddingButton, Uploadbutton, TextFieldManyRows, ErrorMessages, ErrormsgTitle } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
 
 const UserendHero = () => {
@@ -40,7 +40,8 @@ return (
      </Stack>
      <Stack gap={1}>
      <Typography className={classes.titleText}>Heading Content</Typography>
-     <TextFieldManyRows />   
+     <TextFieldManyRows />
+     <ErrormsgTitle />   
      </Stack>
    </Stack>
    {index!==heroslides.length-1&&<Divider className={classes.heroDivider}/>}

@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, ErrorMessages } from "./UserEndCommonButtons";
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, ErrorMessages, ErrormsgTitle } from "./UserEndCommonButtons";
 
 const UserendDirectors = () => {
 
@@ -51,18 +51,21 @@ const UserendDirectors = () => {
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>   
+         <ErrormsgTitle />
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Role</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>
+         <ErrormsgTitle />
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Place</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>
+         <ErrormsgTitle />
         </Stack> 
       </Box>
       </Stack> 
@@ -108,18 +111,21 @@ const UserendDirectors = () => {
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>   
+         <ErrormsgTitle />
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Role</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>
+         <ErrormsgTitle />
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Place</Typography>
         <TextField className={classes.heroTextfiled}
          fullWidth
          size="small"/>
+         <ErrormsgTitle />
         </Stack> 
       </Box>
       </Stack> 

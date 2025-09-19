@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Stack,  TextField,  Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
-import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages } from "./UserEndCommonButtons";
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages, ErrormsgTitle, ErrormsgContent } from "./UserEndCommonButtons";
 import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
 import Avatar from '@mui/material/Avatar';
@@ -43,14 +43,17 @@ return (
      <Stack direction="column" gap={1}>
       <Typography className={classes.titleText}> Name</Typography>
       <TextField size="small" className={classes.textfiledTestimonial} />
+      <ErrormsgTitle />
      </Stack>
      <Stack direction="column" gap={1}>
        <Typography className={classes.titleText}> Occupation</Typography>
       <TextField size="small" className={classes.textfiledTestimonial}/> 
+      <ErrormsgTitle />
      </Stack>
       </Box>
      <Typography className={classes.titleText}>Content</Typography>
      <TextFieldManyRows />  
+     <ErrormsgContent />
      </Stack>
     </Stack> 
      {index!==testimonialdata.length-1&& <Divider sx={{border:'1px solid #0A4FA4',mt:2}}/>}

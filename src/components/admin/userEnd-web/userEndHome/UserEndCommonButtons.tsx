@@ -128,7 +128,7 @@ export const ErrorMessages=()=>{
   const{classes}=useUserEndwebStyles() 
   return (
    <Typography className={classes.errorUpload}>
-                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height)
+                 *Please upload the image in landscape format (Preferred size: 300px width × 100px height)
                <Typography className={classes.errorUpload}>Image Must be 5 MB</Typography>
               </Typography>
   )

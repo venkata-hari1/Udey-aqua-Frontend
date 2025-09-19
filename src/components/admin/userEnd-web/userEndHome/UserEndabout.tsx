@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { DeleteButton, ErrorMessages, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
+import { DeleteButton, ErrorMessages, ErrormsgContent, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 
 const UserEndabout = () => {
 
@@ -27,6 +27,7 @@ const UserEndabout = () => {
         <Stack display="flex" justifyContent="flex-start" gap={1}>
         <Typography className={classes.titleText}>Content</Typography>
         <TextFieldManyRows />   
+        <ErrormsgContent />
         </Stack>
       </Stack>
       <UserEndSaveCancelButtons />

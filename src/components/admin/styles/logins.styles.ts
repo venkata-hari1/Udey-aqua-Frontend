@@ -200,15 +200,15 @@ export const StyledResendLinkContainer = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
   marginBottom: theme.spacing(4),
   alignSelf: 'center',
-  cursor:'pointer'
+  cursor:'pointer',
+  
 }));
 
 export const StyledResendLink = styled("button")(({ theme }) => ({
-  textDecoration: 'underline', // Added underline by default
   fontSize: '15px',
   fontFamily: 'roboto',
-  color: theme.palette.primary.main,
+  color: theme.palette.primary.dark,
   '&:hover': {
-    textDecoration: 'underline', // Keep on hover, although it's already underlined
+    textDecoration: 'underline',
   },
 }));

@@ -2,22 +2,25 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import useProfileStyles from '../profile/ProfileStyles';
 
 type Iprops={
     open:boolean;
     handleclickopen:()=>void;
 }
 const Deletepopup = ({open,handleclickopen}:Iprops) => {
+  const { classes } = useProfileStyles();
   return (
    <Dialog
         open={open}
         onClose={handleclickopen}
-        PaperProps={{
+       /*  PaperProps={{
         sx:{
          padding:"30px",  
         }}}
         sx={{background:'#8f8f8f80',
-        }}
+        }} */
+       className={classes.dialogContainer}
   >
         <DialogTitle sx={{display:'flex',color:'red'}}>
          "Are you sure you want to delete the<br />

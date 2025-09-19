@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages } from "./UserEndCommonButtons";
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages, ErrormsgTitle, ErrormsgContent } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
 
 const UserendPricing = () => {
@@ -46,10 +46,12 @@ return (
         <TextField className={classes.heroTextfiled}
          fullWidth
         size="small"/>   
+        <ErrormsgTitle />
         </Stack>
         <Stack gap={1}>
         <Typography className={classes.titleText}>Description</Typography>
         <TextFieldManyRows />
+        <ErrormsgContent />
         </Stack>
         </Box>
       </Stack> 

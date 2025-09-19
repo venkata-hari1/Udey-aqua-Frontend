@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages } from "./UserEndCommonButtons";
+import {UserendSaveDeleteButtons,UserEndSaveCancelButtons, Uploadbutton, TextFieldManyRows, ErrorMessages, ErrormsgContent, ErrormsgTitle } from "./UserEndCommonButtons";
 
 const UserEndProjects = () => {
  
@@ -47,10 +47,12 @@ const UserEndProjects = () => {
      <TextField className={classes.heroTextfiled}
       fullWidth
      size="small"/>   
+     <ErrormsgTitle />
      </Stack>
      <Stack gap={1}>
      <Typography className={classes.titleText}>Description</Typography>
      <TextFieldManyRows />
+     <ErrormsgContent />
      </Stack>
      </Box>
    </Stack> 

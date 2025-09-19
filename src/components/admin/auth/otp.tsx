@@ -21,26 +21,38 @@ import {
 
 const OTP = () => {
   const navigate = useNavigate();
-  const inputs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
+  const inputs = Array(4)
+    .fill(null)
+    .map(() => useRef<HTMLInputElement>(null));
 
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [otpError, setOtpError] = useState(false);
   const [isOtpExpired, setIsOtpExpired] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30); 
+  const [timeLeft, setTimeLeft] = useState(30);
 
-  // Timer (hidden)
+  // Timer
   useEffect(() => {
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       setIsOtpExpired(true);
-      setOtpError(true); // automatically show expired message
+      setOtpError(true); // show expired message
     }
   }, [timeLeft]);
 
+  // Format time like 0:30
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
   // Handle input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { value } = e.target;
     if (!/^\d*$/.test(value) || value.length > 1) return;
 
@@ -54,7 +66,10 @@ const OTP = () => {
   };
 
   // Handle backspace
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
     if (e.key === "Backspace" && otpValues[index] === "" && index > 0) {
       inputs[index - 1].current?.focus();
     }
@@ -68,7 +83,7 @@ const OTP = () => {
     }
 
     const otp = otpValues.join("");
-    const CORRECT_OTP = "1234"; 
+    const CORRECT_OTP = "1234";
 
     if (otp === CORRECT_OTP) {
       setOtpError(false);
@@ -111,8 +126,12 @@ const OTP = () => {
                 key={index}
                 inputRef={ref}
                 value={otpValues[index]}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, index)}
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e, index)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleChange(e, index)
+                }
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  handleKeyDown(e, index)
+                }
                 inputProps={{ maxLength: 1, inputMode: "numeric" }}
                 error={otpError}
               />
@@ -121,21 +140,55 @@ const OTP = () => {
 
           {/* Error Message */}
           {otpError && (
-            <Typography variant="caption" color="error" sx={{ mt: -2, alignSelf: "center" }}>
+            <Typography
+              variant="caption"
+              color="error"
+              sx={{ mt: -2, alignSelf: "center" }}
+            >
               {isOtpExpired
                 ? "OTP has expired, please click on resend."
                 : "Invalid OTP, please try again."}
             </Typography>
           )}
 
-          <Typography variant="body2" color="#64748B" alignSelf="center" sx={{ mt: 1 }}>
+          <Typography
+            variant="body2"
+            color="#64748B"
+            alignSelf="center"
+            sx={{ mt: 1 }}
+          >
             Didn’t receive the code?
           </Typography>
 
-          {/* Resend Link - always visible */}
-          <StyledResendLinkContainer>
-            <StyledResendLink as="button" onClick={handleResend}>
-              Resend code
+          {/* Timer + Resend side by side */}
+          <StyledResendLinkContainer
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              borderBottom:'1px solid #0A4FA4',
+              mt: 1,
+              
+            }}
+          >
+            <Typography variant="body2" color="error">
+              {formatTime(timeLeft)}
+            </Typography>
+
+            <StyledResendLink
+              as="button"
+              onClick={handleResend}
+              disabled={timeLeft > 0 && !isOtpExpired}
+              style={{
+                border: "none",
+                background: "transparent",
+                cursor:
+                  timeLeft > 0 && !isOtpExpired ? "not-allowed" : "pointer",
+                 opacity: timeLeft > 0 && !isOtpExpired ? 0.5 : 1,
+              }}
+            >
+              Resend 
             </StyledResendLink>
           </StyledResendLinkContainer>
 

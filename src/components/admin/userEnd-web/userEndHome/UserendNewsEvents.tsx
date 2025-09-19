@@ -2,7 +2,7 @@ import { Box, Button, Divider, FormControl, MenuItem, Select, Stack,  TextField,
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { ErrorMessages, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
+import { ErrorMessages, ErrormsgContent, ErrormsgTitle, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons, UserendSaveDeleteButtons } from "./UserEndCommonButtons";
 import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 
 
@@ -52,11 +52,13 @@ const UserendNewsEvents = () => {
        <Stack direction="column" gap={1}>
         <Typography className={classes.titleText}>Heading</Typography>
         <TextField size="small" className={classes.textfiledTestimonialblog} />
+        <ErrormsgTitle />
        </Stack>
       </Box>
       <Stack gap={1} mt={2}>
        <Typography className={classes.titleText}>Description</Typography>
-       <TextFieldManyRows />   
+       <TextFieldManyRows />
+       <ErrormsgContent />   
        </Stack>
        </Stack>
     </Stack> 
