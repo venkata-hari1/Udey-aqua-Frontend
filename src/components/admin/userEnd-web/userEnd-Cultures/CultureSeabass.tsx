@@ -3,6 +3,9 @@ import useUserEndwebStyles from "../UserendwebStyles";
 import AddIcon from "@mui/icons-material/Add";
 import {
   ErrorMessages,
+  ErrormsgContent,
+  ErrormsgPrice,
+  ErrormsgTitle,
   Uploadbutton,
   UserEndSaveCancelButtons,
   UserendSaveDeleteButtons,
@@ -37,7 +40,7 @@ const CultureSeabass = () => {
        <Box>
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
-          <UserendSaveDeleteButtons message="" />
+          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Sae Bass?" />
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}
@@ -46,7 +49,7 @@ const CultureSeabass = () => {
               <Typography className={classes.titleText}>Image</Typography>
               <Uploadbutton />
               <Box className={classes.herouploadImageBox1}>
-                <img src={fishImg} className={classes.herouploadImage} />
+                <img src={fishImg} className={classes.herouploadImage} alt="fish image"/>
                 <CancelIcon className={classes.cancelImgIcon} />
                 <Button
                   variant="contained"
@@ -73,29 +76,25 @@ const CultureSeabass = () => {
                   variant="contained"
                   className={classes.pdfButtonbox}
                 >
-                  {/* <AddIcon /> */}
-                  <img src={PdfImg}  width="40px" height="40px"/>
+                <img src={PdfImg}  width="40px" height="40px" alt="pdf image"/>
                 </Button>
               </Box>
-              <Typography className={classes.errorUpload}>
-                *Please upload the sponsor logo in landscape format (Preferred
-                size: 300px width × 100px height)
-                <Typography className={classes.errorUpload}>
-                  Image Must be 5 MB
-                </Typography>
-              </Typography>
+              <ErrorMessages />
             </Stack>
           </Box>
 
           {/* for  rightside box */}
           <Box>
-            <Stack>
+            <Stack gap={1}>
+              <Box>
               <Typography className={classes.titleText}>Title</Typography>
               <TextField
                 size="small"
                 className={classes.textfiledTestimonialblog}
               />
-
+              <ErrormsgTitle />
+              </Box>
+              <Box>
               <Typography className={classes.titleText}>Content</Typography>
               <TextField
                 className={classes.heroTextfiled}
@@ -103,19 +102,22 @@ const CultureSeabass = () => {
                 multiline
                 minRows={10}
               />
+              <ErrormsgContent />
+             </Box> 
             </Stack>
           </Box>
         </Box>
         <Divider className={classes.heroDivider}/>
        </Box>
-        <UserEndSaveCancelButtons /> 
+        <UserEndSaveCancelButtons />  
       
       
       {/* FOR BANNER PART */}
 
       <Stack className={classes.bannerStacktitle}>
         <Typography className={classes.MottoBoxText}>Banner</Typography>
-        <UserendSaveDeleteButtons message="" />
+        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Sae Bass?" />
+      
       </Stack>
       <Box>
       
@@ -139,17 +141,21 @@ const CultureSeabass = () => {
             </Box>
             <ErrorMessages />
           </Stack>
+         
         </Box>
 
       {/* banner rightside start */}
         <Box>
           <Stack direction="column" gap={1}>
+           <Box>
             <Typography className={classes.titleText}>Title</Typography>
             <TextField
               size="small"
               className={classes.textfiledTestimonialblog}
             />
-
+            <ErrormsgTitle />
+            </Box>
+            <Box>
             <Typography className={classes.titleText}>Content</Typography>
             <TextField
               className={classes.heroTextfiled}
@@ -157,6 +163,8 @@ const CultureSeabass = () => {
               multiline
               minRows={3}
             />
+            <ErrormsgContent />
+            </Box>
           </Stack>
         </Box>
       </Box>
@@ -178,27 +186,24 @@ const CultureSeabass = () => {
                 variant="contained"
                 className={classes.pdfButtonbox}
               >
-                <img src={PdfImg} width="40px" height="40px"/>
+                <img src={PdfImg} width="40px" height="40px" alt="pdf image1"/>
               </Button>
             </Box>
-            <Typography className={classes.errorUpload}>
-              *Please upload the sponsor logo in landscape format (Preferred
-              size: 300px width × 100px height)
-              <Typography className={classes.errorUpload}>
-                Image Must be 5 MB
-              </Typography>
-            </Typography>
+            <ErrorMessages />
           </Stack>
         </Box>
-
+        
         {/* for  banner rightside box */}
         <Box>
           <Stack className={classes.bannerRightsidestack}>
+            <Box>
             <Typography className={classes.titleText}>Price</Typography>
             <TextField size="small"
               className={classes.textfiledTestimonialblog}
             />
-
+            <ErrormsgPrice />
+            </Box>
+            <Box>
             <Typography className={classes.titleText}>Content</Typography>
             <TextField
               className={classes.heroTextfiled}
@@ -206,6 +211,8 @@ const CultureSeabass = () => {
               multiline
               minRows={3}
             />
+            <ErrormsgContent />
+            </Box>
           </Stack>
         </Box>
       </Box>

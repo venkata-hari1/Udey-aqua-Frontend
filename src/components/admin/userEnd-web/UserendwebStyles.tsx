@@ -19,7 +19,7 @@ const useUserEndwebStyles = makeStyles()((theme: Theme) => ({
   },
 
 UserEndMaincontainerbox:{
-    marginLeft:'40px',
+    margin:'0px 30px',
     [theme.breakpoints.down('md')]:{
       marginLeft:'0px',
     },
@@ -82,14 +82,14 @@ homeBackarrowbox:{
  display:'flex',
  justifyContent:'start',
  alignItems:'center',
- gap:10,
+gap:10,
  
 },
 UserendbackArrow:{
  cursor:'pointer',
  fontSize:'18px',
  paddingBottom:"18px",
-
+ marginLeft:'15px',
  color:theme.palette.primary.dark,
  [theme.breakpoints.down('sm')]:{
   fontSize:'15px',
@@ -514,11 +514,13 @@ dateTextfieldbox:{
 
 //..............CULTURES PAGES:..................//
 
+
+
 cultureHomebox:{
   display:'flex',
   justifyContent:'space-between',
   alignContents:'center',
-  paddingRight:'12px',
+  margin:'0px 30px',
   paddingBottom:"8px",
 },
 culturebackarrowbox:{
@@ -526,22 +528,39 @@ culturebackarrowbox:{
 justifyContent:"center", 
 alignItems:"center",
 gap:'10px',
+
 },
-cultureTitle:{
- color:"#0A4FA4"
+
+CulturehomeMaincontainer:{
+  margin:'0px 30px',
+    [theme.breakpoints.down('md')]:{
+      marginLeft:'0px',
+    },
+},
+
+cultureHomeTitle:{
+color:"#0A4FA4",
+ marginBottom:"10px",
+ fontWeight:500,
+ fontSize:20,
+  [theme.breakpoints.down('md')]:{
+     marginLeft:"0px",
+     paddingLeft:'0px',
+  }
 },
 culturebackbutton:{
   color:"#0A4FA4",
   fontSize:'16px',
   cursor:'pointer',
+  marginTop:'-10px',
 },
 addSubpagebutton:{
   background:'#0A4FA4',
   color:'white',
   textTransform:'capitalize',
-  
   textAlign:'center',
-  fontSize:'12px'
+  fontSize:'12px',
+  padding:'8px 8px',
 },
 //culture Hero page
 
@@ -628,7 +647,7 @@ bannerImageStack:{
 bannerUploadbox:{
   display:"flex",
   justifyContent:"space-between",
-  marginTop:14,
+  marginTop:30,
   flexDirection:'row',
   [theme.breakpoints.down('md')]:{
      flexDirection:'column'

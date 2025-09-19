@@ -133,3 +133,24 @@ export const ErrorMessages=()=>{
               </Typography>
   )
 }
+
+export const ErrormsgTitle=()=>{
+    const{classes}=useUserEndwebStyles()  
+  return(
+    <Typography className={classes.errorUpload}>Max 200 characters required</Typography> 
+   )
+}
+
+export const ErrormsgContent=()=>{
+    const{classes}=useUserEndwebStyles()  
+  return(
+    <Typography className={classes.errorUpload}>Max 2000 characters required</Typography> 
+   )
+}
+
+export const ErrormsgPrice=()=>{
+    const{classes}=useUserEndwebStyles()  
+  return(
+    <Typography className={classes.errorUpload}>Max 12 characters required</Typography> 
+   )
+}

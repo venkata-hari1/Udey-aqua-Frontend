@@ -13,7 +13,7 @@ const CulturesImage = () => {
     <Box>
      <Box sx={{display:'flex', justifyContent:'space-between'}}>
       <Typography className={classes.MottoBoxText}>Header Section</Typography>
-       <DeleteButton message=""/>
+       <DeleteButton message="Are you sure want delete Image in Cultures Image?"/>
      </Box>
       <Box className={classes.cultureheroBox2}>  
       <Stack display="flex" gap={2} justifyContent="space-between">
