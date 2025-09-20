@@ -5,14 +5,26 @@ import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 
+
+type UserEndSaveCancelButtons<T =any>={
+  values:T,
+  onSave:(values: T)=>void;
+  
+}
+
 export const UserEndSaveCancelButtons = () => {
 
     const{classes}=useUserEndwebStyles()  
-  
+    
+    const handleSave=()=>{
+      
+    }
+
     return (
    
     <Box className={classes.buttonContainer}>
-         <Button className={classes.headerSaveButton}>Save</Button>
+         <Button className={classes.headerSaveButton}
+          onClick={handleSave}>Save</Button>
          <Button className={classes.headerCancelButton}>Cancel</Button>  
     </Box>
 

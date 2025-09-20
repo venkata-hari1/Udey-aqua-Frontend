@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import bgimg from "../../../assets/admin/Group 39739.png";
 import logo from "../../../assets/admin/logo.png";
 import lockIconPng from "../../../assets/admin/lock.png";
-import eyeIconPng from "../../../assets/admin/eye-off.png";
-
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   StyledLoginRoot,
   StyledLoginLeft,
@@ -22,6 +22,7 @@ import {
   StyledInputAdornmentIcon,
   StyledLoginButton,
 } from "../styles/logins.styles";
+import { confirmValidatePassword, validatePassword } from "../utils/Validations";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -35,46 +36,31 @@ const ChangePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-const passwordRegex =
-    
-/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  const validatePassword = (value: string): boolean => {
-    if (!value) {
-      setErrorPassword("Password can't be empty");
-      return false;
-    }
-    if (!passwordRegex.test(value)) {
-      setErrorPassword(
-        "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character"
-      );
-      return false;
-    }
-    setErrorPassword("");
-    return true;
-  };
-
-  const validateConfirmPassword = (value: string): boolean => {
-    if (!value) {
-      setErrorConfirm("Confirm password can't be empty");
-      return false;
-    }
-    if (value !== password) {
-      setErrorConfirm("Passwords do not match");
-      return false;
-    }
-    setErrorConfirm("");
-    return true;
-  };
+const passwordChangeHandler=(event:any)=>{
+      const value=event.target.value;
+      setPassword(value)
+      const passwordoutput= validatePassword(value)
+      setErrorPassword(passwordoutput)
+ }
+const confirmPwdChangeHandler=(event:any)=>{
+     const value=event.target.value;
+     setConfirmPassword(value);
+    const confirmpwdoutput= confirmValidatePassword(value,password)
+     setErrorConfirm(confirmpwdoutput)
+  }  
 
   const handleSubmit = () => {
-    const pwdOk = validatePassword(password);
-    const confirmOk = validateConfirmPassword(confirmPassword);
+     const passwordresult=validatePassword(password);
+     const confirmpwdresult=confirmValidatePassword(confirmPassword,password);
+     setErrorPassword(passwordresult);
+     setErrorConfirm(confirmpwdresult)
+     if(passwordresult==="" && confirmpwdresult===""){
+      console.log(passwordresult,confirmpwdresult)
+       navigate('/admin/login') 
+     }
 
-    if (pwdOk && confirmOk) {
-      console.log({ password, confirmPassword });
-      navigate("/admin/login");
-    }
+     
   };
 
   return (
@@ -97,10 +83,8 @@ const passwordRegex =
             placeholder="New Password"
             type={showPassword ? "text" : "password"}
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              validatePassword(e.target.value); 
-            }}
+            onChange={ passwordChangeHandler}
+            
             error={errorPassword !== ""}
             helperText={errorPassword || " "}
             InputProps={{
@@ -117,10 +101,11 @@ const passwordRegex =
                     edge="end"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    <StyledCustomIcon
-                      src={eyeIconPng}
-                      alt={showPassword ? "Hide password" : "Show password"}
-                    />
+                    {showPassword ? (
+                      <VisibilityOutlinedIcon sx={{ fontSize: '18px' }} />
+                    ) : (
+                      <VisibilityOffOutlinedIcon sx={{ fontSize: '18px' }} />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -133,10 +118,7 @@ const passwordRegex =
             placeholder="Confirm New Password"
             type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-              validateConfirmPassword(e.target.value); 
-            }}
+            onChange={confirmPwdChangeHandler}       
             error={errorConfirm !== ""}
             helperText={errorConfirm || " "}
             InputProps={{
@@ -153,14 +135,12 @@ const passwordRegex =
                     edge="end"
                     onClick={() =>
                       setShowConfirmPassword(!showConfirmPassword)
-                    }
-                  >
-                    <StyledCustomIcon
-                      src={eyeIconPng}
-                      alt={
-                        showConfirmPassword ? "Hide password" : "Show password"
-                      }
-                    />
+                    }>
+                    {showConfirmPassword ? (
+                      <VisibilityOutlinedIcon sx={{ fontSize: '18px' }} />
+                    ) : (
+                      <VisibilityOffOutlinedIcon sx={{ fontSize: '18px' }} />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),

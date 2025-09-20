@@ -16,6 +16,7 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
+import { confirmValidatePassword, validatePassword } from "./Validations";
 
 type Iprops = {
   pwdopen: boolean;
@@ -48,45 +49,30 @@ const Changepasswordpopup = ({ pwdopen, handlepsswordopen }: Iprops) => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorConfirm, setErrorConfirm] = useState("");
 
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  const validatePassword = (value: string): boolean => {
-    if (!value) {
-      setErrorPassword("Password can't be empty");
-      return false;
-    }
-    if (!passwordRegex.test(value)) {
-      setErrorPassword(
-        "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character"
-      );
-      return false;
-    }
-    setErrorPassword("");
-    return true;
-  };
+ const passwordOnChangehandler=(event:any)=>{
+     const value=event.target.value;
+     setPasswordValue(value)
+    const passwordresult= validatePassword(value)
+    setErrorPassword(passwordresult)
+ }
 
-  const validateConfirmPassword = (value: string): boolean => {
-    if (!value) {
-      setErrorConfirm("Confirm password can't be empty");
-      return false;
-    }
-    if (value !== passwordValue) {
-      setErrorConfirm("Passwords do not match");
-      return false;
-    }
-    setErrorConfirm("");
-    return true;
-  };
-
+const confirmChangeHandler=(event:any)=>{
+    const value=event.target.value;
+    setConfirmPwdValue(value);
+    const confirmpwdresult= confirmValidatePassword(value,passwordValue);
+    setErrorConfirm(confirmpwdresult)
+ }
   const passwordSubmitHandler = () => {
-    const pwdOk = validatePassword(passwordValue);
-    const confirmOk = validateConfirmPassword(confirmPwdValue);
-
-    if (pwdOk && confirmOk) {
-      console.log({ passwordValue, confirmPwdValue });
-      handlepsswordopen(); // close dialog after success
+    const passwordOk=validatePassword(passwordValue)
+    const confirpwdOk=confirmValidatePassword(confirmPwdValue,passwordValue)
+    setErrorPassword(passwordOk)
+    setErrorConfirm(confirpwdOk) 
+    
+    if(passwordOk=="" && confirpwdOk===""){
+      console.log(passwordValue,confirmPwdValue) 
     }
+
   };
 
   return (
@@ -103,7 +89,7 @@ const Changepasswordpopup = ({ pwdopen, handlepsswordopen }: Iprops) => {
             <Typography className={classes.updateEmailText}>
               New Password
             </Typography>
-            <Typography fontSize="13px">
+            <Typography fontSize="13px" textAlign="center">
               Set the new password for your account to login.
             </Typography>
           </DialogContentText>
@@ -120,10 +106,7 @@ const Changepasswordpopup = ({ pwdopen, handlepsswordopen }: Iprops) => {
                 type={createPwdType}
                 className={classes.profileTextfileds}
                 value={passwordValue}
-                onChange={(e) => {
-                  setPasswordValue(e.target.value);
-                  validatePassword(e.target.value);
-                }}
+                onChange={passwordOnChangehandler}
                 error={errorPassword !== ""}
                 helperText={errorPassword || " "}
                 InputProps={{
@@ -170,10 +153,7 @@ const Changepasswordpopup = ({ pwdopen, handlepsswordopen }: Iprops) => {
                 type={confirmPwdType}
                 className={classes.profileTextfileds}
                 value={confirmPwdValue}
-                onChange={(e) => {
-                  setConfirmPwdValue(e.target.value);
-                  validateConfirmPassword(e.target.value);
-                }}
+                onChange={confirmChangeHandler}
                 error={errorConfirm !== ""}
                 helperText={errorConfirm || " "}
                 InputProps={{

@@ -27,6 +27,7 @@ const ProfileEmailpopup = ({ open, handleclickopen }: Iprops) => {
   const [error, setError] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(600);
 
+
   // Reset when closed
   useEffect(() => {
     if (!open) {
@@ -53,8 +54,10 @@ const ProfileEmailpopup = ({ open, handleclickopen }: Iprops) => {
       return;
     }
     if (otp !== "1234") {
+      console.log("Invalid Otp")
       setError("Invalid OTP");
     } else {
+      console.log("otp verified",otp)
       setError(null);
       alert("OTP Verified!");
       handleclickopen();
@@ -65,18 +68,18 @@ const ProfileEmailpopup = ({ open, handleclickopen }: Iprops) => {
   const[emailvalue,setEmailvalue]=useState("")
   const[emailError,setEmailError]=useState("")
   const emailChangeHandler=(event:any)=>{
-     setEmailvalue(event.target.value);
+     const value=event.target.value;
+     setEmailvalue(value);
+     const emailoutput=validateEmail(value)
+     setEmailError(emailoutput)
 }
 
 const handleEmailSubmit=()=>{
-  
-  const resultEmail= validateEmail(emailvalue)
-  if(!resultEmail){
-  setEmailError("Enter Valid Email ID")
-  }else{
-    setEmailError("")
-    setOtpemail(true)
-  }
+    const emailOk=validateEmail(emailvalue);
+    console.log("Emailvalue",emailvalue)
+    setEmailError(emailOk)
+     setOtpemail(true)    
+ 
 }
   return (
     <Dialog

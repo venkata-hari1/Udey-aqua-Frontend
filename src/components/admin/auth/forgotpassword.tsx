@@ -4,7 +4,7 @@ import { InputAdornment } from '@mui/material';
 
 import bgimg from '../../../assets/admin/Group 39739.png';
 import logo from '../../../assets/admin/logo.png';
-import mail from '../../../assets/admin/mail.png'; // Import your custom image icon
+import mail from '../../../assets/admin/mail.png'; 
 
 import {
   StyledLoginRoot,
@@ -26,25 +26,24 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  
 
-  const validateAndContinue = () => {
-    let isValid=true;
-    if(!email){
-      setEmailError("Email is required");
-      isValid=false;
+ const emilchangeHandler=(e:any)=>{
+  const value=e.target.value;
+  setEmail(value)
+  const emailoutput=validateEmail(value)
+  setEmailError(emailoutput)
+ 
+}  
 
-    }else if(!validateEmail(email)){
-       setEmailError("Enter a valid email address");
-       isValid=false;
-    }else{
-      setEmailError("")
-    }
+const validateAndContinue = () => {
+   const emailOk=validateEmail(email)
    
-    if(isValid){
-      navigate('/admin/otp')
-    }
-  };
+   if(emailOk===''){
+    console.log("email",email);
+     navigate('/admin/otp')
+   }
+
+};
 
   return (
     <StyledLoginRoot>
@@ -65,18 +64,8 @@ const ForgotPassword = () => {
             fullWidth
             placeholder="Email"
             value={email}
-            onChange={(e) => {
-             const value=e.target.value;
-             setEmail(value)
-             if(!value){
-              setEmailError("Email is required")
-             }else if(!validateEmail(value)){
-              setEmailError("Enter a valid email address");
-             }else{
-              setEmailError("")
-             } 
-            }
-            }
+            onChange={(e)=>emilchangeHandler(e)}
+             
             
             error={!!emailError}
             helperText={emailError ||null}

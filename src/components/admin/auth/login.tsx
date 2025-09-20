@@ -22,7 +22,7 @@ import {
   StyledLink,
   StyledLoginButton,
 } from '../styles/logins.styles';
-import { validateEmail } from '../utils/Validations';
+import { validateEmail, validatePassword } from '../utils/Validations';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -35,42 +35,35 @@ const Login: React.FC = () => {
 
 
   
-  const validatePassword = (password: string) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()\-_=+{}[\]|;:'",.<>\/?])[A-Za-z\d@$!%*?&#^()\-_=+{}[\]|;:'",.<>\/?]{8,}$/;
-    return passwordRegex.test(password);
-  };
+ const emailChangehandler=(event:any)=>{
+     const value=event.target.value;
+     setEmail(value)
+     const emailoutput= validateEmail(value)
+     setEmailError(emailoutput)
+}
+    
+const passwordChangehandler=(event:any)=>{
+   const value=event.target.value;
+   setPassword(value)
+   const passwordoutput=validatePassword(value)
+   setPasswordError(passwordoutput)
+}
 
   const validateAndLogin = () => {
-    
-    let isValid = true;
-
-    if (!email) {
-      setEmailError('Email is required');
-      isValid = false;
-    } else if (!validateEmail(email)) {
-      setEmailError('Enter a valid email address');
-      isValid = false;
-    } else {
-      setEmailError('');
+        
+    const emailResult=validateEmail(email);
+    const passwordResult=validatePassword(password);
+   
+    setEmailError(emailResult);
+    setPasswordError(passwordResult);
+   
+    if(emailResult==='' && passwordResult===''){
+      console.log("login success :", {email,password});
+      navigate('/admin/dashboard')
+    }else{
+      console.log("validation failed")
     }
 
-    if (!password) {
-      setPasswordError('Password cannot be empty');
-      isValid = false;
-    } else if (!validatePassword(password)) {
-      setPasswordError(
-        "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character."
-      );
-      isValid = false;
-    } else {
-      setPasswordError('');
-    }
-
-    if (isValid) {
-      console.log('Login values:', { email, password });
-      navigate('/admin/dashboard');
-    }
   };
 
   return (
@@ -94,18 +87,7 @@ const Login: React.FC = () => {
             fullWidth
             placeholder="Email"
             value={email}
-            onChange={(e) => {
-              const value = e.target.value;
-              setEmail(value);
-
-              if (!value) {
-                setEmailError('Email is required');
-              } else if (!validateEmail(value)) {
-                setEmailError('Enter a valid email address');
-              } else {
-                setEmailError('');
-              }
-            }}
+            onChange={(event)=>emailChangehandler(event)}
             error={!!emailError}
             helperText={emailError}
             InputProps={{
@@ -132,20 +114,8 @@ const Login: React.FC = () => {
             placeholder="Password"
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(e) => {
-              const value = e.target.value;
-              setPassword(value);
-
-              if (!value) {
-                setPasswordError('Password cannot be empty');
-              } else if (!validatePassword(value)) {
-                setPasswordError(
-                  "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character."
-                );
-              } else {
-                setPasswordError('');
-              }
-            }}
+            onChange={(event)=>passwordChangehandler(event)}
+              
             error={!!passwordError}
             helperText={passwordError}
             InputProps={{
