@@ -21,7 +21,7 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
     "axios": "^1.10.0",
-    "framer-motion": "^12.23.12",
+    "framer-motion": "^12.23.16",
     "install": "^0.13.0",
     "npm": "^11.6.0",
     "react": "^19.1.0",
@@ -29,6 +29,7 @@
     "react-otp-input": "^3.1.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.3",
+    "recharts": "^3.2.1",
     "tss-react": "^4.9.19"
   },
   "devDependencies": {
