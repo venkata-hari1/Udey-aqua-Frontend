@@ -1,0 +1,166 @@
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.login-root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.login-left {
+  width: 52%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.login-right {
+  width: 48%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px; 
+}
+
+.login-logo {
+  width: 165px;
+  margin-bottom: 8px;
+  margin-top: 92px; 
+}
+.login-button {
+  background-color: #0052CC;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.forgot-password-link {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.forgot-root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.forgot-left {
+  width: 52%;
+  background-size: cover;
+  background-position: center;
+}
+
+.forgot-right {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forgot-form {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 92px; 
+}
+
+.forgot-logo {
+  width: 165px;
+}
+
+.forgot-button {
+  background-color: #0052cc;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+
+.otp-root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.otp-left {
+  width: 52%;
+  background-size: cover;
+  background-position: center;
+}
+
+.otp-right {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.otp-form {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 92px; 
+}
+.otp-logo {
+  width: 165px;
+}
+
+
+.otp-input-container {
+  display: flex;
+  gap: 16px;
+}
+
+.otp-input-box {
+  width: 50px !important;
+  height: 50px;
+}
+
+.otp-digit {
+  text-align: center;
+  font-size: 30px;
+  padding: 0;
+}
+
+
+.otp-button {
+  background-color: #0052cc;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.otp-resend-link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+

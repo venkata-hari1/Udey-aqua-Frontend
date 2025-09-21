@@ -1,0 +1,214 @@
+import { Box, Typography, TextField, Button} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Link as RouterLink, type LinkProps as RouterLinkProps } from 'react-router-dom';
+
+
+export const StyledLoginRoot = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  minHeight: '100vh',
+  width: '100vw',
+  overflow: 'hidden',
+  backgroundColor: theme.palette.background.default,
+}));
+
+export const StyledLoginLeft = styled(Box)(({ theme }) => ({
+  flexGrow: 1,
+  flexShrink: 0,
+  flexBasis: '50%',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
+
+export const StyledLoginRight = styled(Box)(() => ({
+  flexGrow: 1,
+  flexShrink: 0,
+  flexBasis: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: 'transparent'
+  
+}));
+
+export const StyledLoginForm = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  maxWidth: '100%',
+  height: '100%',
+  justifyContent: 'flex-start',
+  borderRadius: '10px',
+  gap: '16px',
+  [theme.breakpoints.down('sm')]: {
+    padding: '25px',
+    width: '100%',
+    boxShadow: 'none',
+    borderRadius: '0px',
+    height: 'auto',
+    minHeight: 'auto',
+    justifyContent: 'flex-start',
+  },
+}));
+
+export const StyledLoginLogo = styled('img')(() => ({
+  marginTop: '60px',
+  height: '170px',
+  objectFit: 'contain',
+  marginBottom: '20px',
+  alignSelf: 'center',
+}));
+
+export const StyledTitle = styled(Typography)(() => ({
+  fontSize: '2rem',
+  fontWeight: 600,
+  marginBottom: '0',
+  alignSelf: 'center',
+ 
+}));
+
+export const StyledSubtitle = styled(Typography)(({ theme }) => ({
+  fontSize: '14px',
+  color: theme.palette.text.secondary,
+  marginBottom: '24px',
+  alignSelf: 'center',
+}));
+
+export const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: '0',
+  alignSelf: 'center',
+  width: '100%',
+   paddingRight: '12px', 
+    paddingLeft: '12px',
+  '& .MuiInputBase-root': {
+    height: '50px',
+    borderRadius: '8px',
+    fontSize: '16px',
+    backgroundColor: '#F9F9F9',
+    boxSizing: 'border-box',
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#E0E0E0',
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#A0A0A0',
+  },
+  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.primary.main,
+  },
+  '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.error.main,
+  },
+  '& .MuiFormHelperText-root.Mui-error': {
+    color: theme.palette.error.main,
+    alignSelf: 'flex-start',
+    width: '100%',
+    textAlign: 'left',
+    marginLeft: '0px',
+    marginRight: '0px',
+    marginTop: '4px',
+  },
+}));
+
+export const StyledCustomIcon = styled('img')(() => ({
+  width: '20px',
+  height: '20px',
+  objectFit: 'contain',
+}));
+
+export const StyledInputAdornmentIcon = styled(Box)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginRight: '8px',
+}));
+
+export const StyledForgotPasswordLink = styled(Box)(() => ({
+  alignSelf: 'flex-end',
+  marginTop: '0px',
+  marginBottom: '10px',
+}));
+
+export const StyledLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
+  textDecoration: 'none',
+  fontSize: '0.875rem',
+  fontFamily:'Inter',
+  color: theme.palette.primary.main,
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+}));
+
+export const StyledLoginButton = styled(Button)(({ theme }) => ({
+  height: '50px',
+  borderRadius: '8px',
+  boxShadow: 'none',
+  backgroundColor: theme.palette.primary.dark,
+  color: '#FFFFFF',
+  textTransform: 'none',
+  fontSize: '1rem',
+  fontWeight: 600,
+  width: '100%',
+  alignSelf: 'center',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.dark,
+    boxShadow: 'none',
+  },
+}));
+
+// --- OTP Specific Styled Components ---
+
+export const StyledOtpInputContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(2),
+  justifyContent: 'center',
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(3),
+  width: '100%',
+}));
+
+export const StyledOtpTextField = styled(TextField)(({ theme }) => ({
+  width: "60px",
+  "& .MuiOutlinedInput-root": {
+    height: "60px",
+    borderRadius: "12px",
+    fontSize: "24px",
+    backgroundColor: "#F9F9F9",
+    "& fieldset": {
+      borderColor: "#c9c7c7ff", // default
+    },
+    "&:hover fieldset": {
+      borderColor: "#A0A0A0",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
+    },
+    "&.Mui-error fieldset": {
+      borderColor: "#E62310", 
+    },
+  },
+  "& input": {
+    textAlign: "center",
+    padding: 0,
+    height: "100%",
+    fontSize: "24px",
+  },
+}));
+
+export const StyledResendLinkContainer = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(4),
+  alignSelf: 'center',
+  cursor:'pointer',
+  
+}));
+
+export const StyledResendLink = styled("button")(({ theme }) => ({
+  fontSize: '15px',
+  fontFamily: 'roboto',
+  color: theme.palette.primary.dark,
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+}));
