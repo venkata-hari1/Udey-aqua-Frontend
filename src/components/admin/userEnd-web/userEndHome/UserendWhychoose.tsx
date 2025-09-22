@@ -18,7 +18,7 @@ const UserendWhychoose = () => {
       <Box className={classes.useHerocontainer}> 
       <Box mt={2}>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-          <DeleteButton message="Are you sure want to delete the Image?"/>
+          <DeleteButton message="Are you sure want to delete the Image?" onDelete={()=>console.log("deleted")}/>
       </Box>
      <Stack className={classes.UploadandAboutbox}>
            <Stack className={classes.UploadImageStack}>

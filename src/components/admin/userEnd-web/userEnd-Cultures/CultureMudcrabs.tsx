@@ -16,6 +16,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const CultureMudcrabs = () => {
   const { classes } = useUserEndwebStyles();
+
+const handleSave=()=>{
+
+}
   return (
     <Box className={classes.SeaBassContainer}>
       <Stack className={classes.Seabassstack}>
@@ -40,7 +44,8 @@ const CultureMudcrabs = () => {
        <Box>
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
-          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Mud Crab?" />
+          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Mud Crab?" 
+          onDelete={()=>console.log("deleted")}/>
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}
@@ -104,14 +109,15 @@ const CultureMudcrabs = () => {
         </Box>
         <Divider className={classes.heroDivider}/>
        </Box>
-       <UserEndSaveCancelButtons />
+       <UserEndSaveCancelButtons onSave={handleSave}/>
       
       
       {/* FOR BANNER PART */}
 
       <Stack className={classes.bannerStacktitle}>
         <Typography className={classes.MottoBoxText}>Banner</Typography>
-        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Mud Crab?" />
+        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Mud Crab?" 
+        onDelete={()=>console.log("deleting")}/>
       </Stack>
       <Box>
       

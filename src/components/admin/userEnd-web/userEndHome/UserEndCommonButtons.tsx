@@ -97,7 +97,11 @@ export const AddingButton = ({ onClick }: Genericadding) => {
   );
 };
 
-export const DeleteButton = ({ message }: { message: string }) => {
+interface GenericDelete {
+  message: string;
+  onDelete: () => void;
+}
+export const DeleteButton = ({ message,onDelete }: GenericDelete) => {
   const { classes } = useUserEndwebStyles();
 
   const [open, setOpen] = useState(false);
@@ -106,6 +110,7 @@ export const DeleteButton = ({ message }: { message: string }) => {
     setOpen((prev) => !prev);
   };
   const handleConfirmDelete = () => {
+    onDelete()
     console.log("Delete", message);
   };
 

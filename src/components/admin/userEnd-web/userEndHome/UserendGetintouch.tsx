@@ -16,7 +16,7 @@ const UserendGetintouch = () => {
        
        
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-        <DeleteButton message="Are you sure want to delete?"/>
+        <DeleteButton message="Are you sure want to delete?" onDelete={()=>console.log("deleted")}/>
        </Box>
        <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>

@@ -15,7 +15,8 @@ const UserEndAddvideo = () => {
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <DeleteButton message="Are you sure want to delete Video?"/>
+       <DeleteButton message="Are you sure want to delete Video?" 
+       onDelete={()=>console.log("deleted")}/>
    </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>

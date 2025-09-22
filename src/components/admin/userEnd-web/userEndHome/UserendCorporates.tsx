@@ -21,7 +21,7 @@ return (
    <Box>
     <Stack className={classes.corporateStack1}>
     <Typography className={classes.titleText}>Logos</Typography>
-    <DeleteButton message="Are you use you want to delete Logo?"/>
+    <DeleteButton message="Are you use you want to delete Logo?" onDelete={()=>console.log("deleted")}/>
     </Stack>
     <Box className={classes.corporateImageBox}>
     <Uploadbutton />  

@@ -16,6 +16,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const CultureMurrel = () => {
   const { classes } = useUserEndwebStyles();
+  
+  const handleSave=()=>{
+
+  }
   return (
     <Box className={classes.SeaBassContainer}>
       <Stack className={classes.Seabassstack}>
@@ -40,7 +44,8 @@ const CultureMurrel = () => {
        <Box>
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
-          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Murrel?" />
+          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Murrel?" 
+          onDelete={()=>console.log("on deleting")}/>
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}
@@ -104,14 +109,15 @@ const CultureMurrel = () => {
         </Box>
         <Divider className={classes.heroDivider}/>
        </Box>
-       <UserEndSaveCancelButtons />
+       <UserEndSaveCancelButtons onSave={handleSave}/>
       
       
       {/* FOR BANNER PART */}
 
       <Stack className={classes.bannerStacktitle}>
         <Typography className={classes.MottoBoxText}>Banner</Typography>
-        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Murrel?" />
+        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Murrel?" 
+        onDelete={()=>console.log("deleting")}/>
       </Stack>
       <Box>
       
