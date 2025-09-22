@@ -1,6 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Layout from "../components/userflow/Shared/Layout";
-import Home from "../components/userflow/Home/Home";
 import Login from "../components/admin/auth/login";
 import ForgotPassword from "../components/admin/auth/forgotpassword";
 import OTP from "../components/admin/auth/otp";
@@ -16,16 +14,20 @@ import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
 import Logout from "../components/admin/auth/Logout";
 import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
-
+//user
+import Layout from "../components/userflow/Shared/Layout";
+import Home from "../components/userflow/Home/Home";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/home" replace />} />
-
+        {/* User Routes */}
       <Route path="/" element={<Layout />}>
         <Route path="home" element={<Home />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
       </Route>
+      
 
+     {/* admin Routes */}
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin/forgotpassword" element={<ForgotPassword />} />
       <Route path="/admin/otp" element={<OTP />} />
