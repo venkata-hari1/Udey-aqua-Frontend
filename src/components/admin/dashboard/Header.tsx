@@ -72,6 +72,8 @@ const backarrowHandle=()=>{
     break; 
    case "userend-home":
    case "userend-culture":
+   navigate('/admin/userend-web')
+   case "userend-aboutus":
    navigate('/admin/userend-web') 
    
    
