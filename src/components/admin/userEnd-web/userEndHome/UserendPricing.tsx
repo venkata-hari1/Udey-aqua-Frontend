@@ -16,6 +16,11 @@ const UserendPricing = () => {
     {id:3,price:3}
   ]
 
+ 
+ const handleSave=()=>{
+   console.log("userend values")
+ }    
+
 return (
    <Box>
        <Box className={classes.useHerocontainer}>
@@ -26,7 +31,8 @@ return (
       {pricedata.map((price,index)=>(
           <Fragment>
       <Box className={classes.userEnddelete} >
-       <UserendSaveDeleteButtons message={`Are you want to delete ${price.price}?`}/>
+       <UserendSaveDeleteButtons message={`Are you want to delete ${price.price}?`}
+       onDelete={()=>console.log("delete price")}/>
       </Box>
        <Typography className={classes.titleText}>{price.price}</Typography>      
        <Stack className={classes.projectsUploadContentbox}>
@@ -59,7 +65,7 @@ return (
        </Fragment>
       ))}
 
-     <UserEndSaveCancelButtons />  
+     <UserEndSaveCancelButtons onSave={handleSave} />  
        </Box> 
        </Box>
   

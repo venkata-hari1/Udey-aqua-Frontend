@@ -13,6 +13,10 @@ const corporatedata=[
     {count:3,image:fishImg},
 ] 
 
+
+ const handleSave=()=>{
+   console.log("userend values")
+ }   
 return (
    <Box>
     <Stack className={classes.corporateStack1}>
@@ -47,7 +51,7 @@ return (
      <Box>
       <ErrorMessages /> 
      </Box>
-     <UserEndSaveCancelButtons />
+     <UserEndSaveCancelButtons onSave={handleSave} />
  
 
 

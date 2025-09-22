@@ -6,6 +6,10 @@ import { DeleteButton, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndC
 
 const UserEndAddvideo = () => {
      const{classes}=useUserEndwebStyles() 
+
+ const handleSave=()=>{
+   console.log("userend values")
+ }    
   return (
    <Box>    
    <Box className={classes.useHerocontainer}> 
@@ -28,7 +32,7 @@ const UserEndAddvideo = () => {
         
         </Stack>
       </Stack>
-      <UserEndSaveCancelButtons />
+      <UserEndSaveCancelButtons onSave={handleSave} />
   </Box>
   </Box>
     </Box>

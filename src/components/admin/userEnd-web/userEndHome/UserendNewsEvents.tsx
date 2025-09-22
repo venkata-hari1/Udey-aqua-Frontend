@@ -9,6 +9,11 @@ import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 const UserendNewsEvents = () => {
 
   const{classes}=useUserEndwebStyles()
+
+
+ const handleSave=()=>{
+   console.log("userend values")
+ }     
     return (
      <Box>
       <Box className={classes.useHerocontainer}>
@@ -33,7 +38,8 @@ const UserendNewsEvents = () => {
     type="date" 
     size="small" 
     className={classes.dateTextfield}/>
-    <UserendSaveDeleteButtons message="Are you sure want to delete blog?"/>
+    <UserendSaveDeleteButtons message="Are you sure want to delete blog?"
+    onDelete={()=>console.log("deleted news")}/>
     </Box>
   </Box>
 
@@ -63,7 +69,7 @@ const UserendNewsEvents = () => {
        </Stack>
     </Stack> 
     <Divider sx={{border:'1px solid rgba(97, 177, 218, 0)'}}/>
-    <UserEndSaveCancelButtons />
+    <UserEndSaveCancelButtons onSave={handleSave} />
 
      </Box>
     </Box>

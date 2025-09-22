@@ -13,7 +13,14 @@ const UserendTestimonials = () => {
   {id:1,test:"Testimonial 1"},
   {id:2,test:"Testimonial 2"}
  ] 
+
 const{classes}=useUserEndwebStyles()
+
+
+ const handleSave=()=>{
+   console.log("userend values")
+ }   
+
 return (
  <Box>
  <Box className={classes.useHerocontainer}>
@@ -24,7 +31,8 @@ return (
 { testimonialdata.map((test,index)=>(
   <Fragment>
   <Box sx={{display:'flex',justifyContent:'end',mt:2}}>
-  <UserendSaveDeleteButtons message={`Are you sure wnant to delete ${test.test}`}/>
+  <UserendSaveDeleteButtons message={`Are you sure wnant to delete ${test.test}`}
+  onDelete={()=>console.log("delete testimonial")}/>
   </Box>
 
   <Stack className={classes.Uploadandheadingbox}>
@@ -62,7 +70,7 @@ return (
   
 }
    
-      <UserEndSaveCancelButtons />
+      <UserEndSaveCancelButtons onSave={handleSave} />
  </Box>
  </Box>
  )

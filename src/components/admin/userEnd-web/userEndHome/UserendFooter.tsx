@@ -9,6 +9,10 @@ const UserendFooter = () => {
 
   const{classes}=useUserEndwebStyles() 
 
+
+ const handleSave=()=>{
+   console.log("userend values")
+ }     
   return (
     <Box>
        <Box className={classes.useHerocontainer}>
@@ -56,7 +60,7 @@ const UserendFooter = () => {
       </Stack> 
     
      
-       <UserEndSaveCancelButtons /> 
+       <UserEndSaveCancelButtons onSave={handleSave} /> 
        
        </Box> 
        </Box>

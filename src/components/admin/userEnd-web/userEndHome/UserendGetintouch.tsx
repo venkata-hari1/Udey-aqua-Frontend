@@ -7,6 +7,9 @@ import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages, Err
 const UserendGetintouch = () => {
       const{classes}=useUserEndwebStyles() 
 
+ const handleSave=()=>{
+   console.log("userend values")
+ }   
   return (
     <Box>
        <Box className={classes.useHerocontainer}>
@@ -54,7 +57,7 @@ const UserendGetintouch = () => {
       </Stack> 
     
      
-       <UserEndSaveCancelButtons /> 
+       <UserEndSaveCancelButtons onSave={handleSave} /> 
        
        </Box> 
        </Box>

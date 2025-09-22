@@ -9,7 +9,10 @@ const UserendDirectors = () => {
 
     const{classes}=useUserEndwebStyles() 
     
-    
+ 
+ const handleSave=()=>{
+   console.log("userend values")
+ }      
 
   return (
    <Box>
@@ -31,7 +34,8 @@ const UserendDirectors = () => {
        </Select>
      </FormControl>
    
-      <UserendSaveDeleteButtons message={`Are you sure want to delete Director?`}/>
+      <UserendSaveDeleteButtons message={`Are you sure want to delete Director?`}
+      onDelete={()=>console.log("deleted")}/>
       </Box>
     
       <Stack className={classes.projectsUploadContentbox}>
@@ -91,7 +95,8 @@ const UserendDirectors = () => {
        </Select>
      </FormControl>
    
-      <UserendSaveDeleteButtons message={`Are you sure want to delete Advisor?`}/>
+      <UserendSaveDeleteButtons message={`Are you sure want to delete Advisor?`}
+      onDelete={()=>console.log("delted directors")}/>
       </Box>
     
       <Stack className={classes.projectsUploadContentbox}>
@@ -132,7 +137,7 @@ const UserendDirectors = () => {
       <Divider sx={{border:'1px solid #0A4FA4',mt:2,mb:2}}/>
       
      
-       <UserEndSaveCancelButtons /> 
+       <UserEndSaveCancelButtons onSave={handleSave} /> 
        
        </Box>
 

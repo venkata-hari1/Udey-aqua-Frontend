@@ -9,6 +9,10 @@ const UserEndProjects = () => {
  
     const{classes}=useUserEndwebStyles() 
 
+ const handleSave=()=>{
+   console.log("userend values")
+ }       
+
   return (
     <Box>
     <Box className={classes.useHerocontainer}>
@@ -28,7 +32,8 @@ const UserEndProjects = () => {
     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
     </Select>
   </FormControl>
-  <UserendSaveDeleteButtons message="Are you want to delete the Project?"/>
+  <UserendSaveDeleteButtons message="Are you want to delete the Project?"
+  onDelete={()=>console.log("delete project")}/>
    </Box>
     
    <Stack className={classes.projectsUploadContentbox}>
@@ -57,7 +62,7 @@ const UserEndProjects = () => {
      </Box>
    </Stack> 
    <Divider sx={{border:'1px solid rgba(94, 190, 237, 0)'}}/>
-    <UserEndSaveCancelButtons /> 
+    <UserEndSaveCancelButtons onSave={handleSave} /> 
     
     </Box> 
     </Box>

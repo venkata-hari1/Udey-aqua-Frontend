@@ -7,7 +7,11 @@ import { DeleteButton, ErrorMessages, ErrormsgContent, TextFieldManyRows, Upload
 const UserEndabout = () => {
 
       const{classes}=useUserEndwebStyles() 
-  return (
+
+  const handleSave=()=>{
+   console.log("userend hero values")
+ }
+      return (
    <Box>    
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
@@ -30,7 +34,7 @@ const UserEndabout = () => {
         <ErrormsgContent />
         </Stack>
       </Stack>
-      <UserEndSaveCancelButtons />
+      <UserEndSaveCancelButtons onSave={handleSave} />
   </Box>
   </Box>
     </Box>

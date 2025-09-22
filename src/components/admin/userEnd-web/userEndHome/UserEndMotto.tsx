@@ -16,6 +16,10 @@ const{classes}=useUserEndwebStyles()
   {id:3,boxname:"Box3"},
  ]
 
+ 
+ const handleSave=()=>{
+   console.log("userend values")
+ }   
   return (
    
    <Box>    
@@ -28,7 +32,8 @@ const{classes}=useUserEndwebStyles()
      <Box mt={2} key={index}>
    <Stack className={classes.slideAndButtons}>
     <Typography className={classes.MottoBoxText}>{moto.boxname}</Typography>
-   <UserendSaveDeleteButtons message={`Are you sure you want to delete ${moto.boxname} in Motto? `}/>
+   <UserendSaveDeleteButtons message={`Are you sure you want to delete ${moto.boxname} in Motto? `}
+   onDelete={()=>console.log("deleted moto")}/>
    </Stack>
    
    <Stack className={classes.Uploadandheadingbox}>
@@ -54,7 +59,7 @@ const{classes}=useUserEndwebStyles()
     
    </Box>
   ))}
-  <UserEndSaveCancelButtons />
+  <UserEndSaveCancelButtons onSave={handleSave} />
   
 </Box>
  </Box>

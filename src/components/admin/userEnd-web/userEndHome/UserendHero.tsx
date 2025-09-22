@@ -30,6 +30,11 @@ const onDelete=(id:string)=>{
   console.log("Slide after deletion",updatedslides)
 }
 
+
+ const handleSave=()=>{
+   console.log("userend hero values")
+ }
+
 return (
    <Box>    
    <Box className={classes.useHerocontainer}>
@@ -67,7 +72,7 @@ return (
     ))
    }
 
-   <UserEndSaveCancelButtons />
+   <UserEndSaveCancelButtons onSave={handleSave} />
  </Box>
  </Box>
   )
