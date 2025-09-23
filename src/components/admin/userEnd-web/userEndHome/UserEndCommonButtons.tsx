@@ -4,7 +4,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import { addressContentValidation } from "../../utils/Validations";
 
+//SAVE and CANCEL buttons
 interface SaveCancelProps {
   onSave: () => void;
   onCancel?: () => void;
@@ -35,14 +37,19 @@ export const UserEndSaveCancelButtons = ({
   );
 };
 
+//SAVE and DELETE buttons
 interface GenericSavedelete {
   message: string;
   onDelete: () => void;
+  disabled?: boolean;
+  sliceSave: () => void;
 }
 
 export const UserendSaveDeleteButtons = ({
   message,
   onDelete,
+  sliceSave,
+  disabled = false,
 }: GenericSavedelete) => {
   const [open, setOpen] = useState(false);
 
@@ -60,7 +67,13 @@ export const UserendSaveDeleteButtons = ({
 
   return (
     <Box display="flex" gap={2}>
-      <Button className={classes.heroSave}>Save</Button>
+      <Button
+        className={classes.heroSave}
+        variant="contained"
+        onClick={sliceSave}
+      >
+        Save
+      </Button>
       <Button className={classes.heroDelete} onClick={handleToggle}>
         Delete
       </Button>
@@ -76,10 +89,10 @@ export const UserendSaveDeleteButtons = ({
   );
 };
 
+//ADD NEW BOX/SLIDE
 interface Genericadding {
   onClick?: () => void;
 }
-
 export const AddingButton = ({ onClick }: Genericadding) => {
   const { classes } = useUserEndwebStyles();
 
@@ -97,11 +110,12 @@ export const AddingButton = ({ onClick }: Genericadding) => {
   );
 };
 
+//DELETE 
 interface GenericDelete {
   message: string;
   onDelete: () => void;
 }
-export const DeleteButton = ({ message,onDelete }: GenericDelete) => {
+export const DeleteButton = ({ message, onDelete }: GenericDelete) => {
   const { classes } = useUserEndwebStyles();
 
   const [open, setOpen] = useState(false);
@@ -110,7 +124,7 @@ export const DeleteButton = ({ message,onDelete }: GenericDelete) => {
     setOpen((prev) => !prev);
   };
   const handleConfirmDelete = () => {
-    onDelete()
+    onDelete();
     console.log("Delete", message);
   };
 
@@ -146,8 +160,18 @@ export const Textfiledbox = () => {
   );
 };
 
-export const Uploadbutton = () => {
+//UPLOAD IMAGE
+interface UploadbuttonProps {
+  onUpload: (file: File) => void;
+}
+export const Uploadbutton = ({ onUpload }: UploadbuttonProps) => {
   const { classes } = useUserEndwebStyles();
+
+  const handleChangeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+    onUpload(event.target.files[0]);
+    event.target.value = "";
+  };
 
   return (
     <Button
@@ -156,19 +180,37 @@ export const Uploadbutton = () => {
       component="label"
       endIcon={<FileUploadOutlinedIcon />}
     >
-      <input type="file" accept="image/*" hidden /> Upload
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        onChange={handleChangeUpload}
+      />{" "}
+      Upload
     </Button>
   );
 };
 
-export const TextFieldManyRows = () => {
+interface GenericTextfieldmutlirows {
+  onChange: (value: string) => void;
+}
+export const TextFieldManyRows = ({ onChange }: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
+
+  const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const contentoutput = addressContentValidation(value);
+    console.log(contentoutput);
+    onChange(value);
+  };
+
   return (
     <TextField
       className={classes.heroTextfiled}
       fullWidth
       multiline
       minRows={5}
+      onChange={handleChangeManyrows}
     />
   );
 };

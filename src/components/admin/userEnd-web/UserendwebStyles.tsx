@@ -225,6 +225,7 @@ cancelImgIcon:{
  top:-12,
  right:44,
  color:"red",
+ cursor:'pointer'
  
 },
 avtcancelImgIcon:{

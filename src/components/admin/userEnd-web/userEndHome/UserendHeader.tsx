@@ -41,6 +41,10 @@ const{classes}=useUserEndwebStyles()
  const handleSave=()=>{
    const payload={email,phone,address}
    console.log(payload)
+   setEmail('')
+   setPhone('')
+   setAddress('')
+  
  }
  
   return (
