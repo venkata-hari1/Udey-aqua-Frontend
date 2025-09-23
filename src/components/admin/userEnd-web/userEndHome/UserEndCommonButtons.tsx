@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { addressContentValidation } from "../../utils/Validations";
+import { addressContentValidation, validateImageDimensions, validateImageFile } from "../../utils/Validations";
 
 //SAVE and CANCEL buttons
 interface SaveCancelProps {
@@ -71,6 +71,7 @@ export const UserendSaveDeleteButtons = ({
         className={classes.heroSave}
         variant="contained"
         onClick={sliceSave}
+        disabled={disabled}
       >
         Save
       </Button>
@@ -163,14 +164,32 @@ export const Textfiledbox = () => {
 //UPLOAD IMAGE
 interface UploadbuttonProps {
   onUpload: (file: File) => void;
+  onError?:(msg:string)=>void;
 }
-export const Uploadbutton = ({ onUpload }: UploadbuttonProps) => {
+export const Uploadbutton = ({ onUpload,onError }: UploadbuttonProps) => {
   const { classes } = useUserEndwebStyles();
 
-  const handleChangeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || event.target.files.length === 0) return;
-    onUpload(event.target.files[0]);
-    event.target.value = "";
+    const file=event.target.files[0];
+    
+    //file validations
+    const fileError=validateImageFile(file)
+    if(fileError){
+     onError?.(fileError);
+     event.target.value="";
+     return;
+    }
+   const dimError=await validateImageDimensions(file);
+   if(dimError){
+    onError?.(dimError);
+    event.target.value="";
+    return;
+   } 
+  
+   onUpload(file);
+   event.target.value="";
+   return;
   };
 
   return (
@@ -192,16 +211,15 @@ export const Uploadbutton = ({ onUpload }: UploadbuttonProps) => {
 };
 
 interface GenericTextfieldmutlirows {
-  onChange: (value: string) => void;
+  onChange: (value: string,error:string) => void;
 }
 export const TextFieldManyRows = ({ onChange }: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
 
   const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const contentoutput = addressContentValidation(value);
-    console.log(contentoutput);
-    onChange(value);
+    const contenterror=addressContentValidation(value);
+    onChange(value,contenterror);    
   };
 
   return (
@@ -215,15 +233,18 @@ export const TextFieldManyRows = ({ onChange }: GenericTextfieldmutlirows) => {
   );
 };
 
-export const ErrorMessages = () => {
+//Error message for Image uploading
+
+interface ErrorMessageProps{
+  message?:string;
+}
+export const ErrorMessages = ({message}:ErrorMessageProps) => {
+
   const { classes } = useUserEndwebStyles();
+  if(!message)return null;
   return (
     <Typography className={classes.errorUpload}>
-      *Please upload the image in landscape format (Preferred size: 300px width
-      × 100px height)
-      <Typography className={classes.errorUpload}>
-        Image Must be 5 MB
-      </Typography>
+      {message}
     </Typography>
   );
 };
@@ -237,11 +258,14 @@ export const ErrormsgTitle = () => {
   );
 };
 
-export const ErrormsgContent = () => {
+interface ErrormsgContentProps{
+  message?:string;
+}
+export const ErrormsgContent = ({message}:ErrormsgContentProps) => {
   const { classes } = useUserEndwebStyles();
   return (
     <Typography className={classes.errorUpload}>
-      Max 2000 characters required
+      {message}
     </Typography>
   );
 };
