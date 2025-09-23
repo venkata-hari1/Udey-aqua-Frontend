@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/SeaWeed.tsx
 import CulturePage from "./CulturePage";
 import type { CultureCardData } from "./CulturePage";
 import seaWeedImg from "../../../assets/cultures/seaweed.png";

@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/MudCrab.tsx
 import CulturePage from "./CulturePage";
 import type { CultureCardData } from "./CulturePage";
 import mudCrabImg from "../../../assets/cultures/mudcrab.png";

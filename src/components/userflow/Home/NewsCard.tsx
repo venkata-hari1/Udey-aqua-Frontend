@@ -1,3 +1,4 @@
+// src/components/userflow/Home/NewsCard.tsx
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
@@ -26,7 +27,17 @@ const NewsCard: React.FC<NewsCardProps> = ({
   const navigate = useNavigate();
 
   const handleReadMoreClick = () => {
-    navigate('/news-events');
+    navigate("/news-events/news", {
+      state: {
+        openNews: {
+          image,
+          title,
+          date,
+          description,
+          author,
+        },
+      },
+    });
   };
   return (
     <Box
@@ -54,20 +65,24 @@ const NewsCard: React.FC<NewsCardProps> = ({
             {description}
           </Typography>
           <Typography className={classes.newsCardAuthor}>
-            {authorLink ? (
-              <Typography className={classes.newsCardAuthorLink}>
-                {author}
-              </Typography>
-            ) : (
-              <Box component="span" className={classes.newsCardAuthorSpan}>
-                {author}
-              </Box>
-            )}
-          </Typography>
+  {authorLink ? (
+    <Typography
+      component="span" 
+      className={classes.newsCardAuthorLink}
+    >
+      {author}
+    </Typography>
+  ) : (
+    <Box component="span" className={classes.newsCardAuthorSpan}>
+      {author}
+    </Box>
+  )}
+</Typography>
+
         </Box>
         <Box className={classes.newsCardFooter}>
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             className={classes.newsCardButton}
             onClick={handleReadMoreClick}
           >

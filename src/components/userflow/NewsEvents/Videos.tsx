@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/Videos.tsx
 import { Box, Typography, IconButton } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { useState } from "react";
@@ -79,6 +80,13 @@ const videoLibrary: ReadonlyArray<VideoItem> = [
 
 const Videos = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const [lastWatchedId, setLastWatchedId] = useState<string | null>(() => {
+    try {
+      return sessionStorage.getItem("videos_last_id");
+    } catch {
+      return null;
+    }
+  });
   const { classes } = useNewsEventsStyles();
   const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
     useScrollWithOffset(200);
@@ -90,10 +98,34 @@ const Videos = () => {
 
   const handleVideoClick = (video: VideoItem) => {
     setSelectedVideo(video);
+    setLastWatchedId(video.id);
+    try { sessionStorage.setItem("videos_last_id", video.id); } catch {}
   };
 
   const closeVideo = () => {
     setSelectedVideo(null);
+    // Ensure the page with the last watched video is visible and scroll to it
+    if (lastWatchedId) {
+      const idx = videoLibrary.findIndex((v) => v.id === lastWatchedId);
+      if (idx >= 0) {
+        const page = Math.floor(idx / pagination.itemsPerPage) + 1;
+        if (page !== pagination.currentPage) {
+          pagination.goToPage(page);
+        }
+      }
+      setTimeout(() => {
+        const el = document.getElementById(`video-item-${lastWatchedId}`);
+        if (el) {
+          try {
+            const rect = el.getBoundingClientRect();
+            const y = window.scrollY + rect.top - 120;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+          } catch {}
+        } else {
+          scrollToReadMore();
+        }
+      }, 0);
+    }
   };
 
   const extractYouTubeId = (urlOrId: string): string => {
@@ -140,6 +172,7 @@ const Videos = () => {
         currentItem={carousel.currentItem}
         onPrevious={carousel.goToPrevious}
         onNext={carousel.goToNext}
+        showArrows={false}
         renderBackground={(item) => (
           <Box className={classes.successStoriesBg}>
             <Box
@@ -188,7 +221,13 @@ const Videos = () => {
               {/* Multiple videos from youtubeIds array */}
               <Box className={classes.videoRowContent}>
                 {row.map((video) => (
-                  <Box key={video.id} className={classes.videoItem}>
+                  <Box
+                    key={video.id}
+                    id={`video-item-${video.id}`}
+                    className={`${classes.videoItemContainer} ${
+                      video.id === lastWatchedId ? classes.videoItemHighlight : ""
+                    }`}
+                  >
                     {/* All videos from youtubeIds array */}
                     <Box className={classes.videoThumbnailsContainer}>
                       {video.youtubeIds.map((youtubeId, index) => (

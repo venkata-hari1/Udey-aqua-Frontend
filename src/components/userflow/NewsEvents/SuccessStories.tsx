@@ -1,12 +1,13 @@
+// src/components/userflow/NewsEvents/SuccessStories.tsx
 import { Box, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
 import news1 from "../../../assets/news/past/past_news_1.png";
 import news2 from "../../../assets/news/past/past_news_2.png";
 import news3 from "../../../assets/news/success_story.png";
-import { useCarousel, usePagination, useCalendarFilter } from "./hooks";
+import { useCarousel, usePagination, useCalendarFilter, useScrollWithOffset } from "./hooks";
 import { HeroCarousel, Pagination, CalendarFilter } from "./components";
 
 interface CarouselItem {
@@ -119,6 +120,7 @@ const SuccessStories = () => {
   const carousel = useCarousel({ items: heroItems });
   const pagination = usePagination({ items: listItems, itemsPerPage: 2 });
   const calendarFilter = useCalendarFilter();
+  const { ref: listTopRef, scrollTo: scrollToListTop } = useScrollWithOffset(200);
   const [lightbox, setLightbox] = useState<{
     open: boolean;
     src: string;
@@ -132,6 +134,13 @@ const SuccessStories = () => {
     author?: string;
     images?: string[];
   }>({ active: false, image: "", title: "", body: [] });
+
+  // Ensure when the page changes (e.g., clicking page 5), we scroll to the list section top
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToListTop();
+    }, 0);
+  }, [pagination.currentPage]);
 
   return (
     <Box className={classes.successStoriesRoot}>
@@ -271,9 +280,16 @@ const SuccessStories = () => {
             </Box>
             <Box
               className={classes.backButtonContainer}
-              onClick={() =>
-                setDetail({ active: false, image: "", title: "", body: [] })
-              }
+              onClick={() => {
+                setDetail({ active: false, image: "", title: "", body: [] });
+                setTimeout(() => {
+                  const el = listTopRef?.current;
+                  if (el) {
+                    const y = el.getBoundingClientRect().top + window.pageYOffset - 200;
+                    try { window.scrollTo(0, Math.max(0, y)); } catch {}
+                  }
+                }, 0);
+              }}
             >
               <Box className={classes.backButton}>
                 <ArrowBack />
@@ -283,6 +299,7 @@ const SuccessStories = () => {
         </Box>
       ) : (
         <Box className={classes.cardsSection}>
+          <Box ref={listTopRef} />
           <Box className={classes.cardsGrid}>
             {pagination.currentItems.map((it, i) => (
               <Box key={`${it.title}-${i}`} className={classes.storyCard}>
@@ -345,7 +362,7 @@ const SuccessStories = () => {
             ))}
           </Box>
           <Box className={classes.testimonialPaginationWrapper}>
-            <Box className={classes.testimonialPagination}>
+          <Box className={classes.testimonialPagination}>
               <Pagination
                 currentPage={pagination.currentPage}
                 totalPages={pagination.totalPages}

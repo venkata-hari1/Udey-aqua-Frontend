@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/components/userflow/Cultures/CulturesLayout.tsx
+import React, { useEffect, useState } from "react";
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -62,6 +63,12 @@ const CulturesLayout: React.FC = () => {
   const handleStepChange = (step: number) => {
     setCurrentStep(step);
   };
+
+  // Reset plan flow when switching between culture routes
+  useEffect(() => {
+    setCurrentStep(1);
+    setFromPdf(false);
+  }, [location.pathname]);
 
   const scrollToPlans = () => {
     try {
@@ -147,6 +154,7 @@ const CulturesLayout: React.FC = () => {
       />
       <Box id="plans-section">
         <PlansSection
+          key={location.pathname}
           currentStep={currentStep}
           onStepChange={handleStepChange}
           initialCulture={"Freshwater"}

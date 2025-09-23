@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/Plans/indiaLocations.ts
 export type DistrictInfo = {
   name: string;
   pincode: string; // representative/default pincode for demo purposes

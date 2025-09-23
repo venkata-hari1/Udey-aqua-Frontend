@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/Plans/Step3.tsx
 import {
   Box,
   Button,
@@ -40,6 +41,8 @@ const Step3 = ({
   const { classes } = usePlansStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  // Show validation messages only after user clicks Continue
+  const [showErrors, setShowErrors] = useState(false);
 
   const [statesList, setStatesList] = useState<string[]>(ALL_INDIA_STATES);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
@@ -97,7 +100,7 @@ const Step3 = ({
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    if (formErrors[field]) {
+    if (showErrors && formErrors[field]) {
       setFormErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
@@ -184,14 +187,23 @@ const Step3 = ({
       if (prev.district === districtName) return prev;
       return { ...prev, district: districtName, pincode: "" };
     });
-    setFormErrors((prev) => ({
-      ...prev,
-      district: undefined,
-      pincode: undefined,
-    }));
+    if (showErrors) {
+      setFormErrors((prev) => ({
+        ...prev,
+        district: undefined,
+        pincode: undefined,
+      }));
+    }
   };
 
+  // Ensure Select never receives out-of-range value while options are loading or changed
+  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {});
+  const safeDistrictValue = availableDistrictNames.includes(formData.district)
+    ? formData.district
+    : "";
+
   const handleContinue = () => {
+    setShowErrors(true);
     const digitsOnly = (formData.phone || "").replace(/[^0-9]/g, "");
     const normalizedPhone = /^\+91\d{10}$/.test(formData.phone)
       ? formData.phone
@@ -245,17 +257,17 @@ const Step3 = ({
         <Grid size={{ xs: 12, md: 6 }} className={classes.step3FormCol}>
           <Grid container spacing={2} className={classes.step3FieldsGrid}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <FormField
+            <FormField
                 label="Name"
                 placeholder="Enter your name"
                 required
                 value={formData.name}
                 onChange={(value) => handleInputChange("name", value)}
-                error={formErrors.name}
+              error={showErrors ? formErrors.name : undefined}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <FormField
+            <FormField
                 label="Phone"
                 placeholder="+91 9876543210"
                 required
@@ -268,28 +280,28 @@ const Step3 = ({
                   const tenDigits = withoutCountry.slice(0, 10);
                   handleInputChange("phone", tenDigits);
                 }}
-                error={formErrors.phone}
+              error={showErrors ? formErrors.phone : undefined}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <FormField
+            <FormField
                 label="Email ID"
                 placeholder="Enter your email"
                 required
                 value={formData.email}
                 onChange={(value) => handleInputChange("email", value)}
-                error={formErrors.email}
+              error={showErrors ? formErrors.email : undefined}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <FormField
+            <FormField
                 label="Address"
                 placeholder="Enter your address"
                 multiline
                 rows={3}
                 value={formData.address}
                 onChange={(value) => handleInputChange("address", value)}
-                error={formErrors.address}
+              error={showErrors ? formErrors.address : undefined}
               />
             </Grid>
             <Grid
@@ -306,7 +318,7 @@ const Step3 = ({
                   value={formData.state || ""}
                   onChange={(e) => handleStateChange(e.target.value as string)}
                   className={classes.step3Field}
-                  error={!!formErrors.state}
+                  error={showErrors ? !!formErrors.state : false}
                   IconComponent={KeyboardArrowDown}
                   MenuProps={{
                     PaperProps: { className: classes.step4MenuPaper },
@@ -326,7 +338,7 @@ const Step3 = ({
                     </MenuItem>
                   ))}
                 </Select>
-                {formErrors.state && (
+                {showErrors && formErrors.state && (
                   <Typography className={classes.step3Error}>
                     {formErrors.state}
                   </Typography>
@@ -342,12 +354,12 @@ const Step3 = ({
                       <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
                     </Typography>
                     <Select
-                      value={formData.district || ""}
+                      value={safeDistrictValue}
                       onChange={(e) =>
                         handleDistrictChange(e.target.value as string)
                       }
                       className={classes.step3Field}
-                      error={!!formErrors.district}
+                      error={showErrors ? !!formErrors.district : false}
                       disabled={!formData.state || loadingDistricts}
                       IconComponent={KeyboardArrowDown}
                       MenuProps={{
@@ -372,7 +384,7 @@ const Step3 = ({
                         )
                       )}
                     </Select>
-                    {formErrors.district && (
+                    {showErrors && formErrors.district && (
                       <Typography className={classes.step3Error}>
                         {formErrors.district}
                       </Typography>
@@ -418,8 +430,8 @@ const Step3 = ({
                       }}
                       placeholder="Enter 6-digit pincode"
                       className={classes.step3Field}
-                      error={!!formErrors.pincode}
-                      helperText={formErrors.pincode}
+                      error={showErrors ? !!formErrors.pincode : false}
+                      helperText={showErrors ? formErrors.pincode : undefined}
                       disabled={
                         !formData.state || !formData.district || loadingDistricts
                       }
@@ -480,8 +492,8 @@ const Step3 = ({
                   }}
                   placeholder="Enter 6-digit pincode"
                   className={classes.step3Field}
-                  error={!!formErrors.pincode}
-                  helperText={formErrors.pincode}
+                  error={showErrors ? !!formErrors.pincode : false}
+                  helperText={showErrors ? formErrors.pincode : undefined}
                   disabled={
                     !formData.state || !formData.district || loadingDistricts
                   }
@@ -500,7 +512,7 @@ const Step3 = ({
                       <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
                 </Typography>
                 <Select
-                  value={formData.district || ""}
+                  value={safeDistrictValue}
                   onChange={(e) =>
                     handleDistrictChange(e.target.value as string)
                   }

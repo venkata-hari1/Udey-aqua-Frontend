@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/components/userflow/Technologies/TechnologiesLayout.tsx
+import React, { useEffect, useState } from "react";
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -57,6 +58,12 @@ const TechnologiesLayout: React.FC = () => {
       }
     } catch {}
   };
+
+  // Reset plan flow when switching between technology routes
+  useEffect(() => {
+    setCurrentStep(1);
+    setFromPdf(false);
+  }, [location.pathname]);
 
   return (
     <Grid
@@ -139,6 +146,7 @@ const TechnologiesLayout: React.FC = () => {
       />
       <Box id="plans-section">
         <PlansSection
+          key={location.pathname}
           currentStep={currentStep}
           onStepChange={handleStepChange}
           initialCulture={"Freshwater"}

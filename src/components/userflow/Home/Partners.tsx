@@ -1,3 +1,4 @@
+// src/components/userflow/Home/Partners.tsx
 import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";

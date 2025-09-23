@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/hooks/usePagination.ts
 import { useState, useCallback, useMemo } from "react";
 
 interface UsePaginationProps {
@@ -10,6 +11,7 @@ interface UsePaginationReturn {
   currentPage: number;
   totalPages: number;
   currentItems: any[];
+  itemsPerPage: number;
   goToPage: (page: number) => void;
   goToPreviousPage: () => void;
   goToNextPage: () => void;
@@ -62,6 +64,7 @@ export const usePagination = ({
     currentPage,
     totalPages,
     currentItems,
+    itemsPerPage,
     goToPage,
     goToPreviousPage,
     goToNextPage,

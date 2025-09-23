@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/NewsEventsHero.tsx
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import useNewsEventsStyles from "./newsEventsStyles.tsx";
 import newsEventsImage from "../../../assets/news/main.png";

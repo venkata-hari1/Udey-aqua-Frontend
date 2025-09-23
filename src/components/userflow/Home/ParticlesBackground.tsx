@@ -1,3 +1,4 @@
+// src/components/userflow/Home/ParticlesBackground.tsx
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
@@ -36,25 +37,39 @@ const ParticlesBackground: React.FC = () => {
       },
       particles: {
         color: { value: "#ffffff" },
+        // Desktop baseline style
         links: { color: "#ffffff", distance: 150, enable: true },
-        move: {
-          enable: true,
-          speed: 2,
-          outModes: { default: "bounce" },
-        },
-        number: {
-          value: 80,
-          density: {
-            enable: true,
-            // Some versions require value_area, others area; engine handles both
-            area: 800,
-          },
-        },
+        move: { enable: true, speed: 2, outModes: { default: "bounce" } },
+        number: { value: 80, density: { enable: true, area: 800 } },
         opacity: { value: 0.5 },
         shape: { type: "circle" },
         size: { value: { min: 1, max: 5 } },
       },
       detectRetina: true,
+    
+      responsive: [
+        {
+          maxWidth: 480,
+          options: {
+            particles: {
+              // Mobile: spacious, transparent, behind content
+              number: { value: 22, density: { enable: false } },
+              links: { opacity: 0.15, width: 1 },
+              opacity: { value: 0.25 },
+            },
+          },
+        },
+        {
+          maxWidth: 768,
+          options: {
+            particles: {
+              number: { value: 35, density: { enable: false } },
+              links: { opacity: 0.2, width: 1 },
+              opacity: { value: 0.35 },
+            },
+          },
+        },
+      ],
     } as unknown
   ), []);
 

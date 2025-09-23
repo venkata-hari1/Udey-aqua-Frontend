@@ -1,3 +1,4 @@
+// src/components/userflow/Technologies/TechnologiesCard.tsx
 import { Box, Typography, IconButton, Collapse } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useTechnologiesStyles from "./technologiesStyles";

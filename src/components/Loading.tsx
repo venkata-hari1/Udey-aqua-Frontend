@@ -1,3 +1,4 @@
+// src/components/Loading.tsx
 import { Box } from "@mui/material";
 import useSharedStyles from "./userflow/Shared/sharedStyles";
 import logoColor from "../assets/logo_color.png";

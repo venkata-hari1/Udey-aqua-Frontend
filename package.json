@@ -23,6 +23,8 @@
     "axios": "^1.10.0",
     "framer-motion": "^12.23.16",
     "install": "^0.13.0",
+    "jspdf": "^3.0.3",
+    "jspdf-autotable": "^5.0.2",
     "npm": "^11.6.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

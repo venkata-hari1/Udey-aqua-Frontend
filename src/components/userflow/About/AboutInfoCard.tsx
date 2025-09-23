@@ -1,3 +1,4 @@
+// src/components/userflow/About/AboutInfoCard.tsx
 import { Box, Typography, IconButton, Collapse } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useAboutStyles from "./aboutStyles";
@@ -29,7 +30,9 @@ const AboutInfoCard = ({
 
   return (
     <Box className={classes.aboutCard} id={`card-${slug}`}>
-      <Typography className={classes.aboutCardTitle}>{title}</Typography>
+      <Typography className={classes.aboutCardTitle} id={`card-${slug}-title`}>
+        {title}
+      </Typography>
       {!expanded && (
         <Typography className={classes.aboutCardDesc}>{smallDesc}</Typography>
       )}

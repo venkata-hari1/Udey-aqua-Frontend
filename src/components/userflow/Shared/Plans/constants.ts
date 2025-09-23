@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/Plans/constants.ts
 import type1 from "../../../../assets/training/type1.png";
 import type2 from "../../../../assets/training/type2.png";
 import type3 from "../../../../assets/training/type3.png";
@@ -124,7 +125,7 @@ export const IMAGES = {
 // Form validation patterns
 export const VALIDATION_PATTERNS = {
   phone: /^\+91\d{10}$/,
-  email: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+  email: /^(?!.*\.\.)[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
   pincode: /^\d{6}$/,
 };
 

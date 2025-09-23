@@ -1,3 +1,4 @@
+// src/components/userflow/About/aboutStyles.tsx
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
@@ -80,6 +81,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutHeaderSideGrid: {
     display: "grid",
     placeItems: "center",
+    [theme.breakpoints.down("lg")]: {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(1),
+    },
   },
   aboutCard: {
     background: COLORS.WHITE_GRAY,
@@ -171,6 +176,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     maxWidth: "200px",
     maxHeight: "200px",
     display: "block",
+    [theme.breakpoints.down("lg")]: {
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
   },
   aboutLayoutRoot: {
     width: "100%",

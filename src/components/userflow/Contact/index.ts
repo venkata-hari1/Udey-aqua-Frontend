@@ -1,3 +1,4 @@
+// src/components/userflow/Contact/index.ts
 export { default as Contact } from "./Contact";
 export { default as ContactHero } from "./ContactHero";
 export { default as ContactLayout } from "./ContactLayout";

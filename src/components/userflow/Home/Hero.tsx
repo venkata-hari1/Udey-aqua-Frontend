@@ -1,7 +1,8 @@
-import { Box, Typography, IconButton, useMediaQuery } from "@mui/material";
+// src/components/userflow/Home/Hero.tsx
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+// import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTheme } from "@mui/material/styles";
 import heroImg from "../../../assets/home/hero_img.png";
 import useHomeStyles from "./homeStyles";
@@ -19,11 +20,11 @@ const Hero = () => {
 
   return (
     <Box className={classes.heroRoot}>
-      <Box className={classes.heroLeftArrowBox}>
+      {/* <Box className={classes.heroLeftArrowBox}>
         <IconButton className={classes.heroArrowBtn}>
           <ArrowBackIosNewIcon className={classes.heroArrowBackIcon} />
         </IconButton>
-      </Box>
+      </Box> */}
       <Box className={classes.heroMain}>
         <Box sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
           <ParticlesBackground />
@@ -55,11 +56,11 @@ const Hero = () => {
           </Box>
         </Box>
       </Box>
-      <Box className={classes.heroRightArrowBox}>
+      {/* <Box className={classes.heroRightArrowBox}>
         <IconButton className={classes.heroArrowBtnRight}>
           <ArrowForwardIosIcon className={classes.heroArrowForwardIcon} />
         </IconButton>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

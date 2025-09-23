@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/components/HeroCarousel.tsx
 import { Box, IconButton, Typography } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -13,6 +14,7 @@ interface HeroCarouselProps {
   renderOverlay?: (item: any) => ReactNode;
   renderTitle?: (item: any) => ReactNode;
   className?: string;
+  showArrows?: boolean;
 }
 
 const HeroCarousel = ({
@@ -24,6 +26,7 @@ const HeroCarousel = ({
   renderOverlay,
   renderTitle,
   className,
+  showArrows = true,
 }: HeroCarouselProps) => {
   const { classes, cx } = useNewsEventsStyles();
 
@@ -36,27 +39,31 @@ const HeroCarousel = ({
       <Box className={classes.successStoriesCarousel}>
         {renderBackground(currentItem)}
 
-        <IconButton
-          onClick={onPrevious}
-          className={cx(
-            classes.successStoriesArrow,
-            classes.successStoriesArrowLeft
-          )}
-          aria-label="Previous"
-        >
-          <ChevronLeftIcon />
-        </IconButton>
+        {showArrows && (
+          <IconButton
+            onClick={onPrevious}
+            className={cx(
+              classes.successStoriesArrow,
+              classes.successStoriesArrowLeft
+            )}
+            aria-label="Previous"
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+        )}
 
-        <IconButton
-          onClick={onNext}
-          className={cx(
-            classes.successStoriesArrow,
-            classes.successStoriesArrowRight
-          )}
-          aria-label="Next"
-        >
-          <ChevronRightIcon />
-        </IconButton>
+        {showArrows && (
+          <IconButton
+            onClick={onNext}
+            className={cx(
+              classes.successStoriesArrow,
+              classes.successStoriesArrowRight
+            )}
+            aria-label="Next"
+          >
+            <ChevronRightIcon />
+          </IconButton>
+        )}
 
         {renderOverlay && renderOverlay(currentItem)}
 

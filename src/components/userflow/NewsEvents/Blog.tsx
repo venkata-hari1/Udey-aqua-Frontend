@@ -1,6 +1,7 @@
+// src/components/userflow/NewsEvents/Blog.tsx
 import { Box, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
 import {
@@ -143,7 +144,25 @@ const Blog = () => {
   });
   const calendarFilter = useCalendarFilter();
 
+  const [lastClickedId, setLastClickedId] = useState<number | null>(() => {
+    try {
+      const v = sessionStorage.getItem("news_last_blog_id");
+      return v ? parseInt(v, 10) : null;
+    } catch {
+      return null;
+    }
+  });
+  // Fade-out highlight after return
+  useEffect(() => {
+    if (lastClickedId) {
+      const t = setTimeout(() => setLastClickedId(null), 2000);
+      return () => clearTimeout(t);
+    }
+  }, [lastClickedId]);
+
   const handleReadMore = (blog: ReadMoreBlogItem) => {
+    setLastClickedId(blog.id);
+    try { sessionStorage.setItem("news_last_blog_id", String(blog.id)); } catch {}
     setDetail({
       active: true,
       image: blog.image,
@@ -162,6 +181,33 @@ const Blog = () => {
       scrollToDetailTop();
     }, 0);
   };
+
+  // When returning to list (detail closed), scroll to previously clicked card on mobile
+  useEffect(() => {
+    if (!detail.active && lastClickedId) {
+      // Ensure the page containing the blog is visible
+      const idx = readMoreBlogData.findIndex((b) => b.id === lastClickedId);
+      if (idx >= 0) {
+        const page = Math.floor(idx / pagination.itemsPerPage) + 1;
+        if (page !== pagination.currentPage) {
+          pagination.goToPage(page);
+        }
+      }
+      setTimeout(() => {
+        const el = document.getElementById(`blog-card-${lastClickedId}`);
+        if (el) {
+          try {
+            const rect = el.getBoundingClientRect();
+            const y = window.scrollY + rect.top - 120;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+          } catch {}
+        } else {
+          scrollToReadMore();
+        }
+      }, 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detail.active]);
 
   if (detail.active) {
     return (
@@ -270,7 +316,12 @@ const Blog = () => {
 
         <Box className={classes.readMoreNewsGrid}>
           {pagination.currentItems.map((blog: ReadMoreBlogItem) => (
-            <Box key={blog.id} onClick={() => handleReadMore(blog)}>
+            <Box
+              key={blog.id}
+              id={`blog-card-${blog.id}`}
+              onClick={() => handleReadMore(blog)}
+              className={blog.id === lastClickedId ? classes.blogCardHighlight : undefined}
+            >
               <NewsCard {...blog} autoWidth />
             </Box>
           ))}

@@ -1,13 +1,36 @@
+// src/components/userflow/Shared/Plans/Step7.tsx
 import { Box, Grid, Typography } from "@mui/material";
 import { usePlansStyles } from "../sharedStyles";
 import { IMAGES } from "./constants";
+import InvoiceGenerator from "../InvoiceGenerator";
+import type { FormData, Step2Data, Step4Data } from "./types";
 
-const Step7 = () => {
+interface Step7Props {
+  formData: FormData;
+  step2Data: Step2Data;
+  step4Data: Step4Data;
+  price: number;
+}
+
+const Step7 = ({ formData, step2Data, step4Data, price }: Step7Props) => {
   const { classes } = usePlansStyles();
 
-  const handleDownloadInvoice = () => {
-    // Handle invoice download
-    console.log("Download invoice");
+  // Sample invoice data - in a real app, this would come from props or state
+  const invoiceData = {
+    customerName: (formData.name || "").trim(),
+    customerAddress: `${(formData.address || "").trim()}, ${(formData.district || "").trim()}, ${(formData.state || "").trim()}, ${formData.pincode || ""}`.replace(/,\s*,/g, ", ").replace(/,\s*$/, ""),
+    customerPhone: formData.phone ? `+91 ${formData.phone}` : "",
+    invoiceNumber: `UDAY-${Date.now()}`,
+    invoiceDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+    subject: `Training Program – ${step4Data.trainingCourse || step2Data.selectedCultureType || "Aquaculture"}`,
+    itemDetail: `Training Program – ${step4Data.trainingCourse || step2Data.selectedCultureType || "Aquaculture"}\n(Culture: ${step2Data.selectedCultureType || "-"}, Duration: 3 Days)`,
+    quantity: 1,
+    rate: price,
+    subtotal: price,
+    gstRate: 18,
+    gstAmount: Math.round(price * 0.18),
+    total: price + Math.round(price * 0.18),
   };
 
   return (
@@ -41,19 +64,7 @@ const Step7 = () => {
             <Typography className={classes.step7SuccessMessage}>
               Thank you for booking your training slot with Uday Aqua
             </Typography>
-            <Box
-              component="button"
-              className={classes.step7DownloadButton}
-              onClick={handleDownloadInvoice}
-            >
-              <Box
-                component="img"
-                src={IMAGES.pdfIcon}
-                alt="PDF"
-                className={classes.step7PdfIcon}
-              />
-              Download Invoice
-            </Box>
+            <InvoiceGenerator invoiceData={invoiceData} />
           </Box>
         </Grid>
       </Grid>

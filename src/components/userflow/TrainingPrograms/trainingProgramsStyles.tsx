@@ -1,3 +1,4 @@
+// src/components/userflow/TrainingPrograms/trainingProgramsStyles.tsx
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, FONTS, SHADOWS } from "../Shared/styles";

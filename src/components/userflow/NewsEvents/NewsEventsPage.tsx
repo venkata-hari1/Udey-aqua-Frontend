@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/NewsEventsPage.tsx
 import { Box } from "@mui/material";
 import useNewsEventsStyles from "./newsEventsStyles.tsx";
 

@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/SeaBass.tsx
 import CulturePage from "./CulturePage";
 import type { CultureCardData } from "./CulturePage";
 import seaBassImg from "../../../assets/cultures/seebass.png";
