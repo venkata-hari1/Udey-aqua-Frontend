@@ -9,7 +9,7 @@ const Layout = () => {
   const { classes } = useSharedStyles();
   const location = useLocation();
   const pathname = location.pathname || "/";
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "/home";
   const routeHasContactBox =
     pathname.startsWith("/about") ||
     pathname.startsWith("/cultures") ||

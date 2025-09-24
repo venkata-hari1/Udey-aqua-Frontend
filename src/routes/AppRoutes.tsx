@@ -48,7 +48,6 @@ import Awards from "../components/userflow/NewsEvents/Awards";
 import Blog from "../components/userflow/NewsEvents/Blog";
 import Contact from "../components/userflow/Contact/Contact";
 import Maps from "../components/userflow/Shared/Maps";
-
 const AppRoutes = () => {
   const location = useLocation();
 
@@ -60,10 +59,10 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/home" replace />} />
-
+        {/* User Routes */}
       <Route path="/" element={<Layout />}>
         <Route path="home" element={<Home />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="about" element={<AboutLayout />}>
           <Route index element={<WhoWeAre />} />
           <Route path="our-history" element={<OurHistory />} />
@@ -101,7 +100,9 @@ const AppRoutes = () => {
           <Route path="cage-culture" element={<CageCulture />} />
         </Route>
       </Route>
+      
 
+     {/* admin Routes */}
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin/forgotpassword" element={<ForgotPassword />} />
       <Route path="/admin/otp" element={<OTP />} />
