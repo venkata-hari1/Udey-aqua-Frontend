@@ -19,7 +19,7 @@ const CulturesImage = () => {
       <Box className={classes.cultureheroBox2}>  
       <Stack display="flex" gap={2} justifyContent="space-between">
           <Typography className={classes.titleText}>Image</Typography>
-          <Uploadbutton />
+          <Uploadbutton onUpload={() =>console.log("")}/>
           <Box className={classes.herouploadImageBox1}>
             <img src={fishImg} className={classes.herouploadImage}/>
             <CancelIcon className={classes.cancelImgIcon}/>
@@ -32,7 +32,8 @@ const CulturesImage = () => {
 
      <Box>
       <Typography className={classes.titleText}>SubTitle</Typography>
-      <TextFieldManyRows />
+      <TextFieldManyRows onChange={() =>
+                        console.log("")}/>
      </Box>
      </Box>
      <Box className={classes.buttonContainer}>

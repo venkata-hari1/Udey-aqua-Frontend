@@ -118,3 +118,19 @@ export const validateImageDimensions=(file:File):Promise<string |null>=>{
      img.onerror=()=>resolve("Unable to read image dimensions");
    })
 }
+
+export const validateVideo=(file:File)=>{
+   if(!file){
+    return "Please upload video";
+   }
+  const allowFormats=["video/mp4","video/quicktime"];
+  if(!allowFormats.includes(file.type)){
+    return "Recommended formats: MP4, MOV.";
+  }
+  
+  const maxSizinMB=5;
+  if(file.size>maxSizinMB*1024*1024){
+    return "video must be lessthan 5MB"
+  }
+  return null;
+}

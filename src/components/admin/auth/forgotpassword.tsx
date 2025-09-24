@@ -53,7 +53,7 @@ const validateAndContinue = () => {
         <StyledLoginForm>
           <StyledLoginLogo src={logo} alt="Logo" />
 
-          <StyledTitle variant="h5" fontWeight="bold">
+          <StyledTitle variant="h5" fontWeight="bold" sx={{ textAlign: { xs: 'center',fontSize:'25px' } }}>
             Forgot Password
           </StyledTitle>
           <StyledSubtitle variant="body2">

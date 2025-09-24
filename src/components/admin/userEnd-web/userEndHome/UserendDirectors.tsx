@@ -13,6 +13,9 @@ const UserendDirectors = () => {
  const handleSave=()=>{
    console.log("userend values")
  }      
+ const handleSliceSave=()=>{
+
+ }
 
   return (
    <Box>
@@ -35,13 +38,15 @@ const UserendDirectors = () => {
      </FormControl>
    
       <UserendSaveDeleteButtons message={`Are you sure want to delete Director?`}
-      onDelete={()=>console.log("deleted")}/>
+      onDelete={()=>console.log("deleted")}
+      sliceSave={() => handleSliceSave()}
+                    />
       </Box>
     
       <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() => console.log("")}/>   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
@@ -96,13 +101,14 @@ const UserendDirectors = () => {
      </FormControl>
    
       <UserendSaveDeleteButtons message={`Are you sure want to delete Advisor?`}
-      onDelete={()=>console.log("delted directors")}/>
+      onDelete={()=>console.log("delted directors")}
+      sliceSave={() => handleSliceSave()}/>
       </Box>
     
       <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() => console.log()}/>   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>

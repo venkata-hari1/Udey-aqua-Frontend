@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { addressContentValidation, validateImageDimensions, validateImageFile } from "../../utils/Validations";
+import { addressContentValidation, validateImageDimensions, validateImageFile,validateVideo } from "../../utils/Validations";
 
 //SAVE and CANCEL buttons
 interface SaveCancelProps {
@@ -161,7 +161,11 @@ export const Textfiledbox = () => {
   );
 };
 
-//UPLOAD IMAGE
+
+
+
+
+/* //UPLOAD IMAGE
 interface UploadbuttonProps {
   onUpload: (file: File) => void;
   onError?:(msg:string)=>void;
@@ -209,7 +213,7 @@ export const Uploadbutton = ({ onUpload,onError }: UploadbuttonProps) => {
     </Button>
   );
 };
-
+ */
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
 }
@@ -234,7 +238,6 @@ export const TextFieldManyRows = ({ onChange }: GenericTextfieldmutlirows) => {
 };
 
 //Error message for Image uploading
-
 interface ErrorMessageProps{
   message?:string;
 }
@@ -276,5 +279,92 @@ export const ErrormsgPrice = () => {
     <Typography className={classes.errorUpload}>
       Max 12 characters required
     </Typography>
+  );
+};
+
+//IMAGE/VIDEO UPLOAD ....
+
+interface UploadButtonPropsBase {
+  onError?: (msg: string,id?:string) => void;
+  type?: "image" | "video";
+}
+
+interface UploadButtonSingle extends UploadButtonPropsBase {
+  multiple?: false;
+  onUpload: (file: File) => void;
+}
+interface UploadButtonMultiple extends UploadButtonPropsBase {
+  multiple: true;
+  onUpload: (files: File[]) => void;
+}
+
+type UploadButtonProps = UploadButtonSingle | UploadButtonMultiple;
+
+export const Uploadbutton = ({
+  onUpload,
+  onError,
+  type = "image",
+  multiple = false,
+}: UploadButtonProps) => {
+  const { classes } = useUserEndwebStyles();
+
+  const handleChangeUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+
+    const files = Array.from(event.target.files);
+    const validFiles: File[] = [];
+
+    for (const file of files) {
+      if (type === "image") {
+        const fileError = validateImageFile(file);
+        if (fileError) {
+          onError?.(fileError);
+          continue;
+        }
+
+        const dimError = await validateImageDimensions(file);
+        if (dimError) {
+          onError?.(dimError);
+          continue;
+        }
+      } else if (type === "video") {
+        const error = validateVideo(file);
+        if (error) {
+          onError?.(error);
+          continue;
+        }
+      }
+      validFiles.push(file);
+    }
+
+    if (validFiles.length > 0) {
+      if (multiple) {
+        (onUpload as (files: File[]) => void)(validFiles);
+      } else {
+        (onUpload as (file: File) => void)(validFiles[0]);
+      }
+    }
+
+    event.target.value = ""; 
+  };
+
+  const accept = type === "image" ? "image/*" : "video/mp4,video/quicktime";
+
+  return (
+    <Button
+      variant="outlined"
+      className={classes.uploadHerobutton}
+      component="label"
+      endIcon={<FileUploadOutlinedIcon />}
+    >
+      <input
+        type="file"
+        accept={accept}
+        hidden
+        multiple={multiple}
+        onChange={handleChangeUpload}
+      />
+      Upload
+    </Button>
   );
 };

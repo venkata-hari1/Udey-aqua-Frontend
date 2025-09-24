@@ -21,7 +21,7 @@ const UserendGetintouch = () => {
        <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() =>console.log("")}/>   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>

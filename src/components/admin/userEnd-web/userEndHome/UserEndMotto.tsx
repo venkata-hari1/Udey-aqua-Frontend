@@ -141,7 +141,7 @@ const isSaveDisabled=mottobox.some(
               <Stack className={classes.UploadImageStack}>
                 <Typography className={classes.titleText}>Image</Typography>
 
-                <Uploadbutton
+                <Uploadbutton type="image"
                   onUpload={(file) => handleUpload(box.id, file)}
                   onError={(msg) => handleImageError(box.id, msg)}
                 />

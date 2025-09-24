@@ -45,14 +45,16 @@ const handleSave=()=>{
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
           <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Mud Crab?" 
-          onDelete={()=>console.log("deleted")}/>
+          onDelete={()=>console.log("deleted")}
+          sliceSave={() => console.log("deleted")}
+          />
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}
           <Box className={classes.leftsideSectionbox}>
             <Stack className={classes.leftsideSectionbox}>
               <Typography className={classes.titleText}>Image</Typography>
-              <Uploadbutton />
+              <Uploadbutton onUpload={() =>console.log("")}/>
               <Box className={classes.herouploadImageBox1}>
                 <img src={fishImg} className={classes.herouploadImage} alt="fish image"/>
                 <CancelIcon className={classes.cancelImgIcon} />
@@ -67,7 +69,7 @@ const handleSave=()=>{
             </Stack>
             <Stack className={classes.leftsideSectionbox}>
               <Typography color="black">Upload Pdf</Typography>
-              <Uploadbutton />
+              <Uploadbutton onUpload={() =>console.log("")}/>
               <Box className={classes.herouploadImageBox1}>
                 <img src={fishImg} className={classes.herouploadImage} />
                 <CancelIcon className={classes.cancelImgIcon} />
@@ -117,7 +119,8 @@ const handleSave=()=>{
       <Stack className={classes.bannerStacktitle}>
         <Typography className={classes.MottoBoxText}>Banner</Typography>
         <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Mud Crab?" 
-        onDelete={()=>console.log("deleting")}/>
+        onDelete={()=>console.log("deleting")}
+        sliceSave={() => console.log("")}/>
       </Stack>
       <Box>
       
@@ -128,7 +131,9 @@ const handleSave=()=>{
         <Box className={classes.bannerImgboxleft}>
           <Stack className={classes.bannerImageStack}>
             <Typography className={classes.titleText}>Image</Typography>
-            <Uploadbutton />
+            <Uploadbutton 
+             onUpload={() => console.log()}
+                  onError={() => console.log()}/>
             <Box className={classes.herouploadImageBox1}>
               <img src={fishImg} className={classes.herouploadImage} />
               <CancelIcon className={classes.cancelImgIcon} />
@@ -177,7 +182,8 @@ const handleSave=()=>{
               Pdf Section
             </Typography>
             <Typography>Upload Pdf</Typography>
-            <Uploadbutton />
+            <Uploadbutton onUpload={() => console.log()}
+                  onError={() => console.log()}/>
             <Box className={classes.herouploadImageBox1}>
               <img src={fishImg} className={classes.herouploadImage} />
               <CancelIcon className={classes.cancelImgIcon} />

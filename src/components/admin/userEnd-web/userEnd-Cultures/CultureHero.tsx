@@ -20,7 +20,7 @@ const handleSave=()=>{
       <Box className={classes.cultureheroBox2}>  
       <Stack display="flex" gap={2} justifyContent="space-between">
           <Typography className={classes.titleText}>Image</Typography>
-          <Uploadbutton />
+          <Uploadbutton onUpload={() =>console.log("")}/>
           <Box className={classes.herouploadImageBox1}>
             <img src={fishImg} className={classes.herouploadImage} alt="fish image"/>
             <CancelIcon className={classes.cancelImgIcon}/>
@@ -33,7 +33,9 @@ const handleSave=()=>{
 
      <Box>
       <Typography className={classes.titleText}>SubTitle</Typography>
-      <TextFieldManyRows />
+      <TextFieldManyRows onChange={() =>
+                        console.log()
+                    }/>
      </Box>
      </Box>
      <UserEndSaveCancelButtons onSave={handleSave}/>

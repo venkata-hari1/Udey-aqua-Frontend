@@ -106,7 +106,7 @@ const UserendHero = () => {
   };
 
   const handleSave = () => {
-    console.log("userend hero values");
+    console.log(heroslide);
   };
 
   return (
@@ -135,7 +135,7 @@ const UserendHero = () => {
                   <Stack className={classes.UploadImageStack}>
                     <Typography className={classes.titleText}>Image</Typography>
 
-                    <Uploadbutton
+                    <Uploadbutton type="image"
                       onUpload={(file) => handleUpload(slide.id, file)}
                       onError={(msg) => handleImageError(slide.id, msg)}
                     />

@@ -39,14 +39,17 @@ const UserendNewsEvents = () => {
     size="small" 
     className={classes.dateTextfield}/>
     <UserendSaveDeleteButtons message="Are you sure want to delete blog?"
-    onDelete={()=>console.log("deleted news")}/>
+    onDelete={()=>console.log("deleted news")}
+    sliceSave={() =>console.log()}/>
     </Box>
   </Box>
 
    <Stack className={classes.Uploadandheadingbox}>
        <Stack className={classes.UploadImageStack}>
        <Typography className={classes.titleText} mt={1} ml={1}>Image</Typography>
-       <Uploadbutton />   
+       <Uploadbutton 
+        onUpload={() =>console.log("")}
+          onError={() => console.log("")}/>   
        <Box className={classes.herouploadImageBox}>
         <img src={CorpCard2} className={classes.herouploadImage}/>
        <CancelIcon className={classes.cancelImgIcon}/>
@@ -63,7 +66,9 @@ const UserendNewsEvents = () => {
       </Box>
       <Stack gap={1} mt={2}>
        <Typography className={classes.titleText}>Description</Typography>
-       <TextFieldManyRows />
+       <TextFieldManyRows 
+        onChange={() =>
+                        console.log("")}/>
        <ErrormsgContent />   
        </Stack>
        </Stack>

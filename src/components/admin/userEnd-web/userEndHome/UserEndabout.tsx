@@ -20,11 +20,13 @@ const [aboutslide, setAboutslide] = useState(
     })
 
  const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror  
-const handleUpload=(file:File)=>{
+
+ const handleUpload=(file:File)=>{
   const imageUrl = URL.createObjectURL(file);
   const updatedAboutslide={...aboutslide,image:imageUrl,imgerror:""}
   setAboutslide(updatedAboutslide) 
 }
+
 const handleImageError=(msg:string)=>{
   const updatedImgerror={...aboutslide,imgerror:msg}
   setAboutslide(updatedImgerror)
@@ -45,7 +47,7 @@ const onDelete=()=>{
   setAboutslide({...aboutslide,image:""}) 
 }
 const handleSave=()=>{
-   console.log("userend hero values")
+   console.log(aboutslide)
 }
       return (
    <Box>    
@@ -58,7 +60,8 @@ const handleSave=()=>{
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText}>Image</Typography>
-        <Uploadbutton onUpload={(file) => handleUpload(file)}
+        <Uploadbutton  type="image" 
+          onUpload={(file) => handleUpload(file)}
           onError={(msg) => handleImageError(msg)}/> 
          {aboutslide.image&&
          <Box className={classes.herouploadImageBox}>

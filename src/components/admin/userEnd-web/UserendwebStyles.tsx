@@ -21,7 +21,7 @@ const useUserEndwebStyles = makeStyles()((theme: Theme) => ({
 UserEndMaincontainerbox:{
     margin:'0px 30px',
     [theme.breakpoints.down('md')]:{
-      marginLeft:'0px',
+      margin:'0px',
     },
   },
 

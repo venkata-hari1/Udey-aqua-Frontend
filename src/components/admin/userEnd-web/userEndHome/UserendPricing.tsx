@@ -32,14 +32,16 @@ return (
           <Fragment>
       <Box className={classes.userEnddelete} >
        <UserendSaveDeleteButtons message={`Are you want to delete ${price.price}?`}
-       onDelete={()=>console.log("delete price")}/>
+       onDelete={()=>console.log("delete price")}
+       sliceSave={() => console.log("") }/>
+       
       </Box>
        <Typography className={classes.titleText}>{price.price}</Typography>      
        <Stack className={classes.projectsUploadContentbox}>
 
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() =>console.log("")}/>   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
@@ -56,7 +58,9 @@ return (
         </Stack>
         <Stack gap={1}>
         <Typography className={classes.titleText}>Description</Typography>
-        <TextFieldManyRows />
+        <TextFieldManyRows    onChange={() =>
+                        console.log()
+                    }/>
         <ErrormsgContent />
         </Stack>
         </Box>

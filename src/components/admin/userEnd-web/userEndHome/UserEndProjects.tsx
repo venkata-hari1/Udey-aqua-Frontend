@@ -33,13 +33,14 @@ const UserEndProjects = () => {
     </Select>
   </FormControl>
   <UserendSaveDeleteButtons message="Are you want to delete the Project?"
-  onDelete={()=>console.log("delete project")}/>
+  onDelete={()=>console.log("delete project")}
+  sliceSave={() =>console.log("slice save") }/>
    </Box>
     
    <Stack className={classes.projectsUploadContentbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText} mt={2}>Image</Typography>
-     <Uploadbutton />   
+     <Uploadbutton onUpload={() =>console.log("")}/>   
      <Box className={classes.herouploadImageBox}>
      <img src={fishImg} className={classes.herouploadImage}/>
      <CancelIcon className={classes.cancelImgIcon}/>
@@ -56,7 +57,9 @@ const UserEndProjects = () => {
      </Stack>
      <Stack gap={1}>
      <Typography className={classes.titleText}>Description</Typography>
-     <TextFieldManyRows />
+     <TextFieldManyRows    onChange={() =>
+                        console.log()
+                    }/>
      <ErrormsgContent />
      </Stack>
      </Box>

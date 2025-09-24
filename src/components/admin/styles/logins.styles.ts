@@ -1,72 +1,84 @@
-import { Box, Typography, TextField, Button} from '@mui/material';
+import { Box, Typography, TextField, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link as RouterLink, type LinkProps as RouterLinkProps } from 'react-router-dom';
 
-
+// Root wrapper – fills viewport
 export const StyledLoginRoot = styled(Box)(({ theme }) => ({
   display: 'flex',
   minHeight: '100vh',
   width: '100vw',
   overflow: 'hidden',
   backgroundColor: theme.palette.background.default,
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column', // stack only right panel
+  },
 }));
 
 export const StyledLoginLeft = styled(Box)(({ theme }) => ({
-  flexGrow: 1,
-  flexShrink: 0,
-  flexBasis: '50%',
+  flex: '0 0 50%',       // fixed 50% width
+  maxWidth: '50%',
+  height: '100vh',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   [theme.breakpoints.down('md')]: {
-    display: 'none',
+    display: 'none',     // hide left image on tablet/mobile
   },
 }));
 
-export const StyledLoginRight = styled(Box)(() => ({
-  flexGrow: 1,
-  flexShrink: 0,
-  flexBasis: '50%',
+export const StyledLoginRight = styled(Box)(({ theme }) => ({
+  flex: '0 0 50%',
+  maxWidth: '50%',
+  height: '100vh',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  background: 'transparent'
-  
-}));
-
-export const StyledLoginForm = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  maxWidth: '100%',
-  height: '100%',
-  justifyContent: 'flex-start',
-  borderRadius: '10px',
-  gap: '16px',
-  [theme.breakpoints.down('sm')]: {
-    padding: '25px',
-    width: '100%',
-    boxShadow: 'none',
-    borderRadius: '0px',
-    height: 'auto',
-    minHeight: 'auto',
-    justifyContent: 'flex-start',
+  background: 'transparent',
+  [theme.breakpoints.down('md')]: {
+    flex: '1 0 100%',         // full width
+    maxWidth: '100%',
+    height: '100vh',          // full viewport height
+    padding: theme.spacing(2),
+    justifyContent: 'center', // horizontal center
+    alignItems: 'center',     // vertical center
   },
 }));
 
+
+// Form wrapper
+export const StyledLoginForm = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  maxWidth: 400,
+  width: '100%',
+  justifyContent: 'flex-start', // allow content to grow from top
+  alignItems: 'center',
+  borderRadius: '10px',
+  gap: theme.spacing(1), // reduced gap for OTP page
+  padding: theme.spacing(3),
+  boxSizing: 'border-box',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1),
+    gap: theme.spacing(1.5), // reduce further on small screens
+    width: '100%',
+    },
+}));
+
+// Logo
 export const StyledLoginLogo = styled('img')(() => ({
-  marginTop: '60px',
-  height: '170px',
+  marginTop: '40px',
+  height: '150px',
   objectFit: 'contain',
   marginBottom: '20px',
   alignSelf: 'center',
 }));
 
+// Titles
 export const StyledTitle = styled(Typography)(() => ({
   fontSize: '2rem',
   fontWeight: 600,
-  marginBottom: '0',
+  marginBottom: 0,
   alignSelf: 'center',
- 
 }));
 
 export const StyledSubtitle = styled(Typography)(({ theme }) => ({
@@ -76,12 +88,13 @@ export const StyledSubtitle = styled(Typography)(({ theme }) => ({
   alignSelf: 'center',
 }));
 
+// Text field
 export const StyledTextField = styled(TextField)(({ theme }) => ({
-  marginBottom: '0',
+  marginBottom: 0,
   alignSelf: 'center',
   width: '100%',
-   paddingRight: '12px', 
-    paddingLeft: '12px',
+  paddingRight: '12px',
+  paddingLeft: '12px',
   '& .MuiInputBase-root': {
     height: '50px',
     borderRadius: '8px',
@@ -101,6 +114,9 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.error.main,
   },
+  '& .MuiFormHelperText-root': {
+    minHeight: '20px',  // reserve space to prevent jumping
+  },
   '& .MuiFormHelperText-root.Mui-error': {
     color: theme.palette.error.main,
     alignSelf: 'flex-start',
@@ -112,6 +128,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+// Icons
 export const StyledCustomIcon = styled('img')(() => ({
   width: '20px',
   height: '20px',
@@ -124,21 +141,25 @@ export const StyledInputAdornmentIcon = styled(Box)(() => ({
   marginRight: '8px',
 }));
 
+// Links & buttons
 export const StyledForgotPasswordLink = styled(Box)(() => ({
   alignSelf: 'flex-end',
-  marginTop: '0px',
+  marginTop: 0,
   marginBottom: '10px',
 }));
 
 export const StyledLink = styled(RouterLink)<RouterLinkProps>(({ theme }) => ({
   textDecoration: 'none',
   fontSize: '0.875rem',
-  fontFamily:'Inter',
+  fontFamily: 'Inter',
   color: theme.palette.primary.main,
   '&:hover': {
     textDecoration: 'underline',
   },
 }));
+
+
+
 
 export const StyledLoginButton = styled(Button)(({ theme }) => ({
   height: '50px',

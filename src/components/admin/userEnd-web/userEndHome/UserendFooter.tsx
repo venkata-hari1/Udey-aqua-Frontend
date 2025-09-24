@@ -25,7 +25,7 @@ const UserendFooter = () => {
        <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() => console.log()}/>   
         <Box className={classes.herouploadImageBox1}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
@@ -54,7 +54,10 @@ const UserendFooter = () => {
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Address</Typography>
-        <TextFieldManyRows />
+        <TextFieldManyRows 
+        onChange={() =>
+                        console.log()
+                    }/>
          <ErrormsgContent />
         </Stack> 
       </Box>

@@ -33,46 +33,40 @@ const Login: React.FC = () => {
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const emailChangehandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setEmail(value);
+    setEmailError(validateEmail(value));
+  };
 
-  
- const emailChangehandler=(event:any)=>{
-     const value=event.target.value;
-     setEmail(value)
-     const emailoutput= validateEmail(value)
-     setEmailError(emailoutput)
-}
-    
-const passwordChangehandler=(event:any)=>{
-   const value=event.target.value;
-   setPassword(value)
-   const passwordoutput=validatePassword(value)
-   setPasswordError(passwordoutput)
-}
+  const passwordChangehandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setPassword(value);
+    setPasswordError(validatePassword(value));
+  };
 
   const validateAndLogin = () => {
-        
-    const emailResult=validateEmail(email);
-    const passwordResult=validatePassword(password);
-   
+    const emailResult = validateEmail(email);
+    const passwordResult = validatePassword(password);
+
     setEmailError(emailResult);
     setPasswordError(passwordResult);
-   
-    if(emailResult==='' && passwordResult===''){
-      console.log("login success :", {email,password});
-      navigate('/admin/dashboard')
-    }else{
-      console.log("validation failed")
-    }
 
+    if (emailResult === '' && passwordResult === '') {
+      console.log('login success :', { email, password });
+      navigate('/admin/dashboard');
+    } else {
+      console.log('validation failed');
+    }
   };
 
   return (
     <StyledLoginRoot>
       <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
       <StyledLoginRight>
-        <StyledLoginForm sx={{ width: '100%', maxWidth: 400 }}>
+        <StyledLoginForm>
           <StyledLoginLogo src={logo} alt="Logo" />
-          <StyledTitle variant="h6" sx={{ textAlign: { xs: 'center' } }}>
+          <StyledTitle variant="h6" sx={{ textAlign: { xs: 'center',fontSize:'25px' } }}>
             Log In to Your Account!
           </StyledTitle>
           <StyledSubtitle
@@ -87,7 +81,7 @@ const passwordChangehandler=(event:any)=>{
             fullWidth
             placeholder="Email"
             value={email}
-            onChange={(event)=>emailChangehandler(event)}
+            onChange={emailChangehandler}
             error={!!emailError}
             helperText={emailError}
             InputProps={{
@@ -104,18 +98,10 @@ const passwordChangehandler=(event:any)=>{
           {/* Password Field */}
           <StyledTextField
             fullWidth
-            FormHelperTextProps={{
-              sx: {
-                whiteSpace: 'normal',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              },
-            }}
             placeholder="Password"
             type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(event)=>passwordChangehandler(event)}
-              
+            onChange={passwordChangehandler}
             error={!!passwordError}
             helperText={passwordError}
             InputProps={{
@@ -148,8 +134,7 @@ const passwordChangehandler=(event:any)=>{
               Forgot Password?
             </StyledLink>
           </StyledForgotPasswordLink>
-
-          <StyledLoginButton
+           <StyledLoginButton
             variant="contained"
             fullWidth
             onClick={validateAndLogin}
