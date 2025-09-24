@@ -1,160 +1,407 @@
-import { Box, Typography, Button, InputBase, InputAdornment, useTheme, useMediaQuery, IconButton } from "@mui/material";
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import PhoneIcon from '@mui/icons-material/Phone';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import logo from "../../../assets/logo.png";
+import { useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  InputBase,
+  InputAdornment,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import MailOutlineIcon from "@mui/icons-material/Mail";
+import PhoneIcon from "@mui/icons-material/Phone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import TwitterIcon from "../../../assets/icons/twitter.svg";
+import FacebookIcon from "../../../assets/icons/facebook.svg";
+import InstagramIcon from "../../../assets/icons/instagram.svg";
+import CopyIcon from "../../../assets/icons/copy.svg";
+import logo from "../../../assets/footer_logo.png";
 import footerBg from "../../../assets/home/footer.png";
+import footerBg1 from "../../../assets/home/footer1.png";
+import footerBg2 from "../../../assets/home/footer2.png";
+import footerBg3 from "../../../assets/home/footer3.png";
 import footerMap from "../../../assets/home/footer_map.png";
+import useSharedStyles from "./sharedStyles";
+import {
+  FOOTER_BG1_INITIAL,
+  FOOTER_BG1_ANIMATE,
+  FOOTER_BG1_TRANSITION,
+  FOOTER_BG2_INITIAL,
+  FOOTER_BG2_ANIMATE,
+  FOOTER_BG2_TRANSITION,
+  FOOTER_BG3_INITIAL,
+  FOOTER_BG3_ANIMATE,
+  FOOTER_BG3_TRANSITION,
+} from "./animations";
 
-const navLinks1 = ["Home", "About US", "New & Events", "Contact Us"];
-const navLinks2 = ["Training Program", "Technologies"];
+const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
+const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const { classes } = useSharedStyles();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const isValidEmail = (v: string) => /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/.test(v);
+  const emailHasError = emailTouched && !isValidEmail(email);
 
+  const handleNavigation = (link: string) => {
+    switch (link) {
+      case "Home":
+        navigate("/");
+        break;
+      case "About Us":
+        navigate("/about");
+        break;
+      case "News & Events":
+        navigate("/news-events");
+        break;
+      case "Contact Us":
+        navigate("/contact");
+        break;
+      case "Cultures":
+        navigate("/cultures");
+        break;
+      case "Training Programs":
+        navigate("/training-programs");
+        break;
+      case "Technologies":
+        navigate("/technologies");
+        break;
+      default:
+        break;
+    }
+  };
   return (
-    <Box sx={{ width: '100%', minHeight: isMobile ? 700 : 550, position: 'relative', pt: 0, pb: 0, overflow: 'hidden' }}>
-      <Box component="img" src={footerBg} alt="Footer Waves" sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: isMobile ? '100%' : '120%', objectFit: 'cover', objectPosition: 'top', zIndex: 0 }} />
-      <Box sx={{ position: 'relative', mt: isMobile ? '40px' : '100px', zIndex: 1, px: { xs: 1, md: 8 }, pt: isMobile ? 3 : 8, pb: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        
-        <Box sx={{ width: '100%', display: isMobile ? 'flex' : 'none', justifyContent: isMobile ? 'flex-start' : 'center', mb: isMobile ? 2 : 0 }}>
-          <Box component="img" src={logo} alt="Logo" sx={{ width: isMobile ? 120 : 180, mt:20 }} />
-        </Box>
-        
-        <Box sx={{ width: '100%', maxWidth: 600, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', mb: 4, mt: 2, gap: isMobile ? 2 : 0, justifyContent: 'center' }}>
-          <InputBase
-            placeholder="Enter Email"
-            endAdornment={
-              <InputAdornment position="end">
-                <Button variant="contained" sx={{
-                  background: "#0463EE",
-                  color: '#fff',
-                  fontWeight: 400,
-                  fontSize: isMobile ? 14 : 16,
-                  borderRadius: 999,
-                  mr: 2,
-                  px: 2,
-                  height: "fit-content",
-                  boxShadow: '0 2px 8px 0 #0A4FA422',
-                  textTransform: 'none',
-                  letterSpacing: 0.5,
-                  minWidth: 0,
-                  '&:hover': { background: '#1251a3' }
-                }}>Subscribe</Button>
-              </InputAdornment>
-            }
-            sx={{
-              flex: 1,
-              background: '#fff',
-              borderRadius: 3,
-              px: 2,
-              py: 1.5,
-              fontSize: isMobile ? 16 : 22,
-              boxShadow: '0 2px 8px 0 #0A4FA422',
-              height: isMobile ? 44 : 56,
-              pr: 0,
-              width: isMobile ? '100%' : 'auto',
-              minWidth: 0,
-              mb: isMobile ? 1 : 0
-            }}
-          />
-        </Box>
-        
+    <Box className={classes.footerRoot}>
+      <Box
+        component="img"
+        src={footerBg}
+        alt="Footer Waves"
+        className={classes.footerBg}
+      />
+      <motion.img
+        src={footerBg1}
+        alt="Footer Waves"
+        className={classes.footerBg1}
+        initial={FOOTER_BG1_INITIAL}
+        animate={FOOTER_BG1_ANIMATE}
+        transition={FOOTER_BG1_TRANSITION}
+      />
+      <motion.img
+        src={footerBg2}
+        alt="Footer Waves"
+        className={classes.footerBg2}
+        initial={FOOTER_BG2_INITIAL}
+        animate={FOOTER_BG2_ANIMATE}
+        transition={FOOTER_BG2_TRANSITION}
+      />
+      <motion.img
+        src={footerBg3}
+        alt="Footer Waves"
+        className={classes.footerBg3}
+        initial={FOOTER_BG3_INITIAL}
+        animate={FOOTER_BG3_ANIMATE}
+        transition={FOOTER_BG3_TRANSITION}
+      />
+      <Box className={classes.footerContent}>
         {isMobile ? (
-          <Box sx={{ width: '100%', mt: 1, mb: 2,pb:2, display: 'flex', flexWrap: 'wrap' }}>
-            <Box sx={{ width: '50%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start', pl: 1 }}>
-              {navLinks1.map(link => (
-                <Typography key={link} sx={{ color: '#fff', fontSize: 14, fontWeight: 400, mb: 0.5, cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>{link}</Typography>
-              ))}
-            </Box>
-            <Box sx={{ width: '50%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start', pl: 1 }}>
-              {navLinks2.map(link => (
-                <Typography key={link} sx={{ color: '#fff', fontSize: 14, fontWeight: 700, mb: 0.5, cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>{link}</Typography>
-              ))}
-            </Box>
-            <Box sx={{ width: '50%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start', pl: 1, mt: 2 }}>
-              <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: 15, mb: 1 }}>Contact Us</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff', mb: 0.5 }}>
-                <MailOutlineIcon fontSize="small" />
-                <Typography sx={{ fontSize: 13 }}>info@Uday.com</Typography>
+          <>
+            <Box className={classes.flexSide}>
+              <Box className={classes.footerLogoBoxMobile}>
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Logo"
+                  className={classes.footerLogo}
+                />
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff', mb: 0.5 }}>
-                <PhoneIcon fontSize="small" />
-                <Typography sx={{ fontSize: 13 }}>+91 97911-99909</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff', mb: 0.5 }}>
-                <LocationOnIcon fontSize="small" />
-                <Typography sx={{ fontSize: 13 }}>Mulapolam, Srikakulam</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-                <IconButton sx={{ color: '#fff' }}><TwitterIcon /></IconButton>
-                <IconButton sx={{ color: '#fff' }}><FacebookIcon /></IconButton>
-                <IconButton sx={{ color: '#fff' }}><InstagramIcon /></IconButton>
+              <Box className={classes.subscribeBox}>
+                <InputBase
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <Button
+                        variant="contained"
+                        className={`${classes.subscribeButton}`}
+                        onClick={() => setEmailTouched(true)}
+                      >
+                        Subscribe
+                      </Button>
+                    </InputAdornment>
+                  }
+                  className={`${classes.subscribeInput}  ${classes.hideInBig} ${emailHasError ? classes.subscribeInputError : ''}`}
+                />
               </Box>
             </Box>
-            <Box sx={{ width: '50%', boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 0, mt: 2 }}>
-              <Box component="img" src={footerMap} alt="Map" sx={{ width: 120, height: 90, borderRadius: 3, boxShadow: 2, objectFit: 'cover' }} />
+            <Box className={classes.flexRoot}>
+              <Box className={classes.navLinksBoxMobile}>
+                {navLinks1.map((link) => (
+                  <Typography
+                    key={link}
+                    className={`${classes.navLink} ${classes.navLinkMobile} ${classes.cursorPointer}`}
+                    onClick={() => handleNavigation(link)}
+                  >
+                    {link}
+                  </Typography>
+                ))}
+              </Box>
+              <Box
+                className={`${classes.navLinksBoxMobile} ${classes.navLinksBoxMobile2}`}
+              >
+                {navLinks2.map((link) => (
+                  <Typography
+                    key={link}
+                    className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldMobile} ${classes.cursorPointer}`}
+                    onClick={() => handleNavigation(link)}
+                  >
+                    {link}
+                  </Typography>
+                ))}
+              </Box>
+              <Box className={classes.contactBoxMobile}>
+                <Typography
+                  className={`${classes.contactTitle} ${classes.contactTitleMobile}`}
+                >
+                  Contact Us
+                </Typography>
+                <Box
+                  className={`${classes.contactRow} ${classes.contactRowInline}`}
+                >
+                  <MailOutlineIcon fontSize="small" />
+                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>info@Uday.com</Typography>
+                </Box>
+                <Box
+                  className={`${classes.contactRow} ${classes.contactRowInline}`}
+                >
+                  <PhoneIcon fontSize="small" />
+                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>+91 97911-99909</Typography>
+                </Box>
+                <Box
+                  className={`${classes.contactRow} ${classes.contactRowInline}`}
+                >
+                  <LocationOnIcon fontSize="small" />
+                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>Mulapolam, Srikakulam</Typography>
+                </Box>
+                <Box className={classes.socialIconsMobile}>
+                  <Box
+                    component="a"
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={classes.cursorPointer}
+                  >
+                    <Box
+                      component="img"
+                      src={TwitterIcon}
+                      alt="Twitter"
+                      className={classes.footerSocialIconWhite}
+                    />
+                  </Box>
+                  <Box
+                    component="a"
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={classes.cursorPointer}
+                  >
+                    <Box
+                      component="img"
+                      src={FacebookIcon}
+                      alt="Facebook"
+                      className={classes.footerSocialIconWhite}
+                    />
+                  </Box>
+                  <Box
+                    component="a"
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={classes.cursorPointer}
+                  >
+                    <Box
+                      component="img"
+                      src={InstagramIcon}
+                      alt="Instagram"
+                      className={classes.footerSocialIconWhite}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+              <Box className={classes.mapBoxMobile}>
+                <Box
+                  component="img"
+                  src={footerMap}
+                  alt="Map"
+                  className={`${classes.mapImg} ${classes.mapImgMobile}`}
+                />
+              </Box>
             </Box>
-          </Box>
+          </>
         ) : (
-          <Box sx={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            mt: 2,
-            gap: 4,
-            mb: 2
-          }}>
-            <Box sx={{ minWidth: 120, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-              <Box component="img" src={logo} alt="Logo" sx={{ width: 180, mb: 2 }} />
+          <Box
+            className={classes.footerDesktopRow}
+          >
+            <Box className={classes.logoBoxDesktop}>
+              <Box
+                component="img"
+                src={logo}
+                alt="Logo"
+                className={classes.footerLogoDesktop}
+              />
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, alignItems: 'flex-start' }}>
-              {navLinks1.map(link => (
-                <Typography key={link} sx={{ color: '#fff', fontSize: 16, fontWeight: 400, mb: 0.5, cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>{link}</Typography>
-              ))}
+            <Box>
+              <Box className={classes.subscribeBox}>
+                <InputBase
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <Button
+                        variant="contained"
+                        className={`${classes.subscribeButton}`}
+                        onClick={() => setEmailTouched(true)}
+                      >
+                        Subscribe
+                      </Button>
+                    </InputAdornment>
+                  }
+                  className={`${classes.subscribeInput} ${emailHasError ? classes.subscribeInputError : ''}`}
+                />
+              </Box>
+              <Box className={classes.linksFlex}>
+                <Box
+                  className={`${classes.navLinks1} ${classes.navLinksBoxDesktop}`}
+                >
+                  {navLinks1.map((link) => (
+                    <Typography
+                      key={link}
+                      className={`${classes.navLink} ${classes.navLinkDesktop} ${classes.cursorPointer}`}
+                      onClick={() => handleNavigation(link)}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+                <Box
+                  className={`${classes.navLinks2} ${classes.navLinksBoxDesktop}`}
+                >
+                  {navLinks2.map((link) => (
+                    <Typography
+                      key={link}
+                      className={`${classes.navLinkBold} ${classes.navLink} ${classes.navLinkBoldDesktop} ${classes.cursorPointer}`}
+                      onClick={() => handleNavigation(link)}
+                    >
+                      {link}
+                    </Typography>
+                  ))}
+                </Box>
+              </Box>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, alignItems: 'flex-start' }}>
-              {navLinks2.map(link => (
-                <Typography key={link} sx={{ color: '#fff', fontSize: 16, fontWeight: 700, mb: 0.5, cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>{link}</Typography>
-              ))}
-            </Box>
-            <Box sx={{ minWidth: 160, display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'flex-start' }}>
-              <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: 18, mb: 1, textAlign: 'center' }}>Contact Us</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff', mb: 0.5 }}>
+            <Box
+              className={`${classes.contactBox} ${classes.contactBoxDesktop} ${classes.topInBig}`}
+            >
+              <Typography
+                className={`${classes.contactTitle} ${classes.contactTitleDesktop}`}
+              >
+                Contact Us
+              </Typography>
+              <Box
+                className={`${classes.contactRow} ${classes.contactRowInline}`}
+              >
                 <MailOutlineIcon fontSize="small" />
-                <Typography sx={{ fontSize: 15 }}>info@Uday.com</Typography>
+                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>info@Uday.com</Typography>
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff', mb: 0.5 }}>
+              <Box
+                className={`${classes.contactRow} ${classes.contactRowInline}`}
+              >
                 <PhoneIcon fontSize="small" />
-                <Typography sx={{ fontSize: 15 }}>+91 97911-99909</Typography>
+                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>+91 97911-99909</Typography>
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff', mb: 0.5 }}>
+              <Box
+                className={`${classes.contactRow} ${classes.contactRowInline}`}
+              >
                 <LocationOnIcon fontSize="small" />
-                <Typography sx={{ fontSize: 15 }}>Mulapolam, Srikakulam</Typography>
+                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>Mulapolam, Srikakulam</Typography>
               </Box>
-              <Box sx={{ display: 'flex', gap: 2, mt: 2, justifyContent: 'center' }}>
-                <IconButton sx={{ color: '#fff' }}><TwitterIcon /></IconButton>
-                <IconButton sx={{ color: '#fff' }}><FacebookIcon /></IconButton>
-                <IconButton sx={{ color: '#fff' }}><InstagramIcon /></IconButton>
+              <Box className={classes.socialIconsDesktop}>
+                <Box
+                  component="a"
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={classes.cursorPointer}
+                >
+                  <Box
+                    component="img"
+                    src={TwitterIcon}
+                    alt="Twitter"
+                    className={classes.footerSocialIconWhite}
+                  />
+                </Box>
+                <Box
+                  component="a"
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={classes.cursorPointer}
+                >
+                  <Box
+                    component="img"
+                    src={FacebookIcon}
+                    alt="Facebook"
+                    className={classes.footerSocialIconWhite}
+                  />
+                </Box>
+                <Box
+                  component="a"
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={classes.cursorPointer}
+                >
+                  <Box
+                    component="img"
+                    src={InstagramIcon}
+                    alt="Instagram"
+                    className={classes.footerSocialIconWhite}
+                  />
+                </Box>
               </Box>
             </Box>
-            <Box sx={{ minWidth: 120, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Box component="img" src={footerMap} alt="Map" sx={{ width: 220, height: 160, borderRadius: 3, boxShadow: 2, objectFit: 'cover' }} />
+            <Box className={classes.mapBoxDesktop}>
+              <Box
+                component="img"
+                src={footerMap}
+                alt="Map"
+                className={`${classes.mapImg} ${classes.mapImgDesktop}`}
+              />
             </Box>
           </Box>
         )}
       </Box>
-      <Box sx={{ width: '100%', borderTop: '1px solid #e0e7ef', py: 1, mt: 0, textAlign: 'center', color: '#fff', fontSize: isMobile ? 13 : 17, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, position: 'absolute', left: 0, bottom: 0, background: 'transparent' }}>
-        <span>Copyright</span>
-        <span style={{ fontSize: isMobile ? 16 : 22, margin: '0 4px' }}>©</span>
-        <span>Uday Aqua all rights reserved.</span>
+      <Box
+        className={
+          isMobile
+            ? `${classes.copyright} ${classes.copyrightMobile}`
+            : `${classes.copyright} ${classes.copyrightDesktop}`
+        }
+      >
+        <Typography component="span">Copyright</Typography>
+        <Box
+          component="img"
+          src={CopyIcon}
+          alt="Copyright"
+          className={classes.copyrightIcon}
+        />
+        <Typography component="span">Uday Aqua all rights reserved.</Typography>
       </Box>
     </Box>
   );

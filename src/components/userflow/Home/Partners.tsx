@@ -1,4 +1,5 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
+import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import fishBg from "../../../assets/home/partners_img.png";
 
@@ -10,6 +11,12 @@ import icar from "../../../assets/partners/icar.png";
 import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
+import useHomeStyles from "./homeStyles";
+import {
+  PARTNERS_FISH_INITIAL,
+  PARTNERS_FISH_ANIMATE,
+  PARTNERS_FISH_TRANSITION,
+} from "../Shared/animations";
 
 const partners = [
   { src: ciba, alt: "CIBA" },
@@ -20,83 +27,41 @@ const partners = [
 ];
 
 const PartnersSection = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { classes } = useHomeStyles();
   const scrollRef = useRef<HTMLDivElement>(null);
   useAutoHorizontalScroll(scrollRef);
   const isOverflowing = useIsOverflowing(scrollRef);
 
   return (
-    <Box sx={{ position: "relative", pt: 4, bgcolor: "#fff", width: "100%", left: "50%", right: "50%", ml: "-50vw", mr: "-50vw", px: 0 }}>
-      <SectionTitle title="Our Partners" />
-      <Box
-        sx={{
-          width: "100%",
-          mx: "auto",
-          position: "relative",
-          zIndex: 1,
-          background: "#fff",
-        }}
-      >
+    <Box className={classes.partnersRoot}>
+      <SectionTitle title="Our Corporates" />
+      <Box className={classes.partnersInner}>
         <Box
           ref={scrollRef}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "nowrap",
-            width: "100%",
-            gap: 4,
-            justifyContent: isOverflowing ? "flex-start" : "space-around",
-            alignItems: "center",
-            mt: 6,
-            mb: 16,
-            boxShadow: "0 2px 10px 0 #0463EE66",
-            overflowX: "auto",
-            overflowY: "hidden",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            '::-webkit-scrollbar': {
-              display: 'none',
-            },
-          }}
+          className={
+            classes.partnersScroll +
+            (isOverflowing ? " " + classes.partnersScrollFlexStart : "")
+          }
         >
           {partners.map((p) => (
-            <Box
-              key={p.alt}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                px: 4,
-                py: 1.5,
-                minWidth: 120,
-                maxWidth: 180,
-              }}
-            >
+            <Box key={p.alt} className={classes.partnersCard}>
               <Box
                 component="img"
                 src={p.src}
                 alt={p.alt}
-                sx={{ width: "100%", objectFit: "contain" }}
+                className={classes.partnersImg}
               />
             </Box>
           ))}
         </Box>
       </Box>
-      <Box
-        component="img"
+      <motion.img
         src={fishBg}
         alt=""
-        sx={{
-          position: "absolute",
-          right: 60,
-          top: 55,
-          height: 140,
-          opacity: 0.5,
-          zIndex: 0,
-          pointerEvents: "none",
-          display: isMobile ? "none" : "",
-        }}
+        className={classes.partnersBgImg}
+        initial={PARTNERS_FISH_INITIAL}
+        animate={PARTNERS_FISH_ANIMATE}
+        transition={PARTNERS_FISH_TRANSITION}
       />
     </Box>
   );

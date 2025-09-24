@@ -1,14 +1,27 @@
-import Footer from './Footer';
-import Header from './Header';
-import { Outlet } from 'react-router-dom';
+import Footer from "./Footer";
+import Header from "./Header";
+import { Outlet, useLocation } from "react-router-dom";
+import useSharedStyles from "./sharedStyles";
+import WhatsappBox from "./WhatsappBox";
 
 const Layout = () => {
+  const { classes } = useSharedStyles();
+  const location = useLocation();
+  const pathname = location.pathname || "/";
+  const isHome = pathname === "/" || pathname === "/home";
+  const routeHasContactBox =
+    pathname.startsWith("/about") ||
+    pathname.startsWith("/cultures") ||
+    pathname.startsWith("/technologies") ||
+    pathname.startsWith("/news-events");
+
   return (
     <>
       <Header />
-      <main style={{ minHeight: '100vh',width:"100%",overflow:"hidden" }}>
+      <main className={classes.layout}>
         <Outlet />
       </main>
+      {!isHome && !routeHasContactBox && <WhatsappBox />}
       <Footer />
     </>
   );

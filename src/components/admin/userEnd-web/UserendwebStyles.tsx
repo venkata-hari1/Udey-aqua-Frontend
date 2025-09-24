@@ -23,7 +23,7 @@ UserEndMaincontainerbox:{
     [theme.breakpoints.down('md')]:{
       margin:'0px',
     },
-  },
+},
 
 userEndHomeTitle:{
   color:"#0A4FA4",

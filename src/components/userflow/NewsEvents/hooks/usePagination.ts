@@ -1,0 +1,71 @@
+import { useState, useCallback, useMemo } from "react";
+
+interface UsePaginationProps {
+  items: readonly any[];
+  itemsPerPage: number;
+  initialPage?: number;
+}
+
+interface UsePaginationReturn {
+  currentPage: number;
+  totalPages: number;
+  currentItems: any[];
+  goToPage: (page: number) => void;
+  goToPreviousPage: () => void;
+  goToNextPage: () => void;
+  canGoPrevious: boolean;
+  canGoNext: boolean;
+}
+
+export const usePagination = ({
+  items,
+  itemsPerPage,
+  initialPage = 1,
+}: UsePaginationProps): UsePaginationReturn => {
+  const [currentPage, setCurrentPage] = useState<number>(initialPage);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(items.length / itemsPerPage);
+  }, [items.length, itemsPerPage]);
+
+  const currentItems = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }, [items, currentPage, itemsPerPage]);
+
+  const goToPage = useCallback(
+    (page: number) => {
+      if (page >= 1 && page <= totalPages) {
+        setCurrentPage(page);
+      }
+    },
+    [totalPages]
+  );
+
+  const goToPreviousPage = useCallback(() => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [currentPage]);
+
+  const goToNextPage = useCallback(() => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  }, [currentPage, totalPages]);
+
+  const canGoPrevious = currentPage > 1;
+  const canGoNext = currentPage < totalPages;
+
+  return {
+    currentPage,
+    totalPages,
+    currentItems,
+    goToPage,
+    goToPreviousPage,
+    goToNextPage,
+    canGoPrevious,
+    canGoNext,
+  };
+};
