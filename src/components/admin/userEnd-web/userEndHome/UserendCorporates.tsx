@@ -1,9 +1,8 @@
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import useUserEndwebStyles from "../UserendwebStyles";
 import CancelIcon from "@mui/icons-material/Cancel";
-import AddIcon from "@mui/icons-material/Add";
 import {
-  DeleteButton,
+  EditButton,
   ErrorMessages,
   Uploadbutton,
   UserEndSaveCancelButtons,
@@ -22,6 +21,8 @@ const UserendCorporates = () => {
   const { classes } = useUserEndwebStyles();
   const [corporates, setCorporates] = useState<CorporateLogo[]>([]);
 
+ 
+ 
   const handleUpload = (files: File[]) => {
     const newLogos = files.map((file) => ({
       id: uuidv4(),
@@ -47,14 +48,15 @@ const UserendCorporates = () => {
     console.log("userend values", corporates);
   };
 
+  const sliceEdit=()=>{
+
+  }
+
   return (
     <Box>
       <Stack className={classes.corporateStack1}>
         <Typography className={classes.titleText}>Logos</Typography>
-        <DeleteButton
-          message="Are you sure you want to delete Logo?"
-          onDelete={() => console.log("deleted")}
-        />
+        <EditButton sliceEdit={sliceEdit}/>
       </Stack>
 
       <Box className={classes.corporateImageBox}>
@@ -63,13 +65,11 @@ const UserendCorporates = () => {
           onUpload={handleUpload}
           onError={(msg, id) => handleImageError(msg, id)}
         />
-
-        {/* Horizontal flex container for images */}
-        <Stack
+         <Stack
           direction="row"
-          spacing={2} // gap between images
+          spacing={2} 
           className={classes.CorporateuploadImageStack}
-          sx={{ flexWrap: "wrap" }} // wrap to next line if too many
+          sx={{ flexWrap: "wrap" }} 
         >
           {corporates.map((corp, index) => (
             <Box key={corp.id} sx={{ display: "flex", alignItems: "center" }}>
@@ -84,18 +84,12 @@ const UserendCorporates = () => {
                 </Box>
                 <ErrorMessages message={corp.imgerror} />
               </Box>
-              {/* Divider except for the last image */}
+             
               {index !== corporates.length - 1 && (
                 <Divider orientation="vertical" flexItem sx={{ border: "1px solid blue" }} />
               )}
             </Box>
           ))}
-
-          {/* Only one Add button at the end */}
-          <Button variant="contained" className={classes.corporatePlusbutton}
-          sx={{ alignSelf: "end",height:60, width:80 }}>
-            <AddIcon />
-          </Button>
         </Stack>
 
         <UserEndSaveCancelButtons onSave={handleSave} />

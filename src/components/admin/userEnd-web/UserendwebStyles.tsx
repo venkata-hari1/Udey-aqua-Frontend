@@ -39,7 +39,7 @@ userEndHomeTitle:{
 
 accardianTypoMenu:{
  fontSize:'16px',
- fontWeight:500,
+ fontWeight:600,
 },
 userEndButton: {
     justifySelf: "center",
@@ -76,6 +76,7 @@ titleHeading:{
 },
 titleText:{
  color:'black',
+ fontWeight:600,
 },
 
 homeBackarrowbox:{
@@ -258,7 +259,7 @@ heroTextfiled:{
       },
 heroDivider:{
  border:'1px solid #0A4FA4',
- marginTop:5,
+ marginTop:15,
 },
 
 //userCorporate page start
@@ -335,7 +336,8 @@ corporateCancel:{
 
 MottoBoxText:{
  textDecoration:'underline',
- color:'black'
+ color:'black',
+ fontWeight:600
 },
 //userend-About start
 

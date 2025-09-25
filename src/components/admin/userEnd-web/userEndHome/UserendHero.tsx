@@ -1,15 +1,15 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import useUserEndwebStyles from "../UserendwebStyles";
-/* import fishImg from './../../../../assets/admin/fishImg.jpg'*/
 import CancelIcon from "@mui/icons-material/Cancel";
 import {
   UserEndSaveCancelButtons,
-  UserendSaveDeleteButtons,
   AddingButton,
   Uploadbutton,
   TextFieldManyRows,
   ErrorMessages,
   ErrormsgContent,
+  UserendEditandDeletebuttons,
+  EditButton,
 } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
@@ -36,9 +36,7 @@ const UserendHero = () => {
     },
   ]);
 
- const isSaveDisabled = heroslide.some(
-    (slide) => !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror
-  );
+ 
 
 
 
@@ -87,14 +85,7 @@ const UserendHero = () => {
     console.log("updated slide", value);
   };
 
-  const handleSliceSave = (slide: {
-    id: string;
-    name: string;
-    image: string;
-    content: string;
-  }) => {
-    console.log(slide);
-  };
+ 
 
   //validation
   const handleImageError = (id: string, msg: string) => {
@@ -105,10 +96,35 @@ const UserendHero = () => {
     );
   };
 
-  const handleSave = () => {
-    console.log(heroslide);
-  };
+  const sliceEdit=(id:string)=>{
+    const savedSlide=localStorage.getItem(`heroSlide${id}`) 
+    if(savedSlide){
+      const parsedSlide=JSON.parse(savedSlide);
+      setHeroslide((prev)=>
+        prev.map((slide)=>
+        slide.id===id ?{...slide,...parsedSlide}:slide)
+       )
+   }
+  }
 
+  const handleSave = (id:string) => {
+   const slideTosave= heroslide.find((slide)=>slide.id===id)  
+   if(slideTosave){
+    localStorage.setItem(`heroSlide${id}`,JSON.stringify(slideTosave))
+   }
+  setHeroslide((prev)=>
+  prev.map((slide)=>
+  slide.id===id ? {...slide,image:'',imgerror:'',content:''}:slide
+  )
+);
+};
+
+const onCancel=(id:string)=>{
+    setHeroslide((prev)=>
+    prev.map((slide)=>
+    slide.id===id ?{...slide,image:'',imgerror:'',content:'',contenterror:''}:slide)
+    )
+}
   return (
     <Box>
       <Box className={classes.useHerocontainer}>
@@ -124,13 +140,12 @@ const UserendHero = () => {
                   <Typography className={classes.titleText}>
                     {slide.name}
                   </Typography>
-                  <UserendSaveDeleteButtons
-                    message={`Are you sure want to delete ${slide.name} ?`}
-                    onDelete={() => onDelete(slide.id)}
-                    sliceSave={() => handleSliceSave(slide)}
-                    disabled={slideSaveDisabled}
-                  />
-                </Stack>
+                  {index===0 ? <EditButton sliceEdit={()=>sliceEdit(slide.id)}/>:
+                  <UserendEditandDeletebuttons 
+                   message={`Are you sure want to delete ${slide.name} ?`} 
+                   onDelete={() => onDelete(slide.id)}
+                   sliceEdit={()=>sliceEdit(slide.id)}/>}
+                  </Stack>
                 <Stack className={classes.Uploadandheadingbox}>
                   <Stack className={classes.UploadImageStack}>
                     <Typography className={classes.titleText}>Image</Typography>
@@ -161,6 +176,7 @@ const UserendHero = () => {
                       Heading Content
                     </Typography>
                     <TextFieldManyRows
+                    value={slide.content}
                       onChange={(value, error) =>
                         handleContentchange(slide.id, value, error)
                       }
@@ -170,6 +186,8 @@ const UserendHero = () => {
                     )}
                   </Stack>
                 </Stack>
+                <UserEndSaveCancelButtons onSave={()=>handleSave(slide.id)} 
+                onCancel={()=>onCancel(slide.id)}disabled={slideSaveDisabled}/>
                 {index !== heroslide.length - 1 && (
                   <Divider className={classes.heroDivider} />
                 )}
@@ -178,7 +196,7 @@ const UserendHero = () => {
           );
         })}
 
-        <UserEndSaveCancelButtons onSave={handleSave} disabled={isSaveDisabled}/>
+        
       </Box>
     </Box>
   );

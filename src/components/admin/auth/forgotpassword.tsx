@@ -26,8 +26,8 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-
- const emilchangeHandler=(e:any)=>{
+  const isDisabled=!email || !!emailError 
+  const emilchangeHandler=(e:any)=>{
   const value=e.target.value;
   setEmail(value)
   const emailoutput=validateEmail(value)
@@ -85,6 +85,7 @@ const validateAndContinue = () => {
             variant="contained"
             fullWidth
             onClick={validateAndContinue}
+            disabled={isDisabled}
           >
             Continue
           </StyledLoginButton>

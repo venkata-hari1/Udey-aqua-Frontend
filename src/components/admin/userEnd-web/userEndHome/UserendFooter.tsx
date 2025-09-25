@@ -1,70 +1,126 @@
-import { Box, Button,Stack, TextField, Typography } from "@mui/material"
+import { Box,Stack,Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-import AddIcon from '@mui/icons-material/Add';
-import fishImg from './../../../../assets/admin/fishImg.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons, DeleteButton, Uploadbutton, ErrorMessages, ErrormsgTitle, TextFieldManyRows, ErrormsgContent } from "./UserEndCommonButtons";
+import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages, TextFieldManyRows, ErrormsgContent, ErrorName, TextFieldSingleRow, EditButton } from "./UserEndCommonButtons";
+import { useState } from "react";
+import { nameValidation, validateEmail } from "../../utils/Validations";
+
 
 const UserendFooter = () => {
 
-  const{classes}=useUserEndwebStyles() 
+const{classes}=useUserEndwebStyles() 
+
+const[footerslide,setFooterslide]=useState({
+        title: "Image",
+        image: "",
+        name: '',
+        email:'',
+        address:'',
+        imgError:'',
+        nameError:'',
+        emailError:'',
+        addressError:'',
+})
 
 
- const handleSave=()=>{
-   console.log("userend values")
- }     
-  return (
+ const handleUpload=(file:File)=>{
+  const imageUrl = URL.createObjectURL(file);
+  const updatedFooterslide={...footerslide,image:imageUrl,imgError:''}
+  setFooterslide(updatedFooterslide) 
+}
+
+const handleImageError=(msg:string)=>{
+  setFooterslide((prev)=>({...prev,imgError:msg,}))
+}
+
+const handleRemoveImage=()=>{
+  const updatedImages={...footerslide,image:""}
+  setFooterslide(updatedImages)
+}
+
+const handleContentchange=(value:string,error:string)=>{
+    const updatedContent={...footerslide,address:value,addressError:error}
+    setFooterslide(updatedContent)
+    console.log(updatedContent)
+}
+
+const handleNameChange=(value:string,error:string)=>{
+    const updateName=({...footerslide, name:value,nameError:error})
+    setFooterslide(updateName)
+}
+
+const handleEmailChange=(value:string,error:string)=>{
+  const updatedEmail=({...footerslide, email:value,emailError:error})
+    setFooterslide(updatedEmail)
+}
+
+ const handleCancel=()=>{
+  const updatedvalues={...footerslide,name:"",email:"",address:"",image:"",nameError:"",
+    emailError:"",addressError:"",imgError:""}
+  console.log(setFooterslide(updatedvalues))
+}
+
+const sliceEdit=()=>{
+   const savedData=localStorage.getItem("footerValues");
+   if(savedData){
+     const parsed=JSON.parse(savedData);
+     setFooterslide({
+      ...footerslide,
+      name:parsed.name,
+      email:parsed.email,
+      address:parsed.address,
+     });
+   }
+}
+
+const handleSave=()=>{
+  setFooterslide({...footerslide,name:'',email:'',address:'',image:''})
+  localStorage.setItem("footerValues",JSON.stringify(footerslide)) 
+}
+
+return (
     <Box>
        <Box className={classes.useHerocontainer}>
-       
-       
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-        <DeleteButton message="Are you sure want to delete?" 
-        onDelete={()=>console.log("deleted")}/>
+       <EditButton sliceEdit={sliceEdit}/>
        </Box>
        <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton onUpload={() => console.log()}/>   
+        <Uploadbutton onUpload={(file) => handleUpload(file)}
+          onError={(msg) => handleImageError(msg)}/>   
         <Box className={classes.herouploadImageBox1}>
-        <img src={fishImg} className={classes.herouploadImage}/>
-        <CancelIcon className={classes.cancelImgIcon}/>
-        <Button variant="contained" className={classes.corporatePlusbutton1}>
-        <AddIcon />
-        </Button>
-     </Box>
-         
-        <ErrorMessages />
-        
+        {footerslide.image &&
+        <Box>
+        <img src={footerslide.image} className={classes.herouploadImage}/>
+        <CancelIcon className={classes.cancelImgIcon}
+        onClick={handleRemoveImage}/>
+        </Box>
+        }
+        </Box>
+        <ErrorMessages message={footerslide.imgError}/>
         </Stack>
        <Box className={classes.headingDescbox}> 
         <Stack>
         <Typography className={classes.titleText} >Name</Typography>
-        <TextField className={classes.heroTextfiled}
-         fullWidth
-         size="small"/>  
-         <ErrormsgTitle /> 
+        <TextFieldSingleRow onChange={handleNameChange} validationFn={nameValidation}
+         value={footerslide.name}/>  
+         <ErrorName message={footerslide.nameError}/> 
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Email</Typography>
-        <TextField className={classes.heroTextfiled}
-         fullWidth
-         size="small"/>
-         <ErrormsgTitle />
+        <TextFieldSingleRow onChange={handleEmailChange} validationFn={validateEmail}
+         value={footerslide.email}/>
+         <ErrorMessages message={footerslide.emailError}/>
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Address</Typography>
-        <TextFieldManyRows 
-        onChange={() =>
-                        console.log()
-                    }/>
-         <ErrormsgContent />
+        <TextFieldManyRows value={footerslide.address} onChange={(value, error) => handleContentchange(value, error)}/>
+        <ErrormsgContent message={footerslide.addressError}/>
         </Stack> 
       </Box>
       </Stack> 
-    
-     
-       <UserEndSaveCancelButtons onSave={handleSave} /> 
+      <UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel}/> 
        
        </Box> 
        </Box>

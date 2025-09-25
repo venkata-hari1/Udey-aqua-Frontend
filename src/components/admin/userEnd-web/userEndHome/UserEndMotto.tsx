@@ -1,23 +1,20 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import useUserEndwebStyles from "../UserendwebStyles";
 import AddIcon from "@mui/icons-material/Add";
-/* import fishImg from "./../../../../assets/admin/fishImg.jpg"; */
 import CancelIcon from "@mui/icons-material/Cancel";
 import { v4 as uuidv4 } from "uuid";
 import {
+  EditButton,
   ErrorMessages,
   ErrormsgContent,
   TextFieldManyRows,
   Uploadbutton,
+  UserendEditandDeletebuttons,
   UserEndSaveCancelButtons,
-  UserendSaveDeleteButtons,
-} from "./UserEndCommonButtons";
+  } from "./UserEndCommonButtons";
 import { useState } from "react";
 const UserEndMotto = () => {
   const { classes } = useUserEndwebStyles();
-
-  
-  
   const [mottobox, setMottobox] = useState([
     {
       id: uuidv4(),
@@ -36,10 +33,6 @@ const UserEndMotto = () => {
       contenterror: "",
     },
   ]);
-
-const isSaveDisabled=mottobox.some(
-    (box) => !box.content || !box.image || !!box.contenterror || !!box.imgerror
-  );
 
   const handleAddMottobox = () => {
     const newmottobox = {
@@ -84,16 +77,7 @@ const isSaveDisabled=mottobox.some(
     console.log("updated slide", value);
   };
 
-  const handleSliceSave = (box: {
-    id: string;
-    boxname: string;
-    image: string;
-    content: string;
-  }) => {
-    console.log(box);
-  };
-
-//validation
+  //validation
   const handleImageError = (id: string, msg: string) => {
     setMottobox((prev) =>
       prev.map((box) =>
@@ -102,9 +86,27 @@ const isSaveDisabled=mottobox.some(
     );
   };
 
-  const handleSave = () => {
-    console.log("userend moto box values");
-  };
+ const sliceEdit=(id:string)=>{
+   const savedBox=localStorage.getItem(`motobox${id}`) 
+    if(savedBox){
+      const parsedBox=JSON.parse(savedBox);
+      setMottobox((prev)=>
+        prev.map((box)=>
+        box.id===id ?{...box,...parsedBox}:box)
+       )
+   }
+}
+const handleSave = (id:string) => {
+   const boxTosave= mottobox.find((box)=>box.id===id)  
+   if(boxTosave){
+    localStorage.setItem(`motobox${id}`,JSON.stringify(boxTosave))
+   }
+  setMottobox((prev)=>
+  prev.map((box)=>
+  box.id===id ? {...box,image:'',imgerror:'',content:''}:box
+  )
+);
+};
   return (
     <Box>
       <Box className={classes.useHerocontainer}>
@@ -129,12 +131,14 @@ const isSaveDisabled=mottobox.some(
               <Typography className={classes.MottoBoxText}>
                 {box.boxname}
               </Typography>
-              <UserendSaveDeleteButtons
-                message={`Are you sure you want to delete ${box.boxname} in Motto? `}
+              {index===0 ?<EditButton sliceEdit={()=>sliceEdit(box.id)}/>: 
+               <UserendEditandDeletebuttons 
+                message={`Are you sure want to delete ${box.boxname} ?`} 
                 onDelete={() => onDelete(box.id)}
-                sliceSave={() => handleSliceSave(box)}
-                disabled={motoboxSaveDisabled}
-              />
+                sliceEdit={()=>sliceEdit(box.id)}/>
+               }
+              
+              
             </Stack>
 
             <Stack className={classes.Uploadandheadingbox}>
@@ -166,8 +170,10 @@ const isSaveDisabled=mottobox.some(
                         handleContentchange(box.id, value, error)
                     } />
                 <ErrormsgContent />
+                </Stack>
               </Stack>
-            </Stack>
+          <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
+          disabled={motoboxSaveDisabled}/>
             {index !== mottobox.length - 1 && (
               <Divider className={classes.heroDivider} />
             )}
@@ -175,8 +181,7 @@ const isSaveDisabled=mottobox.some(
            ) 
           }
         )}
-        <UserEndSaveCancelButtons onSave={handleSave} 
-        disabled={isSaveDisabled}/>
+
       </Box>
     </Box>
   );

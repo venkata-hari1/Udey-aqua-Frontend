@@ -32,7 +32,8 @@ const Login: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
+  
+  const isDisabled=!email ||!password || !!emailError ||!!passwordError
   const emailChangehandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setEmail(value);
@@ -138,6 +139,7 @@ const Login: React.FC = () => {
             variant="contained"
             fullWidth
             onClick={validateAndLogin}
+            disabled={isDisabled}
           >
             Login
           </StyledLoginButton>

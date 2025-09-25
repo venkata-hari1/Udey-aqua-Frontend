@@ -6,12 +6,11 @@ export const validateEmail = (email: string): string => {
       return "Email cannot be empty";
     }
     if(!emailRegex.test(email)){
-      return "Email valid email id";
+      return "Enter a valid email ID";
     }else{
         return ""
     }
  };
-
 
 
 export const validatePassword = (pword: any):string => {
@@ -65,10 +64,22 @@ export const confirmValidatePassword = (
   }
 };
 
+
+export const nameValidation=(name:any):string=>{
+  if(name.length===0){
+    return "*Name cant be empty"
+  }
+  if(name.length>80){
+    return "*Max 80 charecters required";
+  }
+  return "";
+}
+
+
 export const phoneNumbervalidation=(phone:any):string=>{
   
   if(phone.length===0){
-    return "Phone number cant be empty"
+    return "Phone number cannot be empty"
   }else if(/[^0-9]/.test(phone)){
     return "*Only numbers are allowed"
    }else if(phone.length!==10){

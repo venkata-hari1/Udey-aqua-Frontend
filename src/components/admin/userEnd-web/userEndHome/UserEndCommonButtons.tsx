@@ -37,6 +37,76 @@ export const UserEndSaveCancelButtons = ({
   );
 };
 
+
+//EDIT and DELETE BUTTONS
+interface GenericSaveEdit {
+  sliceEdit:() => void;
+  value?:string;
+  message: string;
+  onDelete: () => void;
+}
+export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSaveEdit)=>{
+  
+  const [open, setOpen] = useState(false);
+  
+  const handleToggle = () => {
+    setOpen((prev) => !prev);
+  };
+  const handleConfirmDelete = () => {
+    console.log("Deleted", message);
+    onDelete();
+    setOpen(false);
+  };
+
+  const { classes } = useUserEndwebStyles();
+
+  return(
+    <Box display="flex" gap={2}>
+      <Button
+        className={classes.heroSave}
+        variant="contained"
+        onClick={sliceEdit}
+        >
+        Edit
+      </Button>
+      <Button className={classes.heroDelete} onClick={handleToggle}>
+        Delete
+      </Button>
+      {open && (
+        <UserendDeletepopup
+          open={open}
+          message={message}
+          onClose={handleToggle}
+          onDelete={handleConfirmDelete}
+        />
+      )}
+      </Box> 
+  )
+}
+//EDIT Button
+interface GenericEdit {
+  sliceEdit:() => void;
+  value?:string;
+}
+export const EditButton=({sliceEdit}:GenericEdit)=>{
+ 
+  const { classes } = useUserEndwebStyles();
+ 
+  return(
+      <Box display="flex" gap={2}>
+      <Button
+        className={classes.heroSave}
+        variant="contained"
+        onClick={sliceEdit}
+        
+      >
+        Edit
+      </Button>
+      </Box>
+    )
+}
+
+
 //SAVE and DELETE buttons
 interface GenericSavedelete {
   message: string;
@@ -162,62 +232,37 @@ export const Textfiledbox = () => {
 };
 
 
-
-
-
-/* //UPLOAD IMAGE
-interface UploadbuttonProps {
-  onUpload: (file: File) => void;
-  onError?:(msg:string)=>void;
+//Textfiled singlerow
+interface GenericTextfieldsinglerows {
+  onChange: (value: string,error:string) => void;
+  validationFn:(value:string)=>string;
+  value: string;
 }
-export const Uploadbutton = ({ onUpload,onError }: UploadbuttonProps) => {
+
+export const TextFieldSingleRow = ({ onChange,validationFn,value }: GenericTextfieldsinglerows) => {
   const { classes } = useUserEndwebStyles();
 
-  const handleChangeUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files || event.target.files.length === 0) return;
-    const file=event.target.files[0];
-    
-    //file validations
-    const fileError=validateImageFile(file)
-    if(fileError){
-     onError?.(fileError);
-     event.target.value="";
-     return;
-    }
-   const dimError=await validateImageDimensions(file);
-   if(dimError){
-    onError?.(dimError);
-    event.target.value="";
-    return;
-   } 
-  
-   onUpload(file);
-   event.target.value="";
-   return;
+const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const contenterror=validationFn(value);
+    onChange(value,contenterror);    
   };
 
-  return (
-    <Button
-      variant="outlined"
-      className={classes.uploadHerobutton}
-      component="label"
-      endIcon={<FileUploadOutlinedIcon />}
-    >
-      <input
-        type="file"
-        accept="image/*"
-        hidden
-        onChange={handleChangeUpload}
-      />{" "}
-      Upload
-    </Button>
-  );
-};
- */
+  return(
+    <TextField className={classes.heroTextfiled}
+         fullWidth
+         size="small"
+         value={value}
+         onChange={handleChangeSinglerow}/>
+  ) 
+}
+
+//Textfiled multirows
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
-}
-export const TextFieldManyRows = ({ onChange }: GenericTextfieldmutlirows) => {
+  value?:string;
+  }
+export const TextFieldManyRows = ({ onChange,value}: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
 
   const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -233,6 +278,7 @@ export const TextFieldManyRows = ({ onChange }: GenericTextfieldmutlirows) => {
       multiline
       minRows={5}
       onChange={handleChangeManyrows}
+      value={value}
     />
   );
 };
@@ -272,6 +318,19 @@ export const ErrormsgContent = ({message}:ErrormsgContentProps) => {
     </Typography>
   );
 };
+
+interface ErrorNameProps{
+  message?:string;
+}
+export const ErrorName=({message}:ErrorNameProps)=>{
+  const {classes}=useUserEndwebStyles();
+  return (
+    <Typography className={classes.errorUpload}>
+      {message}
+    </Typography>
+  )
+}
+
 
 export const ErrormsgPrice = () => {
   const { classes } = useUserEndwebStyles();
@@ -335,9 +394,10 @@ export const Uploadbutton = ({
         }
       }
       validFiles.push(file);
-    }
+      }
 
     if (validFiles.length > 0) {
+      onError?.("")
       if (multiple) {
         (onUpload as (files: File[]) => void)(validFiles);
       } else {

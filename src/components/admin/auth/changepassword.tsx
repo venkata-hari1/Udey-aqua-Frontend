@@ -36,7 +36,7 @@ const ChangePassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-
+const isDisabled= !password ||!confirmPassword ||!!errorPassword ||!!errorConfirm
 const passwordChangeHandler=(event:any)=>{
       const value=event.target.value;
       setPassword(value)
@@ -151,6 +151,7 @@ const confirmPwdChangeHandler=(event:any)=>{
             variant="contained"
             fullWidth
             onClick={handleSubmit}
+            disabled={isDisabled}
           >
             Reset Password
           </StyledLoginButton>

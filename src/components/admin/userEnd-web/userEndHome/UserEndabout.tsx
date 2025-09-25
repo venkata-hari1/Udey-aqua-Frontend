@@ -74,8 +74,7 @@ const handleSave=()=>{
         </Stack>
         <Stack display="flex" justifyContent="flex-start" gap={1}>
         <Typography className={classes.titleText}>Content</Typography>
-        <TextFieldManyRows 
-         onChange={(value, error) =>
+        <TextFieldManyRows onChange={(value, error) =>
                         handleContentchange(value, error)
                       }/>   
         <ErrormsgContent message={aboutslide.contenterror}/>
