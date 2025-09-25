@@ -158,18 +158,18 @@ const handleSave = (id:string) => {
                     />
                   </Box>
                 )}
-
-                <ErrorMessages />
-              </Stack>
+                {box.imgerror&&  <ErrorMessages message={box.imgerror}/>}
+               </Stack>
               <Stack gap={1}>
                 <Typography className={classes.titleText}>
                   Heading Content
                 </Typography>
                 <TextFieldManyRows 
-                onChange={(value, error) =>
+                 value={box.content}
+                 onChange={(value, error) =>
                         handleContentchange(box.id, value, error)
                     } />
-                <ErrormsgContent />
+                <ErrormsgContent message={box.contenterror}/>
                 </Stack>
               </Stack>
           <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
