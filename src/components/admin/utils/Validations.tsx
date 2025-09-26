@@ -5,9 +5,13 @@ export const validateEmail = (email: string): string => {
     if(email.length===0){
       return "Email cannot be empty";
     }
+    if(email.startsWith(".") || email.endsWith(".")){
+      return "Email cannot start or end with '.'";
+    }
     if(!emailRegex.test(email)){
       return "Enter a valid email ID";
-    }else{
+    }
+    else{
         return ""
     }
  };
