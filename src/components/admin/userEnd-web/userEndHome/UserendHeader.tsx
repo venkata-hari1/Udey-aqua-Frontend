@@ -7,14 +7,16 @@ import { useState } from "react"
 const UserendHeader = () => {
 
   const[email,setEmail]=useState('')
-  const[emailerror,setEmailError]=useState("")
-
-  const[phone,setPhone]=useState('')
-  const[phoneError,setPhoneError]=useState('')
   const [address,setAddress]=useState('')
+  const[phone,setPhone]=useState('')
+  const[emailError,setEmailError]=useState('')
+  const[phoneError,setPhoneError]=useState('')
   const[addressError,setAddressError]=useState('')
-
-  const{classes}=useUserEndwebStyles()  
+  
+  const isDisable=
+   !email || !phone || !address || !!emailError || !!phoneError || !!addressError;
+  
+const{classes}=useUserEndwebStyles()  
   
   const emailChangeHandler=(event:any)=>{
     const value=event.target.value;
@@ -35,9 +37,18 @@ const UserendHeader = () => {
     const addressresult=addressContentValidation(value)
     setAddressError(addressresult)
  }
+
+ const handleSave=()=>{
+   const payload={email,phone,address}
+   console.log(payload)
+   setEmail('')
+   setPhone('')
+   setAddress('')
+  
+ }
+ 
   return (
     <Box>
-   {/*  <Typography color="#0A4FA4" mx="10px">Header</Typography> */}
     <Box>
     <Grid container spacing={2} alignItems="center" mx="10px">
        {/* email */}
@@ -50,8 +61,8 @@ const UserendHeader = () => {
           value={email}
           variant="outlined"
           size="small"
-          error={!!emailerror}
-          helperText={emailerror}
+          error={!!emailError}
+          helperText={emailError}
           onChange={emailChangeHandler}
           className={classes.useHeaderTextfiled}/>
         </Grid>
@@ -63,7 +74,6 @@ const UserendHeader = () => {
         <Grid size={{xs:12,md:10}}>
          <TextField className={classes.useHeaderTextfiled}
           fullWidth
-          type="tel"
           variant="outlined"
           size="small"
           value={phone}
@@ -88,7 +98,8 @@ const UserendHeader = () => {
           />
         </Grid>
     </Grid>
-    <UserEndSaveCancelButtons />
+    <UserEndSaveCancelButtons onSave={handleSave}
+     disabled={isDisable} />
     </Box>
     </Box>
   )

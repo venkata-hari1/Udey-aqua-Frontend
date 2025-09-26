@@ -9,6 +9,11 @@ import CorpCard2 from './../../../../assets/admin/corp2.jpg'
 const UserendNewsEvents = () => {
 
   const{classes}=useUserEndwebStyles()
+
+
+ const handleSave=()=>{
+   console.log("userend values")
+ }     
     return (
      <Box>
       <Box className={classes.useHerocontainer}>
@@ -33,14 +38,18 @@ const UserendNewsEvents = () => {
     type="date" 
     size="small" 
     className={classes.dateTextfield}/>
-    <UserendSaveDeleteButtons message="Are you sure want to delete blog?"/>
+    <UserendSaveDeleteButtons message="Are you sure want to delete blog?"
+    onDelete={()=>console.log("deleted news")}
+    sliceSave={() =>console.log()}/>
     </Box>
   </Box>
 
    <Stack className={classes.Uploadandheadingbox}>
        <Stack className={classes.UploadImageStack}>
        <Typography className={classes.titleText} mt={1} ml={1}>Image</Typography>
-       <Uploadbutton />   
+       <Uploadbutton 
+        onUpload={() =>console.log("")}
+          onError={() => console.log("")}/>   
        <Box className={classes.herouploadImageBox}>
         <img src={CorpCard2} className={classes.herouploadImage}/>
        <CancelIcon className={classes.cancelImgIcon}/>
@@ -57,13 +66,15 @@ const UserendNewsEvents = () => {
       </Box>
       <Stack gap={1} mt={2}>
        <Typography className={classes.titleText}>Description</Typography>
-       <TextFieldManyRows />
+       <TextFieldManyRows 
+        onChange={() =>
+                        console.log("")}/>
        <ErrormsgContent />   
        </Stack>
        </Stack>
     </Stack> 
     <Divider sx={{border:'1px solid rgba(97, 177, 218, 0)'}}/>
-    <UserEndSaveCancelButtons />
+    <UserEndSaveCancelButtons onSave={handleSave} />
 
      </Box>
     </Box>

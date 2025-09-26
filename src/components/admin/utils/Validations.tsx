@@ -6,12 +6,11 @@ export const validateEmail = (email: string): string => {
       return "Email cannot be empty";
     }
     if(!emailRegex.test(email)){
-      return "Email valid email id";
+      return "Enter a valid email ID";
     }else{
         return ""
     }
  };
-
 
 
 export const validatePassword = (pword: any):string => {
@@ -65,10 +64,22 @@ export const confirmValidatePassword = (
   }
 };
 
+
+export const nameValidation=(name:any):string=>{
+  if(name.length===0){
+    return "*Name cant be empty"
+  }
+  if(name.length>80){
+    return "*Max 80 charecters required";
+  }
+  return "";
+}
+
+
 export const phoneNumbervalidation=(phone:any):string=>{
   
   if(phone.length===0){
-    return "Phone number cant be empty"
+    return "Phone number cannot be empty"
   }else if(/[^0-9]/.test(phone)){
     return "*Only numbers are allowed"
    }else if(phone.length!==10){
@@ -90,6 +101,47 @@ export const addressContentValidation=(content:any)=>{
   }else{
     return ""
   }
+}
 
+export const validateImageFile=(file:File)=>{
+     //check file size <=5mb
+     if(file.size>5*1024*1024){
+      return "Image must be 5MB or less";
+     } 
+     if(!file.type.startsWith("image/")){
+      return "Invalid format.Only images are allowed";
+     }
+     return null; //no error
+}
 
+export const validateImageDimensions=(file:File):Promise<string |null>=>{
+   return new Promise((resolve)=>{
+     const img=new Image();
+     img.src=URL.createObjectURL(file);
+     img.onload=()=>{
+        if(img.width<300 || img.height<100){
+          resolve("Please upload the image in landscape format (Preferred size: 300px × 100px"
+         );
+        }else{
+          resolve(null);
+        }
+      };
+     img.onerror=()=>resolve("Unable to read image dimensions");
+   })
+}
+
+export const validateVideo=(file:File)=>{
+   if(!file){
+    return "Please upload video";
+   }
+  const allowFormats=["video/mp4","video/quicktime"];
+  if(!allowFormats.includes(file.type)){
+    return "Recommended formats: MP4, MOV.";
+  }
+  
+  const maxSizinMB=5;
+  if(file.size>maxSizinMB*1024*1024){
+    return "video must be lessthan 5MB"
+  }
+  return null;
 }

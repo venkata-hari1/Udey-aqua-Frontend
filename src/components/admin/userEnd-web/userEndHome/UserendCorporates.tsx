@@ -1,59 +1,101 @@
-import { Box, Button, Divider, Stack, Typography } from "@mui/material"
-import useUserEndwebStyles from "../UserendwebStyles"
-import fishImg from './../../../../assets/admin/ciba.png'
-import CancelIcon from '@mui/icons-material/Cancel';
-import AddIcon from '@mui/icons-material/Add';
-import { DeleteButton, ErrorMessages, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
-const UserendCorporates = () => {
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import useUserEndwebStyles from "../UserendwebStyles";
+import CancelIcon from "@mui/icons-material/Cancel";
+import {
+  EditButton,
+  ErrorMessages,
+  Uploadbutton,
+  UserEndSaveCancelButtons,
+} from "./UserEndCommonButtons";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-const{classes}=useUserEndwebStyles() 
-const corporatedata=[
-    {count:1,image:fishImg},
-    {count:2,image:fishImg},
-    {count:3,image:fishImg},
-] 
-
-return (
-   <Box>
-    <Stack className={classes.corporateStack1}>
-    <Typography className={classes.titleText}>Logos</Typography>
-    <DeleteButton message="Are you use you want to delete Logo?"/>
-    </Stack>
-    <Box className={classes.corporateImageBox}>
-    <Uploadbutton />  
-     
-     <Stack className={classes.CorporateuploadImageStack}>
-      
-      {corporatedata.map((data,index)=>
-     <>
-      <Box key={index} className={classes.corporateCountImgBox}>  
-      <Typography className={classes.titleText}>{data.count}</Typography>
-      <Box className={classes.herouploadImageBox}>
-      <img src={data.image}  className={classes.herouploadImage}/>
-      <CancelIcon className={classes.corporateImgCancelIcon}/>  
-      </Box>
-      
-      </Box>
-     {index!==corporatedata.length-1 &&
-     <Divider sx={{border:'1px solid blue'}} />}
-     
-     </>
-      )
-    }
-     <Button variant="contained" className={classes.corporatePlusbutton}>
-      <AddIcon />
-     </Button>
-     </Stack>
-     <Box>
-      <ErrorMessages /> 
-     </Box>
-     <UserEndSaveCancelButtons />
- 
-
-
-    </Box>
-   </Box>
-  )
+interface CorporateLogo {
+  id: string;
+  name: string;
+  image: string;
+  imgerror: string;
 }
 
-export default UserendCorporates
+const UserendCorporates = () => {
+  const { classes } = useUserEndwebStyles();
+  const [corporates, setCorporates] = useState<CorporateLogo[]>([]);
+
+ 
+ 
+  const handleUpload = (files: File[]) => {
+    const newLogos = files.map((file) => ({
+      id: uuidv4(),
+      name: "Corporate Logo",
+      image: URL.createObjectURL(file),
+      imgerror: "",
+    }));
+    setCorporates((prev) => [...prev, ...newLogos]);
+  };
+
+  const handleImageError = (msg: string, id?: string) => {
+    if (!id) return;
+    setCorporates((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, imgerror: msg } : c))
+    );
+  };
+
+  const handleRemoveImage = (id: string) => {
+    setCorporates((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const handleSave = () => {
+    console.log("userend values", corporates);
+  };
+
+  const sliceEdit=()=>{
+
+  }
+
+  return (
+    <Box>
+      <Stack className={classes.corporateStack1}>
+        <Typography className={classes.titleText}>Logos</Typography>
+        <EditButton sliceEdit={sliceEdit}/>
+      </Stack>
+
+      <Box className={classes.corporateImageBox}>
+        <Uploadbutton
+          multiple
+          onUpload={handleUpload}
+          onError={(msg, id) => handleImageError(msg, id)}
+        />
+         <Stack
+          direction="row"
+          spacing={2} 
+          className={classes.CorporateuploadImageStack}
+          sx={{ flexWrap: "wrap" }} 
+        >
+          {corporates.map((corp, index) => (
+            <Box key={corp.id} sx={{ display: "flex", alignItems: "center" }}>
+              <Box>
+                <Typography className={classes.titleText}>{index + 1}</Typography>
+                <Box className={classes.herouploadImageBox}>
+                  <img src={corp.image} className={classes.herouploadImage} />
+                  <CancelIcon
+                    className={classes.corporateImgCancelIcon}
+                    onClick={() => handleRemoveImage(corp.id)}
+                  />
+                </Box>
+                <ErrorMessages message={corp.imgerror} />
+              </Box>
+             
+              {index !== corporates.length - 1 && (
+                <Divider orientation="vertical" flexItem sx={{ border: "1px solid blue" }} />
+              )}
+            </Box>
+          ))}
+        </Stack>
+
+        <UserEndSaveCancelButtons onSave={handleSave} />
+      </Box>
+    </Box>
+  );
+};
+
+export default UserendCorporates;

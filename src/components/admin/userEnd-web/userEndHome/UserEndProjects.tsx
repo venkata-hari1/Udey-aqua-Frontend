@@ -9,6 +9,10 @@ const UserEndProjects = () => {
  
     const{classes}=useUserEndwebStyles() 
 
+ const handleSave=()=>{
+   console.log("userend values")
+ }       
+
   return (
     <Box>
     <Box className={classes.useHerocontainer}>
@@ -28,13 +32,15 @@ const UserEndProjects = () => {
     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
     </Select>
   </FormControl>
-  <UserendSaveDeleteButtons message="Are you want to delete the Project?"/>
+  <UserendSaveDeleteButtons message="Are you want to delete the Project?"
+  onDelete={()=>console.log("delete project")}
+  sliceSave={() =>console.log("slice save") }/>
    </Box>
     
    <Stack className={classes.projectsUploadContentbox}>
      <Stack className={classes.UploadImageStack}>
      <Typography className={classes.titleText} mt={2}>Image</Typography>
-     <Uploadbutton />   
+     <Uploadbutton onUpload={() =>console.log("")}/>   
      <Box className={classes.herouploadImageBox}>
      <img src={fishImg} className={classes.herouploadImage}/>
      <CancelIcon className={classes.cancelImgIcon}/>
@@ -51,13 +57,15 @@ const UserEndProjects = () => {
      </Stack>
      <Stack gap={1}>
      <Typography className={classes.titleText}>Description</Typography>
-     <TextFieldManyRows />
+     <TextFieldManyRows    onChange={() =>
+                        console.log()
+                    }/>
      <ErrormsgContent />
      </Stack>
      </Box>
    </Stack> 
    <Divider sx={{border:'1px solid rgba(94, 190, 237, 0)'}}/>
-    <UserEndSaveCancelButtons /> 
+    <UserEndSaveCancelButtons onSave={handleSave} /> 
     
     </Box> 
     </Box>

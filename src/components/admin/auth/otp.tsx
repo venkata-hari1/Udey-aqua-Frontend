@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import bgimg from "../../../assets/admin/Group 39739.png";
 import logo from "../../../assets/admin/logo.png";
 
@@ -109,10 +109,9 @@ const OTP = () => {
       <StyledLoginLeft style={{ backgroundImage: `url(${bgimg})` }} />
 
       <StyledLoginRight>
-        <StyledLoginForm sx={{ width: "100%", maxWidth: 400 }}>
+        <StyledLoginForm>
           <StyledLoginLogo src={logo} alt="Logo" />
-
-          <StyledTitle variant="h5" fontWeight="bold">
+           <StyledTitle variant="h5" fontWeight="bold" sx={{ textAlign: { xs: 'center',fontSize:'25px' } }}>
             Verification
           </StyledTitle>
           <StyledSubtitle variant="body2" textAlign="center" color="#64748B">
@@ -143,7 +142,7 @@ const OTP = () => {
             <Typography
               variant="caption"
               color="error"
-              sx={{ mt: -2, alignSelf: "center" }}
+              sx={{ mt: 1, mb: 1, textAlign: "center" }}
             >
               {isOtpExpired
                 ? "OTP has expired, please click on resend."
@@ -154,7 +153,7 @@ const OTP = () => {
           <Typography
             variant="body2"
             color="#64748B"
-            alignSelf="center"
+            align="center"
             sx={{ mt: 1 }}
           >
             Didn’t receive the code?
@@ -167,12 +166,12 @@ const OTP = () => {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              borderBottom:'1px solid #0A4FA4',
+              borderBottom: "1px solid #0A4FA4",
               mt: 1,
-              
+              pb: 0.5,
             }}
           >
-            <Typography variant="body2" color="error">
+            <Typography variant="body2" color="error" sx={{ mr: 1 }}>
               {formatTime(timeLeft)}
             </Typography>
 
@@ -185,12 +184,15 @@ const OTP = () => {
                 background: "transparent",
                 cursor:
                   timeLeft > 0 && !isOtpExpired ? "not-allowed" : "pointer",
-                 opacity: timeLeft > 0 && !isOtpExpired ? 0.5 : 1,
+                opacity: timeLeft > 0 && !isOtpExpired ? 0.5 : 1,
               }}
             >
-              Resend 
+              Resend
             </StyledResendLink>
           </StyledResendLinkContainer>
+
+          {/* Push Verify button to bottom */}
+          <Box sx={{ flexGrow: 1 }} />
 
           {/* Verify Button */}
           <StyledLoginButton

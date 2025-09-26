@@ -26,8 +26,8 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-
- const emilchangeHandler=(e:any)=>{
+  const isDisabled=!email || !!emailError 
+  const emilchangeHandler=(e:any)=>{
   const value=e.target.value;
   setEmail(value)
   const emailoutput=validateEmail(value)
@@ -53,7 +53,7 @@ const validateAndContinue = () => {
         <StyledLoginForm>
           <StyledLoginLogo src={logo} alt="Logo" />
 
-          <StyledTitle variant="h5" fontWeight="bold">
+          <StyledTitle variant="h5" fontWeight="bold" sx={{ textAlign: { xs: 'center',fontSize:'25px' } }}>
             Forgot Password
           </StyledTitle>
           <StyledSubtitle variant="body2">
@@ -85,6 +85,7 @@ const validateAndContinue = () => {
             variant="contained"
             fullWidth
             onClick={validateAndContinue}
+            disabled={isDisabled}
           >
             Continue
           </StyledLoginButton>
