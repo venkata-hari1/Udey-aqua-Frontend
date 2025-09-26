@@ -9,7 +9,13 @@ const UserendDirectors = () => {
 
     const{classes}=useUserEndwebStyles() 
     
-    
+ 
+ const handleSave=()=>{
+   console.log("userend values")
+ }      
+ const handleSliceSave=()=>{
+
+ }
 
   return (
    <Box>
@@ -31,13 +37,16 @@ const UserendDirectors = () => {
        </Select>
      </FormControl>
    
-      <UserendSaveDeleteButtons message={`Are you sure want to delete Director?`}/>
+      <UserendSaveDeleteButtons message={`Are you sure want to delete Director?`}
+      onDelete={()=>console.log("deleted")}
+      sliceSave={() => handleSliceSave()}
+                    />
       </Box>
     
       <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() => console.log("")}/>   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
@@ -91,13 +100,15 @@ const UserendDirectors = () => {
        </Select>
      </FormControl>
    
-      <UserendSaveDeleteButtons message={`Are you sure want to delete Advisor?`}/>
+      <UserendSaveDeleteButtons message={`Are you sure want to delete Advisor?`}
+      onDelete={()=>console.log("delted directors")}
+      sliceSave={() => handleSliceSave()}/>
       </Box>
     
       <Stack className={classes.projectsUploadContentbox}>
         <Stack className={classes.UploadImageStack}>
         <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton />   
+        <Uploadbutton onUpload={() => console.log()}/>   
         <Box className={classes.herouploadImageBox}>
         <img src={fishImg} className={classes.herouploadImage}/>
         <CancelIcon className={classes.cancelImgIcon}/>
@@ -132,7 +143,7 @@ const UserendDirectors = () => {
       <Divider sx={{border:'1px solid #0A4FA4',mt:2,mb:2}}/>
       
      
-       <UserEndSaveCancelButtons /> 
+       <UserEndSaveCancelButtons onSave={handleSave} /> 
        
        </Box>
 
