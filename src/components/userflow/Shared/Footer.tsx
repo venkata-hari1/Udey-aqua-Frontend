@@ -36,7 +36,7 @@ import {
   FOOTER_BG3_ANIMATE,
   FOOTER_BG3_TRANSITION,
 } from "./animations";
-import { getValue } from "@mui/system";
+/* import { getValue } from "@mui/system"; */
 import { validateEmail } from "../../admin/utils/Validations";
 
 const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
@@ -53,7 +53,12 @@ const Footer = () => {
   const handleEmailChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
        const value=e.target.value;
        setEmail(value);
-       setError(validateEmail(value))
+       if(value===''){
+         setError("")
+       }else{
+        setError(validateEmail(value))
+       }
+       
  }
 
 const isEmailValid=error==="" &&email.length>0
