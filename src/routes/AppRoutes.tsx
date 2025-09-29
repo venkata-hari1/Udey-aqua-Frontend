@@ -17,37 +17,11 @@ import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
 import Logout from "../components/admin/auth/Logout";
 import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
-import AboutLayout from "../components/userflow/About/AboutLayout";
-import WhoWeAre from "../components/userflow/About/WhoWeAre";
-import OurHistory from "../components/userflow/About/OurHistory";
-import OurTeam from "../components/userflow/About/OurTeam";
-import SustainableDevelopment from "../components/userflow/About/SustainableDevelopment";
-import Careers from "../components/userflow/About/Careers";
-import Milestones from "../components/userflow/About/Milestones";
-import Testimonials from "../components/userflow/About/Testimonials";
-import CulturesLayout from "../components/userflow/Cultures/CulturesLayout";
-import SeaBass from "../components/userflow/Cultures/SeaBass";
-import PearlSpot from "../components/userflow/Cultures/PearlSpot";
-import MudCrab from "../components/userflow/Cultures/MudCrab";
-import Murrel from "../components/userflow/Cultures/Murrel";
-import Tilapia from "../components/userflow/Cultures/Tilapia";
-import SeaWeed from "../components/userflow/Cultures/SeaWeed";
-import TechnologiesLayout from "../components/userflow/Technologies/TechnologiesLayout";
-import RAS from "../components/userflow/Technologies/RAS";
-import CAS from "../components/userflow/Technologies/CAS";
-import PondFarming from "../components/userflow/Technologies/PondFarming";
-import FishHatchery from "../components/userflow/Technologies/FishHatchery";
-import CageCulture from "../components/userflow/Technologies/CageCulture";
-import TrainingProgramsLayout from "../components/userflow/TrainingPrograms/TrainingProgramsLayout";
-import NewsEventsLayout from "../components/userflow/NewsEvents/NewsEventsLayout";
-import SuccessStories from "../components/userflow/NewsEvents/SuccessStories";
-import News from "../components/userflow/NewsEvents/News";
-import Videos from "../components/userflow/NewsEvents/Videos";
-import Gallery from "../components/userflow/NewsEvents/Gallery";
-import Awards from "../components/userflow/NewsEvents/Awards";
-import Blog from "../components/userflow/NewsEvents/Blog";
-import Contact from "../components/userflow/Contact/Contact";
-import Maps from "../components/userflow/Shared/Maps";
+//user
+import Layout from "../components/userflow/Shared/Layout";
+import Home from "../components/userflow/Home/Home";
+import AboutUs from "../components/admin/userEnd-web/userEnd-Aboutus/AboutUs";
+import Addsubpage from "../components/admin/userEnd-web/userEnd-Aboutus/AddsubPage";
 const AppRoutes = () => {
   const location = useLocation();
 
@@ -123,6 +97,8 @@ const AppRoutes = () => {
         <Route path="profile" element={<Profile />}/>
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
+        <Route path="userend-web/userend-aboutus" element={<AboutUs/>}/>
+        <Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage/>}/>
         <Route path="userend-web/userend-culture" element={<CultureHome />} />        
         
         <Route path="logout" element={<Logout />} />  
