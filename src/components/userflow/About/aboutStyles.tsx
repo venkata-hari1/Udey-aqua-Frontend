@@ -173,14 +173,36 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   sideImg: {
-    maxWidth: "200px",
-    maxHeight: "200px",
-    display: "block",
+    maxWidth: "180px",
+    maxHeight: "180px",
+    display: "block",   
+    animation: "floatXY 6s ease-in-out infinite",
     [theme.breakpoints.down("lg")]: {
       marginLeft: "auto",
       marginRight: "auto",
+      maxWidth: "100px",
+    maxHeight: "100px",
     },
+    "@keyframes floatXY": {
+  "0%": {
+    transform: "translate(0px, 0px)",
   },
+  "25%": {
+    transform: "translate(10px, -8px)", 
+  },
+  "50%": {
+    transform: "translate(0px, -15px)", 
+  },
+  "75%": {
+    transform: "translate(-10px, -8px)", 
+  },
+  "100%": {
+    transform: "translate(0px, 0px)", 
+  },
+},
+  },
+
+
   aboutLayoutRoot: {
     width: "100%",
     minHeight: "100vh",
@@ -419,6 +441,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "flex-start",
     position: "relative",
     padding: "8px 15px 0 15px",
+    [theme.breakpoints.down('md')]:{
+      padding:0,
+      paddingTop:'10px',
+    }
   },
   milestoneItem: {
     display: "flex",
@@ -1741,6 +1767,7 @@ testimonialRoot: {
   // Milestones styles
   milestoneItemRow: {
     flexDirection: "row",
+
   },
   milestoneItemRowReverse: {
     flexDirection: "row-reverse",
@@ -1749,7 +1776,7 @@ testimonialRoot: {
     flex: 1,
   },
   milestoneTextJustify: {
-    textAlign: "justify",
+    textAlign: "start",
     marginBottom: theme.spacing(0.5),
   },
 

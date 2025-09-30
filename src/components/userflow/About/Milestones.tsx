@@ -135,12 +135,13 @@ const Milestones = () => {
             );
           })}
         </Box>
-        <Box className={classes.backButtonWrapper} onClick={() => navigate(-1)}>
+       
+      </Box>
+       <Box className={classes.backButtonWrapper} onClick={() => navigate(-1)}>
           <Box className={classes.backButton}>
             <ArrowBack />
           </Box>
         </Box>
-      </Box>
     </>
   );
 };
