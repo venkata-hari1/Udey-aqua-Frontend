@@ -187,7 +187,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     background: COLORS.BLUE_GRAY,
   },
   aboutHero: {
-    width: "100vw",
+    width: "100%",
     minHeight: "60vh",
     height: "70vh",
     position: "relative",
@@ -445,6 +445,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     maxWidth: "45%",
     height: "auto",
     borderRadius: 8,
+    
     zIndex: 2,
     [theme.breakpoints.down("md")]: {
       maxWidth: "45%",
@@ -654,7 +655,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginTop: theme.spacing(2),
     display: "flex",
     alignItems: "center",
-    gap: 4,
+    gap: 6,
     color: COLORS.WHITE,
     width: "30px",
     height: "30px",
@@ -664,6 +665,11 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       backgroundColor: COLORS.PRIMARY_BLUE,
       color: COLORS.WHITE,
     },
+    [theme.breakpoints.down('md')]:{
+      marginTop:'-10px',
+      zIndex:1,
+      
+    }
   },
   backButtonWrapper: {
     width: "100%",

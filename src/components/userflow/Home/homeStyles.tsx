@@ -782,6 +782,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
     position: "relative",
     overflow: "visible",
+    [theme.breakpoints.down('md')]:{
+      paddingTop:'10px',
+      paddingLeft:"10px",
+      paddingRight:'10px'
+    }
   },
   aboutUsVideo: {
     width: "100%",

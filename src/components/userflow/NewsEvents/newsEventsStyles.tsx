@@ -867,28 +867,36 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
   latestUpdatesScrollContainer: {
     display: "flex",
-    overflowX: "auto",
-    gap: theme.spacing(2),
+    flexWrap:'wrap',
+    gap: theme.spacing(3),
     padding: theme.spacing(1, 0),
     scrollbarWidth: "none",
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    [theme.breakpoints.down('md')]:{
+      flexWrap:'nowrap',
+      overflowX:'auto',
+    }
   },
   latestUpdatesCard: {
     minWidth: 200,
     height: 250,
-    overflow: "hidden",
     position: "relative",
     cursor: "pointer",
     transition: "transform 0.3s ease",
+    border:'3px solid #57b6ff',
+    borderRadius:'5px',
   },
   latestUpdatesImage: {
     width: "100%",
     height: "100%",
     objectFit: "cover",
-  },
+    [theme.breakpoints.down('md')]:{
+     width:'100%'     
+   } 
+},
   latestUpdatesOverlay: {
     position: "absolute",
     bottom: 0,
@@ -903,6 +911,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 600,
     marginBottom: theme.spacing(0.5),
     fontFamily: FONTS.INTER,
+    border:'1px solid #6993c7',
   },
   latestUpdatesCardDate: {
     fontSize: 12,
