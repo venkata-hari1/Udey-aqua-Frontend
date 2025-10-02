@@ -2,6 +2,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
+import PdfMark from "../NewsEvents/components/PdfMark";
 
 export interface NewsCardProps {
   image: string;
@@ -45,12 +46,17 @@ const NewsCard: React.FC<NewsCardProps> = ({
         autoWidth ? classes.newsCardAuto : ""
       }`}
     >
-      <Box className={classes.newsCardImgWrap}>
+      <Box className={classes.newsCardImgWrap} sx={{ position: 'relative' }}>
         <Box
           component="img"
           src={image}
           alt={title}
           className={classes.newsCardImg}
+        />
+        <PdfMark 
+          imageUrl={image}
+          position="top-right"
+          size="small"
         />
         <Box className={classes.newsCardDateBox}>
           <Typography className={classes.newsCardDateDay}>{day}</Typography>
