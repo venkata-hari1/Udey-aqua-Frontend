@@ -267,7 +267,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   mottoCardFishText: {
     position: "absolute",
     top: "50%",
-    left: "55%",
+    left: "50%",
     transform: "translate(-50%, -50%)",
     fontWeight: 600,
     color: COLORS.PRIMARY_BLUE,
@@ -352,12 +352,17 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     boxSizing: "border-box",
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
       minWidth: "100%",
       maxWidth: "100%",
       scrollSnapAlign: "center",
+    },
+  },
+  mottoCardOuterLast: {
+    [theme.breakpoints.down("md")]: {
+      paddingRight: theme.spacing(3),
     },
   },
   newsRoot: {
@@ -422,6 +427,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     alignItems: "stretch",
     marginBottom: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      minWidth: "100%",
+      maxWidth: "100%",
+      scrollSnapAlign: "center",
+      justifyContent: "center",
+    },
   },
   newsCardOuterFirst: {
     marginLeft: theme.spacing(4),
@@ -590,7 +601,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
 
   ourMottoScrollWrap: {
     display: "flex",
-    gap: theme.spacing(12),
+    gap: theme.spacing(6),
     justifyContent: "center",
     alignItems: "stretch",
     width: "100%",
@@ -601,8 +612,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     overflowX: "auto",
     overflowY: "hidden",
     scrollbarWidth: "none",
-    marginBottom: theme.spacing(5),
     msOverflowStyle: "none",
+    marginBottom: theme.spacing(5),
     "&::-webkit-scrollbar": {
       display: "none",
     },
@@ -616,23 +627,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       scrollPaddingRight: theme.spacing(2),
     },
   },
-  ourMottoScrollFlexStart: {
-    justifyContent: "flex-start",
-  },
-  ourMottoOverflowBoxLeft: {
-    marginRight: theme.spacing(-8),
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-      marginRight: 0,
-    },
-  },
-  ourMottoOverflowBoxRight: {
-    marginLeft: theme.spacing(-8),
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-      marginLeft: 0,
-    },
-  },
+  ourMottoScrollFlexStart: {},
+  ourMottoOverflowBoxLeft: {},
+  ourMottoOverflowBoxRight: {},
   aboutUsRoot: {
     width: "100%",
     background: COLORS.WHITE,
@@ -991,6 +988,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
     display: "flex",
     alignItems: "stretch",
+    [theme.breakpoints.down("md")]: {
+      minWidth: "100%",
+      maxWidth: "100%",
+      scrollSnapAlign: "center",
+      justifyContent: "center",
+    },
   },
   projectCardRoot: {
     width: 350,
@@ -1077,7 +1080,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     maxWidth: 1400,
     margin: "auto",
     gap: theme.spacing(6),
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
     marginTop: theme.spacing(6),
     marginBottom: theme.spacing(16),
@@ -1088,7 +1091,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
       gap: theme.spacing(2),
-      justifyContent: "flex-start",
+      justifyContent: "center",
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       scrollSnapType: "x mandatory",
@@ -1216,6 +1219,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
     display: "flex",
     alignItems: "stretch",
+    [theme.breakpoints.down("md")]: {
+      minWidth: "100%",
+      maxWidth: "100%",
+      scrollSnapAlign: "center",
+      justifyContent: "center",
+    },
   },
   pricingCardInner: {
     width: "90%",
@@ -1576,13 +1585,22 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     alignItems: "stretch",
     marginLeft: 0,
     marginRight: 0,
+    [theme.breakpoints.down("md")]: {
+      minWidth: "100%",
+      maxWidth: "100%",
+      scrollSnapAlign: "center",
+      justifyContent: "center",
+    },
+  },
+  testimonialsCardOuterLast: {
+    [theme.breakpoints.down("md")]: {
+      marginRight: theme.spacing(3),
+    },
   },
   testimonialsCardOuterFirst: {
     marginLeft: theme.spacing(4),
   },
-  testimonialsCardOuterLast: {
-    marginRight: theme.spacing(4),
-  },
+  // removed duplicate testimonialsCardOuterLast
   testimonialCardRoot: {
     flex: 1,
     minWidth: 320,

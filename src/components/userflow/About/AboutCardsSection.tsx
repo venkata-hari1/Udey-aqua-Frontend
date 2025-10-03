@@ -56,15 +56,8 @@ const AboutCardsSection = ({
   
     if (idx >= 0) {
       setOpenSet((prev) => new Set(prev).add(idx));
-  
-      // Always scroll to top first
-      window.scrollTo(0, 0);
-  
-      let attempts = 0;
-      const maxAttempts = 5;
-  
-      const tryScroll = () => {
-        // Prefer scrolling to the card title so the heading is at the top
+      // Align precisely to the title after expansion/layout
+      requestAnimationFrame(() => {
         const el =
           document.getElementById(`card-${slug}-title`) ||
           document.getElementById(`card-${slug}`);
@@ -72,16 +65,8 @@ const AboutCardsSection = ({
           (scrollRef as unknown as { current: HTMLElement | null }).current =
             el as HTMLElement;
           scrollTo();
-        } else if (attempts < maxAttempts) {
-          attempts += 1;
-          setTimeout(tryScroll, 150);
         }
-      };
-  
-      // Small delay after scroll-to-top before trying card scroll
-      const timeoutId = setTimeout(tryScroll, 350);
-  
-      return () => clearTimeout(timeoutId);
+      });
     }
   }, [location.pathname, location.search, cards, scrollRef, scrollTo]);
   

@@ -1,6 +1,7 @@
 export const validateEmail = (email: string): string => {
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    // Broader email pattern: allows dots/plus/hyphen, subdomains, and TLDs >=2
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; 
        
     if(email.length===0){
       return "Email cannot be empty";
