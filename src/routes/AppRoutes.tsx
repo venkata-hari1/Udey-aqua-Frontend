@@ -1,23 +1,8 @@
 import { useEffect } from "react";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";
-import Login from "../components/admin/auth/login";
-import ForgotPassword from "../components/admin/auth/forgotpassword";
-import OTP from "../components/admin/auth/otp";
-import ChangePassword from "../components/admin/auth/changepassword";
-import Trainingprograms from "../components/admin/user-management/Trainingprograms";
-import MainLayout from "../components/admin/dashboard/MainLayout";
-import Admindb from "../components/admin/dashboard/Admindb";
-import UserInformation from "../components/admin/user-management/UserInformation";
-import GetintouchUsers from "../components/admin/user-management/GetintouchUsers";
-import Subscriber from "../components/admin/user-management/Subscriber";
-import Profile from "../components/admin/profile/Profile";
-import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
-import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
-import Logout from "../components/admin/auth/Logout";
-import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
-//user
-import Layout from "../components/userflow/Shared/Layout";
-import Home from "../components/userflow/Home/Home";
+
+// User flow components
+
 import AboutLayout from "../components/userflow/About/AboutLayout";
 import WhoWeAre from "../components/userflow/About/WhoWeAre";
 import OurHistory from "../components/userflow/About/OurHistory";
@@ -49,6 +34,26 @@ import CAS from "../components/userflow/Technologies/CAS";
 import PondFarming from "../components/userflow/Technologies/PondFarming";
 import FishHatchery from "../components/userflow/Technologies/FishHatchery";
 import CageCulture from "../components/userflow/Technologies/CageCulture";
+
+// Admin components
+import Login from "../components/admin/auth/login";
+import ForgotPassword from "../components/admin/auth/forgotpassword";
+import OTP from "../components/admin/auth/otp";
+import ChangePassword from "../components/admin/auth/changepassword";
+import Trainingprograms from "../components/admin/user-management/Trainingprograms";
+import MainLayout from "../components/admin/dashboard/MainLayout";
+import Admindb from "../components/admin/dashboard/Admindb";
+import UserInformation from "../components/admin/user-management/UserInformation";
+import GetintouchUsers from "../components/admin/user-management/GetintouchUsers";
+import Subscriber from "../components/admin/user-management/Subscriber";
+import Profile from "../components/admin/profile/Profile";
+import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
+import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
+import Logout from "../components/admin/auth/Logout";
+import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
+//user
+import Layout from "../components/userflow/Shared/Layout";
+import Home from "../components/userflow/Home/Home";
 import AboutUs from "../components/admin/userEnd-web/userEnd-Aboutus/AboutUs";
 import Addsubpage from "../components/admin/userEnd-web/userEnd-Aboutus/AddsubPage";
 const AppRoutes = () => {

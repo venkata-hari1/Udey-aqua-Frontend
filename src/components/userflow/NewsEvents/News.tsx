@@ -533,12 +533,17 @@ const News = () => {
       <Box className={classes.latestUpdatesSection}>
         <Box className={classes.latestUpdatesScrollContainer}>
           {latestUpdatesData.map((update: LatestUpdateItem) => (
-            <Box key={update.id} className={classes.latestUpdatesCard}>
+            <Box key={update.id} className={classes.latestUpdatesCard} sx={{ position: 'relative' }}>
               <Box
                 component="img"
                 src={update.image}
                 alt="Latest Update"
                 className={classes.latestUpdatesImage}
+              />
+              <PdfMark 
+                imageUrl={update.image}
+                position="top-right"
+                size="small"
               />
             </Box>
           ))}
