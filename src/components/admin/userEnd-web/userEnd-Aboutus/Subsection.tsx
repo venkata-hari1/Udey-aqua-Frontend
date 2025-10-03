@@ -73,13 +73,6 @@ const Subsection=({ accordianId, id, onDelete }: SubsectionProps)=>{
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
     };
-    const handleDeleteAll = () => {
-            setFile([]);
-            setImage([]);
-            setError("");
-            setSubtitle('');
-            setContent('');
-    };
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };

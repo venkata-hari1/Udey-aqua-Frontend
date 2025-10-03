@@ -2,7 +2,7 @@
 import { Box, IconButton, Tooltip } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { useState } from 'react';
-import { convertImageToPDF, convertNewsImageToPDF, NewsImageData } from '../../../../utils/pdfConverter';
+import { convertImageToPDF, convertNewsImageToPDF, type NewsImageData } from '../../../../utils/pdfConverter';
 
 interface PdfMarkProps {
   imageUrl: string;

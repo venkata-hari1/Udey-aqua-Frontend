@@ -77,7 +77,7 @@ export const convertNewsImageToPDF = async (newsData: NewsImageData): Promise<vo
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
 
-      newsData.body.forEach((paragraph, index) => {
+      newsData.body.forEach((paragraph) => {
         const paragraphLines = pdf.splitTextToSize(paragraph, contentWidth);
         
         // Check if we need a new page

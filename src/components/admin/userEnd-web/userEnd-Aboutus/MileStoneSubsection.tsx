@@ -1,8 +1,7 @@
 import {useUserEndwebStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton} from './AboutUsButtons';
 import { useState } from 'react';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import {HelperTextValidate, NameandRoleValidate} from './validations';
 
 type MilestoneSubpageProps={
@@ -19,8 +18,6 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
     const [role, setRole] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    const [selected, setSelected] = useState("Directors");
-    const options = ["Directors", "Advisors", "Managers"]; 
 
     const roleFlied = NameandRoleValidate(role);
     const nameFlied = NameandRoleValidate(name);
