@@ -3,8 +3,6 @@ import {
   Box,
   Grid,
   Typography,
-  useMediaQuery,
-  useTheme,
   IconButton,
 } from "@mui/material";
 import { motion } from "framer-motion";
