@@ -431,7 +431,19 @@ const News = () => {
               <Box component="img" src={calendarIcon} alt="Calendar" width={16} height={16} />
               <Typography variant="body2">{detail.date}</Typography>
             </Box>
-            <PdfMark imageUrl={detail.image} position="top-right" size="medium" />
+            <PdfMark 
+              imageUrl={detail.image}
+              newsData={{
+                imageUrl: detail.image,
+                title: detail.title,
+                date: detail.date,
+                description: detail.description,
+                author: detail.author,
+                body: detail.body,
+              }}
+              position="top-right" 
+              size="medium" 
+            />
           </Box>
         </Box>
 
@@ -612,8 +624,10 @@ const News = () => {
               className={
                 news.id === lastReadId ? classes.newsCardHighlight : undefined
               }
+              sx={{ position: 'relative' }}
             >
-              <NewsCard autoWidth {...news} />
+              <NewsCard autoWidth hidePdfMark {...news} />
+              <PdfMark imageUrl={news.image} position="top-right" size="small" />
             </Box>
           ))}
         </Box>

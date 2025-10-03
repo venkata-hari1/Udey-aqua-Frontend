@@ -1303,6 +1303,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
     background: COLORS.WHITE,
+    width: 142,
   },
   sectionTitleRoot: {
     position: "relative",

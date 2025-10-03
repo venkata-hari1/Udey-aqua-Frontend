@@ -1102,17 +1102,17 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   // Testimonials Styles
   
   testimonialCarouselWrapper: {
-    width: "70vw",
-    maxWidth: "90vw",
+    width: "100vw",
+    maxWidth: "100vw",
     margin: "24px 0 40px 0",
     marginLeft: "calc(50% - 50vw)",
     marginRight: "calc(50% - 50vw)",
     position: "relative",
-    paddingLeft: 26,
-    paddingRight: 16,
+    paddingLeft: 0,
+    paddingRight: 0,
     [theme.breakpoints.down("md")]: {
-      paddingLeft: 8,
-      paddingRight: 8,
+      paddingLeft: 0,
+      paddingRight: 0,
       margin: "16px 0 24px 0",
     },
   },
@@ -1154,7 +1154,7 @@ testimonialRoot: {
     position: "relative",
     marginBottom: 24,
     minHeight: 400,
-    marginLeft: 64,
+    marginLeft: 200,
     [theme.breakpoints.down("md")]: {
       marginBottom: 16,
       minHeight: 300,
@@ -1460,8 +1460,6 @@ testimonialRoot: {
   testimonialBottomWrapper: {
     width: "100vw",
     maxWidth: "100vw",
-    marginLeft: "calc(50% - 50vw)",
-    marginRight: "calc(50% - 50vw)",
     background: "#DBECF9",
     paddingTop: 12,
     paddingBottom: 24,
@@ -1475,10 +1473,10 @@ testimonialRoot: {
     },
   },
   extraWidth: {
-    width: 1,
-    paddingLeft: "60px",
+    width: 0,
+    paddingLeft: 0,
     [theme.breakpoints.down("md")]: {
-      paddingLeft: "20px",
+      paddingLeft: 0,
     },
   },
   testimonialWideCards: {

@@ -21,7 +21,6 @@ const PdfMark: React.FC<PdfMarkProps> = ({
 
   const handlePdfConversion = async () => {
     if (isConverting) return;
-    
     setIsConverting(true);
     try {
       if (newsData) {
@@ -71,15 +70,17 @@ const PdfMark: React.FC<PdfMarkProps> = ({
           onClick={handlePdfConversion}
           disabled={isConverting}
           sx={{
-            backgroundColor: 'transparent',
-            border: 'none',
-            boxShadow: 'none',
+            backgroundColor: '#ffffff',
+            borderRadius: '50%',
+            border: '1px solid rgba(0,0,0,0.1)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
+            p: 0.5,
             '&:hover': {
-              backgroundColor: 'transparent',
+              backgroundColor: '#ffffff',
               transform: 'scale(1.05)'
             },
             '&:disabled': {
-              backgroundColor: 'transparent',
+              backgroundColor: '#ffffff',
               color: 'rgba(0, 0, 0, 0.3)'
             },
             transition: 'all 0.2s ease-in-out'

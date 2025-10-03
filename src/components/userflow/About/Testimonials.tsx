@@ -79,8 +79,6 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useAboutStyles();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isReadMoreMode, setIsReadMoreMode] = useState(false);

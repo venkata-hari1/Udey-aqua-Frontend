@@ -61,15 +61,7 @@ const AboutLayout = () => {
                 ))}
               </Box>
               <ContactBox />
-              <Box className={classes.aboutSidebarFish}>
-                <motion.img
-                  src={aboutSideFish}
-                  alt="Fish"
-                  initial={ABOUT_FISH_INITIAL}
-                  animate={ABOUT_FISH_ANIMATE}
-                  transition={ABOUT_FISH_TRANSITION}
-                />
-              </Box>
+              {/* Removed side fish to allow main content to take full width */}
             </Grid>
           )}
           {isMobile && <ContactBox />}
