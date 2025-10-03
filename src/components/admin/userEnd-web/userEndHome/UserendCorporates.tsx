@@ -45,7 +45,7 @@ const UserendCorporates = () => {
   };
 
   const handleSave = () => {
-    console.log("userend values", corporates);
+    
   };
 
   const sliceEdit=()=>{
@@ -72,8 +72,9 @@ const UserendCorporates = () => {
           sx={{ flexWrap: "wrap" }} 
         >
           {corporates.map((corp, index) => (
-            <Box key={corp.id} sx={{ display: "flex", alignItems: "center" }}>
-              <Box>
+             
+             <Box key={corp.id} sx={{ display: "flex", alignItems: "center" }}>
+               <Box>
                 <Typography className={classes.titleText}>{index + 1}</Typography>
                 <Box className={classes.herouploadImageBox}>
                   <img src={corp.image} className={classes.herouploadImage} />
@@ -92,7 +93,7 @@ const UserendCorporates = () => {
           ))}
         </Stack>
 
-        <UserEndSaveCancelButtons onSave={handleSave} />
+        <UserEndSaveCancelButtons onSave={handleSave}/>
       </Box>
     </Box>
   );
