@@ -1102,7 +1102,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   // Testimonials Styles
   
   testimonialCarouselWrapper: {
-    width: "100vw",
+    width: "85vw",
     maxWidth: "100vw",
     margin: "24px 0 40px 0",
     marginLeft: "calc(50% - 50vw)",
@@ -1460,6 +1460,8 @@ testimonialRoot: {
   testimonialBottomWrapper: {
     width: "100vw",
     maxWidth: "100vw",
+    // marginLeft: "calc(50%  -50vw)",
+    // marginRight: "calc(50% - 50vw)",
     background: "#DBECF9",
     paddingTop: 12,
     paddingBottom: 24,
