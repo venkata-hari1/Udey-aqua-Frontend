@@ -126,14 +126,14 @@ export const convertImageToPDF = async (options: PDFConversionOptions): Promise<
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
       
-      body.forEach((paragraph, index) => {
+      body.forEach((paragraph) => {
         if (paragraph.trim()) {
           // Clean the paragraph text
           const cleanParagraph = paragraph.trim().replace(/\s+/g, ' ');
           const splitParagraph = pdf.splitTextToSize(cleanParagraph, contentWidth);
           
           // Render each line with consistent spacing
-          splitParagraph.forEach((line, lineIndex) => {
+          splitParagraph.forEach((line: string) => {
             if (currentY > pageHeight - 40) {
               pdf.addPage();
               currentY = margin;

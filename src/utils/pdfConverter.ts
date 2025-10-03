@@ -29,9 +29,8 @@ export const convertNewsImageToPDF = async (newsData: NewsImageData): Promise<vo
     pdf.setFontSize(10);
     pdf.setFont('helvetica', 'normal');
     pdf.text(`Date: ${newsData.date}`, margin, margin + 25);
-    pdf.text(`Author: ${newsData.author}`, margin, margin + 32);
+    pdf.text(`Author:${newsData.author}`, margin, margin + 32);
 
-    // Add description
     pdf.setFontSize(12);
     pdf.setFont('helvetica', 'normal');
     const descriptionLines = pdf.splitTextToSize(newsData.description, contentWidth);
@@ -77,10 +76,9 @@ export const convertNewsImageToPDF = async (newsData: NewsImageData): Promise<vo
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
 
-      newsData.body.forEach((paragraph, index) => {
+  newsData.body.forEach((paragraph) => {
         const paragraphLines = pdf.splitTextToSize(paragraph, contentWidth);
         
-        // Check if we need a new page
         if (currentY + (paragraphLines.length * 5) > pageHeight - margin) {
           pdf.addPage();
           currentY = margin;
@@ -92,12 +90,9 @@ export const convertNewsImageToPDF = async (newsData: NewsImageData): Promise<vo
 
     } catch (imageError) {
       console.error('Error loading image:', imageError);
-      // Continue without image if there's an error
       pdf.setFontSize(12);
       pdf.text('Image could not be loaded', margin, margin + 60);
     }
-
-    // Save the PDF
     const fileName = `news_${newsData.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.pdf`;
     pdf.save(fileName);
 

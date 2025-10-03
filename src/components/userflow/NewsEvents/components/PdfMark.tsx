@@ -2,7 +2,7 @@
 import { Box, IconButton, Tooltip } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { useState } from 'react';
-import { convertImageToPDF, convertNewsImageToPDF, NewsImageData } from '../../../../utils/pdfConverter';
+import { convertImageToPDF, convertNewsImageToPDF, type NewsImageData } from '../../../../utils/pdfConverter';
 
 interface PdfMarkProps {
   imageUrl: string;
@@ -31,7 +31,6 @@ const PdfMark: React.FC<PdfMarkProps> = ({
       }
     } catch (error) {
       console.error('PDF conversion failed:', error);
-      // You could show a toast notification here
       alert('Failed to generate PDF. Please try again.');
     } finally {
       setIsConverting(false);
@@ -72,19 +71,18 @@ const PdfMark: React.FC<PdfMarkProps> = ({
           onClick={handlePdfConversion}
           disabled={isConverting}
           sx={{
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            backdropFilter: 'blur(4px)',
-            border: '2px solid #1976d2',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+            backgroundColor: 'transparent',
+            border: 'none',
+            boxShadow: 'none',
             '&:hover': {
-              backgroundColor: 'rgba(25, 118, 210, 0.1)',
-              transform: 'scale(1.05)',
+              backgroundColor: 'transparent',
+              transform: 'scale(1.05)'
             },
             '&:disabled': {
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              color: 'rgba(0, 0, 0, 0.3)',
+              backgroundColor: 'transparent',
+              color: 'rgba(0, 0, 0, 0.3)'
             },
-            transition: 'all 0.2s ease-in-out',
+            transition: 'all 0.2s ease-in-out'
           }}
         >
           <PictureAsPdfIcon 

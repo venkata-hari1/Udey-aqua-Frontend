@@ -16,7 +16,7 @@ import {
   Tab,
   IconButton,
 } from '@mui/material';
-import { Close, CreditCard, AccountBalance, Payment } from '@mui/icons-material';
+import { Close, CreditCard } from '@mui/icons-material';
 // import useSharedStyles from './sharedStyles';
 
 // Payment method images

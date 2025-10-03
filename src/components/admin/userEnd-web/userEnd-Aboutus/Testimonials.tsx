@@ -1,6 +1,6 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button} from '@mui/material';
-import { AddHighlights, AddTestimonials, DeleteButton, CancelButton, UpdateHeader, UploadButton, UploadButtonTestimonials} from './AboutUsButtons';
+import { AddHighlights, AddTestimonials, DeleteButton, CancelButton, UpdateHeader, UploadButtonTestimonials} from './AboutUsButtons';
 import { useState } from 'react';
 import { HelperTextValidate } from './validations';
 import SubHighlights from './SubHighlights';

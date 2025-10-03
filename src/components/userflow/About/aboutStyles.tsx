@@ -1102,9 +1102,19 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   // Testimonials Styles
   
   testimonialCarouselWrapper: {
-    maxWidth: 1200,
-    margin: "40px auto",
+    width: "70vw",
+    maxWidth: "90vw",
+    margin: "24px 0 40px 0",
+    marginLeft: "calc(50% - 50vw)",
+    marginRight: "calc(50% - 50vw)",
     position: "relative",
+    paddingLeft: 26,
+    paddingRight: 16,
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: 8,
+      paddingRight: 8,
+      margin: "16px 0 24px 0",
+    },
   },
 testimonialRoot: {
     width: "100%",
@@ -1121,7 +1131,7 @@ testimonialRoot: {
     right:-150,
     top: -70,
     zIndex: 100,
-    display: "block",
+    display: "none",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -1144,9 +1154,11 @@ testimonialRoot: {
     position: "relative",
     marginBottom: 24,
     minHeight: 400,
+    marginLeft: 64,
     [theme.breakpoints.down("md")]: {
       marginBottom: 16,
       minHeight: 300,
+      marginLeft: 0,
     },
   },
   testimonialCarouselContent: {
@@ -1154,6 +1166,10 @@ testimonialRoot: {
     gap: 12,
     alignItems: "stretch",
     height: "100%",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      gap: 8,
+    },
   },
   testimonialImageContainer: {
     flexShrink: 0,
@@ -1161,6 +1177,10 @@ testimonialRoot: {
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      height: 220,
+    },
   },
   testimonialImage: {
     width: "100%",
@@ -1173,7 +1193,7 @@ testimonialRoot: {
     display: "flex",
     flexDirection: "column",
     gap: 16,
-    padding: "32px 16px",
+    padding: "20px 12px",
     justifyContent: "space-between",
   },
   testimonialTitle: {
@@ -1438,17 +1458,20 @@ testimonialRoot: {
 
   // Bottom section full-width
   testimonialBottomWrapper: {
-    width: "100%",
+    width: "100vw",
+    maxWidth: "100vw",
+    marginLeft: "calc(50% - 50vw)",
+    marginRight: "calc(50% - 50vw)",
     background: "#DBECF9",
-    paddingTop: 24,
-    paddingBottom: 48,
-    marginTop: 62,
-    marginBottom: 80,
+    paddingTop: 12,
+    paddingBottom: 24,
+    marginTop: 40,
+    marginBottom: 60,
     [theme.breakpoints.down("md")]: {
-      paddingTop: 16,
-      paddingBottom: 32,
+      paddingTop: 8,
+      paddingBottom: 20,
       marginTop: 16,
-      marginBottom: 40,
+      marginBottom: 32,
     },
   },
   extraWidth: {
@@ -1464,8 +1487,8 @@ testimonialRoot: {
     display: "flex",
     gap: 24,
     overflowX: "auto",
-    paddingLeft: 64,
-    paddingRight: 64,
+    paddingLeft: 0,
+    paddingRight: 0,
     zIndex:101,
     scrollbarWidth: "none",
     "&::-webkit-scrollbar": {
@@ -1473,8 +1496,8 @@ testimonialRoot: {
     },
     [theme.breakpoints.down("md")]: {
       gap: 16,
-      paddingLeft: 16,
-      paddingRight: 16,
+      paddingLeft: 0,
+      paddingRight: 0,
     },
   },
   testimonialWideCard: {
