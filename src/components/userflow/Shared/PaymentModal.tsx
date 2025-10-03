@@ -19,6 +19,14 @@ import {
 import { Close, CreditCard, AccountBalance, Payment } from '@mui/icons-material';
 // import useSharedStyles from './sharedStyles';
 
+// Payment method images
+import visaImg from '../../../assets/payment_section/visa.png';
+import mastercardImg from '../../../assets/payment_section/mastercard.png';
+import discoverImg from '../../../assets/payment_section/discover.png';
+import americanExpressImg from '../../../assets/payment_section/americanexpress.png';
+import epsImg from '../../../assets/payment_section/eps.png';
+import giropayImg from '../../../assets/payment_section/giropay.png';
+
 interface PaymentModalProps {
   open: boolean;
   onClose: () => void;
@@ -42,15 +50,71 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     postalCode: '',
   });
 
+  const [formErrors, setFormErrors] = useState({
+    cardNumber: '',
+    expiry: '',
+    cvc: '',
+    postalCode: '',
+  });
+
+  const validateField = (field: string, value: string): string => {
+    switch (field) {
+      case 'cardNumber':
+        const cardNumber = value.replace(/\s/g, '');
+        if (!cardNumber) return 'Card number is required';
+        if (!/^\d{16}$/.test(cardNumber)) return 'Card number must be exactly 16 digits';
+        return '';
+      case 'expiry':
+        if (!value) return 'Expiry date is required';
+        if (!/^\d{2}\/\d{2}$/.test(value)) return 'Expiry must be in MM/YY format';
+        return '';
+      case 'cvc':
+        if (!value) return 'CVC is required';
+        if (!/^\d{3,4}$/.test(value)) return 'CVC must be 3-4 digits';
+        return '';
+      case 'postalCode':
+        if (!value) return 'Postal code is required';
+        if (!/^\d{5}$/.test(value)) return 'Postal code must be exactly 5 digits';
+        return '';
+      default:
+        return '';
+    }
+  };
+
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
   const handleInputChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    let value = event.target.value;
+    
+    // Format input based on field type
+    if (field === 'cardNumber') {
+      // Remove all non-digits and limit to 16 digits, add spaces every 4 digits
+      value = value.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
+    } else if (field === 'expiry') {
+      // Format as MM/YY
+      value = value.replace(/\D/g, '').replace(/(\d{2})(?=\d)/g, '$1/');
+    } else if (field === 'cvc') {
+      // Only allow digits, max 4 characters
+      value = value.replace(/\D/g, '').slice(0, 4);
+    } else if (field === 'postalCode') {
+      // Only allow digits, max 5 characters
+      value = value.replace(/\D/g, '').slice(0, 5);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [field]: event.target.value
+      [field]: value
     }));
+    
+    // Clear error when user starts typing (no real-time validation)
+    if (formErrors[field as keyof typeof formErrors]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
   };
 
   const handleCountryChange = (event: any) => {
@@ -60,7 +124,29 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     }));
   };
 
+  const isFormValid = () => {
+    // Check if all required fields are filled and valid
+    const cardNumberValid = formData.cardNumber && validateField('cardNumber', formData.cardNumber) === '';
+    const expiryValid = formData.expiry && validateField('expiry', formData.expiry) === '';
+    const cvcValid = formData.cvc && validateField('cvc', formData.cvc) === '';
+    const postalCodeValid = formData.postalCode && validateField('postalCode', formData.postalCode) === '';
+    
+    return cardNumberValid && expiryValid && cvcValid && postalCodeValid;
+  };
+
   const handleRequestAccess = () => {
+    if (!isFormValid()) {
+      // Validate all fields to show errors
+      const newErrors = {
+        cardNumber: validateField('cardNumber', formData.cardNumber),
+        expiry: validateField('expiry', formData.expiry),
+        cvc: validateField('cvc', formData.cvc),
+        postalCode: validateField('postalCode', formData.postalCode),
+      };
+      setFormErrors(newErrors);
+      return;
+    }
+    
     // Handle payment processing here
     console.log('Processing payment for:', speciesName, 'Amount:', price);
     onClose();
@@ -125,16 +211,16 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               icon={<CreditCard />}
               iconPosition="start"
             />
-            <Tab 
-              label="EPS" 
-              icon={<AccountBalance />}
-              iconPosition="start"
-            />
-            <Tab 
-              label="Giropay" 
-              icon={<Payment />}
-              iconPosition="start"
-            />
+             <Tab 
+               label="EPS" 
+               icon={<Box component="img" src={epsImg} alt="EPS" sx={{ height: 20, width: 'auto' }} />}
+               iconPosition="start"
+             />
+             <Tab 
+               label="Giropay" 
+               icon={<Box component="img" src={giropayImg} alt="Giropay" sx={{ height: 20, width: 'auto' }} />}
+               iconPosition="start"
+             />
           </Tabs>
         </Box>
 
@@ -150,83 +236,85 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {/* Card Number */}
               <Box>
-                <TextField
-                  fullWidth
-                  label="Card number"
-                  placeholder="1234 1234 1234 1234"
-                  value={formData.cardNumber}
-                  onChange={handleInputChange('cardNumber')}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      backgroundColor: 'white',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      '&:hover': {
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                      },
-                      '&.Mui-focused': {
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                      }
-                    }
-                  }}
-                />
+                 <TextField
+                   fullWidth
+                   label="Card number"
+                   placeholder="1234 1234 1234 1234"
+                   value={formData.cardNumber}
+                   onChange={handleInputChange('cardNumber')}
+                   error={!!formErrors.cardNumber}
+                   helperText={formErrors.cardNumber}
+                   sx={{
+                     '& .MuiOutlinedInput-root': {
+                       backgroundColor: 'white',
+                       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                       '&:hover': {
+                         boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                       },
+                       '&.Mui-focused': {
+                         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                       }
+                     }
+                   }}
+                 />
                 <Box sx={{ 
                   display: 'flex', 
                   gap: '8px', 
                   marginTop: '8px',
-                  justifyContent: 'flex-end'
+                  justifyContent: 'flex-end',
+                  alignItems: 'center'
                 }}>
-                  <Typography variant="caption" sx={{ fontSize: '12px' }}>
-                    VISA
-                  </Typography>
-                  <Typography variant="caption" sx={{ fontSize: '12px' }}>
-                    Mastercard
-                  </Typography>
-                  <Typography variant="caption" sx={{ fontSize: '12px' }}>
-                    Discover
-                  </Typography>
+                  <Box component="img" src={visaImg} alt="Visa" sx={{ height: 20, width: 'auto' }} />
+                  <Box component="img" src={mastercardImg} alt="Mastercard" sx={{ height: 20, width: 'auto' }} />
+                  <Box component="img" src={americanExpressImg} alt="American Express" sx={{ height: 20, width: 'auto' }} />
+                  <Box component="img" src={discoverImg} alt="Discover" sx={{ height: 20, width: 'auto' }} />
                 </Box>
               </Box>
 
               {/* Expiry and CVC */}
               <Box sx={{ display: 'flex', gap: '16px' }}>
-                <TextField
-                  label="Expiry"
-                  placeholder="MM/YY"
-                  value={formData.expiry}
-                  onChange={handleInputChange('expiry')}
-                  sx={{ 
-                    flex: 1, 
-                    '& .MuiOutlinedInput-root': { 
-                      backgroundColor: 'white',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      '&:hover': {
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                      },
-                      '&.Mui-focused': {
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                      }
-                    } 
-                  }}
-                />
-                <TextField
-                  label="CVC"
-                  placeholder="CVC"
-                  value={formData.cvc}
-                  onChange={handleInputChange('cvc')}
-                  sx={{ 
-                    flex: 1, 
-                    '& .MuiOutlinedInput-root': { 
-                      backgroundColor: 'white',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      '&:hover': {
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                      },
-                      '&.Mui-focused': {
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                      }
-                    } 
-                  }}
-                />
+                 <TextField
+                   label="Expiry"
+                   placeholder="MM/YY"
+                   value={formData.expiry}
+                   onChange={handleInputChange('expiry')}
+                   error={!!formErrors.expiry}
+                   helperText={formErrors.expiry}
+                   sx={{ 
+                     flex: 1, 
+                     '& .MuiOutlinedInput-root': { 
+                       backgroundColor: 'white',
+                       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                       '&:hover': {
+                         boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                       },
+                       '&.Mui-focused': {
+                         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                       }
+                     } 
+                   }}
+                 />
+                 <TextField
+                   label="CVC"
+                   placeholder="CVC"
+                   value={formData.cvc}
+                   onChange={handleInputChange('cvc')}
+                   error={!!formErrors.cvc}
+                   helperText={formErrors.cvc}
+                   sx={{ 
+                     flex: 1, 
+                     '& .MuiOutlinedInput-root': { 
+                       backgroundColor: 'white',
+                       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                       '&:hover': {
+                         boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                       },
+                       '&.Mui-focused': {
+                         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                       }
+                     } 
+                   }}
+                 />
               </Box>
 
               {/* Country */}
@@ -257,48 +345,49 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               </FormControl>
 
               {/* Postal Code */}
-              <TextField
-                fullWidth
-                label="Postal code"
-                placeholder="90210"
-                value={formData.postalCode}
-                onChange={handleInputChange('postalCode')}
-                sx={{ 
-                  '& .MuiOutlinedInput-root': { 
-                    backgroundColor: 'white',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                    '&:hover': {
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                    },
-                    '&.Mui-focused': {
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                    }
-                  } 
-                }}
-              />
+               <TextField
+                 fullWidth
+                 label="Postal code"
+                 placeholder="90210"
+                 value={formData.postalCode}
+                 onChange={handleInputChange('postalCode')}
+                 error={!!formErrors.postalCode}
+                 helperText={formErrors.postalCode}
+                 sx={{ 
+                   '& .MuiOutlinedInput-root': { 
+                     backgroundColor: 'white',
+                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                     '&:hover': {
+                       boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                     },
+                     '&.Mui-focused': {
+                       boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                     }
+                   } 
+                 }}
+               />
             </Box>
           )}
 
-          {activeTab === 1 && (
-            <Box sx={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center',
-              padding: '40px 20px',
-              textAlign: 'center'
-            }}>
-              <AccountBalance sx={{ fontSize: 48, color: '#ccc', marginBottom: '16px' }} />
-              <Typography variant="h6" sx={{ marginBottom: '8px', color: '#666' }}>
-                EPS Payment
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '24px' }}>
-                Electronic Payment Standard - Coming Soon
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                This payment method will be available in a future update.
-              </Typography>
-            </Box>
-          )}
+           {activeTab === 1 && (
+             <Box sx={{ 
+               display: 'flex', 
+               flexDirection: 'column', 
+               alignItems: 'center',
+               padding: '40px 20px',
+               textAlign: 'center'
+             }}>
+               <Typography variant="h6" sx={{ marginBottom: '8px', color: '#666' }}>
+                 EPS Payment
+               </Typography>
+               <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '24px' }}>
+                 Electronic Payment Standard - Coming Soon
+               </Typography>
+               <Typography variant="body2" color="text.secondary">
+                 This payment method will be available in a future update.
+               </Typography>
+             </Box>
+           )}
 
           {activeTab === 2 && (
             <Box sx={{ 
@@ -308,7 +397,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               padding: '40px 20px',
               textAlign: 'center'
             }}>
-              <Payment sx={{ fontSize: 48, color: '#ccc', marginBottom: '16px' }} />
               <Typography variant="h6" sx={{ marginBottom: '8px', color: '#666' }}>
                 Giropay Payment
               </Typography>

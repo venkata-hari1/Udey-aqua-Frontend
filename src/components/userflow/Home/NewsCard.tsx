@@ -2,7 +2,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
-import PdfMark from "../NewsEvents/components/PdfMark";
+import PDFButton from "../NewsEvents/components/PDFButton";
 
 export interface NewsCardProps {
   image: string;
@@ -53,10 +53,13 @@ const NewsCard: React.FC<NewsCardProps> = ({
           alt={title}
           className={classes.newsCardImg}
         />
-        <PdfMark 
+        <PDFButton
           imageUrl={image}
-          position="top-right"
-          size="small"
+          title={title}
+          author={author}
+          date={date}
+          description={description}
+          body={[]} // News cards don't have full body content
         />
         <Box className={classes.newsCardDateBox}>
           <Typography className={classes.newsCardDateDay}>{day}</Typography>

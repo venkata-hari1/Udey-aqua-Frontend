@@ -19,7 +19,6 @@ import { useLocation } from "react-router-dom";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
 import { useScrollWithOffset } from "./hooks";
-import PdfMark from "./components/PdfMark";
 
 import latest1 from "../../../assets/news/latest/img0.png";
 import latest2 from "../../../assets/news/latest/img1.png";
@@ -430,27 +429,12 @@ const News = () => {
             />
             <Typography variant="body2">{detail.date}</Typography>
           </Box>
-          <Box sx={{ position: 'relative', display: 'inline-block' }}>
-            <Box
-              component="img"
-              src={detail.image}
-              alt={detail.title}
-              className={classes.newsDetailImage}
-            />
-            <PdfMark 
-              imageUrl={detail.image}
-              newsData={{
-                imageUrl: detail.image,
-                title: detail.title,
-                date: detail.date,
-                description: detail.description,
-                author: detail.author,
-                body: detail.body
-              }}
-              position="top-right"
-              size="medium"
-            />
-          </Box>
+          <Box
+            component="img"
+            src={detail.image}
+            alt={detail.title}
+            className={classes.newsDetailImage}
+          />
         </Box>
 
         <Box className={classes.newsDetailContent}>
