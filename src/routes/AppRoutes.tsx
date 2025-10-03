@@ -18,6 +18,8 @@ import Logout from "../components/admin/auth/Logout";
 import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
 import AboutUs from "../components/admin/userEnd-web/userEnd-Aboutus/AboutUs";
 import Addsubpage from "../components/admin/userEnd-web/userEnd-Aboutus/AddsubPage";
+import Technologies from "../components/admin/userEnd-web/userEnd-Technologies/Technologies";
+import AddSubPage from "../components/admin/userEnd-web/userEnd-Technologies/AddSubPage";
 
 const AppRoutes = () => {
   return (
@@ -50,7 +52,9 @@ const AppRoutes = () => {
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
         <Route path="userend-web/userend-aboutus" element={<AboutUs/>}/>
         <Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage/>}/>
-        <Route path="userend-web/userend-culture" element={<CultureHome />} />        
+        <Route path="userend-web/userend-culture" element={<CultureHome />} />  
+        <Route path='userend-web/userend-technologies' element={<Technologies/>}/> 
+        <Route path='userend-web/userend-technologies/subpage' element={<AddSubPage/>}/>     
          
         <Route path="logout" element={<Logout />} />  
       </Route>

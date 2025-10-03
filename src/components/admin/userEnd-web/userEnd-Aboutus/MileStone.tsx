@@ -1,24 +1,25 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
-import { AddSection, CancelButton, DeleteButton, UpdateHeader, UploadButton} from './AboutUsButtons';
-import Subsection from './Subsection';
-import { useState } from 'react';
+import { AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import { HelperTextValidate } from './validations';
 import MilestoneSubsection from './MileStoneSubsection';
 
 
 type MileStoneProps={
     id:string;
-    accordianId:string
+    accordianId:string;
+    Accordiantitle:string
 }
-const MileStone=({id,accordianId}:MileStoneProps)=>{
+const MileStone=({id,accordianId,Accordiantitle}:MileStoneProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
-    const [counter, setCounter] = useState<any>([]);
+    const [counter, setCounter] = useState<any>([1]);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+    const [prevData, setPrevData] = useState<boolean>(false);
 
     const TextFieldError=HelperTextValidate(subtitle);
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
@@ -68,13 +69,6 @@ const MileStone=({id,accordianId}:MileStoneProps)=>{
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
     };
-    const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-        localStorage.removeItem("Data")
-      };
 
     const handleAddSubpage = () => {
         const newId = `Milestone-${counter.length+1}`; // unique id
@@ -91,9 +85,28 @@ const MileStone=({id,accordianId}:MileStoneProps)=>{
             image:Images
         }
         console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
+    localStorage.setItem("Milestones", JSON.stringify(Data));
+    setPrevData(true)
     };
+    const CancelData = ()=>{
+        const PrevData=localStorage.getItem('Milestones');
+        if (PrevData) {
+            const parsedData = JSON.parse(PrevData);
+            setSubtitle(parsedData.subtitle || "");
+            setImage(parsedData.image || []);
+            setFile([]); 
+            setError(""); 
+        } else {
+            alert("No previous data found!");
+        }
+    
+    }
+    useEffect(() => {
+        const saved = localStorage.getItem("Milestones");
+        if (saved) {
+        setPrevData(true);
+        }
+    }, []);
     return(
         <>
             <Box className={classes.WhoWeAreContainer}>
@@ -102,7 +115,7 @@ const MileStone=({id,accordianId}:MileStoneProps)=>{
                 </Box>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
-                    <DeleteButton onClick={handleDeleteAll}/>
+                    <EditButton/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -118,7 +131,7 @@ const MileStone=({id,accordianId}:MileStoneProps)=>{
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId}/> 
-                            {file.length>0 && (
+                            {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -153,9 +166,11 @@ const MileStone=({id,accordianId}:MileStoneProps)=>{
                                             </label>
                                         </Box>
                                         <Box>
-                                            <Typography className={classes.errorText}>
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography>  
+                                            </Typography> 
+                                            )} 
                                         </Box> 
                                 </Box>
                             )}
@@ -187,10 +202,11 @@ const MileStone=({id,accordianId}:MileStoneProps)=>{
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
                         <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                        <CancelButton onClick={handleDeleteAll}/>
+                        {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
+                <MilestoneSubsection  id='Milestone-1' accordianId="7" title={Accordiantitle} />
                 {subpages.map((sub) => (
-                    <MilestoneSubsection key={sub.id} id={sub.id} accordianId={id} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <MilestoneSubsection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

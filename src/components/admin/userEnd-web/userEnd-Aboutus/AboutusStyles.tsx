@@ -239,13 +239,14 @@ AboutUscontainer:{
   flexDirection:'column',
   gap:5,
   color:'#fff',
-  padding:'8px',
+  padding:'15px',
 },
 AboutUsHeaderbox:{
   display:'flex',
   flexDirection:'row',
   justifyContent:'space-between',
   width:'100%',
+  marginBottom:'20px'
 },
 AboutUsArrowAndHeaderBox:{
   display:'flex',
@@ -271,6 +272,7 @@ AboutUsHeaderButtonBox:{
 AccordianBox:{
   display:'flex',
   flexDirection:'column',
+  paddingLeft:'15px'
 },
 AccordiaStack:{
   display:'flex',
@@ -287,7 +289,7 @@ AccordiaStack:{
 },
 AccordianText:{
   color:`${theme.palette.primary.dark}`,
-  fontWeight:400,
+  fontWeight:500,
   fontSize:'16px'
 },
 DialoagBox:{

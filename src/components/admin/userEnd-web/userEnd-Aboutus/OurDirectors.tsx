@@ -1,16 +1,17 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, MenuItem, Select} from '@mui/material';
-import { AddSection, DeleteButton, SaveButton, UploadButton} from './AboutUsButtons';
-import { useState } from 'react';
+import { AddSection, EditButton,  UploadButton, UpdateHeader, CancelButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import Advisors from './Advisors';
 import {HelperTextValidate, NameandRoleValidate} from './validations';
 
 type HeroProps={
     id:string;
-    accordianId:string
+    accordianId:string;
+    Accordiantitle:string,
 }
-const OurDirectors=({id,accordianId}:HeroProps)=>{
+const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -21,6 +22,7 @@ const OurDirectors=({id,accordianId}:HeroProps)=>{
     const [role, setRole] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
+    const [prevData, setPrevData] = useState<boolean>(false);
     const options = ["Directors", "Advisors", "Managers"];
 
     const roleFlied = NameandRoleValidate(role);
@@ -94,16 +96,37 @@ const OurDirectors=({id,accordianId}:HeroProps)=>{
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
     }; 
     const SaveData = ()=>{
-        const Data={
-            role,
-            name,
-            content,
-            image:Images
+            const Data={
+                name:name,
+                role:role,
+                content:content,
+                image:Images
+            }
+            console.log(Data);
+        localStorage.setItem("OurDirectors", JSON.stringify(Data));
+        setPrevData(true)
+        };
+        const CancelData = ()=>{
+            const PrevData=localStorage.getItem('OurDirectors');
+            if (PrevData) {
+                const parsedData = JSON.parse(PrevData);
+                setName(parsedData.name || "");
+                setRole(parsedData.role || []);
+                setContent(parsedData.content || []);
+                setImage(parsedData.image || []);
+                setFile([]); 
+                setError(""); 
+            } else {
+                alert("No previous data found!");
+            }
+        
         }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
-    };
+        useEffect(() => {
+            const saved = localStorage.getItem("OurDirectors");
+            if (saved) {
+            setPrevData(true);
+            }
+        }, []);
     return (
     <Box className={classes.WhoWeAreContainer}>
       <Box className={classes.AddSectionBox}>
@@ -130,8 +153,8 @@ const OurDirectors=({id,accordianId}:HeroProps)=>{
 
         </Select>
         <Box display="flex" justifyContent="flex-end" gap={2}>
-          <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-          <DeleteButton/>
+          {/*<SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>*/}
+          <EditButton/>
         </Box>
       </Box>
       <Box className={classes.myuploadandheadingbox}>
@@ -148,7 +171,7 @@ const OurDirectors=({id,accordianId}:HeroProps)=>{
                                 onChange={HandleFileChange}
                                 />
                         <UploadButton id={id} accordianId={accordianId}/> 
-                        {file.length>0 && (
+                        {(file.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
                                     {Images.map((prev,index)=>
@@ -174,19 +197,15 @@ const OurDirectors=({id,accordianId}:HeroProps)=>{
                                             style={{ display: "none" }}
                                             onChange={HandleFileChange}
                                     />
-                                    <Button className={classes.AddMoreButton}
-                                        variant="outlined"
-                                        component="span">
-                                            +
-                                            </Button>
                                         </label>
                                     </Box>
                                     <Box>
-                                        <Typography className={classes.errorText}
-                                            >
-                                            *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                        </Typography>  
-                                    </Box> 
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
+                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
+                                            </Typography> 
+                                            )} 
+                                    </Box>  
                             </Box>
                         )}
                         <Box>
@@ -229,9 +248,13 @@ const OurDirectors=({id,accordianId}:HeroProps)=>{
                             helperText={contentFlied.message}
                             FormHelperTextProps={{className:classes.helperText}}/>
                 </Box>
-            </Box>   
+            </Box> 
+            <Box className={classes.SeveandCancelBox}>
+                            <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
+                            {prevData &&(<CancelButton onClick={CancelData}/>)}
+                        </Box>
             {subpages.map((sub) => (
-                    <Advisors key={sub.id} id={sub.id} accordianId={id} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Advisors key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))} 
  
     </Box>
