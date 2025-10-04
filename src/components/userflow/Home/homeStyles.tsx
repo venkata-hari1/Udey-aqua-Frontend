@@ -635,7 +635,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       justifyContent: "center",
       alignItems: "center",
       paddingLeft: 0,
-      paddingRight: 0,
+      paddingRight: 0,  
       scrollSnapType: "x mandatory",
       scrollPaddingLeft: 0,
       scrollPaddingRight: 0,
@@ -1197,7 +1197,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     },
   },
   priceOverflow: {
-    marginLeft:-72,
+    marginLeft: 0,
   },
   pricingRoot: {
     width: "100%",
@@ -1252,7 +1252,14 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     zIndex: 1,
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
-      gap: theme.spacing(10),
+      gap: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      paddingLeft: 0,
+      paddingRight: 0,
+      scrollSnapType: "x mandatory",
+      scrollPaddingLeft: 0,
+      scrollPaddingRight: 0,
     },
   },
   pricingScrollFlexStart: {
@@ -1268,10 +1275,14 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     alignItems: "stretch",
     [theme.breakpoints.down("md")]: {
+      flex: "0 0 100%",
       minWidth: "100%",
       maxWidth: "100%",
       scrollSnapAlign: "center",
       justifyContent: "center",
+      alignItems: "center",
+      paddingLeft: 0,
+      paddingRight: 0,
     },
   },
   pricingCardInner: {
@@ -1279,6 +1290,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     height: "100%",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      maxWidth: 320,
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
   },
   pricingCardRoot: {
     width: 320, 
@@ -1295,6 +1312,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    [theme.breakpoints.down("md")]: {
+      margin: "0 auto",
+    },
   },
   pricingCardImgWrap: {
     width: 240, 
@@ -1353,6 +1373,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     background: COLORS.WHITE,
     width: 142,
     alignItems: "center",
+    margin: "0 auto",
+    display: "flex",
+    justifyContent: "center",
   },
   sectionTitleRoot: {
     position: "relative",
