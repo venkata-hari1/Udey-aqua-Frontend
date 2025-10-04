@@ -174,6 +174,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
+        marginLeft:3,
         padding: '24px 24px 0 24px'
       }}>
         <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: '16px' }}>
