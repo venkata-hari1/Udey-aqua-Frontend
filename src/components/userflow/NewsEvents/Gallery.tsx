@@ -391,29 +391,36 @@ const Gallery = () => {
   ]);
 
   useEffect(() => {
+    // Only run this effect when returning from detail view (detail.active changes from true to false)
     if (!detail.active && lastClickedId) {
       const idx = readMoreGalleryData.findIndex((g) => g.id === lastClickedId);
+      
       if (idx >= 0) {
-        const page = Math.floor(idx / pagination.itemsPerPage) + 1;
-        if (page !== pagination.currentPage) {
-          pagination.goToPage(page);
+        const correctPage = Math.floor(idx / pagination.itemsPerPage) + 1;
+        
+        // Only navigate if we're not already on the correct page
+        if (correctPage !== pagination.currentPage) {
+          pagination.goToPage(correctPage);
         }
+        
+        // Scroll to the clicked item after a short delay to ensure the page has loaded
+        setTimeout(() => {
+          const el = document.getElementById(`gallery-card-${lastClickedId}`);
+          if (el) {
+            try {
+              const rect = el.getBoundingClientRect();
+              const y = window.scrollY + rect.top - 120;
+              window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+            } catch {}
+          } else {
+            // If element not found, scroll to the read more section
+            scrollToReadMore();
+          }
+        }, 100); // Slightly longer delay to ensure DOM is updated
       }
-      setTimeout(() => {
-        const el = document.getElementById(`gallery-card-${lastClickedId}`);
-        if (el) {
-          try {
-            const rect = el.getBoundingClientRect();
-            const y = window.scrollY + rect.top - 120;
-            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-          } catch {}
-        } else {
-          scrollToReadMore();
-        }
-      }, 0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detail.active]);
+  }, [detail.active, lastClickedId]);
 
   if (loadingState.isLoading) {
     return (
@@ -560,6 +567,7 @@ const Gallery = () => {
 
         <Box className={classes.readMoreNewsGrid}>{memoizedGalleryItems}</Box>
 
+        {/* Pagination - always visible to show current page */}
         <Pagination
           currentPage={pagination.currentPage}
           totalPages={pagination.totalPages}

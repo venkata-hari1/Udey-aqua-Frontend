@@ -1005,6 +1005,12 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     gap: theme.spacing(1),
+    marginTop: theme.spacing(3),
+    padding: theme.spacing(2, 0),
+    minHeight: "60px", // Ensure minimum height for visibility
+    width: "100%",
+    flexWrap: "nowrap", // Prevent wrapping
+    overflow: "visible", // Ensure all buttons are visible
   },
   readMoreNewsPaginationArrow: {
     width: 42,
@@ -1036,6 +1042,18 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
+    transition: "all 0.2s ease",
+    minWidth: "42px", // Ensure minimum width
+    flexShrink: 0, // Prevent shrinking
+    "&:hover": {
+      background: COLORS.PRIMARY_BLUE,
+      color: COLORS.WHITE,
+      border: `1px solid ${COLORS.PRIMARY_BLUE}`,
+    },
+    "&:focus": {
+      outline: `2px solid ${COLORS.PRIMARY_BLUE}`,
+      outlineOffset: "2px",
+    },
   },
   readMoreNewsPaginationButtonActive: {
     background: COLORS.PRIMARY_BLUE,
