@@ -6,7 +6,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from './HeroSection';
-import SubPriceplan from "./SubPlanPrice"
+import PricePlan from './PricePlan';
+import AquacultureType from './AcqacultureType';
 
 
 
@@ -15,8 +16,8 @@ const TrainingPrograms=()=>{
     const naviagte = useNavigate();
     const AccordianData = [
         {id:'1',title:'Hero Section',component:HeroSection},
-        {id:'2',title:'Price Plans ',component:SubPriceplan},
-        //{id:'3',title:'Aquaculture Type  '},
+        {id:'2',title:'Price Plans ',component:PricePlan},
+        {id:'3',title:'Aquaculture Type  ',component:AquacultureType},
        // {id:'4',title:'Form Details '},
     ]
     return(
@@ -26,7 +27,7 @@ const TrainingPrograms=()=>{
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
                             <ArrowBack onClick={()=>naviagte(-1)}/>
-                            <Typography className={classes.AboutUsHeader}> Technologies</Typography>
+                            <Typography className={classes.AboutUsHeader}> Training Programs</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
                             <AddSubpage onClick={()=>(naviagte('subpage'))}/>

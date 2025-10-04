@@ -45,11 +45,9 @@ export const NameandRoleValidate = (text: string): {  message: string } => {
 export const YearValidate = (text: string): {  message: string } => {
   if (text.length === 0) {
     return {  message: "" }; 
-  } 
-  if (!/^\d+$/.test(text)) {
-    return { message: "* Must be Numbers" };
-  }
-  if (text.length < 2) {
+  } if(!/[^0-9]/.test(text)){
+    return {message:'* Must be Numbers'};
+  }  if (text.length < 2) {
     return {
       message: `* Must contain at least 2 characters. Remaining Characters ${text.length}/4`,
     };

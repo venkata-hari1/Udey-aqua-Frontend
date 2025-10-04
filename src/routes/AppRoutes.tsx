@@ -20,6 +20,8 @@ import AboutUs from "../components/admin/userEnd-web/userEnd-Aboutus/AboutUs";
 import Addsubpage from "../components/admin/userEnd-web/userEnd-Aboutus/AddsubPage";
 import Technologies from "../components/admin/userEnd-web/userEnd-Technologies/Technologies";
 import AddSubPage from "../components/admin/userEnd-web/userEnd-Technologies/AddSubPage";
+import TrainingPrograms from "../components/admin/userEnd-web/userEnd-TrainingPrograms/TrainingPrograms";
+import AquaAddSub from "../components/admin/userEnd-web/userEnd-TrainingPrograms/AquaAddSub";
 
 const AppRoutes = () => {
   return (
@@ -54,7 +56,9 @@ const AppRoutes = () => {
         <Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage/>}/>
         <Route path="userend-web/userend-culture" element={<CultureHome />} />  
         <Route path='userend-web/userend-technologies' element={<Technologies/>}/> 
-        <Route path='userend-web/userend-technologies/subpage' element={<AddSubPage/>}/>     
+        <Route path='userend-web/userend-technologies/subpage' element={<AddSubPage/>}/>
+        <Route path="userend-web/userend-trainingprograms" element={<TrainingPrograms/>}/>
+        <Route path='userend-web/userend-trainingprograms/subpage' element={<AquaAddSub/>}/>    
          
         <Route path="logout" element={<Logout />} />  
       </Route>

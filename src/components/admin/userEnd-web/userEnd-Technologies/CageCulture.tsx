@@ -214,7 +214,7 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
                         <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
                         {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <SubSection id='Sub Section-1' accordianId='2' title='RAS'/>
+                <SubSection id='Sub Section-1' accordianId='6' title={Accordiantitle}/>
                 {subpages.map((sub) => (
                     <SubSection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}

@@ -8,7 +8,7 @@ import TitleSubpage from './TitleSubpage';
 type TitleProps={
     id:string;
     accordianId:string,
-    Section:string;
+    Section?:string;
 }
 
 const TitlePage=({id,accordianId, Section}:TitleProps)=>{

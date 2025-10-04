@@ -214,7 +214,7 @@ const CAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
                         <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
                         {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <SubSection id='Sub Section-1' accordianId='2' title='RAS'/>
+                <SubSection id='Sub Section-1' accordianId='3' title='CAS'/>
                 {subpages.map((sub) => (
                     <SubSection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}

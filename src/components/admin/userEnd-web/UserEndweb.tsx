@@ -11,7 +11,7 @@ const navigation=[
 {id:1,menu:"Home",path:'/admin/userend-web/userend-home'},
 {id:2,menu:"About Us",path:'/admin/userend-web/userend-aboutus'},
 {id:3,menu:"Cultures",path:'/admin/userend-web/userend-culture'},
-{id:4,menu:"Training Programs",path:'/userend-training-program'},
+{id:4,menu:"Training Programs",path:'/admin/userend-web/userend-trainingprograms'},
 {id:5,menu:"Technologies",path:'/admin/userend-web/userend-technologies'},
 {id:6,menu:"News & Events",path:'/userend-news-events'},
 {id:7,menu:"Contact Us",path:'/userend-contact-us'}

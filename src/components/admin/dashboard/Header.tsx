@@ -58,6 +58,9 @@ switch(path){
   case "userend-technologies":
     title="User End Website"
     break;
+  case "userend-trainingprograms":
+    title="User End Website"
+    break;
   case "logout":
     title="Logout"
 }
@@ -79,9 +82,14 @@ const backarrowHandle=()=>{
    case "userend-home":
    case "userend-culture":
    navigate('/admin/userend-web')
+   break;
    case "userend-aboutus":
    navigate('/admin/userend-web') 
+   break;
    case "userend-technologies":
+    navigate('/admin/userend-web')
+    break;
+   case "userend-trainingprograms":
     navigate('/admin/userend-web')
    
 

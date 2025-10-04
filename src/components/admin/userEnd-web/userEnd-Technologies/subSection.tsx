@@ -16,7 +16,8 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
-    const [pdf, setPdf] = useState<string>([]);
+    
+    const [pdf, setPdf] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
@@ -138,11 +139,11 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${title}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={title}/> 
                             {(file.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -160,10 +161,10 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${title}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${title}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -201,10 +202,10 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId}/> 
-                            {(pdf.length>0|| prevData)  && (
+                            {(file.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {Images.map((prev,index)=>
+                                        {pdf.map((prev,index)=>
                                             <Box key={index} sx={{position:'relative'}} >
                                                 <img 
                                                     src={prev}
@@ -220,7 +221,7 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                         )}
                                         <label htmlFor={`upload-file-${accordianId}-${id}`}>
                                         <input
-                                                accept="image/*"
+                                                accept="application/pdf"
                                                 id={`upload-file-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
@@ -230,7 +231,7 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                             </label>
                                     </Box>
                                     <Box>
-                                            {(Images.length>0 ) &&(
+                                            {(pdf.length>0 ) &&(
                                                 <Typography className={classes.errorText}>
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
                                             </Typography> 
@@ -238,6 +239,14 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                         </Box> 
                                 </Box>
                             )}
+                            <Box>
+                                {error && (
+                                        <Typography className={classes.errorText}>
+                                            {error}
+                                        </Typography>
+                                    )       
+                                }
+                            </Box>
                         </Box>
                 </Stack>
                     <Box className={classes.TextFiledBox}>

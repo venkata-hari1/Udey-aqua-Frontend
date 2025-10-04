@@ -4,7 +4,7 @@ import {  ArrowBack } from '../userEnd-Aboutus/AboutUsButtons';
 import {  useNavigate } from "react-router-dom";
 import TitlePage from '../userEnd-Aboutus/TitlePage';
 
-const AddSubPage=()=>{
+const AquaAddSub=()=>{
     const {classes}=useUserEndwebStyles();
     const navigate=useNavigate();
     return(
@@ -13,13 +13,13 @@ const AddSubPage=()=>{
                 <Box className={classes.AboutUsHeaderbox}>
                     <Box className={classes.AboutUsArrowAndHeaderBox}>
                         <ArrowBack onClick={() => navigate(-1)} />
-                        <Typography className={classes.AboutUsHeader}>Technologies/ Add Subpage</Typography>
+                        <Typography className={classes.AboutUsHeader}>AquacultureType/ Add Subpage</Typography>
                     </Box>
                 </Box>
-                <TitlePage id='1' accordianId='custom' Section='Technologies'/>
+                <TitlePage id='1' accordianId='custom' Section='AquacultureType'/>
             </Box>
         </>
     )
 
 }
-export default AddSubPage;
+export default AquaAddSub;

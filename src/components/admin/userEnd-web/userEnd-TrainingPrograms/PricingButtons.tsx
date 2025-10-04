@@ -47,7 +47,7 @@ export const AddType =({onClick}:AddTypeProps)=>{
     const {classes}=TrainingStyles()
     return(
         <Button variant="contained" disableElevation startIcon={<AddOutlinedIcon/>} className={classes.AddplanButton} onClick={onClick}>
-            Add Price Plan
+            Add Type
         </Button>
     )
 }

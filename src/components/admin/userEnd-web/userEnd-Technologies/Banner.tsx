@@ -1,6 +1,6 @@
 import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
-import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, UpdateHeader} from '../userEnd-Aboutus/AboutUsButtons';
+import { DeleteButton, UploadButton, CancelButton, EditButton, UpdateHeader} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
 import { HelperTextValidate, PriceValidate } from '../userEnd-Aboutus/validations';
 
@@ -16,7 +16,7 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
-    const [pdf, setPdf] = useState<string[]>([]);
+   // const [pdf, setPdf] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
@@ -30,7 +30,7 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
     const PriceField= PriceValidate(pdfPrice);
     const PriceContent = HelperTextValidate(pdfContent)
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200 || content.length === 0 || content.length < 3 || content.length > 200;
-
+    
     const validate = (file:File):string | null=>{
         const maxSize=5 *1024*1024;
         const types=['image/jpg','image/png','image/jpeg'];
@@ -218,11 +218,6 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
-                {/*<Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
-                    {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
-                </Box>
-                <Box className={classes.heroDivider}></Box>*/}
             </Box>
             {/* PDF Area */}
             <Box className={classes.subSectionBox} sx={{marginTop:'40px'}}>
@@ -243,51 +238,7 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={title}/> 
-                            {(pdf.length>0|| prevData)  && (
-                                <Box className={classes.ImagesBox}>
-                                    <Box className={classes.ImagespicBox}>
-                                        {pdf.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
-                                                <iframe 
-                                                    src={prev}
-                                                    title={`preview ${index+1}`}
-                                                    className={classes.ImagePic}
-                                                />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                                >
-                                                    x
-                                                </Button>
-                                            </Box>
-                                        )}
-                                        <label htmlFor={`upload-file-${title}-${accordianId}-${id}`}>
-                                        <input
-                                                accept="application/pdf"
-                                                id={`upload-file-${title}-${accordianId}-${id}`}
-                                                type="file"
-                                                multiple
-                                                style={{ display: "none" }}
-                                                onChange={HandleFileChange}
-                                        />
-                                            </label>
-                                    </Box>
-                                   {/* <Box>
-                                            {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
-                                            )} 
-                                        </Box> */}
-                                </Box>
-                            )}
-                            {/*<Box>
-                                {error && (
-                                        <Typography className={classes.errorText}>
-                                            {error}
-                                        </Typography>
-                                    )       
-                                }
-                            </Box>*/}
+
                         </Box> 
                 </Stack>
                     <Box className={classes.TextFiledBox}>
