@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/News.tsx
 import {
   Box,
   Typography,
@@ -14,9 +15,11 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
 import { useScrollWithOffset } from "./hooks";
+import PdfMark from "./components/PdfMark";
 
 import latest1 from "../../../assets/news/latest/img0.png";
 import latest2 from "../../../assets/news/latest/img1.png";
@@ -200,8 +203,13 @@ const readMoreNewsData: ReadonlyArray<ReadMoreNewsItem> = [
 
 const News = () => {
   const { classes } = useNewsEventsStyles();
+  const location = useLocation();
   const { ref: readMoreSectionRef, scrollTo: scrollToReadMore } =
     useScrollWithOffset(200);
+  const { ref: latestTopRef, scrollTo: scrollToLatestTop } =
+    useScrollWithOffset(240);
+  const { ref: detailTopRef, scrollTo: scrollToDetailTop } =
+    useScrollWithOffset(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [detail, setDetail] = useState<DetailView>({
     active: false,
@@ -212,6 +220,29 @@ const News = () => {
     author: "",
     body: [],
   });
+  const [lastReadId, setLastReadId] = useState<number | null>(() => {
+    try {
+      const v = sessionStorage.getItem("news_last_id");
+      return v ? parseInt(v, 10) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [lastReadSource, setLastReadSource] = useState<"latest" | "grid" | null>(() => {
+    try {
+      const v = sessionStorage.getItem("news_last_source");
+      return v === "latest" || v === "grid" ? v : null;
+    } catch {
+      return null;
+    }
+  });
+  // Clear last highlight after a short delay to avoid persistent focus effect
+  useEffect(() => {
+    if (lastReadId) {
+      const t = setTimeout(() => setLastReadId(null), 2000);
+      return () => clearTimeout(t);
+    }
+  }, [lastReadId]);
   const [loadingState, setLoadingState] = useState<LoadingState>({
     isLoading: true,
     error: null,
@@ -235,6 +266,20 @@ const News = () => {
   const [selMonth, setSelMonth] = useState<number>(5);
   const [selYear, setSelYear] = useState<number>(2025);
   const [openSelect, setOpenSelect] = useState<boolean>(false);
+  const ArrowToggleIcon = (props: any) => (
+    <KeyboardArrowDownIcon
+      {...props}
+      onClick={(e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setOpenSelect((prev) => !prev);
+      }}
+      style={{
+        transform: openSelect ? "rotate(180deg)" : "none",
+        transition: "transform 0.2s",
+      }}
+    />
+  );
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(readMoreNewsData.length / itemsPerPage);
@@ -254,12 +299,43 @@ const News = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Auto-open detail when navigated from Home with state
+  useEffect(() => {
+    const state = location.state as any;
+    const openNews = state?.openNews;
+    if (openNews) {
+      setDetail({
+        active: true,
+        image: openNews.image,
+        title: openNews.title,
+        date: openNews.date,
+        description: openNews.description,
+        author: openNews.author,
+        body: [
+          "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
+          "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
+          "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
+          "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
+        ],
+      });
+      // Align to top immediately, then refine after mount
+      try { window.scrollTo({ top: 0, behavior: "auto" }); } catch {}
+      setTimeout(() => {
+        scrollToDetailTop();
+      }, 0);
+    }
+  }, [location.state]);
+
   const handlePageChange = (page: number): void => {
     setCurrentPage(page);
     scrollToReadMore();
   };
 
-  const handleReadMore = (news: ReadMoreNewsItem): void => {
+  const handleReadMore = (news: ReadMoreNewsItem, source: "latest" | "grid" = "grid"): void => {
+    setLastReadId(news.id);
+    setLastReadSource(source);
+    try { sessionStorage.setItem("news_last_id", String(news.id)); } catch {}
+    try { sessionStorage.setItem("news_last_source", source); } catch {}
     setDetail({
       active: true,
       image: news.image,
@@ -274,10 +350,45 @@ const News = () => {
         "Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.",
       ],
     });
+    // Align to top immediately, then refine after mount
+    try { window.scrollTo({ top: 0, behavior: "auto" }); } catch {}
     setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 100);
+      scrollToDetailTop();
+    }, 0);
   };
+
+  // When closing detail (back), ensure list shows the correct section and top-aligns
+  useEffect(() => {
+    if (!detail.active) {
+      if (lastReadSource === "latest") {
+        setTimeout(() => {
+          scrollToLatestTop();
+        }, 0);
+        return;
+      }
+      if (lastReadId) {
+        const idx = readMoreNewsData.findIndex((n) => n.id === lastReadId);
+        if (idx >= 0) {
+          const page = Math.floor(idx / itemsPerPage) + 1;
+          if (page !== currentPage) {
+            setCurrentPage(page);
+          }
+        }
+        setTimeout(() => {
+          const el = document.getElementById(`news-card-${lastReadId}`);
+          if (el) {
+            try {
+              const rect = el.getBoundingClientRect();
+              const y = window.scrollY + rect.top - 120;
+              window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+            } catch {}
+          } else {
+            scrollToReadMore();
+          }
+        }, 0);
+      }
+    }
+  }, [detail.active]);
 
   // Loading state
   if (loadingState.isLoading) {
@@ -307,7 +418,7 @@ const News = () => {
 
   if (detail.active) {
     return (
-      <Box className={classes.newsDetailView}>
+      <Box className={classes.newsDetailView} ref={detailTopRef}>
         <Box className={classes.newsDetailHeader}>
           <Box className={classes.newsDetailCalendarTopRight}>
             <Box
@@ -371,7 +482,7 @@ const News = () => {
   return (
     <Box>
       <Box className={classes.newsContainer}>
-        <Box className={classes.newsHeader}>
+        <Box className={classes.newsHeader} ref={latestTopRef}>
           <Typography variant="h5" className={classes.newsHeaderTitle}>
             Latest News
           </Typography>
@@ -380,9 +491,28 @@ const News = () => {
         <Box className={classes.scrollableContent}>
           {newsData.map((news: NewsItem) => (
             <Box key={news.id}>
-              <Card className={classes.newsCard}>
+              <Card
+                className={classes.newsCard}
+                onClick={() =>
+                  handleReadMore(
+                    {
+                      id: news.id,
+                      image: latest1, // fallback image
+                      title: news.title,
+                      date: news.date,
+                      description: news.description,
+                      author: "",
+                      authorLink: "",
+                    } as any,
+                    "latest"
+                  )
+                }
+              >
                 <CardContent className={classes.newsCardContent}>
-                  <Typography variant="h6" className={classes.newsTitle}>
+                  <Typography
+                    variant="h6"
+                    className={classes.newsTitle}
+                  >
                     {news.title}
                   </Typography>
                   <Typography className={classes.newsDate}>
@@ -404,12 +534,17 @@ const News = () => {
       <Box className={classes.latestUpdatesSection}>
         <Box className={classes.latestUpdatesScrollContainer}>
           {latestUpdatesData.map((update: LatestUpdateItem) => (
-            <Box key={update.id} className={classes.latestUpdatesCard}>
+            <Box key={update.id} className={classes.latestUpdatesCard} sx={{ position: 'relative' }}>
               <Box
                 component="img"
                 src={update.image}
                 alt="Latest Update"
                 className={classes.latestUpdatesImage}
+              />
+              <PdfMark 
+                imageUrl={update.image}
+                position="top-right"
+                size="small"
               />
             </Box>
           ))}
@@ -439,11 +574,14 @@ const News = () => {
                   const [m, y] = String(e.target.value).split("-");
                   setSelMonth(Number(m));
                   setSelYear(Number(y));
-                  setOpenSelect(false);
                 }}
                 open={openSelect}
-                onOpen={() => setOpenSelect(true)}
-                onClose={() => setOpenSelect(false)}
+                onOpen={() => {
+                  /* no-op to prevent field click from opening */
+                }}
+                onClose={(event) => {
+                  /* ignore outside clicks/escape */ event.preventDefault?.();
+                }}
                 className={classes.readMoreNewsSelect}
                 MenuProps={{
                   PaperProps: { className: classes.newsSelectMenuPaper },
@@ -453,15 +591,11 @@ const News = () => {
                 renderValue={() => (
                   <Typography variant="body2">24-08-2025</Typography>
                 )}
-                IconComponent={KeyboardArrowDownIcon}
+                IconComponent={ArrowToggleIcon as any}
               >
                 {years.map((y) =>
                   months.map((_, mIdx) => (
-                    <MenuItem
-                      key={`${mIdx}-${y}`}
-                      value={`${mIdx}-${y}`}
-                      onClick={() => setOpenSelect(false)}
-                    >
+                    <MenuItem key={`${mIdx}-${y}`} value={`${mIdx}-${y}`}>
                       {months[mIdx]} {y}
                     </MenuItem>
                   ))
@@ -473,7 +607,14 @@ const News = () => {
 
         <Box className={classes.readMoreNewsGrid}>
           {currentNews.map((news: ReadMoreNewsItem) => (
-            <Box key={news.id} onClick={() => handleReadMore(news)}>
+            <Box
+              key={news.id}
+              id={`news-card-${news.id}`}
+              onClick={() => handleReadMore(news)}
+              className={
+                news.id === lastReadId ? classes.newsCardHighlight : undefined
+              }
+            >
               <NewsCard autoWidth {...news} />
             </Box>
           ))}

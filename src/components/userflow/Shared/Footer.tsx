@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/Footer.tsx
 import { useState } from "react";
 import {
   Box,
@@ -46,7 +47,8 @@ const Footer = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [emailTouched, setEmailTouched] = useState(false);
-  const isValidEmail = (v: string) => /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/.test(v);
+  const isValidEmail = (v: string) =>
+    /^(?!.*\.\.)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
   const emailHasError = emailTouched && !isValidEmail(email);
 
   const handleNavigation = (link: string) => {
@@ -125,19 +127,24 @@ const Footer = () => {
                   placeholder="Enter Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => setEmailTouched(true)}
                   endAdornment={
                     <InputAdornment position="end">
                       <Button
                         variant="contained"
                         className={`${classes.subscribeButton}`}
                         onClick={() => setEmailTouched(true)}
+                        disabled={!isValidEmail(email)}
                       >
                         Subscribe
                       </Button>
                     </InputAdornment>
                   }
-                  className={`${classes.subscribeInput}  ${classes.hideInBig} ${emailHasError ? classes.subscribeInputError : ''}`}
+                  className={`${classes.subscribeInput}  ${classes.hideInBig} ${
+                    emailHasError ? classes.subscribeInputError : ""
+                  }`}
                 />
+         
               </Box>
             </Box>
             <Box className={classes.flexRoot}>
@@ -175,19 +182,39 @@ const Footer = () => {
                   className={`${classes.contactRow} ${classes.contactRowInline}`}
                 >
                   <MailOutlineIcon fontSize="small" />
-                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>info@Uday.com</Typography>
+                  <Box
+                    component="a"
+                    href="mailto:info@udayaqua.com"
+                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                  >
+                    info@udayaqua.com
+                  </Box>
                 </Box>
                 <Box
                   className={`${classes.contactRow} ${classes.contactRowInline}`}
                 >
                   <PhoneIcon fontSize="small" />
-                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>+91 97911-99909</Typography>
+                  <Box
+                    component="a"
+                    href="tel:+919791199909"
+                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                  >
+                    +91 97911 99909
+                  </Box>
                 </Box>
                 <Box
                   className={`${classes.contactRow} ${classes.contactRowInline}`}
                 >
                   <LocationOnIcon fontSize="small" />
-                  <Typography className={`${classes.contactText} ${classes.contactTextMobile}`}>Mulapolam, Srikakulam</Typography>
+                  <Box
+                    component="a"
+                    href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                  >
+                    Mulapolam, Srikakulam
+                  </Box>
                 </Box>
                 <Box className={classes.socialIconsMobile}>
                   <Box
@@ -236,18 +263,23 @@ const Footer = () => {
               </Box>
               <Box className={classes.mapBoxMobile}>
                 <Box
-                  component="img"
-                  src={footerMap}
-                  alt="Map"
-                  className={`${classes.mapImg} ${classes.mapImgMobile}`}
-                />
+                  component="a"
+                  href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Box
+                    component="img"
+                    src={footerMap}
+                    alt="Map"
+                    className={`${classes.mapImg} ${classes.mapImgMobile}`}
+                  />
+                </Box>
               </Box>
             </Box>
           </>
         ) : (
-          <Box
-            className={classes.footerDesktopRow}
-          >
+          <Box className={classes.footerDesktopRow}>
             <Box className={classes.logoBoxDesktop}>
               <Box
                 component="img"
@@ -262,19 +294,24 @@ const Footer = () => {
                   placeholder="Enter Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => setEmailTouched(true)}
                   endAdornment={
                     <InputAdornment position="end">
                       <Button
                         variant="contained"
                         className={`${classes.subscribeButton}`}
                         onClick={() => setEmailTouched(true)}
+                        disabled={!isValidEmail(email)}
                       >
                         Subscribe
                       </Button>
                     </InputAdornment>
                   }
-                  className={`${classes.subscribeInput} ${emailHasError ? classes.subscribeInputError : ''}`}
+                  className={`${classes.subscribeInput} ${
+                    emailHasError ? classes.subscribeInputError : ""
+                  }`}
                 />
+                {/* Error message removed: button stays disabled on invalid email */}
               </Box>
               <Box className={classes.linksFlex}>
                 <Box
@@ -313,23 +350,37 @@ const Footer = () => {
               >
                 Contact Us
               </Typography>
-              <Box
-                className={`${classes.contactRow} ${classes.contactRowInline}`}
-              >
+              <Box className={`${classes.contactRow} ${classes.contactRowInline}`}>
                 <MailOutlineIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>info@Uday.com</Typography>
+                <Box
+                  component="a"
+                  href="mailto:info@udayaqua.com"
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                >
+                  info@udayaqua.com
+                </Box>
               </Box>
-              <Box
-                className={`${classes.contactRow} ${classes.contactRowInline}`}
-              >
+              <Box className={`${classes.contactRow} ${classes.contactRowInline}`}>
                 <PhoneIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>+91 97911-99909</Typography>
+                <Box
+                  component="a"
+                  href="tel:+919791199909"
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                >
+                  +91 97911 99909
+                </Box>
               </Box>
-              <Box
-                className={`${classes.contactRow} ${classes.contactRowInline}`}
-              >
+              <Box className={`${classes.contactRow} ${classes.contactRowInline}`}>
                 <LocationOnIcon fontSize="small" />
-                <Typography className={`${classes.contactText} ${classes.contactTextDesktop}`}>Mulapolam, Srikakulam</Typography>
+                <Box
+                  component="a"
+                  href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                >
+                  Mulapolam, Srikakulam
+                </Box>
               </Box>
               <Box className={classes.socialIconsDesktop}>
                 <Box
@@ -381,7 +432,8 @@ const Footer = () => {
                 component="img"
                 src={footerMap}
                 alt="Map"
-                className={`${classes.mapImg} ${classes.mapImgDesktop}`}
+                className={`${classes.mapImg} ${classes.mapImgDesktop} ${classes.cursorPointer}`}
+                onClick={() => navigate('/maps')}
               />
             </Box>
           </Box>

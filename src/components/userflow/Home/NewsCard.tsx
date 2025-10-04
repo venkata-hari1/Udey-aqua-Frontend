@@ -1,6 +1,8 @@
+// src/components/userflow/Home/NewsCard.tsx
 import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
+import PDFButton from "../NewsEvents/components/PDFButton";
 
 export interface NewsCardProps {
   image: string;
@@ -26,7 +28,17 @@ const NewsCard: React.FC<NewsCardProps> = ({
   const navigate = useNavigate();
 
   const handleReadMoreClick = () => {
-    navigate('/news-events');
+    navigate("/news-events/news", {
+      state: {
+        openNews: {
+          image,
+          title,
+          date,
+          description,
+          author,
+        },
+      },
+    });
   };
   return (
     <Box
@@ -34,12 +46,20 @@ const NewsCard: React.FC<NewsCardProps> = ({
         autoWidth ? classes.newsCardAuto : ""
       }`}
     >
-      <Box className={classes.newsCardImgWrap}>
+      <Box className={classes.newsCardImgWrap} sx={{ position: 'relative' }}>
         <Box
           component="img"
           src={image}
           alt={title}
           className={classes.newsCardImg}
+        />
+        <PDFButton
+          imageUrl={image}
+          title={title}
+          author={author}
+          date={date}
+          description={description}
+          body={[]} // News cards don't have full body content
         />
         <Box className={classes.newsCardDateBox}>
           <Typography className={classes.newsCardDateDay}>{day}</Typography>
@@ -54,20 +74,24 @@ const NewsCard: React.FC<NewsCardProps> = ({
             {description}
           </Typography>
           <Typography className={classes.newsCardAuthor}>
-            {authorLink ? (
-              <Typography className={classes.newsCardAuthorLink}>
-                {author}
-              </Typography>
-            ) : (
-              <Box component="span" className={classes.newsCardAuthorSpan}>
-                {author}
-              </Box>
-            )}
-          </Typography>
+  {authorLink ? (
+    <Typography
+      component="span" 
+      className={classes.newsCardAuthorLink}
+    >
+      {author}
+    </Typography>
+  ) : (
+    <Box component="span" className={classes.newsCardAuthorSpan}>
+      {author}
+    </Box>
+  )}
+</Typography>
+
         </Box>
         <Box className={classes.newsCardFooter}>
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             className={classes.newsCardButton}
             onClick={handleReadMoreClick}
           >

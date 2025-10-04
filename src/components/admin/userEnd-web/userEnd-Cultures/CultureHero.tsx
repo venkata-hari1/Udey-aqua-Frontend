@@ -9,15 +9,18 @@ const CultureHero = () => {
 
 const {classes}=useUserEndwebStyles()
 
+const handleSave=()=>{
+    
+}
     return (
     <Box>
      <Box sx={{display:'flex', justifyContent:'end'}}>
-       <DeleteButton message=""/>
+       <DeleteButton message="" onDelete={()=>console.log("deleted")}/>
      </Box>
       <Box className={classes.cultureheroBox2}>  
       <Stack display="flex" gap={2} justifyContent="space-between">
           <Typography className={classes.titleText}>Image</Typography>
-          <Uploadbutton />
+          <Uploadbutton onUpload={() =>console.log("")}/>
           <Box className={classes.herouploadImageBox1}>
             <img src={fishImg} className={classes.herouploadImage} alt="fish image"/>
             <CancelIcon className={classes.cancelImgIcon}/>
@@ -30,10 +33,12 @@ const {classes}=useUserEndwebStyles()
 
      <Box>
       <Typography className={classes.titleText}>SubTitle</Typography>
-      <TextFieldManyRows />
+      <TextFieldManyRows onChange={() =>
+                        console.log()
+                    }/>
      </Box>
      </Box>
-     <UserEndSaveCancelButtons />
+     <UserEndSaveCancelButtons onSave={handleSave}/>
      </Box>
 
 )

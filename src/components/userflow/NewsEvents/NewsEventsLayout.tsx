@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/NewsEventsLayout.tsx
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";

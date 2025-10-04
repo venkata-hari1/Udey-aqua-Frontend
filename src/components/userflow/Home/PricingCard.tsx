@@ -1,4 +1,5 @@
-import { Box, Typography, Button, Grid } from "@mui/material";
+// src/components/userflow/Home/PricingCard.tsx
+import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useHomeStyles from "./homeStyles";
 
@@ -12,33 +13,43 @@ const PricingCard: React.FC<PricingCardProps> = ({ image, title, features }) => 
   const { classes } = useHomeStyles();
   const navigate = useNavigate();
 
+  // Mapping species titles to their respective culture routes
+  const getSpeciesRoute = (speciesTitle: string): string => {
+    const routeMap: { [key: string]: string } = {
+      'Sea Bass': '/cultures',
+      'Pearl Spot': '/cultures/pearl-spot',
+      'Mud Crab': '/cultures/mud-crab',
+      'Murrel': '/cultures/murrel',
+      'Tilapia': '/cultures/tilapia',
+      'Sea Weed': '/cultures/sea-weed',
+    };
+    return routeMap[speciesTitle] || '/cultures';
+  };
+
   const handleLearnMoreClick = () => {
-    navigate('/cultures');
+    const route = getSpeciesRoute(title);
+    navigate(route);
   };
 
   return (
-    <Grid container className={classes.pricingCardRoot}>
-      <Grid size={{ xs: 12 }} className={classes.pricingCardImgWrap}>
+    <Box className={classes.pricingCardRoot}>
+      <Box className={classes.pricingCardImgWrap}>
         <Box component="img" src={image} alt={title} className={classes.pricingCardImg} />
-      </Grid>
-      <Grid size={{ xs: 12 }}>
-        <Typography className={classes.pricingCardTitle}>{title}</Typography>
-      </Grid>
-      <Grid size={{ xs: 12 }} component="ul" className={classes.pricingCardFeatures}>
+      </Box>
+      <Typography className={classes.pricingCardTitle}>{title}</Typography>
+      <Box component="ul" className={classes.pricingCardFeatures}>
         {features.map((f, idx) => (
           <li key={idx} className={classes.pricingCardFeatureItem}>{f}</li>
         ))}
-      </Grid>
-      <Grid size={{ xs: 12 }}>
-        <Button 
-          variant="outlined" 
-          className={classes.pricingCardButton}
-          onClick={handleLearnMoreClick}
-        >
-          Learn More
-        </Button>
-      </Grid>
-    </Grid>
+      </Box>
+      <Button 
+        variant="outlined" 
+        className={classes.pricingCardButton}
+        onClick={handleLearnMoreClick}
+      >
+        Learn More
+      </Button>
+    </Box>
   );
 };
 

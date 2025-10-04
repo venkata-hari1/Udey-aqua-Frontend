@@ -1,3 +1,4 @@
+// src/components/userflow/Home/OurMotto.tsx
 import SectionTitle from "./SectionTitle";
 import card1 from "../../../assets/motto/card_1.png";
 import card2 from "../../../assets/motto/card_2.png";
@@ -56,17 +57,11 @@ const OurMotto = () => {
           (isOverflowing ? " " + classes.ourMottoScrollFlexStart : "")
         }
       >
-        {isOverflowing && (
-          <Box className={classes.ourMottoOverflowBoxLeft}></Box>
-        )}
         {mottoData.map((card, idx) => (
-          <Box key={idx}>
+          <Box key={idx} className={classes.mottoCardOuter}>
             <MottoCard {...card} />
           </Box>
         ))}
-        {isOverflowing && (
-          <Box className={classes.ourMottoOverflowBoxRight}></Box>
-        )}
       </Box>
     </Box>
   );

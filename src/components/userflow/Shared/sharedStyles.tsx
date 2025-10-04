@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/sharedStyles.tsx
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import planWaterBg from "../../../assets/cultures/plan_water.png";
@@ -21,7 +22,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   layout: {
     minHeight: "100vh",
     width: "100%",
-    overflow: "hidden",
+    overflowX: "hidden",
+    overflowY: "visible",
   },
   mobileContactBar: {
     position: "fixed",
@@ -203,6 +205,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     marginTop: theme.spacing(2),
     gap: 0,
     justifyContent: "center",
+    position: "relative",
     [theme.breakpoints.down("lg")]: {
       flexDirection: "column",
       gap: theme.spacing(2),
@@ -558,13 +561,13 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     position: "fixed",
     top: 0,
     left: 0,
-    width: "100vw",
+    width: "100%",
     zIndex: 200,
     transition: "background 0.3s, color 0.3s, box-shadow 0.3s",
   },
   appBarTrigger: {
     background: COLORS.WHITE,
-    color: COLORS.DARK,
+    color: theme.palette.primary.main,
     boxShadow: SHADOWS.SUBTLE,
   },
   appBarNoTrigger: {
@@ -768,9 +771,11 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     marginLeft: theme.spacing(4),
     gap: 24,
+    flexWrap: "wrap",
+    overflow: "visible",
   },
   desktopNavItem: {
     fontWeight: 500,
@@ -792,10 +797,12 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
     borderRadius: "999px",
+    boxShadow: SHADOWS.SUBTLE,
   },
   desktopNavItemInactiveTrigger: {
     color: theme.palette.primary.main,
     background: "transparent",
+    fontWeight: 600,
   },
   desktopNavItemActiveNoTrigger: {
     color: theme.palette.primary.main,

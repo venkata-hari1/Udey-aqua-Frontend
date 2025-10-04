@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/hooks/useScrollWithOffset.ts
 import { useCallback, useRef } from "react";
 
 const animateScrollTo = (to: number, duration: number = 200) => {
@@ -34,6 +35,9 @@ export const useScrollWithOffset = (offset: number = 200) => {
     const el = ref.current;
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+    // Ensure we don't start from bottom due to prior scroll position
+    try { window.scrollTo({ top: Math.max(0, y), behavior: "auto" }); } catch {}
+    // Then perform a smooth align in case content height changed
     animateScrollTo(y);
   }, [offset]);
 

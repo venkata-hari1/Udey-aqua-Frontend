@@ -1,3 +1,4 @@
+// src/components/userflow/Home/AboutUs.tsx
 import { Box, Typography, Button, Grid } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -71,6 +72,7 @@ const AboutUs = () => {
             muted
             loop
             playsInline
+            controls
             className={classes.aboutUsVideo}
           />
         </Grid>

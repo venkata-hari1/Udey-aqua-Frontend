@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/PdfDownloadSection.tsx
 import {
   Box,
   Typography,
@@ -11,6 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import useCulturesStyles from "./culturesStyles";
+import PaymentModal from "../Shared/PaymentModal";
 import seaBassImg from "../../../assets/cultures/pdf_fish/seabass.png";
 import pearlSpotImg from "../../../assets/cultures/pdf_fish/pearlspot.png";
 import mudCrabImg from "../../../assets/cultures/pdf_fish/mudcrab.png";
@@ -116,10 +118,11 @@ const getPdfContent = (label: string): PdfContent => {
   return contentMap[label] || contentMap["Sea Bass"];
 };
 
-const PdfDownloadSection = ({ currentLabel, price = 99, culture = "Freshwater", onContinuePayment }: PdfDownloadSectionProps) => {
+const PdfDownloadSection = ({ currentLabel, price = 89 }: PdfDownloadSectionProps) => {
   const { classes } = useCulturesStyles();
   const content = getPdfContent(currentLabel);
   const [open, setOpen] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
   const listItems = [
     `Complete ${currentLabel} Methodology`,
@@ -128,6 +131,15 @@ const PdfDownloadSection = ({ currentLabel, price = 99, culture = "Freshwater", 
     "Profit Estimation & Market Selling Insights",
     "Best Practices From Real-World Farms",
   ];
+
+  const handlePaymentClick = () => {
+    setOpen(false);
+    setPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setPaymentModalOpen(false);
+  };
 
   return (
     <Box className={classes.pdfDownloadSection}>
@@ -203,12 +215,10 @@ const PdfDownloadSection = ({ currentLabel, price = 99, culture = "Freshwater", 
                     className={classes.pdfDialogPrimaryButtonIconImg}
                   />
                 }
-                onClick={() => {
-                  setOpen(false);
-                  onContinuePayment && onContinuePayment({ price, culture });
-                }}
+                disabled
+                disableElevation
               >
-                Access This Premium Guide For Just ₹99
+                Access This Premium Guide For Just ₹89
               </Button>
             </Box>
             <Box className={classes.pdfDialogFlex}>
@@ -216,10 +226,7 @@ const PdfDownloadSection = ({ currentLabel, price = 99, culture = "Freshwater", 
                 variant="contained"
                 fullWidth
                 className={`${classes.pdfDialogTitlePill} ${classes.pdfDialogTitlePillFloat}`}
-                onClick={() => {
-                  setOpen(false);
-                  onContinuePayment && onContinuePayment({ price, culture });
-                }}
+                onClick={handlePaymentClick}
               >
                 Continue to Payment
               </Button>
@@ -227,6 +234,13 @@ const PdfDownloadSection = ({ currentLabel, price = 99, culture = "Freshwater", 
           </Box>
         </DialogContent>
       </Dialog>
+      
+      <PaymentModal
+        open={paymentModalOpen}
+        onClose={handleClosePaymentModal}
+        speciesName={currentLabel}
+        price={price}
+      />
     </Box>
   );
 };

@@ -1,3 +1,4 @@
+// src/components/userflow/About/Careers.tsx
 import careersImg from "../../../assets/about_us/careers.jpg";
 import careersSideImg from "../../../assets/about_us/careers.png";
 import AboutCardsSection from "./AboutCardsSection";

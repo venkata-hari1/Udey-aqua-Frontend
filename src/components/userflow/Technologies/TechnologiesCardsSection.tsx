@@ -1,7 +1,8 @@
+// src/components/userflow/Technologies/TechnologiesCardsSection.tsx
 import { Box, Grid } from "@mui/material";
 import TechnologiesHeader from "./TechnologiesHeader";
 import TechnologiesCard from "./TechnologiesCard";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import type { TechnologyCardsSectionProps, TechnologyCard } from "./types";
 import useTechnologiesStyles from "./technologiesStyles";
 import { useScrollWithOffset } from "../NewsEvents/hooks";
@@ -13,22 +14,11 @@ const TechnologiesCardsSection = ({
   cards,
 }: TechnologyCardsSectionProps) => {
   const { classes } = useTechnologiesStyles();
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
   const { ref: scrollRef, scrollTo } = useScrollWithOffset(200);
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpenIndex(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+  // Outside clicks no longer close cards; only arrow toggles each card
 
   return (
     <Box>
@@ -42,25 +32,32 @@ const TechnologiesCardsSection = ({
           <TechnologiesCard
             key={idx}
             {...card}
-            expanded={openIndex === idx}
+            expanded={openSet.has(idx)}
             onExpand={() => {
-              if (openIndex === idx) {
-                try {
-                  const title = card.title || "";
-                  const slug = title
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, "-")
-                    .replace(/(^-|-$)/g, "");
-                  const el = document.getElementById(`card-${slug}`);
-                  if (el) {
-                    (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
-                    scrollTo();
-                  }
-                } catch {}
-                setOpenIndex(null);
-                return;
-              }
-              setOpenIndex(idx);
+              setOpenSet((prev) => {
+                const next = new Set(prev);
+                if (next.has(idx)) {
+                  // close this card only
+                  try {
+                    const title = card.title || "";
+                    const slug = title
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, "-")
+                      .replace(/(^-|-$)/g, "");
+                    const el = document.getElementById(`card-${slug}`);
+                    if (el) {
+                      (
+                        scrollRef as unknown as { current: HTMLElement | null }
+                      ).current = el as HTMLElement;
+                      scrollTo();
+                    }
+                  } catch {}
+                  next.delete(idx);
+                } else {
+                  next.add(idx);
+                }
+                return next;
+              });
             }}
           />
         ))}

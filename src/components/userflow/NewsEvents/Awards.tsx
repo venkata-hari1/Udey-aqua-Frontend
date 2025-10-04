@@ -1,5 +1,6 @@
+// src/components/userflow/NewsEvents/Awards.tsx
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import useNewsEventsStyles from "./newsEventsStyles";
 import {
@@ -99,12 +100,23 @@ const Awards = () => {
     award: null,
   });
 
+  const [lastClickedId, setLastClickedId] = useState<number | null>(() => {
+    try {
+      const v = sessionStorage.getItem("awards_last_id");
+      return v ? parseInt(v, 10) : null;
+    } catch {
+      return null;
+    }
+  });
+
   // Use custom hooks
   const carousel = useCarousel({ items: awardsData });
   const pagination = usePagination({ items: awardsData, itemsPerPage: 4 });
   const calendarFilter = useCalendarFilter();
 
   const handleReadMore = (award: AwardItem): void => {
+    setLastClickedId(award.id);
+    try { sessionStorage.setItem("awards_last_id", String(award.id)); } catch {}
     setDetail({
       active: true,
       award,
@@ -113,6 +125,32 @@ const Awards = () => {
       scrollToDetailTop();
     }, 0);
   };
+
+  // When closing detail, ensure the list shows the page with the previously clicked card and scrolls to it
+  useEffect(() => {
+    if (!detail.active && lastClickedId) {
+      const idx = awardsData.findIndex((a) => a.id === lastClickedId);
+      if (idx >= 0) {
+        const page = Math.floor(idx / pagination.itemsPerPage) + 1;
+        if (page !== pagination.currentPage) {
+          pagination.goToPage(page);
+        }
+      }
+      setTimeout(() => {
+        const el = document.getElementById(`award-card-${lastClickedId}`);
+        if (el) {
+          try {
+            const rect = el.getBoundingClientRect();
+            const y = window.scrollY + rect.top - 120;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+          } catch {}
+        } else {
+          scrollToReadMore();
+        }
+      }, 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detail.active]);
 
   if (detail.active && detail.award) {
     return (
@@ -226,7 +264,12 @@ const Awards = () => {
         {pagination.currentItems.map((award: AwardItem) => (
           <Box
             key={award.id}
-            className={classes.awardsCard}
+            id={`award-card-${award.id}`}
+            className={
+              award.id === lastClickedId
+                ? `${classes.awardsCard} ${classes.awardsCardHighlight}`
+                : classes.awardsCard
+            }
             onClick={() => handleReadMore(award)}
           >
             <Box

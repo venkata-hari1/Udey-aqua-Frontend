@@ -1,3 +1,4 @@
+// src/components/userflow/Technologies/TechnologiesHero.tsx
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import about_image from "../../../assets/technologies/hero.png";
 import useTechnologiesStyles from "./technologiesStyles";

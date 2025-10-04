@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+// src/components/userflow/TrainingPrograms/TrainingPrograms.tsx
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useTrainingProgramsStyles from "./trainingProgramsStyles";
 import { useScrollWithOffset } from "../NewsEvents/hooks";
 import PlansSection from "../Shared/PlansSection";
@@ -60,6 +61,7 @@ type ViewMode = "both" | "cultures" | "technologies";
 const TrainingPrograms: React.FC = () => {
   const { classes } = useTrainingProgramsStyles();
   const navigate = useNavigate();
+  const location = useLocation();
   const { ref: topRef, scrollTo: scrollToTop } = useScrollWithOffset(200);
   const [viewMode, setViewMode] = useState<ViewMode>("both");
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -139,6 +141,11 @@ const TrainingPrograms: React.FC = () => {
   const handleCardClick = (path: string) => {
     navigate(path);
   };
+
+  // Reset plan flow state when navigating between routes
+  useEffect(() => {
+    setCurrentStep(1);
+  }, [location.pathname]);
 
   const handleViewAllCultures = (): void => {
     setViewMode("cultures");
@@ -263,6 +270,7 @@ const TrainingPrograms: React.FC = () => {
       </Box>
       {viewMode === "both" && (
         <PlansSection
+          key={location.pathname}
           currentStep={currentStep}
           onStepChange={(step: number) => setCurrentStep(step)}
         />

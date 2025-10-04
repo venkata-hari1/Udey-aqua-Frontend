@@ -1,3 +1,4 @@
+// src/components/userflow/Technologies/types.ts
 export interface TechnologyCard {
   title: string;
   smallDesc: string;

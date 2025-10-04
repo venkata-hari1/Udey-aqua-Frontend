@@ -1,3 +1,4 @@
+// src/components/userflow/Technologies/TechnologiesHeader.tsx
 import { Box, Grid, Typography } from "@mui/material";
 import useTechnologiesStyles from "./technologiesStyles";
 import type { TechnologyHeaderProps } from "./types";

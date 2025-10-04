@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/Gallery.tsx
 import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -335,7 +336,18 @@ const Gallery = () => {
     }
   }, [detailPage, detailTotalPages]);
 
+  const [lastClickedId, setLastClickedId] = useState<number | null>(() => {
+    try {
+      const v = sessionStorage.getItem("gallery_last_id");
+      return v ? parseInt(v, 10) : null;
+    } catch {
+      return null;
+    }
+  });
+
   const handleImageClick = useCallback((gallery: ReadMoreGalleryItem): void => {
+    setLastClickedId(gallery.id);
+    try { sessionStorage.setItem("gallery_last_id", String(gallery.id)); } catch {}
     setDetail({
       active: true,
       image: gallery.image,
@@ -354,8 +366,11 @@ const Gallery = () => {
     return pagination.currentItems.map((gallery: ReadMoreGalleryItem) => (
       <Box
         key={gallery.id}
+        id={`gallery-card-${gallery.id}`}
         onClick={() => handleImageClick(gallery)}
-        className={`${classes.latestUpdatesCard} ${classes.galleryCardClickable}`}
+        className={`${classes.latestUpdatesCard} ${classes.galleryCardClickable} ${
+          gallery.id === lastClickedId ? classes.galleryCardHighlight : ""
+        }`}
       >
         <OptimizedImage
           src={gallery.image}
@@ -369,8 +384,36 @@ const Gallery = () => {
     pagination.currentItems,
     classes.latestUpdatesCard,
     classes.latestUpdatesImage,
+    classes.galleryCardClickable,
+    classes.galleryCardHighlight,
+    lastClickedId,
     handleImageClick,
   ]);
+
+  useEffect(() => {
+    if (!detail.active && lastClickedId) {
+      const idx = readMoreGalleryData.findIndex((g) => g.id === lastClickedId);
+      if (idx >= 0) {
+        const page = Math.floor(idx / pagination.itemsPerPage) + 1;
+        if (page !== pagination.currentPage) {
+          pagination.goToPage(page);
+        }
+      }
+      setTimeout(() => {
+        const el = document.getElementById(`gallery-card-${lastClickedId}`);
+        if (el) {
+          try {
+            const rect = el.getBoundingClientRect();
+            const y = window.scrollY + rect.top - 120;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+          } catch {}
+        } else {
+          scrollToReadMore();
+        }
+      }, 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detail.active]);
 
   if (loadingState.isLoading) {
     return (

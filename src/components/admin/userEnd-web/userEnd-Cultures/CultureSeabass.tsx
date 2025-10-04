@@ -16,6 +16,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const CultureSeabass = () => {
   const { classes } = useUserEndwebStyles();
+
+ const handleSave=()=>{
+  console.log("saving")
+ } 
   return (
     <Box className={classes.SeaBassContainer}>
       <Stack className={classes.Seabassstack}>
@@ -40,14 +44,16 @@ const CultureSeabass = () => {
        <Box>
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
-          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Sae Bass?" />
+          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Sae Bass?" 
+          onDelete={()=>console.log("on deleting")}
+           sliceSave={() => console.log("deleted")}/>
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}
           <Box className={classes.leftsideSectionbox}>
             <Stack className={classes.leftsideSectionbox}>
               <Typography className={classes.titleText}>Image</Typography>
-              <Uploadbutton />
+              <Uploadbutton onUpload={() =>console.log("")}/>
               <Box className={classes.herouploadImageBox1}>
                 <img src={fishImg} className={classes.herouploadImage} alt="fish image"/>
                 <CancelIcon className={classes.cancelImgIcon} />
@@ -68,7 +74,7 @@ const CultureSeabass = () => {
             </Stack>
             <Stack className={classes.leftsideSectionbox}>
               <Typography color="black">Upload Pdf</Typography>
-              <Uploadbutton />
+              <Uploadbutton onUpload={() =>console.log("")}/>
               <Box className={classes.herouploadImageBox1}>
                 <img src={fishImg} className={classes.herouploadImage} />
                 <CancelIcon className={classes.cancelImgIcon} />
@@ -109,14 +115,16 @@ const CultureSeabass = () => {
         </Box>
         <Divider className={classes.heroDivider}/>
        </Box>
-        <UserEndSaveCancelButtons />  
+        <UserEndSaveCancelButtons onSave={handleSave}/>  
       
       
       {/* FOR BANNER PART */}
 
       <Stack className={classes.bannerStacktitle}>
         <Typography className={classes.MottoBoxText}>Banner</Typography>
-        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Sae Bass?" />
+        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Sae Bass?" 
+        onDelete={()=>console.log("deleting")}
+        sliceSave={() => console.log("deleted")}/>
       
       </Stack>
       <Box>
@@ -128,7 +136,7 @@ const CultureSeabass = () => {
         <Box className={classes.bannerImgboxleft}>
           <Stack className={classes.bannerImageStack}>
             <Typography className={classes.titleText}>Image</Typography>
-            <Uploadbutton />
+            <Uploadbutton onUpload={() =>console.log("")}/>
             <Box className={classes.herouploadImageBox1}>
               <img src={fishImg} className={classes.herouploadImage} />
               <CancelIcon className={classes.cancelImgIcon} />
@@ -178,7 +186,7 @@ const CultureSeabass = () => {
               Pdf Section
             </Typography>
             <Typography>Upload Pdf</Typography>
-            <Uploadbutton />
+            <Uploadbutton onUpload={() =>console.log("")}/>
             <Box className={classes.herouploadImageBox1}>
               <img src={fishImg} className={classes.herouploadImage} />
               <CancelIcon className={classes.cancelImgIcon} />

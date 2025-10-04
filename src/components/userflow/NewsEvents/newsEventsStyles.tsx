@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/newsEventsStyles.tsx
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
@@ -983,6 +984,12 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
       gridTemplateColumns: "1fr",
     },
   },
+  newsCardHighlight: {
+    borderRadius: 12,
+    boxShadow: `0 10px 26px rgba(0, 0, 0, 0.18)`,
+    transform: "scale(0.985)",
+    transition: "transform 200ms ease, box-shadow 200ms ease",
+  },
   readMoreVideosGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(1, 1fr)",
@@ -1326,6 +1333,13 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     marginBottom: "10px",
   },
+  awardsCardHighlight: {
+    border: `3px solid ${COLORS.PRIMARY_BLUE}`,
+    outline: `2px solid rgba(10, 79, 164, 0.15)`,
+    borderRadius: 12,
+    boxShadow: `0 6px 18px rgba(10, 79, 164, 0.25)`,
+    background: `linear-gradient(0deg, rgba(10,79,164,0.06), rgba(10,79,164,0.06))`,
+  },
   awardsCardImage: {
     width: "100%",
     height: 240,
@@ -1505,7 +1519,6 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     },
   },
 
-  // Video styles
   videoRow: {
     display: "flex",
     flexDirection: "column",
@@ -1518,7 +1531,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     marginBottom: theme.spacing(2),
     flexWrap: "wrap",
   },
-  videoItem: {
+  videoItemContainer: {
     display: "flex",
     flexDirection: "column",
     width: "100%",
@@ -1608,6 +1621,22 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
 
   // Gallery styles
+  galleryCardHighlight: {
+    border: `3px solid ${COLORS.PRIMARY_BLUE}`,
+    outline: `2px solid rgba(10, 79, 164, 0.15)`,
+    borderRadius: 12,
+    boxShadow: `0 6px 18px rgba(10, 79, 164, 0.25)`,
+    background: `linear-gradient(0deg, rgba(10,79,164,0.06), rgba(10,79,164,0.06))`,
+  },
+
+  // Videos styles
+  videoItemHighlight: {
+    border: `3px solid ${COLORS.PRIMARY_BLUE}`,
+    outline: `2px solid rgba(10, 79, 164, 0.15)`,
+    borderRadius: 12,
+    boxShadow: `0 6px 18px rgba(10, 79, 164, 0.25)`,
+    background: `linear-gradient(0deg, rgba(10,79,164,0.06), rgba(10,79,164,0.06))`,
+  },
   galleryLoadingContainer: {
     display: "flex",
     justifyContent: "center",
@@ -1727,6 +1756,12 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
 
   // Blog styles
+  blogCardHighlight: {
+    borderRadius: 14,
+    boxShadow: `0 10px 26px rgba(0, 0, 0, 0.18)`,
+    transform: "scale(0.985)",
+    transition: "transform 200ms ease, box-shadow 200ms ease",
+  },
   blogCalendarPillClickable: {
     cursor: "pointer",
   },

@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/Tilapia.tsx
 import CulturePage from "./CulturePage";
 import type { CultureCardData } from "./CulturePage";
 import tilapiaImg from "../../../assets/cultures/tilapia.png";

@@ -1,7 +1,7 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
-import { AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from './AboutUsButtons';
-import { useState, useEffect } from 'react';
+import { AddSection, CancelButton, DeleteButton, UpdateHeader, UploadButton} from './AboutUsButtons';
+import { useState } from 'react';
 import { HelperTextValidate } from './validations';
 import MilestoneSubsection from './MileStoneSubsection';
 

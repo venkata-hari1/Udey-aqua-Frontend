@@ -1,3 +1,4 @@
+// src/components/userflow/Home/homeStyles.tsx
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, SHADOWS, FONTS } from "../Shared/styles";
@@ -246,6 +247,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   mottoCardRoot: {
     textAlign: "center",
     width: 300,
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   spanColor:{
     color:"red",
@@ -284,6 +287,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     cursor: "pointer",
     "&:hover .mottoCardButtonWrap": {
       transform: "translateY(0)",
+    },
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "100%",
+      maxWidth: 320,
     },
   },
   mottoCardImgWrap: {
@@ -333,6 +342,23 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     maxWidth: 240,
     fontSize: 22,
     lineHeight: 1.2,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  // Wrapper used in OurMotto.tsx; ensures single-card centering on mobile
+  mottoCardOuter: {
+    flex: "0 0 auto",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxSizing: "border-box",
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    [theme.breakpoints.down("md")]: {
+      minWidth: "100%",
+      maxWidth: "100%",
+      scrollSnapAlign: "center",
+    },
   },
   newsRoot: {
     width: "100%",
@@ -421,6 +447,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     position: "relative",
     [theme.breakpoints.down("md")]: {
       width: "100%",
+      // Keep proportional scaling on smaller screens to match desktop design
+      height: "auto",
+      aspectRatio: "37 / 48",
     },
   },
   newsCardAuto: {
@@ -430,6 +459,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     position: "relative",
     height: 400,
     width: "100%",
+    [theme.breakpoints.down("md")]: {
+      // Reserve a proportional portion of the card for the image area on mobile
+      height: "68%",
+    },
   },
   newsCardImg: {
     width: "100%",
@@ -559,6 +592,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     gap: theme.spacing(12),
     justifyContent: "center",
+    alignItems: "stretch",
     width: "100%",
     maxWidth: 1200,
     margin: "auto",
@@ -572,15 +606,32 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    [theme.breakpoints.down("md")]: {
+      gap: theme.spacing(2),
+      justifyContent: "center",
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      scrollSnapType: "x mandatory",
+      scrollPaddingLeft: theme.spacing(2),
+      scrollPaddingRight: theme.spacing(2),
+    },
   },
   ourMottoScrollFlexStart: {
     justifyContent: "flex-start",
   },
   ourMottoOverflowBoxLeft: {
     marginRight: theme.spacing(-8),
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+      marginRight: 0,
+    },
   },
   ourMottoOverflowBoxRight: {
     marginLeft: theme.spacing(-8),
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+      marginLeft: 0,
+    },
   },
   aboutUsRoot: {
     width: "100%",
@@ -621,7 +672,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     color: COLORS.WHITE,
     fontWeight: 700,
-    fontSize: 40,
+    fontSize: 30,
     boxShadow: SHADOWS.DARK_CARD,
     border: `2px solid ${COLORS.PRIMARY_BLUE}`,
     transition: "all 0.2s",
@@ -646,7 +697,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     background: COLORS.WHITE,
     color: COLORS.SECONDARY_BLUE,
     fontWeight: 700,
-    fontSize: 40,
+    fontSize: 30,
     cursor: "pointer",
     border: `2px solid ${COLORS.LIGHT_GRAY}`,
     boxShadow: SHADOWS.CARD,
@@ -734,12 +785,17 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   aboutUsVideo: {
     width: "100%",
-    height: "100vh",
-    objectFit: "cover",
+    height: "70vh",
+    objectFit: "contain",
     top: 0,
     left: 0,
     minWidth: "100%",
     minHeight: "100%",
+    [theme.breakpoints.down("md")]: {
+      height: "auto",
+      maxHeight: 480,
+      objectFit: "contain",
+    },
   },
   contactRoot: {
     width: "98%",
@@ -1030,6 +1086,15 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     scrollbarWidth: "none",
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": { display: "none" },
+    [theme.breakpoints.down("md")]: {
+      gap: theme.spacing(2),
+      justifyContent: "flex-start",
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      scrollSnapType: "x mandatory",
+      scrollPaddingLeft: theme.spacing(2),
+      scrollPaddingRight: theme.spacing(2),
+    },
   },
   partnersScrollFlexStart: {
     justifyContent: "flex-start",
@@ -1044,11 +1109,24 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingBottom: theme.spacing(1.5),
     minWidth: 120,
     maxWidth: 180,
+    [theme.breakpoints.down("md")]: {
+      minWidth: "50%",
+      maxWidth: "50%",
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      boxSizing: "border-box",
+      scrollSnapAlign: "start",
+    },
   },
   partnersImg: {
     width: "150px",
     height: "150px",
     objectFit: "contain",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      height: "auto",
+      maxHeight: 90,
+    },
   },
   partnersBgImg: {
     position: "absolute",
@@ -1056,11 +1134,15 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     top: 55,
     height: 140,
     opacity: 0.5,
-    zIndex: 0,
+    zIndex: 1,
     pointerEvents: "none",
     display: "block",
     [theme.breakpoints.down("md")]: {
-      display: "none",
+      right: 10,
+      top: 20,
+      height: 80,
+      opacity: 0.4,
+      display: "block",
     },
   },
   priceOverflow: {
@@ -1078,7 +1160,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     right:0,
     width: 369,
     height:209,
-    zIndex: 0,
+    zIndex: 2,
     display: "block",
     // Infinity (lemniscate) swim animation - transform-based for compatibility
     animation: "$swimInfinity 30s linear infinite",
@@ -1095,7 +1177,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     right:0,
     width: 369,
     height:209,
-    zIndex: 0,
+    zIndex: 1,
     display: "block",
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -1126,9 +1208,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "flex-start",
   },
   pricingCardOuter: {
-    minWidth: 320,
-    maxWidth: 380,
-    width: 340,
+    minWidth: 300,
+    maxWidth: 340,
+    width: 320,
     boxSizing: "border-box",
     flex: "0 0 auto",
     height: "100%",
@@ -1142,7 +1224,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
   },
   pricingCardRoot: {
-    width: 360,
+    width: 320, 
+    height: 780, 
     boxShadow: SHADOWS.CARD,
     background: COLORS.BLUE_GRAY,
     padding: theme.spacing(3),
@@ -1152,10 +1235,13 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     borderBottomRightRadius: 0,
     border: `2px solid ${COLORS.LIGHT_GRAY}`,
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   pricingCardImgWrap: {
-    width: 280,
-    height: 280,
+    width: 240, 
+    height: 240, 
     borderRadius: "50%",
     background: COLORS.PRIMARY_BLUE,
     margin: "auto",
@@ -1165,11 +1251,13 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "center",
   },
   pricingCardImg: {
-    width: 200,
-    height: 200,
+    width: 220, // Increased from 200
+    height: 220, // Increased from 200
     objectFit: "contain",
     display: "block",
     margin: "auto",
+    filter: "brightness(0) invert(1)", 
+    opacity: 0.9,
   },
   pricingCardTitle: {
     fontWeight: 700,
@@ -1178,17 +1266,23 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   pricingCardFeatures: {
     color: COLORS.DARK,
-    fontSize: 15,
+    fontSize: 18, // Increased from 16
     listStyle: "disc",
     textAlign: "left",
     width: "100%",
     padding: "0 15px",
+    flex: 1,
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
   },
   pricingCardFeatureItem: {
-    marginBottom: 8,
-    fontSize: 18,
+    marginBottom: 6,
+    fontSize: 16, // Increased from 14
     fontFamily: FONTS.POPPINS,
     fontWeight: 400,
+    lineHeight: 1.4,
   },
   pricingCardButton: {
     color: theme.palette.primary.main,
@@ -1239,10 +1333,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
+    textAlign: "center",
     [theme.breakpoints.down("md")]: {
       fontSize: 18,
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
+      textAlign: "center",
     },
   },
   teamRoot: {
@@ -1329,6 +1425,14 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     maxWidth: "1150px",
     margin: "auto",
     "&::-webkit-scrollbar": { display: "none" },
+    [theme.breakpoints.down("md")]: {
+      scrollSnapType: "x mandatory",
+      scrollPaddingLeft: theme.spacing(2),
+      scrollPaddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      gap: theme.spacing(2),
+    },
   },
   teamCardsScrollFlexStart: {
     justifyContent: "flex-start",
@@ -1345,6 +1449,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     alignItems: "stretch",
     marginLeft: 0,
     marginRight: 0,
+    [theme.breakpoints.down("md")]: {
+      minWidth: "100%",
+      maxWidth: "100%",
+      scrollSnapAlign: "center",
+      justifyContent: "center",
+    },
   },
   teamCardOuterFirst: {
     marginLeft: theme.spacing(4),

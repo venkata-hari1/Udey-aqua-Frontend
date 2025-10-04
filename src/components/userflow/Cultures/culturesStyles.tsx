@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/culturesStyles.tsx
 import { makeStyles } from "tss-react/mui";
 import type { Theme } from "@mui/material";
 import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
@@ -247,10 +248,13 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "center",
     background: "linear-gradient(135deg, #0A4FA4 0%, #041E3E 100%)",
     zIndex: 3,
+    // Keep visual style consistent; scale container via transform to avoid gradient/shape changes
     [theme.breakpoints.down("md")]: {
-      width: "100px",
-      height: "100px",
+      transform: "translateY(-50%) scale(0.7)",
+      transformOrigin: "left center",
       left: "-20px",
+      width: "180px",
+      height: "180px",
     },
   },
   culturePageIconImg: {
@@ -266,47 +270,50 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   culturePageTextContent: {
     background: "linear-gradient(135deg, #0A4FA4 0%, #041E3E 100%)",
     borderRadius: "0 16px 16px 0",
-    padding: theme.spacing(3, 6, 3, 14),
+    padding: theme.spacing(4, 8, 4, 14),
     marginLeft: "60px",
     flex: 1,
-    height: "60px",
+    height: "auto",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
-    opacity: 0.95,
+    // Keep background appearance identical across breakpoints (no opacity/padding change)
+    opacity: 1,
     [theme.breakpoints.down("md")]: {
-      height: "18px",
-      paddingLeft: "40px",
+      // scale the whole block uniformly to match desktop styling while reducing size
+      transform: "scale(0.9)",
+      transformOrigin: "left center",
+      marginLeft: "40px",
     },
   },
   culturePageTitle: {
     margin: 0,
-    fontSize: "40px",
+    fontSize: "44px",
     fontWeight: 400,
     textTransform: "capitalize",
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     color: COLORS.WHITE,
     letterSpacing: "1px",
-    lineHeight: 1,
+    lineHeight: 1.1,
     [theme.breakpoints.down("md")]: {
-      fontSize: "22px",
+      fontSize: "24px",
     },
   },
   culturePageSubtitle: {
-    margin: "12px 0 0 0",
-    fontSize: "1.2rem",
+    margin: "14px 0 0 0",
+    fontSize: "18px",
     opacity: 0.95,
     fontFamily: FONTS.INTER,
     color: COLORS.WHITE,
     fontWeight: 400,
     lineHeight: 1.4,
     [theme.breakpoints.down("lg")]: {
-      fontSize: "14px",
+      fontSize: "16px",
     },
     [theme.breakpoints.down("md")]: {
-      fontSize: "12px",
-      marginTop: "8px",
+      fontSize: "13px",
+      marginTop: "10px",
     },
   },
   culturePageFishBackground: {
@@ -633,6 +640,14 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     boxShadow: "none",
     border: "15px",
     borderRadius: "7px",
+    "&.Mui-disabled": {
+      backgroundColor: COLORS.WHITE,
+      color: COLORS.SECONDARY_BLUE,
+      opacity: 1,
+      boxShadow: "none",
+      pointerEvents: "none",
+      cursor: "default",
+    },
   },
   pdfDialogPrimaryButtonIconImg: {
     width: 20,

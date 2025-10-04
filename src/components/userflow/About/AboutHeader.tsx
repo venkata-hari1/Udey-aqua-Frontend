@@ -1,3 +1,4 @@
+// src/components/userflow/About/AboutHeader.tsx
 import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import useAboutStyles from "./aboutStyles";
 
@@ -22,7 +23,11 @@ const AboutHeader = ({ title, subtitle, img, aboutImg }: AboutHeaderProps) => {
             {subtitle}
           </Typography>
         </Grid>
-        {!isMobile && (
+        {isMobile ? (
+          <Grid size={{ xs: 12 }} className={classes.aboutHeaderSideGrid}>
+            <Box component="img" src={aboutImg} className={classes.sideImg} />
+          </Grid>
+        ) : (
           <Grid size={{ xs: 3 }} className={classes.aboutHeaderSideGrid}>
             <Box component="img" src={aboutImg} className={classes.sideImg} />
           </Grid>

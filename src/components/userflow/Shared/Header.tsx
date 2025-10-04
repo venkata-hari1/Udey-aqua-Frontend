@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/Header.tsx
 import {
   AppBar,
   Toolbar,
@@ -159,7 +160,7 @@ const Header = () => {
       const currentScrollY = window.scrollY;
       setTrigger(currentScrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

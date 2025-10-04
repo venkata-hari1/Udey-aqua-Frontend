@@ -1,3 +1,4 @@
+// src/components/userflow/Home/useAutoHorizontalScroll.tsx
 import { useEffect } from "react";
 
 const useAutoHorizontalScroll = (scrollRef: React.RefObject<HTMLElement | null>, intervalMs = 5000) => {

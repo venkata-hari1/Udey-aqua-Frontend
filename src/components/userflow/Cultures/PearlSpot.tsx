@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/PearlSpot.tsx
 import CulturePage from "./CulturePage";
 import type { CultureCardData } from "./CulturePage";
 import pearlSpotImg from "../../../assets/cultures/pearlspot.png";

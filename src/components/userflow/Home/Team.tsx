@@ -1,4 +1,5 @@
-import { Box, Typography, IconButton } from "@mui/material";
+// src/components/userflow/Home/Team.tsx
+import { Box, Typography} from "@mui/material";
 import { motion } from "framer-motion";
 import {
   TEAM_FISH_INITIAL,
@@ -16,8 +17,8 @@ import { useRef, useState } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
-import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
+// import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
+// import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 
 const teamData = [
   {
@@ -121,21 +122,6 @@ const Team: React.FC<TeamProps> = ({
   const [activeTab, setActiveTab] = useState<"directors" | "advisors">(
     "directors"
   );
-
-  const handlePrev = () => {
-    setCurrentTestimonialIndex((prev) =>
-      prev === 0 ? testimonialData.length - 1 : prev - 1
-    );
-    setShowFullQuote(false);
-  };
-
-  const handleNext = () => {
-    setCurrentTestimonialIndex((prev) =>
-      prev === testimonialData.length - 1 ? 0 : prev + 1
-    );
-    setShowFullQuote(false);
-  };
-
   const currentTestimonial = testimonialData[currentTestimonialIndex];
 
   if (isTestimonialMode) {
@@ -169,10 +155,18 @@ const Team: React.FC<TeamProps> = ({
                   />
                 </Box>
                 <Box className={classes.testimonialTextContainer}>
-                  <Typography className={classes.testimonialHeading}>
+                  <Typography
+                    variant="h6"
+                    component="h3"
+                    className={classes.testimonialHeading}
+                  >
                     {currentTestimonial.heading}
                   </Typography>
-                  <Typography className={classes.testimonialQuote}>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    className={classes.testimonialQuote}
+                  >
                     "
                     {showFullQuote
                       ? currentTestimonial.quote
@@ -181,6 +175,8 @@ const Team: React.FC<TeamProps> = ({
                   </Typography>
                   {!showFullQuote && (
                     <Typography
+                      variant="body2"
+                      component="span"
                       className={classes.testimonialReadMore}
                       onClick={() => setShowFullQuote(true)}
                     >
@@ -188,34 +184,46 @@ const Team: React.FC<TeamProps> = ({
                     </Typography>
                   )}
                   <Box className={classes.testimonialAttribution}>
-                    <Typography className={classes.testimonialName}>
+                    <Typography
+                      variant="subtitle2"
+                      component="span"
+                      className={classes.testimonialName}
+                    >
                       {currentTestimonial.name}
                     </Typography>
-                    <Typography className={classes.testimonialDesignation}>
+                    <Typography
+                      variant="subtitle2"
+                      component="span"
+                      className={classes.testimonialDesignation}
+                    >
                       {currentTestimonial.position}
                     </Typography>
-                    <Typography className={classes.testimonialPlace}>
+                    <Typography
+                      variant="subtitle2"
+                      component="span"
+                      className={classes.testimonialPlace}
+                    >
                       {currentTestimonial.place}
                     </Typography>
                   </Box>
                 </Box>
               </Box>
 
-              {/* Navigation Arrows */}
+              {/* Navigation Arrows
               <IconButton
                 onClick={handlePrev}
                 className={classes.testimonialArrowButton}
                 size="small"
               >
                 <ArrowBackIosNew fontSize="small" />
-              </IconButton>
-              <IconButton
-                onClick={handleNext}
+              </IconButton> */}
+              {/* <IconButton
+                onClick={handleOurTeam}
                 className={classes.testimonialArrowButton}
                 size="small"
               >
                 <ArrowForwardIos fontSize="small" />
-              </IconButton>
+              </IconButton> */}
             </Box>
 
             {/* Pagination Dots */}
@@ -253,7 +261,10 @@ const Team: React.FC<TeamProps> = ({
         animate={TEAM_FISH_ANIMATE}
         transition={TEAM_FISH_TRANSITION}
       />
-      <SectionTitle title="Our Directors & Advisors" />
+      <SectionTitle
+        title="Our Directors & Advisors"
+        
+      />
       {showTabs && (
         <Box className={classes.teamTabs}>
           <Box
@@ -264,9 +275,13 @@ const Team: React.FC<TeamProps> = ({
             }
             onClick={() => setActiveTab("directors")}
           >
-            Directors
+            <Typography variant="subtitle1" component="span">
+              Directors
+            </Typography>
           </Box>
-          <Box className={classes.teamTabDivider}>|</Box>
+          <Box className={classes.teamTabDivider}>
+            <Typography component="span">|</Typography>
+          </Box>
           <Box
             className={
               activeTab === "advisors"
@@ -275,17 +290,22 @@ const Team: React.FC<TeamProps> = ({
             }
             onClick={() => setActiveTab("advisors")}
           >
-            Advisors
+            <Typography variant="subtitle1" component="span">
+              Advisors
+            </Typography>
           </Box>
         </Box>
       )}
-      <Box className={classes.teamScrollWrap}>
+      <Box className={classes.teamScrollWrap} style={{ position: "relative" }}>
         <Box
           component="img"
           src={teamBg}
           alt="Team Background"
           className={classes.teamBgImg}
         />
+
+       
+
         <Box
           ref={scrollRef}
           className={

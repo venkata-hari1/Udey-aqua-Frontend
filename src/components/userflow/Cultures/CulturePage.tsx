@@ -1,5 +1,6 @@
+// src/components/userflow/Cultures/CulturePage.tsx
 import { Box, Grid } from "@mui/material";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef} from "react";
 import { useScrollWithOffset } from "../NewsEvents/hooks";
 import { useLocation } from "react-router-dom";
 import AboutInfoCard from "../About/AboutInfoCard";
@@ -25,7 +26,7 @@ const CulturePage = ({
   headerImg,
   cards,
 }: CulturePageProps) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef<number | null>(null);
   const location = useLocation();
@@ -35,24 +36,7 @@ const CulturePage = ({
   // Check if the current path contains "murrel"
   const isMurrelPage = location.pathname.includes("murrel");
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      try {
-        if (openIndex === null) return;
-        const openTitle = cards[openIndex]?.title || "";
-        const slug = openTitle
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "");
-        const openEl = document.getElementById(`card-${slug}`);
-        if (openEl && !openEl.contains(e.target as Node)) {
-          setOpenIndex(null);
-        }
-      } catch {}
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [openIndex, cards]);
+  // Outside clicks no longer close cards; only arrow toggles each card
 
   return (
     <Box>
@@ -83,26 +67,32 @@ const CulturePage = ({
           <AboutInfoCard
             key={idx}
             {...card}
-            expanded={openIndex === idx}
+            expanded={openSet.has(idx)}
             onExpand={() => {
-              if (openIndex === idx) {
-                try {
-                  const openTitle = cards[idx]?.title || "";
-                  const slug = openTitle
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, "-")
-                    .replace(/(^-|-$)/g, "");
-                  const el = document.getElementById(`card-${slug}`);
-                  if (el) {
-                    (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
-                    scrollTo();
-                  }
-                } catch {}
-                setOpenIndex(null);
-                return;
-              }
-              lastScrollYRef.current = window.scrollY;
-              setOpenIndex(idx);
+              setOpenSet((prev) => {
+                const next = new Set(prev);
+                if (next.has(idx)) {
+                  try {
+                    const openTitle = cards[idx]?.title || "";
+                    const slug = openTitle
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, "-")
+                      .replace(/(^-|-$)/g, "");
+                    const el = document.getElementById(`card-${slug}`);
+                    if (el) {
+                      (
+                        scrollRef as unknown as { current: HTMLElement | null }
+                      ).current = el as HTMLElement;
+                      scrollTo();
+                    }
+                  } catch {}
+                  next.delete(idx);
+                } else {
+                  lastScrollYRef.current = window.scrollY;
+                  next.add(idx);
+                }
+                return next;
+              });
             }}
           />
         ))}

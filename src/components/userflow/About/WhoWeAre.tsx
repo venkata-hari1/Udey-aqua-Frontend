@@ -1,3 +1,4 @@
+// src/components/userflow/About/WhoWeAre.tsx
 import whoarewe from "../../../assets/about_us/who_are_we.jpg";
 import whoareweSide from "../../../assets/about_us/who_we_are.png";
 import missionImg from "../../../assets/about_us/mission.jpg";

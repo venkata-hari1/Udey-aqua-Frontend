@@ -1,3 +1,4 @@
+// src/components/userflow/About/OurTeam.tsx
 import {
   Box,
   Grid,
@@ -27,6 +28,7 @@ import adv1 from "../../../assets/team/adv_1.png";
 import adv2 from "../../../assets/team/adv_2.png";
 import adv3 from "../../../assets/team/adv_3.png";
 import adv4 from "../../../assets/team/adv_4.png";
+import { useNavigate } from "react-router-dom";
 
 // Types
 interface Member {
@@ -108,11 +110,10 @@ const OurTeam = () => {
   const { classes } = useAboutStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">(
-    "Directors"
-  );
+  const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleCardClick = (
@@ -190,33 +191,44 @@ const OurTeam = () => {
         </Typography>
 
         {!open ? (
-  <Box className={classes.headerIconContainer}>
-    <Box component="img" src={aboutImg} className={classes.headerIcon} />
-  </Box>
-) : (
-  <Box className={classes.autoHeaderTabWrapper}>
-    <Typography
-      className={`${classes.autoHeaderTab} ${
-        activeTab === "Directors" ? classes.autoHeaderTabActive : ""
-      }`}
-      onClick={() => { setActiveTab("Directors"); setCurrentIndex(0); }}
-    >
-      Directors
-    </Typography>
+          <Box className={classes.headerIconContainer}>
+            <Box
+              component="img"
+              src={aboutImg}
+              className={classes.headerIcon}
+            />
+          </Box>
+        ) : (
+          <Box className={classes.autoHeaderTabWrapper}>
+            <Typography
+              className={`${classes.autoHeaderTab} ${
+                activeTab === "Directors" ? classes.autoHeaderTabActive : ""
+              }`}
+              onClick={() => {
+                setActiveTab("Directors");
+                setCurrentIndex(0);
+              }}
+            >
+              Directors
+            </Typography>
 
-    <Typography className={classes.autoHeaderTabSeparator}>|</Typography>
+            <Typography className={classes.autoHeaderTabSeparator}>
+              |
+            </Typography>
 
-    <Typography
-      className={`${classes.autoHeaderTab} ${
-        activeTab === "Advisors" ? classes.autoHeaderTabActive : ""
-      }`}
-      onClick={() => { setActiveTab("Advisors"); setCurrentIndex(0); }}
-    >
-      Advisors
-    </Typography>
-  </Box>
-)}
-
+            <Typography
+              className={`${classes.autoHeaderTab} ${
+                activeTab === "Advisors" ? classes.autoHeaderTabActive : ""
+              }`}
+              onClick={() => {
+                setActiveTab("Advisors");
+                setCurrentIndex(0);
+              }}
+            >
+              Advisors
+            </Typography>
+          </Box>
+        )}
       </Box>
       <Box className={classes.sectionWrapper}>
         {!open ? (
@@ -242,7 +254,7 @@ const OurTeam = () => {
                         {currentMember.designation}
                       </Box>
                     )}
-                    <Typography className={classes.carouselNameCustom}>
+                  <Typography className={classes.carouselNameCustom}>
                       {currentMember.name}
                     </Typography>
                     {currentMember.bigDesignation && (
@@ -271,7 +283,7 @@ const OurTeam = () => {
                       <ArrowBackIosNew fontSize="small" />
                     </IconButton>
                     <IconButton
-                      onClick={handleNext}
+                      onClick={() => navigate("/about/our-team")}
                       disabled={currentIndex === selectedMembers.length - 1}
                       className={classes.arrowButtonMobile}
                       size="small"

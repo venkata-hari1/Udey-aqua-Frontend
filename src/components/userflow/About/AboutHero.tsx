@@ -1,3 +1,4 @@
+// src/components/userflow/About/AboutHero.tsx
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import about_image from "../../../assets/about_us/about_hero.png";
 import useAboutStyles from "./aboutStyles";

@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/Plans/PlansSection.tsx
 import { useState, useEffect } from "react";
 import {
   Step1,
@@ -70,6 +71,26 @@ const PlansSection = ({ onStepChange, currentStep = 1, initialCulture, initialPr
   useEffect(() => {
     if (initialCulture) {
       setStep2Data((prev) => ({ ...prev, selectedCultureType: initialCulture }));
+      // Also clear downstream data when initial culture changes (switching plans)
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        address: "",
+        district: "",
+        pincode: "",
+        state: "",
+      });
+      setFormErrors({});
+      setStep4Data({
+        rdFaculty: "",
+        availableSlotFrom: "",
+        availableSlotTo: "",
+        trainingCourse: "",
+        technologies: "",
+        termsAccepted: false,
+      });
+      setStep4Errors({});
     }
   }, [initialCulture]);
 
@@ -79,18 +100,31 @@ const PlansSection = ({ onStepChange, currentStep = 1, initialCulture, initialPr
     }
   }, [initialPrice]);
 
-  // Auto-transition from Step 7 to Step 8 after 5 seconds
+  // Clear form data when the user switches culture/type within the plans UI
   useEffect(() => {
-    if (currentStep === 7) {
-      const timer = setTimeout(() => {
-        if (onStepChange) {
-          onStepChange(8);
-        }
-      }, TRANSITION_TIMERS.STEP7_TO_STEP8);
+    // When culture selection changes, reset all entered data to avoid carryover
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+      address: "",
+      district: "",
+      pincode: "",
+      state: "",
+    });
+    setFormErrors({});
+    setStep4Data({
+      rdFaculty: "",
+      availableSlotFrom: "",
+      availableSlotTo: "",
+      trainingCourse: "",
+      technologies: "",
+      termsAccepted: false,
+    });
+    setStep4Errors({});
+  }, [step2Data.selectedCultureType]);
 
-      return () => clearTimeout(timer);
-    }
-  }, [currentStep, onStepChange]);
+  // Removed auto-transition from Step 7 to Step 8 to avoid unexpected navigation
 
   // Track first visit to Step 3 to allow one render before skipping
   useEffect(() => {
@@ -175,7 +209,14 @@ const PlansSection = ({ onStepChange, currentStep = 1, initialCulture, initialPr
         return <Step6 {...commonProps} />;
 
       case 7:
-        return <Step7 />;
+        return (
+          <Step7
+            formData={formData}
+            step2Data={step2Data}
+            step4Data={step4Data}
+            price={typeof overridePrice !== "undefined" ? overridePrice : 89}
+          />
+        );
 
       case 8:
         return <Step8 {...commonProps} />;

@@ -1,3 +1,4 @@
+// src/components/userflow/Cultures/CulturesHero.tsx
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import cultures_image from "../../../assets/cultures/main.jpg";
 import useCulturesStyles from "./culturesStyles";

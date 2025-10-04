@@ -1,3 +1,4 @@
+// src/components/userflow/Home/Contact.tsx
 import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 import { useState } from "react";
@@ -31,12 +32,16 @@ const Contact = ({ title = true }: { title?: boolean }) => {
 
   const isValidMessage = (value: string) => {
     const len = value.trim().length;
-    return len >= MESSAGE_MIN && len <= maxMessageLength && !containsOnlyNumbers(value);
+    return (
+      len >= MESSAGE_MIN &&
+      len <= maxMessageLength &&
+      !containsOnlyNumbers(value)
+    );
   };
 
-  const nameError = submitted 
-    ? !form.name 
-      ? "First name is required" 
+  const nameError = submitted
+    ? !form.name
+      ? "First name is required"
       : form.name.trim().length < NAME_MIN || form.name.trim().length > NAME_MAX
       ? `Name must be ${NAME_MIN}-${NAME_MAX} characters`
       : containsOnlyNumbers(form.name)
@@ -50,36 +55,44 @@ const Contact = ({ title = true }: { title?: boolean }) => {
       ? "Phone number must be exactly 10 digits"
       : ""
     : "";
-  const messageError = submitted 
-    ? !form.message 
-      ? "Message is required" 
-      : form.message.trim().length < MESSAGE_MIN || form.message.trim().length > maxMessageLength
+  const messageError = submitted
+    ? !form.message
+      ? "Message is required"
+      : form.message.trim().length < MESSAGE_MIN ||
+        form.message.trim().length > maxMessageLength
       ? `Message must be ${MESSAGE_MIN}-${maxMessageLength} characters`
       : containsOnlyNumbers(form.message)
       ? "Message cannot contain only numbers"
       : ""
     : "";
 
+  const messageLimitError =
+    form.message.length === maxMessageLength
+      ? "Message can't exceed 500 characters"
+      : "";
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    
+
     if (name === "message") {
       const limited = value.slice(0, maxMessageLength);
       setForm({ ...form, message: limited });
       return;
     }
-    
+
     if (name === "phone") {
       // Keep +91 visible; store only the 10 local digits in state
       const digitsOnly = value.replace(/\D/g, "");
-      const withoutCountry = digitsOnly.startsWith("91") ? digitsOnly.slice(2) : digitsOnly;
+      const withoutCountry = digitsOnly.startsWith("91")
+        ? digitsOnly.slice(2)
+        : digitsOnly;
       const tenDigits = withoutCountry.slice(0, 10);
       setForm({ ...form, phone: tenDigits });
       return;
     }
-    
+
     setForm({ ...form, [name]: value });
   };
 
@@ -87,7 +100,11 @@ const Contact = ({ title = true }: { title?: boolean }) => {
     e.preventDefault();
     setSubmitted(true);
 
-    if (isValidName(form.name) && isValidPhone(form.phone) && isValidMessage(form.message)) {
+    if (
+      isValidName(form.name) &&
+      isValidPhone(form.phone) &&
+      isValidMessage(form.message)
+    ) {
       console.log({
         name: form.name.trim(),
         phone: `+91${form.phone}`,
@@ -131,7 +148,13 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     alignItems="center"
                   >
                     <Typography className={classes.contactLabel}>
-                      <Typography component="span" className={classes.spanColor}>*</Typography> First Name
+                      <Typography
+                        component="span"
+                        className={classes.spanColor}
+                      >
+                        *
+                      </Typography>{" "}
+                      First Name
                     </Typography>
                     {nameError && (
                       <Typography color="error" fontSize={16}>
@@ -158,7 +181,13 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     alignItems="center"
                   >
                     <Typography className={classes.contactLabel}>
-                      <Typography component="span" className={classes.spanColor}>*</Typography> Phone
+                      <Typography
+                        component="span"
+                        className={classes.spanColor}
+                      >
+                        *
+                      </Typography>{" "}
+                      Phone
                     </Typography>
                     {phoneError && (
                       <Typography color="error" fontSize={16}>
@@ -186,11 +215,17 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     alignItems="center"
                   >
                     <Typography className={classes.contactLabel}>
-                      <Typography component="span" className={classes.spanColor}>*</Typography> Message
+                      <Typography
+                        component="span"
+                        className={classes.spanColor}
+                      >
+                        *
+                      </Typography>{" "}
+                      Message
                     </Typography>
-                    {messageError && (
+                    {(messageLimitError || messageError) && (
                       <Typography color="error" fontSize={16}>
-                        {messageError}
+                        {messageLimitError || messageError}
                       </Typography>
                     )}
                   </Box>
@@ -203,7 +238,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                     minRows={4}
                     variant="outlined"
                     className={classes.contactTextField}
-                    error={Boolean(messageError)}
+                    error={Boolean(messageError || messageLimitError)}
                     placeholder={"Message can't be more than 500 characters"}
                     inputProps={{ maxLength: maxMessageLength }}
                   />

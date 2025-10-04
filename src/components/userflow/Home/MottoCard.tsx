@@ -1,3 +1,4 @@
+// src/components/userflow/Home/MottoCard.tsx
 import { Grid, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import mottoHead from "../../../assets/home/motto_head.svg";
@@ -15,13 +16,14 @@ interface MottoCardProps {
 const MottoCard = ({ img, fishText, title, button, buttonText, aboutCard }: MottoCardProps) => {
   const { classes } = useHomeStyles();
   const navigate = useNavigate();
-
   const handleButtonClick = () => {
     if (aboutCard) {
       navigate(`/about?card=${encodeURIComponent(aboutCard)}`);
     } else {
       navigate('/about');
     }
+    // Ensure we land at the top of the destination page
+    try { setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 0); } catch {}
   };
 
   return (

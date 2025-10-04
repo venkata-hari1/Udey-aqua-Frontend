@@ -1,3 +1,4 @@
+// src/components/userflow/NewsEvents/hooks/useCarousel.ts
 import { useState, useCallback } from "react";
 
 interface UseCarouselProps {

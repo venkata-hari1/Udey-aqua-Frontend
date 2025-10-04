@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/HelpSection.tsx
 import { Box, Typography } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import useSharedStyles from "./sharedStyles";

@@ -1,7 +1,9 @@
+// src/components/userflow/Home/TeamCard.tsx
 import { Box, Typography, Button, Avatar } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import useHomeStyles from "./homeStyles";
-
+import { useNavigate } from "react-router-dom";
+import { slugify } from "../About/teamData";
 export interface TeamCardProps {
   image: string;
   name: string;
@@ -11,6 +13,7 @@ export interface TeamCardProps {
 
 const TeamCard: React.FC<TeamCardProps> = ({ image, name, location, role }) => {
   const { classes } = useHomeStyles();
+  const navigate = useNavigate();
   return (
     <Box className={classes.teamCardRoot}>
       <Avatar src={image} className={classes.teamCardAvatar} />
@@ -22,7 +25,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ image, name, location, role }) => {
             {location}
           </Typography>
         </Box>
-        <Button variant="contained" className={classes.teamCardButton}>
+        <Button variant="contained" className={classes.teamCardButton} onClick={() => navigate(`/about/our-team/${slugify(name)}`)}>
           <ArrowForwardIcon className={classes.teamCardArrow} />
         </Button>
       </Box>

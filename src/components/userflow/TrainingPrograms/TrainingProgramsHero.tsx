@@ -1,3 +1,4 @@
+// src/components/userflow/TrainingPrograms/TrainingProgramsHero.tsx
 import { Box } from "@mui/material";
 import heroImage from "../../../assets/training/hero.png";
 import useTrainingProgramsStyles from "./trainingProgramsStyles";

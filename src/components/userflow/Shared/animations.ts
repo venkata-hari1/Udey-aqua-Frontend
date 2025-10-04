@@ -1,3 +1,4 @@
+// src/components/userflow/Shared/animations.ts
 import type { Target, Transition } from "framer-motion";
 
 export const FISH_OVAL_INITIAL: Target = { x: 0, y: 0, rotate: 0 };
