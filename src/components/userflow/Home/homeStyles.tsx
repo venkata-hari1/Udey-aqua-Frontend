@@ -1072,8 +1072,23 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     position: "relative",
     zIndex: 1,
   },
-  partnersScroll: {
+  partnersDesktopLayout: {
     display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: 1400,
+    margin: "auto",
+    gap: theme.spacing(6),
+    marginTop: theme.spacing(6),
+    marginBottom: theme.spacing(16),
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  partnersScroll: {
+    display: "none",
     flexDirection: "row",
     flexWrap: "nowrap",
     width: "100%",
@@ -1090,13 +1105,27 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
+      display: "flex",
       gap: theme.spacing(2),
       justifyContent: "center",
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
       scrollSnapType: "x mandatory",
-      scrollPaddingLeft: theme.spacing(2),
-      scrollPaddingRight: theme.spacing(2),
+      scrollPaddingLeft: theme.spacing(3),
+      scrollPaddingRight: theme.spacing(3),
+    },
+  },
+  partnersSlide: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    gap: theme.spacing(6),
+    [theme.breakpoints.down("md")]: {
+      gap: theme.spacing(2),
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
     },
   },
   partnersScrollFlexStart: {
@@ -1112,9 +1141,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingBottom: theme.spacing(1.5),
     minWidth: 120,
     maxWidth: 180,
+    flex: 1,
     [theme.breakpoints.down("md")]: {
-      minWidth: "50%",
-      maxWidth: "50%",
+      minWidth: "calc(50% - 8px)",
+      maxWidth: "calc(50% - 8px)",
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
       boxSizing: "border-box",
@@ -1129,6 +1159,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       width: "100%",
       height: "auto",
       maxHeight: 90,
+      maxWidth: "100%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      maxHeight: 70,
     },
   },
   partnersBgImg: {
@@ -1304,6 +1338,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingBottom: theme.spacing(0.5),
     background: COLORS.WHITE,
     width: 142,
+    alignItems: "center",
   },
   sectionTitleRoot: {
     position: "relative",
