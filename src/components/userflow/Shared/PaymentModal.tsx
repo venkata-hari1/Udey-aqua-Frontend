@@ -8,12 +8,9 @@ import {
   Button,
   TextField,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
   Typography,
-  Tabs,
-  Tab,
   IconButton,
 } from '@mui/material';
 import { Close, CreditCard } from '@mui/icons-material';
@@ -67,6 +64,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       case 'expiry':
         if (!value) return 'Expiry date is required';
         if (!/^\d{2}\/\d{2}$/.test(value)) return 'Expiry must be in MM/YY format';
+        // Validate month (01-12)
+        const month = parseInt(value.split('/')[0]);
+        if (month < 1 || month > 12) return 'Month must be between 01-12';
         return '';
       case 'cvc':
         if (!value) return 'CVC is required';
@@ -81,9 +81,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     }
   };
 
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
 
   const handleInputChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
@@ -93,8 +90,15 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       // Remove all non-digits and limit to 16 digits, add spaces every 4 digits
       value = value.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
     } else if (field === 'expiry') {
-      // Format as MM/YY
-      value = value.replace(/\D/g, '').replace(/(\d{2})(?=\d)/g, '$1/');
+      // Format as MM/YY - limit to exactly 5 characters (MM/YY
+      value = value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      // Limit to exactly 5 characters (MM/YY)
+      if (value.length > 5) {
+        value = value.substring(0, 5);
+      }
     } else if (field === 'cvc') {
       // Only allow digits, max 4 characters
       value = value.replace(/\D/g, '').slice(0, 4);
@@ -172,7 +176,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         alignItems: 'center',
         padding: '24px 24px 0 24px'
       }}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+        <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: '16px' }}>
           Payment Details
         </Typography>
         <IconButton onClick={onClose} size="small">
@@ -181,64 +185,93 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       </DialogTitle>
       
       <DialogContent sx={{ padding: '24px' }}>
-        {/* Payment Method Tabs */}
-        <Box sx={{ marginBottom: '24px' }}>
-          <Tabs 
-            value={activeTab} 
-            onChange={handleTabChange}
+        {/* Payment Method Boxes */}
+        <Box sx={{ marginBottom: '24px', display: 'flex', gap: '12px', justifyContent: 'flex-start' }}>
+          <Box 
+            onClick={() => setActiveTab(0)}
             sx={{
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                fontWeight: 500,
-                minHeight: '48px',
-                border: '1px solid #e0e0e0',
-                borderBottom: 'none',
-                borderRadius: '8px 8px 0 0',
-                marginRight: '4px',
-                backgroundColor: 'white',
-                color: '#666',
-              },
-              '& .Mui-selected': {
-                backgroundColor: 'white',
-                color: '#1976d2',
-                borderColor: '#1976d2',
-                borderWidth: '2px',
+              width: '127px',
+              height: '64px',
+              padding: '10px 12px',
+              border: activeTab === 0 ? '2px solid #0570DE' : '2px solid #E0E0E0',
+              borderRadius: '6px',
+              backgroundColor: activeTab === 0 ? '#f5f5f5' : 'white',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '8px',
+              marginLeft: '20px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              '&:hover': {
+                backgroundColor: '#f9f9f9',
               }
             }}
           >
-            <Tab 
-              label="Card" 
-              icon={<CreditCard />}
-              iconPosition="start"
-            />
-             <Tab 
-               label="EPS" 
-               icon={<Box component="img" src={epsImg} alt="EPS" sx={{ height: 20, width: 'auto' }} />}
-               iconPosition="start"
-             />
-             <Tab 
-               label="Giropay" 
-               icon={<Box component="img" src={giropayImg} alt="Giropay" sx={{ height: 20, width: 'auto' }} />}
-               iconPosition="start"
-             />
-          </Tabs>
+            <CreditCard sx={{ width: 16, height: 16 }} />
+            <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '13px' }}>Card</Typography>
+          </Box>
+          
+          <Box 
+            onClick={() => setActiveTab(1)}
+            sx={{
+              width: '127px',
+              height: '64px',
+              padding: '10px 12px',
+              border: activeTab === 1 ? '2px solid #0570DE' : '2px solid #E0E0E0',
+              borderRadius: '6px',
+              backgroundColor: activeTab === 1 ? '#f5f5f5' : 'white',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              '&:hover': {
+                backgroundColor: '#f9f9f9',
+              }
+            }}
+          >
+            <Box component="img" src={epsImg} alt="EPS" sx={{ width: 16, height: 16 }} />
+            <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '13px' }}>EPS</Typography>
+          </Box>
+          
+          <Box 
+            onClick={() => setActiveTab(2)}
+            sx={{
+              width: '127px',
+              height: '64px',
+              padding: '10px 12px',
+              border: activeTab === 2 ? '2px solid #0570DE' : '2px solid #E0E0E0',
+              borderRadius: '6px',
+              backgroundColor: activeTab === 2 ? '#f5f5f5' : 'white',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              '&:hover': {
+                backgroundColor: '#f9f9f9',
+              }
+            }}
+          >
+            <Box component="img" src={giropayImg} alt="Giropay" sx={{ width: 16, height: 16 }} />
+            <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '13px' }}>Giropay</Typography>
+          </Box>
         </Box>
 
         {/* Payment Form */}
         <Box sx={{ 
-          border: '1px solid #e0e0e0', 
-          borderTop: 'none',
-          borderRadius: '0 0 8px 8px',
           padding: '24px',
           backgroundColor: 'white'
         }}>
           {activeTab === 0 && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {/* Card Number */}
-              <Box>
+              <Box sx={{ position: 'relative' }}>
                  <TextField
                    fullWidth
-                   label="Card number"
                    placeholder="1234 1234 1234 1234"
                    value={formData.cardNumber}
                    onChange={handleInputChange('cardNumber')}
@@ -247,34 +280,92 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                    sx={{
                      '& .MuiOutlinedInput-root': {
                        backgroundColor: 'white',
+                       border: '2px solid #E0E0E0',
                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                        '&:hover': {
                          boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
                        },
                        '&.Mui-focused': {
                          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                       },
+                       '& fieldset': {
+                         border: 'none',
+                       },
+                       '& input': {
+                         fontSize: '16px',
+                         '@media (max-width: 768px)': {
+                           fontSize: '14px',
+                         },
+                         '@media (max-width: 480px)': {
+                           fontSize: '12px',
+                         }
                        }
                      }
                    }}
                  />
                 <Box sx={{ 
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
                   display: 'flex', 
                   gap: '8px', 
-                  marginTop: '8px',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  '@media (max-width: 768px)': {
+                    gap: '4px',
+                    right: '8px',
+                  },
+                  '@media (max-width: 480px)': {
+                    gap: '2px',
+                    right: '6px',
+                  }
                 }}>
-                  <Box component="img" src={visaImg} alt="Visa" sx={{ height: 20, width: 'auto' }} />
-                  <Box component="img" src={mastercardImg} alt="Mastercard" sx={{ height: 20, width: 'auto' }} />
-                  <Box component="img" src={americanExpressImg} alt="American Express" sx={{ height: 20, width: 'auto' }} />
-                  <Box component="img" src={discoverImg} alt="Discover" sx={{ height: 20, width: 'auto' }} />
+                  <Box component="img" src={visaImg} alt="Visa" sx={{ 
+                    height: 20, 
+                    width: 'auto',
+                    '@media (max-width: 768px)': {
+                      height: 16,
+                    },
+                    '@media (max-width: 480px)': {
+                      height: 12,
+                    }
+                  }} />
+                  <Box component="img" src={mastercardImg} alt="Mastercard" sx={{ 
+                    height: 20, 
+                    width: 'auto',
+                    '@media (max-width: 768px)': {
+                      height: 16,
+                    },
+                    '@media (max-width: 480px)': {
+                      height: 12,
+                    }
+                  }} />
+                  <Box component="img" src={americanExpressImg} alt="American Express" sx={{ 
+                    height: 20, 
+                    width: 'auto',
+                    '@media (max-width: 768px)': {
+                      height: 16,
+                    },
+                    '@media (max-width: 480px)': {
+                      height: 12,
+                    }
+                  }} />
+                  <Box component="img" src={discoverImg} alt="Discover" sx={{ 
+                    height: 20, 
+                    width: 'auto',
+                    '@media (max-width: 768px)': {
+                      height: 16,
+                    },
+                    '@media (max-width: 480px)': {
+                      height: 12,
+                    }
+                  }} />
                 </Box>
               </Box>
 
               {/* Expiry and CVC */}
               <Box sx={{ display: 'flex', gap: '16px' }}>
                  <TextField
-                   label="Expiry"
                    placeholder="MM/YY"
                    value={formData.expiry}
                    onChange={handleInputChange('expiry')}
@@ -284,18 +375,21 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                      flex: 1, 
                      '& .MuiOutlinedInput-root': { 
                        backgroundColor: 'white',
+                       border: '2px solid #E0E0E0',
                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                        '&:hover': {
                          boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
                        },
                        '&.Mui-focused': {
                          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                       },
+                       '& fieldset': {
+                         border: 'none',
                        }
                      } 
                    }}
                  />
                  <TextField
-                   label="CVC"
                    placeholder="CVC"
                    value={formData.cvc}
                    onChange={handleInputChange('cvc')}
@@ -305,67 +399,75 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                      flex: 1, 
                      '& .MuiOutlinedInput-root': { 
                        backgroundColor: 'white',
+                       border: '2px solid #E0E0E0',
                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                        '&:hover': {
                          boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
                        },
                        '&.Mui-focused': {
                          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                       },
+                       '& fieldset': {
+                         border: 'none',
                        }
                      } 
                    }}
                  />
               </Box>
 
-              {/* Country */}
-              <FormControl fullWidth>
-                <InputLabel>Country</InputLabel>
-                <Select
-                  value={formData.country}
-                  onChange={handleCountryChange}
-                  label="Country"
-                  sx={{ 
-                    backgroundColor: 'white',
-                    '& .MuiOutlinedInput-notchedOutline': {
+              {/* Country and Postal Code in same row */}
+              <Box sx={{ display: 'flex', gap: '16px' }}>
+                <FormControl sx={{ flex: 1 }}>
+                  <Select
+                    value={formData.country}
+                    onChange={handleCountryChange}
+                    sx={{ 
+                      backgroundColor: 'white',
+                      border: '2px solid #E0E0E0',
                       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                    }
-                  }}
-                >
-                  <MenuItem value="United States">United States</MenuItem>
-                  <MenuItem value="India">India</MenuItem>
-                  <MenuItem value="United Kingdom">United Kingdom</MenuItem>
-                  <MenuItem value="Canada">Canada</MenuItem>
-                </Select>
-              </FormControl>
+                      '&:hover': {
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                      },
+                      '&.Mui-focused': {
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                      },
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        border: 'none',
+                      }
+                    }}
+                  >
+                    <MenuItem value="United States">United States</MenuItem>
+                    <MenuItem value="India">India</MenuItem>
+                    <MenuItem value="United Kingdom">United Kingdom</MenuItem>
+                    <MenuItem value="Canada">Canada</MenuItem>
+                  </Select>
+                </FormControl>
 
-              {/* Postal Code */}
-               <TextField
-                 fullWidth
-                 label="Postal code"
-                 placeholder="90210"
-                 value={formData.postalCode}
-                 onChange={handleInputChange('postalCode')}
-                 error={!!formErrors.postalCode}
-                 helperText={formErrors.postalCode}
-                 sx={{ 
-                   '& .MuiOutlinedInput-root': { 
-                     backgroundColor: 'white',
-                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                     '&:hover': {
-                       boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                     },
-                     '&.Mui-focused': {
-                       boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                     }
-                   } 
-                 }}
-               />
+                <TextField
+                  placeholder="Postal code"
+                  value={formData.postalCode}
+                  onChange={handleInputChange('postalCode')}
+                  error={!!formErrors.postalCode}
+                  helperText={formErrors.postalCode}
+                  sx={{ 
+                    flex: 1,
+                    '& .MuiOutlinedInput-root': { 
+                      backgroundColor: 'white',
+                      border: '2px solid #E0E0E0',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      '&:hover': {
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                      },
+                      '&.Mui-focused': {
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                      },
+                      '& fieldset': {
+                        border: 'none',
+                      }
+                    } 
+                  }}
+                />
+              </Box>
             </Box>
           )}
 
