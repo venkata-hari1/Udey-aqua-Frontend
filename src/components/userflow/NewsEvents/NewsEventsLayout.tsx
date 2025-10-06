@@ -78,7 +78,7 @@ const NewsEventsLayout = () => {
           )}
           {isMobile && <ContactBox />}
           <Grid
-            size={{ xs: 12, md: 10 }}
+            size={{ xs: 12 }}
             className={classes.newsEventsMainContent}
           >
             {!isMobile && (

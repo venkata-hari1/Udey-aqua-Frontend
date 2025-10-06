@@ -38,7 +38,7 @@ const AboutCardsSection = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef<number>(0);
   const location = useLocation();
-  const { ref: scrollRef, scrollTo } = useScrollWithOffset(isMobile ? 80 : 120);
+  const { ref: scrollRef, scrollTo } = useScrollWithOffset(isMobile ? 20 : 50);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);

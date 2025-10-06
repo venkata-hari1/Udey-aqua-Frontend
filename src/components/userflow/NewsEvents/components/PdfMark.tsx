@@ -1,6 +1,6 @@
 // src/components/userflow/NewsEvents/components/PdfMark.tsx
-import { Box, IconButton, Tooltip } from '@mui/material';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { Box, Tooltip } from '@mui/material';
+import PdfIcon from '../../../../assets/icons/pdf.svg';
 import { useState } from 'react';
 import { convertImageToPDF, convertNewsImageToPDF, type NewsImageData } from '../../../../utils/pdfConverter';
 
@@ -63,36 +63,22 @@ const PdfMark: React.FC<PdfMarkProps> = ({
     };
   };
 
+  const sizePx = size === 'small' ? 18 : size === 'medium' ? 22 : 26;
+
   return (
     <Tooltip title={isConverting ? "Generating PDF..." : "Convert to PDF"} arrow>
-      <Box sx={getPositionStyles()}>
-        <IconButton
-          onClick={handlePdfConversion}
-          disabled={isConverting}
-          sx={{
-            backgroundColor: '#ffffff',
-            borderRadius: '50%',
-            border: '1px solid rgba(0,0,0,0.1)',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
-            p: 0.5,
-            '&:hover': {
-              backgroundColor: '#ffffff',
-              transform: 'scale(1.05)'
-            },
-            '&:disabled': {
-              backgroundColor: '#ffffff',
-              color: 'rgba(0, 0, 0, 0.3)'
-            },
-            transition: 'all 0.2s ease-in-out'
-          }}
-        >
-          <PictureAsPdfIcon 
-            sx={{ 
-              color: isConverting ? 'rgba(0, 0, 0, 0.3)' : '#1976d2',
-              fontSize: size === 'small' ? 18 : size === 'medium' ? 22 : 26,
-            }} 
-          />
-        </IconButton>
+      <Box
+        onClick={handlePdfConversion}
+        sx={{
+          ...getPositionStyles(),
+          cursor: isConverting ? 'default' : 'pointer',
+        }}
+      >
+        <img
+          src={PdfIcon}
+          alt="PDF"
+          style={{ width: sizePx, height: sizePx, display: 'block', filter: 'none' }}
+        />
       </Box>
     </Tooltip>
   );

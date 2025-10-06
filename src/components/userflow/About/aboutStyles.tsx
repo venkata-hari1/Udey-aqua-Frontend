@@ -98,9 +98,11 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     maxWidth: "100%",
     marginLeft: "auto",
     marginRight: "auto",
+    zIndex: 1,
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(2),
       marginBottom: theme.spacing(6),
+      zIndex: 1,
     },
   },
   aboutCardTitle: {
@@ -186,6 +188,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     minHeight: "100vh",
     background: COLORS.BLUE_GRAY,
     overflow: "visible",
+    [theme.breakpoints.down("sm")]: {
+      minHeight: "auto",
+      height: "auto",
+    },
   },
   aboutHero: {
     width: "100vw",
@@ -201,6 +207,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       minHeight: "30vh",
       height: "30vh",
+    },
+    [theme.breakpoints.down("sm")]: {
+      minHeight: "20vh",
+      height: "20vh",
     },
   },
   aboutHeroImg: {
@@ -357,11 +367,18 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     paddingRight: theme.spacing(20),
     position: "relative",
     overflow: "visible",
+    transform: "none",
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(3),
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
       overflow: "visible",
+      transform: "none",
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
   },
   aboutMainRow: {
@@ -371,10 +388,18 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginRight: 64,
     marginTop: 48,
     minHeight: "100vh",
+    transform: "none",
     [theme.breakpoints.down("md")]: {
       marginLeft: 0,
       marginRight: 0,
       marginTop: 16,
+      minHeight: "auto",
+      height: "auto",
+      overflow: "visible",
+      transform: "none",
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 8,
       minHeight: "auto",
       height: "auto",
     },
@@ -1499,9 +1524,11 @@ testimonialRoot: {
       display: "none",
     },
     [theme.breakpoints.down("md")]: {
-      gap: 16,
+      gap: 0,
       paddingLeft: 0,
       paddingRight: 0,
+      justifyContent: "flex-start",
+      scrollSnapType: "x mandatory",
     },
   },
   testimonialWideCard: {
@@ -1515,8 +1542,12 @@ testimonialRoot: {
     overflow: "hidden",
     boxShadow: SHADOWS.CARD,
     [theme.breakpoints.down("md")]: {
-      minWidth: 400,
+      minWidth: "100vw",
+      maxWidth: "100vw",
+      width: "100vw",
       height: 180,
+      flex: "0 0 100vw",
+      scrollSnapAlign: "center",
     },
   },
   testimonialWideOverlay: {

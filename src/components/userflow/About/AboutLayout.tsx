@@ -65,7 +65,7 @@ const AboutLayout = () => {
             </Grid>
           )}
           {isMobile && <ContactBox />}
-          <Grid size={{ xs: 12, md: 10 }} className={classes.aboutMainContent}>
+          <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
             <Outlet />
           </Grid>
         </Grid>

@@ -408,8 +408,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     gap: theme.spacing(8),
     width: "100%",
     maxWidth: 1250,
-    marginLeft: "auto",
-    marginRight: "auto",
+    // marginLeft: "auto",
+    // marginRight: "auto",
     overflowX: "auto",
     overflowY: "hidden",
     scrollbarWidth: "none",
@@ -418,7 +418,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       display: "none",
     },
     [theme.breakpoints.down("md")]: {
-      gap: "10%",
+      gap: 0,
+      justifyContent: "center",
     },
   },
   newsScrollCenter: {
@@ -989,13 +990,16 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     overflowY: "hidden",
     scrollbarWidth: "none",
     "&::-webkit-scrollbar": { display: "none" },
+    [theme.breakpoints.down("md")]: {
+      gap: 0,
+      justifyContent: "center",
+    },
   },
   ourProjectsScrollFlexStart: {
     justifyContent: "flex-start",
   },
   ourProjectsCardOuter: {
-    minWidth: 320,
-    maxWidth: 380,
+
     width: 340,
     boxSizing: "border-box",
     height: "100%",
@@ -1533,11 +1537,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
       scrollSnapType: "x mandatory",
-      scrollPaddingLeft: theme.spacing(2),
-      scrollPaddingRight: theme.spacing(2),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      scrollPaddingLeft: 0,
+      scrollPaddingRight: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
       gap: theme.spacing(2),
+      justifyContent: "center",
     },
   },
   teamCardsScrollFlexStart: {
@@ -1568,6 +1573,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   teamCardOuterLast: {
     marginRight: theme.spacing(4),
   },
+  // pagination styles removed for default carousel behavior
   teamCardInner: {
     width: "90%",
     marginLeft: "auto",
@@ -1667,6 +1673,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     scrollbarWidth: "none",
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": { display: "none" },
+    [theme.breakpoints.down("md")]: {
+      gap: 0,
+      justifyContent: "center",
+    },
   },
   testimonialsScrollFlexStart: {
     justifyContent: "flex-start",
@@ -1735,7 +1745,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     fontSize: 20,
     lineHeight: 1.3,
     paddingTop: theme.spacing(0.25),
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(3),
     margin: "auto",
     marginTop: -14,
   },

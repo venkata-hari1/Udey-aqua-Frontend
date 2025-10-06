@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Tooltip, CircularProgress } from '@mui/material';
+import { Box, Tooltip, CircularProgress } from '@mui/material';
 import { convertImageToPDF } from '../utils/pdfConverter';
 import pdfIcon from '../../../../assets/icons/pdf.svg';
 
@@ -47,21 +47,16 @@ const PDFButton: React.FC<PDFButtonProps> = ({
   return (
     <Tooltip title="Convert to PDF" arrow>
       <Box className={className}>
-        <IconButton
+        <Box
           onClick={handlePDFGeneration}
-          disabled={isGenerating}
           sx={{
             position: 'absolute',
-            top: 8,
+            bottom: 8,
             left: 8,
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 1)',
-            },
             zIndex: 10,
-            width: 40,
-            height: 40,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+            width: 24,
+            height: 24,
+            cursor: isGenerating ? 'default' : 'pointer'
           }}
         >
           {isGenerating ? (
@@ -70,10 +65,10 @@ const PDFButton: React.FC<PDFButtonProps> = ({
             <img
               src={pdfIcon}
               alt="PDF"
-              style={{ width: 20, height: 20 }}
+              style={{ width: 24, height: 24, display: 'block' }}
             />
           )}
-        </IconButton>
+        </Box>
       </Box>
     </Tooltip>
   );

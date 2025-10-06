@@ -29,9 +29,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     paddingRight: theme.spacing(15),
     position: "relative",
     [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(3),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
+      padding: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
   },
 
