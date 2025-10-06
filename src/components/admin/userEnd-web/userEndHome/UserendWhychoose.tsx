@@ -2,9 +2,10 @@ import { Box,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { EditButton, ErrorMessages, ErrormsgContent, TextFieldManyRows,Uploadbutton,UserEndSaveCancelButtons } from "./UserEndCommonButtons";
+import { EditButton, ErrorMessages, ErrormsgContent, TextFieldManyRows,Uploadbutton,UserEndSaveButton,UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { HeadingContentValidation } from "../../utils/Validations";
 
 const UserendWhychoose = () => {
 
@@ -19,7 +20,7 @@ const[chooseSlide,setChooseslide]=useState({
         contenterror: "",
       }
     )
-
+const[isEditing,setIsediting]=useState(false)
 const isSaveDisabled=!chooseSlide.image || !chooseSlide.content || !!chooseSlide.contenterror || !!chooseSlide.imgerror  
 
  const handleUpload=(file:File)=>{
@@ -46,9 +47,11 @@ const handleContentchange=(value:string,error:string)=>{
 const handleSave=()=>{
   setChooseslide({...chooseSlide,name:'',image:'',content:'',})
   localStorage.setItem("chooseValues",JSON.stringify(chooseSlide)) 
+ setIsediting(false)
 }   
 
  const handleEdit=()=>{
+  setIsediting(true)
   const savedData=localStorage.getItem("chooseValues");
   if(savedData){
     const parsed=JSON.parse(savedData);
@@ -63,6 +66,7 @@ const handleSave=()=>{
 
 const onCancel=()=>{
   setChooseslide({...chooseSlide,image:"",content:"",contenterror:"",imgerror:""})
+  setIsediting(false)
 }
 return (
    <Box>    
@@ -90,12 +94,14 @@ return (
            <TextFieldManyRows 
            value={chooseSlide.content}onChange={(value, error) =>
                         handleContentchange(value, error)
-                      }/>
+                      }
+            validationFn={HeadingContentValidation}/>
            <ErrormsgContent message={chooseSlide.contenterror}/>
            </Stack>
          </Stack>
-        <UserEndSaveCancelButtons onSave={handleSave} disabled={isSaveDisabled}
-        onCancel={onCancel}/>
+         {isEditing ? <UserEndSaveCancelButtons onSave={handleSave} disabled={isSaveDisabled}
+        onCancel={onCancel}/>:<UserEndSaveButton onSave={handleSave} disabled={isSaveDisabled}/>}
+        
      </Box>
      </Box>
        </Box>

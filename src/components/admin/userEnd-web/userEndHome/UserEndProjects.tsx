@@ -20,6 +20,8 @@ import {
   ErrormsgContent,
   ErrormsgTitle,
   TextFieldSingleRow,
+  UserEndSaveButton,
+  EditButton,
 } from "./UserEndCommonButtons";
 import { Fragment } from "react";
 import { useState } from "react";
@@ -42,7 +44,8 @@ const UserEndProjects = () => {
     },
   ]);
 
-  
+ const[editSlideId,setEditSlideId]=useState<string |null>(null)
+ 
   const handleAddProject = () => {
     setProjects((prev) => [
       ...prev,
@@ -105,6 +108,7 @@ const UserEndProjects = () => {
           : p
       )
     );
+    setEditSlideId(null)
   };
 
 
@@ -124,6 +128,7 @@ const UserEndProjects = () => {
           : p
       )
     );
+    setEditSlideId(null)
   };
 
   const handleEdit = (id: string) => {
@@ -134,6 +139,7 @@ const UserEndProjects = () => {
         prev.map((p) => (p.id === id ? { ...p, ...parsed } : p))
       );
     }
+    setEditSlideId(id)
   };
 
  
@@ -180,11 +186,13 @@ const UserEndProjects = () => {
                     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
                   </Select>
                 </FormControl>
+                {index===0 ? <EditButton sliceEdit={() => handleEdit(proj.id)}/> : 
                 <UserendEditandDeletebuttons
                     message={`Are you sure want to delete this project ${projects.length} in Our project?`}
                     onDelete={() => handleDelete(proj.id)}
                     sliceEdit={() => handleEdit(proj.id)}
-                />
+                />}
+                
                 </Box>
 
               {/* Upload + Heading + Description */}
@@ -223,16 +231,6 @@ const UserEndProjects = () => {
                     <TextFieldSingleRow value={proj.heading} 
                     onChange={(val,error)=>handleChange(proj.id,"heading",val,error)}
                     validationFn={HeadingContentValidation}/>
-                    
-                    {/* <TextField
-                      className={classes.heroTextfiled}
-                      fullWidth
-                      size="small"
-                      value={proj.heading}
-                      onChange={(e) =>
-                        handleChange(proj.id, "heading", e.target.value)
-                      }
-                    /> */}
                     {proj.headingerror && (
                       <ErrormsgTitle message={proj.headingerror} />
                     )}
@@ -245,8 +243,9 @@ const UserEndProjects = () => {
                     <TextFieldManyRows
                       value={proj.description}
                       onChange={(value, error) =>
-                        handleChange(proj.id, "description", value, error)
-                      }
+                      handleChange(proj.id, "description", value, error)
+                       }
+                      validationFn={HeadingContentValidation} 
                     />
                     {proj.descriptionerror && (
                       <ErrormsgContent message={proj.descriptionerror} />
@@ -256,11 +255,13 @@ const UserEndProjects = () => {
               </Stack>
 
               {/* Save / Cancel buttons */}
-              <UserEndSaveCancelButtons
+              {editSlideId===proj.id ? <UserEndSaveCancelButtons
                 onSave={() => handleSave(proj.id)}
                 onCancel={() => handleCancel(proj.id)}
                 disabled={saveDisabled}
-              />
+              />: <UserEndSaveButton onSave={() => handleSave(proj.id)}
+              disabled={saveDisabled}/>}
+              
 
               {index !== projects.length - 1 && (
                 <Divider className={classes.heroDivider} />

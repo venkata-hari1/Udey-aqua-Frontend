@@ -1,9 +1,9 @@
 import { Box,Stack,Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages, TextFieldManyRows, ErrormsgContent, ErrorName, TextFieldSingleRow, EditButton } from "./UserEndCommonButtons";
+import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages, TextFieldManyRows, ErrormsgContent, ErrorName, TextFieldSingleRow, EditButton, UserEndSaveButton } from "./UserEndCommonButtons";
 import { useState } from "react";
-import { nameValidation, validateEmail } from "../../utils/Validations";
+import { addressContentValidation, nameValidation, validateEmail } from "../../utils/Validations";
 
 
 const UserendFooter = () => {
@@ -22,7 +22,7 @@ const[footerslide,setFooterslide]=useState({
         addressError:'',
 })
 
-
+const[isEdit,setIsEdit]=useState(false)
 const isDisabled= !footerslide.image || !footerslide.email ||!footerslide.address
 ||!!footerslide.nameError || !!footerslide.imgError || !!footerslide.emailError || !!footerslide.addressError
  
@@ -61,9 +61,11 @@ const handleEmailChange=(value:string,error:string)=>{
   const updatedvalues={...footerslide,name:"",email:"",address:"",image:"",nameError:"",
     emailError:"",addressError:"",imgError:""}
   console.log(setFooterslide(updatedvalues))
+  setIsEdit(false)
 }
 
 const sliceEdit=()=>{
+   setIsEdit(true)
    const savedData=localStorage.getItem("footerValues");
    if(savedData){
      const parsed=JSON.parse(savedData);
@@ -80,6 +82,7 @@ const sliceEdit=()=>{
 const handleSave=()=>{
   setFooterslide({...footerslide,name:'',email:'',address:'',image:''})
   localStorage.setItem("footerValues",JSON.stringify(footerslide)) 
+  setIsEdit(false)
 }
 
 return (
@@ -119,12 +122,15 @@ return (
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Address</Typography>
-        <TextFieldManyRows value={footerslide.address} onChange={(value, error) => handleContentchange(value, error)}/>
+        <TextFieldManyRows value={footerslide.address} onChange={(value, error) => handleContentchange(value, error)}
+          validationFn={addressContentValidation}/>
         <ErrormsgContent message={footerslide.addressError}/>
         </Stack> 
       </Box>
       </Stack> 
-      <UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel} disabled={isDisabled}/> 
+      {isEdit ?<UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel} disabled={isDisabled}/> :
+      <UserEndSaveButton onSave={handleSave} disabled={isDisabled}/> }
+      
        </Box> 
        </Box>
   )

@@ -4,8 +4,31 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { addressContentValidation, validateImageDimensions, validateImageFile,validateVideo } from "../../utils/Validations";
+import { validateImageDimensions, validateImageFile,validateVideo } from "../../utils/Validations";
 
+
+//SAVE
+interface SaveProps{
+  onSave: () => void;
+  disabled?: boolean;
+}
+export const UserEndSaveButton=({onSave,
+disabled = false}:SaveProps)=>{
+
+  const { classes } = useUserEndwebStyles();
+  return (
+    <Box className={classes.buttonContainer}>
+      <Button
+        className={classes.headerSaveButton}
+        onClick={onSave}
+        disabled={disabled}
+        variant="contained"
+      >
+        Save
+      </Button>
+      </Box>
+  );
+}
 //SAVE and CANCEL buttons
 interface SaveCancelProps {
   onSave: () => void;
@@ -261,13 +284,14 @@ const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
   value?:string;
+  validationFn:(value:string)=>string;
   }
-export const TextFieldManyRows = ({ onChange,value}: GenericTextfieldmutlirows) => {
+export const TextFieldManyRows = ({ onChange,value,validationFn}: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
 
   const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const contenterror=addressContentValidation(value);
+    const contenterror=validationFn(value);
     onChange(value,contenterror);    
   };
 

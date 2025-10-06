@@ -2,13 +2,14 @@ import { Box, Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 /* import fishImg from './../../../../assets/admin/userendabout.jpg' */
 import CancelIcon from '@mui/icons-material/Cancel';
-import {EditButton, ErrorMessages, ErrormsgContent, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
+import {EditButton, ErrorMessages, ErrormsgContent, TextFieldManyRows, Uploadbutton, UserEndSaveButton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-
+import { HeadingContentValidation } from "../../utils/Validations";
 const UserEndabout = () => {
 
 const{classes}=useUserEndwebStyles() 
+
 const [aboutslide, setAboutslide] = useState(
     {
       id: uuidv4(),
@@ -18,10 +19,11 @@ const [aboutslide, setAboutslide] = useState(
       imgerror: "",
       contenterror: "",
     })
-
+ const[isEditing,setIsediting]=useState(false)
  const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror  
 
  const handleUpload=(file:File)=>{
+  
   const imageUrl = URL.createObjectURL(file);
   const updatedAboutslide={...aboutslide,image:imageUrl,imgerror:""}
   setAboutslide(updatedAboutslide) 
@@ -47,9 +49,11 @@ const handleContentchange=(value:string,error:string)=>{
 const handleSave=()=>{
   setAboutslide({...aboutslide,name:'',image:'',content:'',})
   localStorage.setItem("aboutValues",JSON.stringify(aboutslide)) 
+  setIsediting(false)
 }
 
 const handleEdit=()=>{
+  setIsediting(true)
   const savedData=localStorage.getItem("aboutValues");
   if(savedData){
     const parsed=JSON.parse(savedData);
@@ -63,7 +67,8 @@ const handleEdit=()=>{
 }
 
 const onCancel=()=>{
-   setAboutslide({...aboutslide,image:"",content:"",contenterror:"",imgerror:""})  
+   setAboutslide({...aboutslide,image:"",content:"",contenterror:"",imgerror:""})
+   setIsediting(false)  
 }
   
 return (
@@ -94,12 +99,15 @@ return (
         <Typography className={classes.titleText}>Content</Typography>
         <TextFieldManyRows value={aboutslide.content} onChange={(value, error) =>
                         handleContentchange(value, error)
-                      }/>   
+                      }
+            validationFn={HeadingContentValidation} />   
         <ErrormsgContent message={aboutslide.contenterror}/>
         </Stack>
       </Stack>
-      <UserEndSaveCancelButtons onSave={handleSave} 
-      onCancel={onCancel}disabled={isSaveDisabled}/>
+      {isEditing?<UserEndSaveCancelButtons onSave={handleSave} 
+      onCancel={onCancel} disabled={isSaveDisabled}/>: <UserEndSaveButton onSave={handleSave}
+      disabled={isSaveDisabled}/>}
+
   </Box>
   </Box>
     </Box>

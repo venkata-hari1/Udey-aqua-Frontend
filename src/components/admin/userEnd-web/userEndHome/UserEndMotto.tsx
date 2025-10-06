@@ -10,11 +10,15 @@ import {
   TextFieldManyRows,
   Uploadbutton,
   UserendEditandDeletebuttons,
+  UserEndSaveButton,
   UserEndSaveCancelButtons,
   } from "./UserEndCommonButtons";
+  import { HeadingContentValidation } from "../../utils/Validations";
 import { useState } from "react";
 const UserEndMotto = () => {
   const { classes } = useUserEndwebStyles();
+  
+  const[editmotoId,setMotoId]=useState<string |null>(null)
   const [mottobox, setMottobox] = useState([
     {
       id: uuidv4(),
@@ -95,6 +99,7 @@ const UserEndMotto = () => {
         box.id===id ?{...box,...parsedBox}:box)
        )
    }
+   setMotoId(id);
 }
 const handleSave = (id:string) => {
    const boxTosave= mottobox.find((box)=>box.id===id)  
@@ -106,6 +111,7 @@ const handleSave = (id:string) => {
   box.id===id ? {...box,image:'',imgerror:'',content:''}:box
   )
 );
+setMotoId(null);
 };
 
 const onCancel=(id:string)=>{
@@ -113,7 +119,7 @@ const onCancel=(id:string)=>{
     prev.map((box)=>
     box.id===id ?{...box,image:'',imgerror:'',content:'',contenterror:''}:box)
     )
-
+ setMotoId(null)
 }
   return (
     <Box>
@@ -177,13 +183,16 @@ const onCancel=(id:string)=>{
                 value={box.content}  
                 onChange={(value, error) =>
                         handleContentchange(box.id, value, error)
-                    } />
+                    }
+                   validationFn={HeadingContentValidation}  />
                 <ErrormsgContent />
                 </Stack>
               </Stack>
-          <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
+          {editmotoId===box.id ? <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
           onCancel={()=>onCancel(box.id)}
-          disabled={motoboxSaveDisabled}/>
+          disabled={motoboxSaveDisabled}/> : <UserEndSaveButton onSave={()=>handleSave(box.id)}
+          disabled={motoboxSaveDisabled}/>}
+         
             {index !== mottobox.length - 1 && (
               <Divider className={classes.heroDivider} />
             )}

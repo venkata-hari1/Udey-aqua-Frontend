@@ -79,6 +79,16 @@ export const nameValidation=(name:any):string=>{
   return "";
 }
 
+export const occupationValidation=(occupation:any):string=>{
+  if(occupation.length===0){
+    return "*Occupation cant be empty"
+  }
+  if(occupation.length>80){
+    return "*Max 80 charecters required";
+  }
+  return "";
+}
+
 export const phoneNumbervalidation=(phone:any):string=>{ 
   if(phone.length===0){ 
     return "Phone number cannot be empty" 
@@ -96,7 +106,7 @@ export const addressContentValidation=(content:any)=>{
   const addressRegexp=/^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{1,200}$/;
   
   if(content.length===0){
-    return "Address field should not be empty"
+    return "Field should not be empty"
   }else if(!addressRegexp.test(content)){
     return "Maximum 200 characters allowed and valid characters only"
   }else{
@@ -117,6 +127,21 @@ export const HeadingContentValidation=(content:any)=>{
     return ""
   }
 }
+
+
+export const DescriptionContentValidation=(content:any)=>{
+ 
+  const addressRegexp=/^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{1,200}$/;
+  
+  if(content.length===0){
+    return "Description field should not be empty"
+  }else if(!addressRegexp.test(content)){
+    return "Maximum 2000 characters required"
+  }else{
+    return ""
+  }
+}
+
 
 
 export const validateImageFile=(file:File)=>{
