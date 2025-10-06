@@ -34,7 +34,7 @@ import newsImg3 from "../../../assets/news_and_blogs/news_3.jpg";
 
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
 import calendarIcon2 from "../../../assets/icons/calendar.svg";
-import PdfMark from "./components/PdfMark";
+
 
 interface NewsItem {
   id: number;
