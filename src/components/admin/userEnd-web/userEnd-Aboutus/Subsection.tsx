@@ -8,11 +8,11 @@ import { HelperTextValidate } from './validations';
 interface SubsectionProps {
   accordianId:string
   id: string;
-  title:string;
+  Section:string;
   onDelete?: () => void; // callback to delete this subpage
 }
 
-const Subsection=({ accordianId, id,title, onDelete }: SubsectionProps)=>{
+const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -111,7 +111,7 @@ const Subsection=({ accordianId, id,title, onDelete }: SubsectionProps)=>{
             }
         }
         useEffect(() => {
-            const saved = localStorage.getItem(`${title}_${id}`);
+            const saved = localStorage.getItem(`${Section}_${id}`);
             if (saved) {
             setPrevData(true);
             }
@@ -137,11 +137,11 @@ const Subsection=({ accordianId, id,title, onDelete }: SubsectionProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                             {(file.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -159,10 +159,10 @@ const Subsection=({ accordianId, id,title, onDelete }: SubsectionProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -214,8 +214,8 @@ const Subsection=({ accordianId, id,title, onDelete }: SubsectionProps)=>{
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
-                    {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
+                    {prevData &&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

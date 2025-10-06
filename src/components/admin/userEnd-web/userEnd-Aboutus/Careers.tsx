@@ -9,9 +9,9 @@ import { HelperTextValidate } from './validations';
 type CareerProps={
     id:string;
     accordianId:string;
-    Accordiantitle:string
+    Section:string
 }
-const Careers=({id,accordianId,Accordiantitle}:CareerProps)=>{
+const Careers=({id,accordianId,Section}:CareerProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -126,11 +126,11 @@ const Careers=({id,accordianId,Accordiantitle}:CareerProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                             {(file.length>0|| prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -148,10 +148,10 @@ const Careers=({id,accordianId,Accordiantitle}:CareerProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -198,9 +198,9 @@ const Careers=({id,accordianId,Accordiantitle}:CareerProps)=>{
                         <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
                         {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <Subsection  id='Sub Section-1' accordianId="6" title={Accordiantitle} />
+                <Subsection  id='Sub Section-1' accordianId="6" Section={Section} />
                 {subpages.map((sub) => (
-                    <Subsection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

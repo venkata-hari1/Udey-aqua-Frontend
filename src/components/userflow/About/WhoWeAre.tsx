@@ -7,6 +7,7 @@ import motto2 from "../../../assets/motto/card_2.png";
 import motto3 from "../../../assets/motto/card_3.png";
 import AboutCardsSection from "./AboutCardsSection";
 
+
 const aboutCards = [
   {
     title: "Our Mission",
@@ -64,6 +65,7 @@ const WhoWeAre = () => {
       headerImgSide={whoareweSide}
       cards={aboutCards}
     />
+
   );
 };
 export default WhoWeAre;

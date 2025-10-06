@@ -9,10 +9,10 @@ import { HelperTextValidate } from './validations';
 type HeroProps={
     id?:string;
     accordianId?:string;
-    //Accordiantitle:string
+    Section:string
 }
 
- const Hero=({id,accordianId}:HeroProps)=>{
+ const Hero=({id,accordianId,Section}:HeroProps)=>{
     const {classes} =useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -117,11 +117,11 @@ type HeroProps={
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                             {(file.length>0 ||prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -139,10 +139,10 @@ type HeroProps={
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}

@@ -11,10 +11,10 @@ import SubTestimonials from './subTestimonials';
 interface TestimonialsProps {
   accordianId:string;
   id: string;
-  Accordiantitle:string
+  Section:string
 }
 
-const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
+const Testimonials=({ accordianId, id, Section }: TestimonialsProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -152,11 +152,11 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-Highlights-${id}`}
+                                    id={`upload-${Section}-file-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButtonTestimonials id={id} accordianId={accordianId} subSection='Highlights'/> 
+                            <UploadButtonTestimonials id={id} accordianId={accordianId}  subSection='Highlights'/> 
                             {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>

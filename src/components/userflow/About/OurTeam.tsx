@@ -17,7 +17,7 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material";
 import useAboutStyles from "./aboutStyles";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import aboutImg from "../../../assets/about_us/team.png";
 
 // Images
@@ -111,6 +111,7 @@ const OurTeam = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
+  const memberref= useRef<HTMLDivElement | null>(null)
 
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");
@@ -126,12 +127,24 @@ const OurTeam = () => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    setCurrentIndex((prev) => {
+    const newIndex = prev > 0 ? prev - 1 : prev;
+    setTimeout(() => {
+      memberref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+ // scroll to top)
+    return newIndex;})
   };
 
   const handleNext = () => {
-    const list = membersData.filter((m) => m.category === activeTab);
-    setCurrentIndex((prev) => (prev < list.length - 1 ? prev + 1 : prev));
+     const list = membersData.filter((m) => m.category === activeTab);
+  setCurrentIndex((prev) => {
+    const newIndex = prev < list.length - 1 ? prev + 1 : prev;
+    setTimeout(() => {
+      memberref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100); // scroll to top
+    return newIndex;
+  });
   };
 
   const renderMembers = (category: "Directors" | "Advisors") => (
@@ -181,6 +194,15 @@ const OurTeam = () => {
   const selectedMembers = membersData.filter((m) => m.category === activeTab);
   const currentMember = selectedMembers[currentIndex];
 
+  useEffect(() => {
+  if (open && memberref.current) {
+    // Wait for layout update, then scroll smoothly
+    setTimeout(() => {
+      memberref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
+  }
+}, [activeTab, currentIndex, open]);
+
   return (
     <Box>
       {/* Header Section */}
@@ -199,7 +221,7 @@ const OurTeam = () => {
             />
           </Box>
         ) : (
-          <Box className={classes.autoHeaderTabWrapper}>
+          <Box ref={memberref}  className={classes.autoHeaderTabWrapper}>
             <Typography
               className={`${classes.autoHeaderTab} ${
                 activeTab === "Directors" ? classes.autoHeaderTabActive : ""
@@ -283,7 +305,8 @@ const OurTeam = () => {
                       <ArrowBackIosNew fontSize="small" />
                     </IconButton>
                     <IconButton
-                      onClick={() => navigate("/about/our-team")}
+                      //onClick={() => navigate("/about/our-team")}
+                      onClick={handleNext}
                       disabled={currentIndex === selectedMembers.length - 1}
                       className={classes.arrowButtonMobile}
                       size="small"

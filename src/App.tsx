@@ -3,6 +3,7 @@ import React from 'react'
 import { Suspense } from 'react'
 import Loading from "./components/Loading";
 import "./App.css"  
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   return (
     <Suspense fallback={<Loading />}>
       <AppRoutes />
+      <ToastContainer/>
     </Suspense>
   )
 }

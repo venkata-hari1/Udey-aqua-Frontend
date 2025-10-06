@@ -42,6 +42,7 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const files = event.target.files;
             setError('');
+            setPdf([""])
         
             if (files && files.length > 0) {
                 const selectedFiles: File[] = Array.from(files);

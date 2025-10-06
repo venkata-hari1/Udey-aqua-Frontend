@@ -4,6 +4,7 @@ import SectionTitle from "./SectionTitle";
 import { useState } from "react";
 import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
+import { showToast } from "../../admin/utils/Toast";
 
 const Contact = ({ title = true }: { title?: boolean }) => {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
@@ -119,7 +120,17 @@ const Contact = ({ title = true }: { title?: boolean }) => {
       });
     }
   };
-
+  const HandleSend=()=>{
+   if (
+      isValidName(form.name) &&
+      isValidPhone(form.phone) &&
+      isValidMessage(form.message)
+    ) {
+     showToast(true, "Sent successfully!");
+    } else {
+     showToast(false, "Error occured while Sending!");
+    }
+  }
   return (
     <>
       {title && (
@@ -245,7 +256,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                 </Grid>
 
                 <Grid size={12} className={classes.fullWidth}>
-                  <Button type="submit" className={classes.contactButton}>
+                  <Button type="submit" className={classes.contactButton} onClick={HandleSend}>
                     Send
                   </Button>
                 </Grid>

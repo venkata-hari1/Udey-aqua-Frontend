@@ -8,10 +8,10 @@ import {HelperTextValidate, NameandRoleValidate} from './validations';
 type AdvisorProps={
     id:string;
     accordianId:string;
-    title:string;
+    Section:string;
     onDelete?: () => void;
 }
-const Advisors=({id,accordianId, title, onDelete}:AdvisorProps)=>{
+const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -125,7 +125,7 @@ const Advisors=({id,accordianId, title, onDelete}:AdvisorProps)=>{
                 }
             }
             useEffect(() => {
-                const saved = localStorage.getItem(`${title}_${id}`);
+                const saved = localStorage.getItem(`${Section}_${id}`);
                 if (saved) {
                 setPrevData(true);
                 }
@@ -166,11 +166,11 @@ const Advisors=({id,accordianId, title, onDelete}:AdvisorProps)=>{
                         <input type='file'
                                 multiple
                                 accept="image/*" 
-                                id={`upload-file-${accordianId}-${id}`}
+                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
                                 onChange={HandleFileChange}
                                 />
-                        <UploadButton id={id} accordianId={accordianId}/> 
+                        <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                         {(file.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
@@ -188,10 +188,10 @@ const Advisors=({id,accordianId, title, onDelete}:AdvisorProps)=>{
                                             </Button>
                                         </Box>
                                     )}
-                                    <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                    <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                     <input
                                             accept="image/*"
-                                            id={`upload-file-${accordianId}-${id}`}
+                                            id={`upload-file-${Section}-${accordianId}-${id}`}
                                             type="file"
                                             multiple
                                             style={{ display: "none" }}
@@ -273,8 +273,8 @@ const Advisors=({id,accordianId, title, onDelete}:AdvisorProps)=>{
             </Dialog>
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
-                                    {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
+                                    {prevData &&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
                         </Box>
         </>
     )

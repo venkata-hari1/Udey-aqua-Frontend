@@ -6,6 +6,7 @@ import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useAboutStyles from "./aboutStyles";
 import ContactBox from "../Shared/ContactBox";
 import AboutHero from "./AboutHero";
+
 import {
   ABOUT_FISH_INITIAL,
   ABOUT_FISH_ANIMATE,

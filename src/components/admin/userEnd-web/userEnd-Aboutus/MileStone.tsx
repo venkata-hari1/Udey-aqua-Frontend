@@ -1,7 +1,7 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
-import { AddSection, CancelButton, DeleteButton, UpdateHeader, UploadButton} from './AboutUsButtons';
-import { useState } from 'react';
+import { AddSection, CancelButton,  UpdateHeader, UploadButton, EditButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import { HelperTextValidate } from './validations';
 import MilestoneSubsection from './MileStoneSubsection';
 
@@ -9,9 +9,9 @@ import MilestoneSubsection from './MileStoneSubsection';
 type MileStoneProps={
     id:string;
     accordianId:string;
-    Accordiantitle:string
+    Section:string
 }
-const MileStone=({id,accordianId,Accordiantitle}:MileStoneProps)=>{
+const MileStone=({id,accordianId,Section}:MileStoneProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -126,11 +126,11 @@ const MileStone=({id,accordianId,Accordiantitle}:MileStoneProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                             {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -148,10 +148,10 @@ const MileStone=({id,accordianId,Accordiantitle}:MileStoneProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -204,9 +204,9 @@ const MileStone=({id,accordianId,Accordiantitle}:MileStoneProps)=>{
                         <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
                         {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <MilestoneSubsection  id='Milestone-1' accordianId="7" title={Accordiantitle} />
+                <MilestoneSubsection  id='Milestone-1' accordianId="7" Section={Section} />
                 {subpages.map((sub) => (
-                    <MilestoneSubsection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <MilestoneSubsection key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

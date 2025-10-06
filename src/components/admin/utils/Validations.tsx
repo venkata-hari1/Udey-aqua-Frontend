@@ -153,3 +153,45 @@ export const PlanContentValidate = (text: string): {  message: string } => {
     return {message: `* Remaining Characters ${text.length}/2000` }; 
   }
 };
+export const validateImageFile=(file:File)=>{
+     //check file size <=5mb
+     if(file.size>5*1024*1024){
+      return "Image must be 5MB or less";
+     } 
+     if(!file.type.startsWith("image/")){
+      return "Invalid format.Only images are allowed";
+     }
+     return null; //no error
+}
+
+export const validateImageDimensions=(file:File):Promise<string |null>=>{
+   return new Promise((resolve)=>{
+     const img=new Image();
+     img.src=URL.createObjectURL(file);
+     img.onload=()=>{
+        if(img.width<300 || img.height<100){
+          resolve("Please upload the image in landscape format (Preferred size: 300px × 100px"
+         );
+        }else{
+          resolve(null);
+        }
+      };
+     img.onerror=()=>resolve("Unable to read image dimensions");
+   })
+}
+
+export const validateVideo=(file:File)=>{
+   if(!file){
+    return "Please upload video";
+   }
+  const allowFormats=["video/mp4","video/quicktime"];
+  if(!allowFormats.includes(file.type)){
+    return "Recommended formats: MP4, MOV.";
+  }
+  
+  const maxSizinMB=5;
+  if(file.size>maxSizinMB*1024*1024){
+    return "video must be lessthan 5MB"
+  }
+  return null;
+}

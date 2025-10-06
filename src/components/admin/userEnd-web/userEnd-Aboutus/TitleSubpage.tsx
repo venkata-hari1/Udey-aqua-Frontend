@@ -8,10 +8,11 @@ import { HelperTextValidate } from './validations';
 interface SubsectionProps {
   accordianId:string
   id: string;
+  Section:string;
   onDelete?: () => void; // callback to delete this subpage
 }
 
-const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
+const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -87,18 +88,18 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = (title:string,id:string)=>{
+    const SaveData = (id:string)=>{
             const Data={
                 title:subtitle,
                 image:Images,
                 content:content
             }
             console.log(Data);
-        localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
+        localStorage.setItem(`${Section}_Custom_Subsection_${id}`, JSON.stringify(Data));
         setPrevData(true)
         };
-        const CancelData = (title:string,id:string)=>{
-            const PrevData=localStorage.getItem(`${title}_${id}`);
+        const CancelData = (id:string)=>{
+            const PrevData=localStorage.getItem(`${Section}_Custom_Subsection_${id}`);
             if (PrevData) {
                 const parsedData = JSON.parse(PrevData);
                 setSubtitle(parsedData.title || "");
@@ -111,7 +112,7 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
             }
         }
         useEffect(() => {
-            const saved = localStorage.getItem(`${accordianId}_${id}`);
+            const saved = localStorage.getItem(`${Section}_Custom_Subsection_${id}`);
             if (saved) {
             setPrevData(true);
             }
@@ -137,11 +138,11 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                             {(file.length>0 || prevData)&& (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -159,10 +160,10 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -215,8 +216,8 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(accordianId,id)}/>
-                    {prevData &&(<CancelButton onClick={()=>CancelData(accordianId,id)}/>)}
+                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(id)}/>
+                    {prevData &&(<CancelButton onClick={()=>CancelData(id)}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

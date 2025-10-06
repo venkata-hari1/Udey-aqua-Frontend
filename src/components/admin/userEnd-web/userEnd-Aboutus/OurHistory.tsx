@@ -8,11 +8,11 @@ import {HelperTextValidate} from './validations';
 type OurHistoryProps={
     id:string;
     accordianId:string;
-    Accordiantitle:string
+    Section:string
 }
 
 
- const OurHistory=({id,accordianId,Accordiantitle}:OurHistoryProps)=>{
+ const OurHistory=({id,accordianId,Section}:OurHistoryProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -126,11 +126,11 @@ type OurHistoryProps={
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                             {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -148,10 +148,10 @@ type OurHistoryProps={
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -197,9 +197,9 @@ type OurHistoryProps={
                     <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
                     {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <Subsection  id='Sub Section-1' accordianId="3" title={Accordiantitle} />
+                <Subsection  id='Sub Section-1' accordianId="3" Section={Section} />
                 {subpages.map((sub) => (
-                    <Subsection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

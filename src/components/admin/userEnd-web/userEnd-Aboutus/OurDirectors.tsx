@@ -9,9 +9,9 @@ import {HelperTextValidate, NameandRoleValidate} from './validations';
 type HeroProps={
     id:string;
     accordianId:string;
-    Accordiantitle:string,
+    Section:string,
 }
-const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
+const OurDirectors=({id,accordianId,Section}:HeroProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -166,11 +166,11 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                         <input type='file'
                                 multiple
                                 accept="image/*" 
-                                id={`upload-file-${accordianId}-${id}`}
+                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
                                 onChange={HandleFileChange}
                                 />
-                        <UploadButton id={id} accordianId={accordianId}/> 
+                        <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                         {(file.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
@@ -188,10 +188,10 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                                             </Button>
                                         </Box>
                                     )}
-                                    <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                    <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                     <input
                                             accept="image/*"
-                                            id={`upload-file-${accordianId}-${id}`}
+                                            id={`upload-file-${Section}-${accordianId}-${id}`}
                                             type="file"
                                             multiple
                                             style={{ display: "none" }}
@@ -254,7 +254,7 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                             {prevData &&(<CancelButton onClick={CancelData}/>)}
                         </Box>
             {subpages.map((sub) => (
-                    <Advisors key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Advisors key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))} 
  
     </Box>

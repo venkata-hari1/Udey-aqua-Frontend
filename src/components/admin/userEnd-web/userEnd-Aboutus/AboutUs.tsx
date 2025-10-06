@@ -35,7 +35,7 @@ const AboutUs=()=>{
     return(
         <>
             
-                <Box className={classes.AboutUscontainer}>
+                <Box className={classes.AboutUscontainer} >
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
                             <ArrowBack onClick={()=>naviagte(-1)}/>
@@ -54,7 +54,7 @@ const AboutUs=()=>{
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Component id={item.id} accordianId={item.id} Accordiantitle={item.title} />
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
                        );

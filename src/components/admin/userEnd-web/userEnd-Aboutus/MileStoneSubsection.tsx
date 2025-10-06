@@ -7,10 +7,10 @@ import {HelperTextValidate, NameandRoleValidate, YearValidate} from './validatio
 type MilestoneSubpageProps={
     id:string;
     accordianId:string;
-    title:string
+    Section:string
     onDelete?: () => void;
 }
-const MilestoneSubsection=({id,accordianId,title,onDelete}:MilestoneSubpageProps)=>{
+const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpageProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -123,7 +123,7 @@ const MilestoneSubsection=({id,accordianId,title,onDelete}:MilestoneSubpageProps
                 }
             }
             useEffect(() => {
-                const saved = localStorage.getItem(`${title}_${id}`);
+                const saved = localStorage.getItem(`${Section}_${id}`);
                 if (saved) {
                 setPrevData(true);
                 }
@@ -146,11 +146,11 @@ const MilestoneSubsection=({id,accordianId,title,onDelete}:MilestoneSubpageProps
                         <input type='file'
                                 multiple
                                 accept="image/*" 
-                                id={`upload-file-${accordianId}-${id}`}
+                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
                                 onChange={HandleFileChange}
                                 />
-                        <UploadButton id={id} accordianId={accordianId}/> 
+                        <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                         {(file.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
@@ -168,10 +168,10 @@ const MilestoneSubsection=({id,accordianId,title,onDelete}:MilestoneSubpageProps
                                             </Button>
                                         </Box>
                                     )}
-                                    <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                    <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                     <input
                                             accept="image/*"
-                                            id={`upload-file-${accordianId}-${id}`}
+                                            id={`upload-file-${Section}-${accordianId}-${id}`}
                                             type="file"
                                             multiple
                                             style={{ display: "none" }}
@@ -253,8 +253,8 @@ const MilestoneSubsection=({id,accordianId,title,onDelete}:MilestoneSubpageProps
             </Dialog>
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
-                {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
+                {prevData &&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
             </Box>
         </>
     )

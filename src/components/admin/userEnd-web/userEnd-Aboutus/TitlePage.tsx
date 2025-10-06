@@ -8,7 +8,7 @@ import TitleSubpage from './TitleSubpage';
 type TitleProps={
     id:string;
     accordianId:string,
-    Section?:string;
+    Section:string;
 }
 
 const TitlePage=({id,accordianId, Section}:TitleProps)=>{
@@ -86,11 +86,11 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                 subtitle,
                 image:Images
             }
-        localStorage.setItem("AUHero", JSON.stringify(Data));
+        localStorage.setItem(`${Section}_Custom_Header`, JSON.stringify(Data));
         setPrevData(true)
         };
         const CancelData = ()=>{
-            const PrevData=localStorage.getItem('AUHero');
+            const PrevData=localStorage.getItem(`${Section}_Custom_Header`);
             if (PrevData) {
                 const parsedData = JSON.parse(PrevData);
                 setSubtitle(parsedData.subtitle || "");
@@ -102,7 +102,7 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
             }
         }
         useEffect(() => {
-            const saved = localStorage.getItem("AUHero");
+            const saved = localStorage.getItem(`${Section}_Custom_Header`);
             if (saved) {
             setPrevData(true);
             }
@@ -222,10 +222,10 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
                         <AddSection onClick={handleAddSubpage}/>
                     </Box>
-                    <TitleSubpage id='Sub Section-1' accordianId='custom'/>
+                    <TitleSubpage id='Sub Section-1' accordianId='custom' Section={Section}/>
                 </Box>
                 {subpages.map((sub) => (
-                    <TitleSubpage key={sub.id} id={sub.id} accordianId={accordianId} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <TitleSubpage key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

@@ -6,6 +6,7 @@ import theme from './theme/theme';
 import { BrowserRouter } from 'react-router-dom';
 
 
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <ThemeProvider theme={theme}>
