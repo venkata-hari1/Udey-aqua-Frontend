@@ -107,6 +107,14 @@ const handleSave = (id:string) => {
   )
 );
 };
+
+const onCancel=(id:string)=>{
+   setMottobox((prev)=>
+    prev.map((box)=>
+    box.id===id ?{...box,image:'',imgerror:'',content:'',contenterror:''}:box)
+    )
+
+}
   return (
     <Box>
       <Box className={classes.useHerocontainer}>
@@ -165,14 +173,15 @@ const handleSave = (id:string) => {
                   Heading Content
                 </Typography>
                 <TextFieldManyRows 
-                 value={box.content}
-                 onChange={(value, error) =>
+                value={box.content}  
+                onChange={(value, error) =>
                         handleContentchange(box.id, value, error)
                     } />
                 <ErrormsgContent message={box.contenterror}/>
                 </Stack>
               </Stack>
           <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
+          onCancel={()=>onCancel(box.id)}
           disabled={motoboxSaveDisabled}/>
             {index !== mottobox.length - 1 && (
               <Divider className={classes.heroDivider} />

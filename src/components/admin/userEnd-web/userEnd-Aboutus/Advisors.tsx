@@ -1,16 +1,17 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions} from '@mui/material';
-import { DeleteButton, SaveButton, UploadButton} from './AboutUsButtons';
-import { useState } from 'react';
+import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import {HelperTextValidate, NameandRoleValidate} from './validations';
 
 type AdvisorProps={
     id:string;
     accordianId:string;
+    title:string;
     onDelete?: () => void;
 }
-const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
+const Advisors=({id,accordianId, title, onDelete}:AdvisorProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -19,6 +20,7 @@ const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
     const [role, setRole] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
+    const [prevData, setPrevData] = useState<boolean>(false); 
     const [selected, setSelected] = useState("Directors");
     const options = ["Directors", "Advisors", "Managers"]; 
 
@@ -97,17 +99,37 @@ const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = ()=>{
-        const Data={
-            role,
-            name,
-            content,
-            image:Images
-        }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
-    };
+    const SaveData = (title:string,id:string)=>{
+                const Data={
+                    role:role,
+                    name:name,
+                    content:content,
+                    image:Images
+                }
+                console.log(Data);
+            localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
+            setPrevData(true)
+            };
+            const CancelData = (title:string,id:string)=>{
+                const PrevData=localStorage.getItem(`${title}_${id}`);
+                if (PrevData) {
+                    const parsedData = JSON.parse(PrevData);
+                    setRole(parsedData.role || []);
+                    setName(parsedData.name || []);
+                    setImage(parsedData.image || []);
+                    setContent(parsedData.content || []);
+                    setFile([]); 
+                    setError(""); 
+                } else {
+                    alert("No previous data found!");
+                }
+            }
+            useEffect(() => {
+                const saved = localStorage.getItem(`${title}_${id}`);
+                if (saved) {
+                setPrevData(true);
+                }
+            }, []);
     return(
         <>
       <Box className={classes.whoWeareHeaderbox}>
@@ -130,7 +152,8 @@ const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
             ))}
         </Select>
         <Box display="flex" justifyContent="flex-end" gap={2}>
-          <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
+          {/*<SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>*/}
+          <EditButton/>
           <DeleteButton onClick={handleDeleteClick}/>
         </Box>
       </Box>
@@ -148,7 +171,7 @@ const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
                                 onChange={HandleFileChange}
                                 />
                         <UploadButton id={id} accordianId={accordianId}/> 
-                        {file.length>0 && (
+                        {(file.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
                                     {Images.map((prev,index)=>
@@ -174,18 +197,14 @@ const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
                                             style={{ display: "none" }}
                                             onChange={HandleFileChange}
                                     />
-                                    <Button className={classes.AddMoreButton}
-                                        variant="outlined"
-                                        component="span">
-                                            +
-                                            </Button>
                                         </label>
                                     </Box>
                                     <Box>
-                                        <Typography className={classes.errorText}
-                                            >
-                                            *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                        </Typography>  
+                                        {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
+                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
+                                            </Typography> 
+                                        )} 
                                     </Box> 
                             </Box>
                         )}
@@ -253,7 +272,10 @@ const Advisors=({id,accordianId,onDelete}:AdvisorProps)=>{
                 </DialogActions>
             </Dialog>
             </Box>    
- 
+            <Box className={classes.SeveandCancelBox}>
+                                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
+                                    {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                        </Box>
         </>
     )
 }

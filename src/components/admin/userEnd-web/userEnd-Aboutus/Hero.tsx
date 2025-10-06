@@ -1,13 +1,15 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Button, Stack, TextField, Typography} from '@mui/material';
-import { CancelButton, DeleteButton, SaveButton, UploadButton} from './AboutUsButtons';
-import { useState } from 'react';
+import { CancelButton, EditButton, SaveButton, UploadButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import { HelperTextValidate } from './validations';
+
 
 
 type HeroProps={
     id?:string;
-    accordianId?:string
+    accordianId?:string;
+    //Accordiantitle:string
 }
 
  const Hero=({id,accordianId}:HeroProps)=>{
@@ -16,9 +18,11 @@ type HeroProps={
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
+    const [prevData, setPrevData] = useState<boolean>(false);
 
-    const TextFieldError=HelperTextValidate(subtitle)
+    const TextFieldError=HelperTextValidate(subtitle);
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
+
     
 
 
@@ -72,39 +76,37 @@ type HeroProps={
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
     };
-    const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-        localStorage.removeItem("Data")
-      };
     const SaveData = ()=>{
         const Data={
             subtitle,
             image:Images
         }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
+    localStorage.setItem("AUHero", JSON.stringify(Data));
+    setPrevData(true)
     };
     const CancelData = ()=>{
-        const PrevData=localStorage.getItem('Data');
+        const PrevData=localStorage.getItem('AUHero');
         if (PrevData) {
             const parsedData = JSON.parse(PrevData);
             setSubtitle(parsedData.subtitle || "");
             setImage(parsedData.image || []);
-            setFile([]); // You can’t restore File objects, just previews
-            setError(""); // clear any previous error
+            setFile([]);
+            setError("");
         } else {
             alert("No previous data found!");
         }
     }
+    useEffect(() => {
+        const saved = localStorage.getItem("AUHero");
+        if (saved) {
+        setPrevData(true);
+        }
+    }, []);
     return(
         <>
             <Box className={classes.myHeroContainer}>
                 <Box className={classes.deleteButtonBox}>
-                    <DeleteButton onClick={handleDeleteAll}/>
+                    <EditButton/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -120,7 +122,7 @@ type HeroProps={
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId}/> 
-                            {file.length>0 && (
+                            {(file.length>0 ||prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -146,18 +148,14 @@ type HeroProps={
                                                 style={{ display: "none" }}
                                                 onChange={HandleFileChange}
                                         />
-                                        <Button className={classes.AddMoreButton}
-                                            variant="outlined"
-                                            component="span" 
-                                            >
-                                                +
-                                                </Button>
                                             </label>
                                         </Box>
                                         <Box>
-                                            <Typography className={classes.errorText}>
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography>  
+                                            </Typography> 
+                                            )} 
                                         </Box> 
                                 </Box>
                             )}
@@ -186,9 +184,9 @@ type HeroProps={
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
-                <Box className={classes.SeveandCancelBox}>
+                <Box className={classes.SeveandCancelBox} >
                     <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                    <CancelButton onClick={CancelData}/>
+                    {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
             </Box>
         </>

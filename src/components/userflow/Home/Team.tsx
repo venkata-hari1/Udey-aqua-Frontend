@@ -1,5 +1,5 @@
 // src/components/userflow/Home/Team.tsx
-import { Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import {
   TEAM_FISH_INITIAL,
@@ -23,21 +23,21 @@ import useHomeStyles from "./homeStyles";
 const teamData = [
   {
     image: teamImg,
-    name: "Uday Krishna",
+    name: "Mr. Uday Kishan Cherukuneedi",
     location: "Hyderabad, Telangana",
     role: "Managing Director",
     roleColor: "#1976d2",
   },
   {
     image: teamImg2,
-    name: "Uday Krishna",
+    name: "Sridhar Devineni",
     location: "Hyderabad, Telangana",
-    role: "Co- Director",
+    role: "Co-Director",
     roleColor: "#1976d2",
   },
   {
     image: teamImg3,
-    name: "Uday Krishna",
+    name: "Dr. Rajesh Kumar",
     location: "Hyderabad, Telangana",
     role: "Director",
     roleColor: "#1976d2",
@@ -123,6 +123,10 @@ const Team: React.FC<TeamProps> = ({
     "directors"
   );
   const currentTestimonial = testimonialData[currentTestimonialIndex];
+  
+  const handleTabChange = (tab: "directors" | "advisors") => {
+    setActiveTab(tab);
+  };
 
   if (isTestimonialMode) {
     return (
@@ -273,7 +277,7 @@ const Team: React.FC<TeamProps> = ({
                 ? classes.teamTabActive
                 : classes.teamTabInactive
             }
-            onClick={() => setActiveTab("directors")}
+            onClick={() => handleTabChange("directors")}
           >
             <Typography variant="subtitle1" component="span">
               Directors
@@ -288,7 +292,7 @@ const Team: React.FC<TeamProps> = ({
                 ? classes.teamTabActive
                 : classes.teamTabInactive
             }
-            onClick={() => setActiveTab("advisors")}
+            onClick={() => handleTabChange("advisors")}
           >
             <Typography variant="subtitle1" component="span">
               Advisors

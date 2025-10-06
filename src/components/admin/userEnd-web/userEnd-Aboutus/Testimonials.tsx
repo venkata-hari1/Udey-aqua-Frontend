@@ -1,7 +1,7 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button} from '@mui/material';
-import { AddHighlights, AddTestimonials, DeleteButton, CancelButton, UpdateHeader, UploadButtonTestimonials} from './AboutUsButtons';
-import { useState } from 'react';
+import { AddHighlights, AddTestimonials, CancelButton, UpdateHeader,  UploadButtonTestimonials, EditButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import { HelperTextValidate } from './validations';
 import SubHighlights from './SubHighlights';
 import SubTestimonials from './subTestimonials';
@@ -11,6 +11,7 @@ import SubTestimonials from './subTestimonials';
 interface TestimonialsProps {
   accordianId:string;
   id: string;
+  Accordiantitle:string
 }
 
 const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
@@ -24,6 +25,7 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
     const [sudTestimonials, setSubTestimonials] = useState<{ id:string}[]>([]);
     const [Highlights, setHighlights] = useState<any>([]);
     const [Testimonials, setTestimonials] = useState<any>([]);
+    const [prevData, setPrevData] = useState<boolean>(false);
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -78,24 +80,37 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
     };
-    const handleDeleteAll = () => {
-            setFile([]);
-            setImage([]);
-            setError("");
-            setSubtitle('');
-            setContent('');
-    };
 
     const SaveData = ()=>{
-        const Data={
-            subtitle,
-            content,
-            image:Images
+            const Data={
+                subtitle:subtitle,
+                content:content,
+                image:Images
+            }
+            console.log(Data);
+        localStorage.setItem("Highlights", JSON.stringify(Data));
+        setPrevData(true)
+        };
+        const CancelData = ()=>{
+            const PrevData=localStorage.getItem('Highlights');
+            if (PrevData) {
+                const parsedData = JSON.parse(PrevData);
+                setSubtitle(parsedData.subtitle || "");
+                setContent(parsedData.content || "");
+                setImage(parsedData.image || []);
+                setFile([]); 
+                setError(""); 
+            } else {
+                alert("No previous data found!");
+            }
+        
         }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
-    };
+        useEffect(() => {
+            const saved = localStorage.getItem("Highlights");
+            if (saved) {
+            setPrevData(true);
+            }
+        }, []);
     const handleAddSubHighlights = () => {
         const newId = `${Highlights.length+1}`; // unique id
         setSubHighlights((prev) => [...prev, { id: newId }]);
@@ -125,7 +140,7 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
                     </Typography>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
                         {/*<SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>*/}
-                        <DeleteButton />
+                        <EditButton />
                     </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
@@ -142,7 +157,7 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
                                     onChange={HandleFileChange}
                                     />
                             <UploadButtonTestimonials id={id} accordianId={accordianId} subSection='Highlights'/> 
-                            {file.length>0 && (
+                            {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -171,11 +186,12 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
                                             </label>
                                     </Box>
                                     <Box>
-                                            <Typography className={classes.errorText}
-                                                >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width x 100px height) Image Must be 5 MB
-                                            </Typography>  
-                                    </Box> 
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
+                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
+                                            </Typography> 
+                                            )} 
+                                        </Box>  
                                 </Box>
                             )}
                             <Box>
@@ -213,8 +229,8 @@ const Testimonials=({ accordianId, id }: TestimonialsProps)=>{
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                    <CancelButton onClick={handleDeleteAll}/>
+                        <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
+                        {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
                 {sudHighlights.map((sub) => (

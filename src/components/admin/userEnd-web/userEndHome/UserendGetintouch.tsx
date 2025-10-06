@@ -54,6 +54,7 @@ const sliceEdit=()=>{
   setGetinSlide({...getinSlide,
     name:parsed.name,
     phone:parsed.phone,
+    image:parsed.image,
     msgContent:parsed.msgContent
   })
  }
@@ -68,7 +69,7 @@ const handleCancel=()=>{
 
  const handleSave=()=>{
    localStorage.setItem("getInvalues",JSON.stringify(getinSlide));
-   setGetinSlide({...getinSlide,name:"",phone:'',msgContent:''})
+   setGetinSlide({...getinSlide,name:"",phone:'',msgContent:'',image:""})
    
  }   
   return (

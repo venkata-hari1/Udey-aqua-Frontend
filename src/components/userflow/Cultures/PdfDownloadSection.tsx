@@ -9,7 +9,10 @@ import {
   List,
   ListItem,
   ListItemText,
+  IconButton,
 } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import InvoiceGenerator from "../Shared/InvoiceGenerator";
 import { useState } from "react";
 import useCulturesStyles from "./culturesStyles";
 import PaymentModal from "../Shared/PaymentModal";
@@ -123,6 +126,8 @@ const PdfDownloadSection = ({ currentLabel, price = 89 }: PdfDownloadSectionProp
   const content = getPdfContent(currentLabel);
   const [open, setOpen] = useState(false);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
 
   const listItems = [
     `Complete ${currentLabel} Methodology`,
@@ -139,6 +144,17 @@ const PdfDownloadSection = ({ currentLabel, price = 89 }: PdfDownloadSectionProp
 
   const handleClosePaymentModal = () => {
     setPaymentModalOpen(false);
+  };
+
+  const handlePaymentSuccess = (invoice: any) => {
+    setPaymentSuccess(true);
+    setInvoiceData(invoice);
+    setPaymentModalOpen(false);
+  };
+
+  const handlePaymentFailure = () => {
+    setPaymentSuccess(false);
+    setInvoiceData(null);
   };
 
   return (
@@ -240,7 +256,87 @@ const PdfDownloadSection = ({ currentLabel, price = 89 }: PdfDownloadSectionProp
         onClose={handleClosePaymentModal}
         speciesName={currentLabel}
         price={price}
+        onPaymentSuccess={handlePaymentSuccess}
+        onPaymentFailure={handlePaymentFailure}
       />
+
+      {/* Payment Success Screen */}
+      {paymentSuccess && invoiceData && (
+        <Dialog
+          open={paymentSuccess}
+          onClose={() => setPaymentSuccess(false)}
+          maxWidth="sm"
+          fullWidth
+          PaperProps={{
+            sx: {
+              borderRadius: '16px',
+              backgroundColor: 'white',
+            }
+          }}
+        >
+          <DialogTitle sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            padding: '24px 24px 0 24px'
+          }}>
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              Payment Successful!
+            </Typography>
+            <IconButton onClick={() => setPaymentSuccess(false)} size="small">
+              <Close />
+            </IconButton>
+          </DialogTitle>
+          
+          <DialogContent sx={{ padding: '24px' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              padding: '20px',
+              textAlign: 'center'
+            }}>
+              <Box sx={{ 
+                width: 80, 
+                height: 80, 
+                borderRadius: '50%', 
+                backgroundColor: '#4CAF50', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                marginBottom: '16px'
+              }}>
+                <Typography sx={{ color: 'white', fontSize: '40px' }}>✓</Typography>
+              </Box>
+              <Typography variant="h6" sx={{ marginBottom: '8px', color: '#4CAF50' }}>
+                Payment Successful!
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '24px' }}>
+                Thank you for your purchase. You can now download your invoice.
+              </Typography>
+              
+              {/* Invoice Download */}
+              <InvoiceGenerator invoiceData={invoiceData} />
+              
+              <Button
+                variant="outlined"
+                onClick={() => setPaymentSuccess(false)}
+                sx={{
+                  marginTop: '16px',
+                  borderColor: '#4CAF50',
+                  color: '#4CAF50',
+                  '&:hover': {
+                    borderColor: '#45a049',
+                    backgroundColor: 'rgba(76, 175, 80, 0.04)',
+                  }
+                }}
+              >
+                Close
+              </Button>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      )}
     </Box>
   );
 };

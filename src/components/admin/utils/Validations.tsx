@@ -1,13 +1,18 @@
 export const validateEmail = (email: string): string => {
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    // Broader email pattern: allows dots/plus/hyphen, subdomains, and TLDs >=2
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; 
        
     if(email.length===0){
       return "Email cannot be empty";
     }
+    if(email.startsWith(".") || email.endsWith(".")){
+      return "Email cannot start or end with '.'";
+    }
     if(!emailRegex.test(email)){
       return "Enter a valid email ID";
-    }else{
+    }
+    else{
         return ""
     }
  };
@@ -75,20 +80,17 @@ export const nameValidation=(name:any):string=>{
   return "";
 }
 
+export const phoneNumbervalidation=(phone:any):string=>{ 
+  if(phone.length===0){ 
+    return "Phone number cannot be empty" 
+  }else if(/[^0-9]/.test(phone)){ 
+    return "*Only numbers are allowed" 
+  }else if(phone.length!==10){
+     return "Phone number must be exactly 10 digits" 
+  } 
+    else{ return "" } 
+  }
 
-export const phoneNumbervalidation=(phone:any):string=>{
-  
-  if(phone.length===0){
-    return "Phone number cannot be empty"
-  }else if(/[^0-9]/.test(phone)){
-    return "*Only numbers are allowed"
-   }else if(phone.length!==10){
-    return "Phone number must be exactly 10 digits"
-  }
-  else{
-    return ""
-  }
-}
 
 export const addressContentValidation=(content:any)=>{
  
@@ -102,6 +104,21 @@ export const addressContentValidation=(content:any)=>{
     return ""
   }
 }
+
+
+export const HeadingContentValidation=(content:any)=>{
+ 
+  const addressRegexp=/^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{1,200}$/;
+  
+  if(content.length===0){
+    return "Heading field should not be empty"
+  }else if(!addressRegexp.test(content)){
+    return "Maximum 100 characters required"
+  }else{
+    return ""
+  }
+}
+
 
 export const validateImageFile=(file:File)=>{
      //check file size <=5mb

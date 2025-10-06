@@ -49,9 +49,18 @@ switch(path){
   break;
   case "userend-web":
   case "userend-home":
+  case 'userend-aboutus':
+    title="User End Website"
+    break;
   case "userend-culture":    
   title="User End Website"
   break;
+  case "userend-technologies":
+    title="User End Website"
+    break;
+  case "userend-trainingprograms":
+    title="User End Website"
+    break;
   case "logout":
     title="Logout"
 }
@@ -71,9 +80,15 @@ const backarrowHandle=()=>{
     navigate('/admin/user-management')
     break; 
    navigate('/admin/userend-web')
+   break;
    case "userend-aboutus":
    navigate('/admin/userend-web') 
-   
+   break;
+   case "userend-technologies":
+    navigate('/admin/userend-web')
+    break;
+   case "userend-trainingprograms":
+    navigate('/admin/userend-web')
    
 
  }

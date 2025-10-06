@@ -17,7 +17,8 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material";
 import useAboutStyles from "./aboutStyles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import aboutImg from "../../../assets/about_us/team.png";
 
 // Images
@@ -28,7 +29,7 @@ import adv1 from "../../../assets/team/adv_1.png";
 import adv2 from "../../../assets/team/adv_2.png";
 import adv3 from "../../../assets/team/adv_3.png";
 import adv4 from "../../../assets/team/adv_4.png";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 
 // Types
 interface Member {
@@ -61,12 +62,12 @@ const membersData: Member[] = [
     category: "Directors",
   },
   {
-    name: "Sridhar Devineni",
-    designation: "Co-Director",
+    name: "Dr. Rajesh Kumar",
+    designation: "Director",
     bigDesignation: "Managing Director – Uday Aqua Connects Private Ltd.",
-    qualification: "(M.Pharm,MBA(IIM-Kolkata))",
+    qualification: "(Ph.D., Aquaculture)",
     image: team3,
-    description: "Another image of Sridhar Devineni",
+    description: "Director with expertise in sustainable aquaculture and RAS/CAS systems.",
     category: "Directors",
   },
   {
@@ -110,28 +111,55 @@ const OurTeam = () => {
   const { classes } = useAboutStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const navigate = useNavigate();
+  /* const navigate = useNavigate(); */
 
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Handle URL parameter for direct member access
+  useEffect(() => {
+    if (memberSlug) {
+      const memberIndex = membersData.findIndex(
+        (member) => member.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === memberSlug
+      );
+      if (memberIndex !== -1) {
+        const member = membersData[memberIndex];
+        setActiveTab(member.category);
+        const categoryMembers = membersData.filter((m) => m.category === member.category);
+        const categoryIndex = categoryMembers.findIndex((m) => m.name === member.name);
+        setCurrentIndex(categoryIndex);
+        setOpen(true);
+      }
+    }
+  }, [memberSlug]);
+
   const handleCardClick = (
     category: "Directors" | "Advisors",
     index: number
   ) => {
-    setActiveTab(category);
-    setCurrentIndex(index);
-    setOpen(true);
+    const categoryMembers = membersData.filter((m) => m.category === category);
+    const member = categoryMembers[index];
+    const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    navigate(`/about/our-team/${slug}`);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    const list = membersData.filter((m) => m.category === activeTab);
+    if (currentIndex > 0) {
+      const prevMember = list[currentIndex - 1];
+      const slug = prevMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      navigate(`/about/our-team/${slug}`);
+    }
   };
 
   const handleNext = () => {
     const list = membersData.filter((m) => m.category === activeTab);
-    setCurrentIndex((prev) => (prev < list.length - 1 ? prev + 1 : prev));
+    if (currentIndex < list.length - 1) {
+      const nextMember = list[currentIndex + 1];
+      const slug = nextMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      navigate(`/about/our-team/${slug}`);
+    }
   };
 
   const renderMembers = (category: "Directors" | "Advisors") => (
@@ -283,7 +311,7 @@ const OurTeam = () => {
                       <ArrowBackIosNew fontSize="small" />
                     </IconButton>
                     <IconButton
-                      onClick={() => navigate("/about/our-team")}
+                      onClick={handleNext}
                       disabled={currentIndex === selectedMembers.length - 1}
                       className={classes.arrowButtonMobile}
                       size="small"
@@ -351,7 +379,7 @@ const OurTeam = () => {
               {/* Back Button */}
               <Box className={classes.backButtonWrapper}>
                 <IconButton
-                  onClick={() => setOpen(false)}
+                  onClick={() => navigate("/about/our-team")}
                   className={classes.backButton}
                 >
                   <ArrowBack className={classes.backIconSmall} />
@@ -370,7 +398,11 @@ const OurTeam = () => {
                 className={`${classes.dot} ${
                   i === currentIndex ? classes.activeDot : ""
                 }`}
-                onClick={() => setCurrentIndex(i)}
+                onClick={() => {
+                  const member = selectedMembers[i];
+                  const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                  navigate(`/about/our-team/${slug}`);
+                }}
               />
             ))}
           </Box>

@@ -2,19 +2,23 @@ import { Box, Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
  import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { DeleteButton, Uploadbutton, UserEndSaveCancelButtons,ErrorMessages } from "./UserEndCommonButtons";
+import { Uploadbutton, UserEndSaveCancelButtons,ErrorMessages, EditButton } from "./UserEndCommonButtons";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
 const UserEndAddvideo = () => {
 const{classes}=useUserEndwebStyles() 
 
-const[video,setVideo]=useState({
+       const[video,setVideo]=useState({
           id: uuidv4(),
-          name: "Slide1",
+          name: "Video",
           video: "",
           videoerror: "",
   })
+
+  const videoSaveDisabled =
+  !video.video || !!video.videoerror;
+
 
  const handleUpload=(file:File)=>{
   const videoUrl = URL.createObjectURL(file);
@@ -33,15 +37,27 @@ const handleRemoveVideo=()=>{
 }
 
 const handleSave=()=>{
-   console.log("userend values")
- }    
+  localStorage.setItem("addVideo",JSON.stringify(video))
+  setVideo({...video,video:"",videoerror:""})
+   
+}  
+const handleEdit=()=>{
+  const savedData=localStorage.getItem("addVideo");
+  if(savedData){
+    const parsed=JSON.parse(savedData);
+    setVideo({
+      ...video,
+      video:parsed.video
+    })
+  }
+} 
+ 
   return (
    <Box>    
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <DeleteButton message="Are you sure want to delete Video?" 
-       onDelete={()=>console.log("deleted")}/>
+       <EditButton sliceEdit={handleEdit}/>
    </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>
@@ -61,7 +77,7 @@ const handleSave=()=>{
          <ErrorMessages message={video.videoerror}/>
         </Stack>
       </Stack>
-      <UserEndSaveCancelButtons onSave={handleSave} />
+      <UserEndSaveCancelButtons onSave={handleSave} disabled={videoSaveDisabled} />
   </Box>
   </Box>
     </Box>

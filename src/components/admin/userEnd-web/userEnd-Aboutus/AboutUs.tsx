@@ -18,6 +18,7 @@ import Testimonials from './Testimonials';
 
 
 
+
 const AboutUs=()=>{
     const {classes}= useUserEndwebStyles();
     const naviagte = useNavigate();
@@ -37,7 +38,7 @@ const AboutUs=()=>{
                 <Box className={classes.AboutUscontainer}>
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
-                            <ArrowBack/>
+                            <ArrowBack onClick={()=>naviagte(-1)}/>
                             <Typography className={classes.AboutUsHeader}>About Us</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
@@ -53,7 +54,7 @@ const AboutUs=()=>{
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Component id={item.id} accordianId={item.id}/>
+                                        <Component id={item.id} accordianId={item.id} Accordiantitle={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
                        );
