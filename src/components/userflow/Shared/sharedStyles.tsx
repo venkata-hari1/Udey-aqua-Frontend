@@ -1041,6 +1041,12 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     height: 24,
     objectFit: "contain",
   },
+  twitterIconWhite: {
+    color: COLORS.WHITE,
+    width: 14,
+    height: 14,
+    objectFit: "contain",
+  },
   headerSearchIcon: {
     ...TYPOGRAPHY.subtitle1(theme),
     fontSize: 22,

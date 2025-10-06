@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Tooltip, CircularProgress } from '@mui/material';
 import { convertImageToPDF } from '../utils/pdfConverter';
-import pdfIcon from '../../../../assets/icons/pdf.svg';
+import pdfIcon from '../../../../assets/icons/pdf_red.svg';
 
 interface PDFButtonProps {
   imageUrl: string;
@@ -54,19 +54,15 @@ const PDFButton: React.FC<PDFButtonProps> = ({
             bottom: 8,
             left: 8,
             zIndex: 10,
-            width: 24,
-            height: 24,
+            width: 36,
+            height: 36,
             cursor: isGenerating ? 'default' : 'pointer'
           }}
         >
           {isGenerating ? (
             <CircularProgress size={20} />
           ) : (
-            <img
-              src={pdfIcon}
-              alt="PDF"
-              style={{ width: 24, height: 24, display: 'block' }}
-            />
+            <img src={pdfIcon} alt="PDF" style={{ width: 36, height: 36, display: 'block' }} />
           )}
         </Box>
       </Box>

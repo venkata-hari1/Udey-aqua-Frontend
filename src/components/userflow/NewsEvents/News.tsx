@@ -526,7 +526,6 @@ const News = () => {
                   </Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
                     <Typography className={classes.newsDate}>{news.date}</Typography>
-                    <PdfMark imageUrl={latest1} position="top-right" size="small" />
                   </Box>
                   <Typography
                     variant="body2"
@@ -553,8 +552,8 @@ const News = () => {
               />
               <PdfMark 
                 imageUrl={update.image}
-                position="top-right"
-                size="small"
+                position="bottom-left"
+                size="large"
               />
             </Box>
           ))}
@@ -627,7 +626,7 @@ const News = () => {
               sx={{ position: 'relative' }}
             >
               <NewsCard autoWidth hidePdfMark {...news} />
-              <PdfMark imageUrl={news.image} position="top-right" size="small" />
+              <PdfMark imageUrl={news.image} position="bottom-left" size="large" />
             </Box>
           ))}
         </Box>

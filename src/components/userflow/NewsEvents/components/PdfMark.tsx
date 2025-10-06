@@ -1,6 +1,6 @@
 // src/components/userflow/NewsEvents/components/PdfMark.tsx
 import { Box, Tooltip } from '@mui/material';
-import PdfIcon from '../../../../assets/icons/pdf.svg';
+import pdfIcon from '../../../../assets/icons/pdf_red.svg';
 import { useState } from 'react';
 import { convertImageToPDF, convertNewsImageToPDF, type NewsImageData } from '../../../../utils/pdfConverter';
 
@@ -63,7 +63,7 @@ const PdfMark: React.FC<PdfMarkProps> = ({
     };
   };
 
-  const sizePx = size === 'small' ? 18 : size === 'medium' ? 22 : 26;
+  const sizePx = 36;
 
   return (
     <Tooltip title={isConverting ? "Generating PDF..." : "Convert to PDF"} arrow>
@@ -74,11 +74,7 @@ const PdfMark: React.FC<PdfMarkProps> = ({
           cursor: isConverting ? 'default' : 'pointer',
         }}
       >
-        <img
-          src={PdfIcon}
-          alt="PDF"
-          style={{ width: sizePx, height: sizePx, display: 'block', filter: 'none' }}
-        />
+        <img src={pdfIcon} alt="PDF" style={{ width: sizePx, height: sizePx, display: 'block'}} />
       </Box>
     </Tooltip>
   );

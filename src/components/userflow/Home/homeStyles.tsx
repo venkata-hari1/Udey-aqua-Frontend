@@ -408,14 +408,17 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     gap: theme.spacing(8),
     width: "100%",
     maxWidth: 1250,
-    // marginLeft: "auto",
-    // marginRight: "auto",
+    marginLeft: "auto",
+    marginRight: "auto",
     overflowX: "auto",
     overflowY: "hidden",
     scrollbarWidth: "none",
     msOverflowStyle: "none",
     "&::-webkit-scrollbar": {
       display: "none",
+    },
+    [theme.breakpoints.up("lg")]: {
+      justifyContent: "center",
     },
     [theme.breakpoints.down("md")]: {
       gap: 0,

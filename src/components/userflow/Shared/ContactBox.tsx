@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useSharedStyles from "./sharedStyles";
 import WhatsappButton from "./WhatsappButton";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import infoPng from "../../../assets/icons/info.png";
 
 const ContactBox = () => {
@@ -19,16 +18,6 @@ const ContactBox = () => {
       <>
         <Box className={classes.contactBoxFloating}>
           <WhatsappButton />
-          <Box
-            className={classes.contactBoxButton}
-            onClick={() => {
-              try { window.open("/company-profile.pdf", "_blank"); } catch {}
-            }}
-            aria-label="Download PDF"
-            title="Download PDF"
-          >
-            <PictureAsPdfIcon style={{ color: "#FF0600" }} />
-          </Box>
           <Box
             className={classes.contactBoxButton}
             onClick={() => setOpen(true)}
@@ -50,16 +39,6 @@ const ContactBox = () => {
       <HelpSection />
       <Box className={classes.contactBoxFloating}>
         <WhatsappButton />
-        <Box
-          className={classes.contactBoxButton}
-          onClick={() => {
-            try { window.open("/company-profile.pdf", "_blank"); } catch {}
-          }}
-          aria-label="Download PDF"
-          title="Download PDF"
-        >
-          <PictureAsPdfIcon style={{ color: "#FF0600" }} />
-        </Box>
       </Box>
     </>
   );
