@@ -38,7 +38,7 @@ const AboutCardsSection = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef<number>(0);
   const location = useLocation();
-  const { ref: scrollRef, scrollTo } = useScrollWithOffset(isMobile ? 0 : 270);
+  const { ref: scrollRef, scrollTo } = useScrollWithOffset(isMobile ? 20 : 50);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -56,32 +56,14 @@ const AboutCardsSection = ({
   
     if (idx >= 0) {
       setOpenSet((prev) => new Set(prev).add(idx));
-  
-      // Always scroll to top first
-      window.scrollTo(0, 0);
-  
-      let attempts = 0;
-      const maxAttempts = 5;
-  
-      const tryScroll = () => {
-        // Prefer scrolling to the card title so the heading is at the top
-        const el =
-          document.getElementById(`card-${slug}-title`) ||
-          document.getElementById(`card-${slug}`);
+      // Navigate to the card title with proper offset
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`card-${slug}-title`);
         if (el) {
-          (scrollRef as unknown as { current: HTMLElement | null }).current =
-            el as HTMLElement;
+          (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
           scrollTo();
-        } else if (attempts < maxAttempts) {
-          attempts += 1;
-          setTimeout(tryScroll, 150);
         }
-      };
-  
-      // Small delay after scroll-to-top before trying card scroll
-      const timeoutId = setTimeout(tryScroll, 350);
-  
-      return () => clearTimeout(timeoutId);
+      });
     }
   }, [location.pathname, location.search, cards, scrollRef, scrollTo]);
   

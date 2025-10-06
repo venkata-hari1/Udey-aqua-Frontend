@@ -1,5 +1,5 @@
 // src/components/userflow/NewsEvents/hooks/usePagination.ts
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 
 interface UsePaginationProps {
   items: readonly any[];
@@ -27,7 +27,9 @@ export const usePagination = ({
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
 
   const totalPages = useMemo(() => {
-    return Math.ceil(items.length / itemsPerPage);
+    const calculated = Math.ceil(items.length / itemsPerPage);
+    // Ensure we always have at least 1 page
+    return Math.max(calculated, 1);
   }, [items.length, itemsPerPage]);
 
   const currentItems = useMemo(() => {
@@ -38,9 +40,9 @@ export const usePagination = ({
 
   const goToPage = useCallback(
     (page: number) => {
-      if (page >= 1 && page <= totalPages) {
-        setCurrentPage(page);
-      }
+      // Ensure page is within valid range
+      const validPage = Math.max(1, Math.min(page, totalPages));
+      setCurrentPage(validPage);
     },
     [totalPages]
   );
@@ -59,6 +61,13 @@ export const usePagination = ({
 
   const canGoPrevious = currentPage > 1;
   const canGoNext = currentPage < totalPages;
+
+  // Reset to page 1 if current page is beyond total pages
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(1);
+    }
+  }, [currentPage, totalPages]);
 
   return {
     currentPage,

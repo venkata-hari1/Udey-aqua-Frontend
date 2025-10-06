@@ -54,7 +54,15 @@ const Testimonials: React.FC = () => {
       >
         {isOverflowing && <Box />}
         {testimonials.map((t, idx) => (
-          <Box key={idx} className={classes.testimonialsCardOuter}>
+          <Box
+            key={idx}
+            className={
+              classes.testimonialsCardOuter +
+              (idx === testimonials.length - 1
+                ? " " + classes.testimonialsCardOuterLast
+                : "")
+            }
+          >
             <TestimonialCard testimonial={t} />
           </Box>
         ))}

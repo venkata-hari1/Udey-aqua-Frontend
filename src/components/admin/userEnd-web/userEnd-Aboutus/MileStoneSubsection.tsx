@@ -18,6 +18,10 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
     const [role, setRole] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
+<<<<<<< HEAD
+=======
+    
+>>>>>>> yasvanth
 
     const roleFlied = NameandRoleValidate(role);
     const nameFlied = NameandRoleValidate(name);

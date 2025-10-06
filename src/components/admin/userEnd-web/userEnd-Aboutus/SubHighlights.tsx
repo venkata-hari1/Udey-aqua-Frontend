@@ -74,6 +74,10 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
     };
+<<<<<<< HEAD
+=======
+    
+>>>>>>> yasvanth
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };

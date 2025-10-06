@@ -394,7 +394,7 @@ const Footer = () => {
                     component="img"
                     src={TwitterIcon}
                     alt="Twitter"
-                    className={classes.footerSocialIconWhite}
+                    className={classes.twitterIconWhite}
                   />
                 </Box>
                 <Box

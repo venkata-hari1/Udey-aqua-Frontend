@@ -197,7 +197,9 @@ const Step3 = ({
   };
 
   // Ensure Select never receives out-of-range value while options are loading or changed
-  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {});
+  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {}).sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
   const safeDistrictValue = availableDistrictNames.includes(formData.district)
     ? formData.district
     : "";
@@ -332,7 +334,7 @@ const Step3 = ({
                   <MenuItem value="" disabled>
                     Select State
                   </MenuItem>
-                  {statesList.map((s) => (
+                  {[...statesList].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" })).map((s) => (
                     <MenuItem key={s} value={s}>
                       {s}
                     </MenuItem>
@@ -376,7 +378,7 @@ const Step3 = ({
                       <MenuItem value="" disabled>
                         Select District
                       </MenuItem>
-                      {Object.keys(stateDistrictPin[formData.state] || {}).map(
+                      {availableDistrictNames.map(
                         (name) => (
                           <MenuItem key={name} value={name}>
                             {name}
@@ -534,7 +536,7 @@ const Step3 = ({
                   <MenuItem value="" disabled>
                     Select District
                   </MenuItem>
-                  {Object.keys(stateDistrictPin[formData.state] || {}).map(
+                  {availableDistrictNames.map(
                     (name) => (
                       <MenuItem key={name} value={name}>
                         {name}

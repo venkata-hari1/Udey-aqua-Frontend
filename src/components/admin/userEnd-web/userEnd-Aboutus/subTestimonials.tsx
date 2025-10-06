@@ -74,6 +74,10 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
     };
+<<<<<<< HEAD
+=======
+    
+>>>>>>> yasvanth
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };
