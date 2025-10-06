@@ -38,7 +38,7 @@ const AboutCardsSection = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef<number>(0);
   const location = useLocation();
-  const { ref: scrollRef, scrollTo } = useScrollWithOffset(isMobile ? 0 : 270);
+  const { ref: scrollRef, scrollTo } = useScrollWithOffset(isMobile ? 80 : 120);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -56,14 +56,11 @@ const AboutCardsSection = ({
   
     if (idx >= 0) {
       setOpenSet((prev) => new Set(prev).add(idx));
-      // Align precisely to the title after expansion/layout
+      // Navigate to the card title with proper offset
       requestAnimationFrame(() => {
-        const el =
-          document.getElementById(`card-${slug}-title`) ||
-          document.getElementById(`card-${slug}`);
+        const el = document.getElementById(`card-${slug}-title`);
         if (el) {
-          (scrollRef as unknown as { current: HTMLElement | null }).current =
-            el as HTMLElement;
+          (scrollRef as unknown as { current: HTMLElement | null }).current = el as HTMLElement;
           scrollTo();
         }
       });

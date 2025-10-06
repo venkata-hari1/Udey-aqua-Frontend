@@ -471,7 +471,6 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     position: "relative",
     [theme.breakpoints.down("md")]: {
       width: "100%",
-      // Keep proportional scaling on smaller screens to match desktop design
       height: "auto",
       aspectRatio: "37 / 48",
     },
@@ -1120,7 +1119,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      gap: theme.spacing(2),
+      gap: theme.spacing(1),
       justifyContent: "center",
       paddingLeft: 0,
       paddingRight: 0,
@@ -1137,7 +1136,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     gap: theme.spacing(6),
     [theme.breakpoints.down("md")]: {
-      gap: theme.spacing(2),
+      gap: theme.spacing(1),
       paddingLeft: 0,
       paddingRight: 0,
       justifyContent: "center",
@@ -1210,6 +1209,15 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(6),
     position: "relative",
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      width: "100vw",
+      maxWidth: "none",
+      overflow: "hidden",
+    },
   },
   pricingTopImg: {
     position: "absolute",
@@ -1259,13 +1267,20 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
       gap: 0,
-      justifyContent: "center",
+      justifyContent: "flex-start",
       alignItems: "center",
       paddingLeft: 0,
       paddingRight: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      margin: 0,
       scrollSnapType: "x mandatory",
       scrollPaddingLeft: 0,
       scrollPaddingRight: 0,
+      width: "100vw",
+      maxWidth: "none",
+      left: 0,
+      right: 0,
     },
   },
   pricingScrollFlexStart: {
@@ -1281,9 +1296,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     alignItems: "stretch",
     [theme.breakpoints.down("md")]: {
-      flex: "0 0 100%",
-      minWidth: "100%",
-      maxWidth: "100%",
+      flex: "0 0 100vw",
+      minWidth: "100vw",
+      maxWidth: "100vw",
+      width: "100vw",
       scrollSnapAlign: "center",
       justifyContent: "center",
       alignItems: "center",
@@ -1298,9 +1314,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
     [theme.breakpoints.down("md")]: {
       width: "100%",
-      maxWidth: 320,
       marginLeft: "auto",
       marginRight: "auto",
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      boxSizing: "border-box",
     },
   },
   pricingCardRoot: {

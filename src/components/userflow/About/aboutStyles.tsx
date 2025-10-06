@@ -185,6 +185,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     minHeight: "100vh",
     background: COLORS.BLUE_GRAY,
+    overflow: "visible",
   },
   aboutHero: {
     width: "100vw",
@@ -355,10 +356,12 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(20),
     position: "relative",
+    overflow: "visible",
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(3),
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
+      overflow: "visible",
     },
   },
   aboutMainRow: {
@@ -372,7 +375,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       marginLeft: 0,
       marginRight: 0,
       marginTop: 16,
-      minHeight: "fit-content",
+      minHeight: "auto",
+      height: "auto",
     },
   },
   aboutSidebarContactTitle: {
