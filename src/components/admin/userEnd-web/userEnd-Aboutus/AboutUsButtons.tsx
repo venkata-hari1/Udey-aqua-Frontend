@@ -14,15 +14,23 @@ export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
         </Button>
     )
 }
-
+export const EditButton=()=>{
+    const {classes} =useUserEndwebStyles();
+    return(
+        <Button variant="contained"   className={classes.SaveButton}  >
+            edit
+        </Button>
+    )
+}
 
 type UploadProps={
     id?:string;
-    accordianId?:string
+    accordianId?:string;
+    Section?:string;
 }
-export const UploadButton=({id,accordianId}:UploadProps)=>{
+export const UploadButton=({id,accordianId,Section}:UploadProps)=>{
     return(
-        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                         <Button
                         variant="outlined"
                         component="span"
@@ -97,6 +105,14 @@ export const AddSection=({onClick}:{onClick?:()=>void})=>{
     return(
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             Add section
+        </Button>
+    )
+}
+export const AddBanner=({onClick}:{onClick?:()=>void})=>{
+    const {classes} =useUserEndwebStyles();
+    return(
+        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
+            Add Banner
         </Button>
     )
 }

@@ -1,24 +1,26 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
-import { AddSection, CancelButton, DeleteButton, UpdateHeader, UploadButton} from './AboutUsButtons';
+import { AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from './AboutUsButtons';
 import Subsection from './Subsection';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {HelperTextValidate} from './validations';
 
 type OurHistoryProps={
     id:string;
-    accordianId:string
+    accordianId:string;
+    Accordiantitle:string
 }
 
 
- const OurHistory=({id,accordianId}:OurHistoryProps)=>{
+ const OurHistory=({id,accordianId,Accordiantitle}:OurHistoryProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
-    const [counter, setCounter] = useState<any>([]);
+    const [counter, setCounter] = useState<any>([1]);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+    const [prevData, setPrevData] = useState<boolean>(false);
 
     const TextFieldError=HelperTextValidate(subtitle);
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
@@ -68,12 +70,6 @@ type OurHistoryProps={
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
     };
-    const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-      };
 
     const handleAddSubpage = () => {
         const newId = `Sub Section-${counter.length+1}`; // unique id
@@ -89,9 +85,28 @@ type OurHistoryProps={
             image:Images
         }
         console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
+    localStorage.setItem("OurHistory", JSON.stringify(Data));
+    setPrevData(true)
     };
+    const CancelData = ()=>{
+            const PrevData=localStorage.getItem('OurHistory');
+            if (PrevData) {
+                const parsedData = JSON.parse(PrevData);
+                setSubtitle(parsedData.subtitle || "");
+                setImage(parsedData.image || []);
+                setFile([]); 
+                setError(""); 
+            } else {
+                alert("No previous data found!");
+            }
+        
+        }
+        useEffect(() => {
+            const saved = localStorage.getItem("OurHistory");
+            if (saved) {
+            setPrevData(true);
+            }
+        }, []);
     return(
         <>
             <Box className={classes.WhoWeAreContainer}>
@@ -100,7 +115,7 @@ type OurHistoryProps={
                 </Box>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
-                    <DeleteButton onClick={handleDeleteAll}/>
+                    <EditButton/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -116,7 +131,7 @@ type OurHistoryProps={
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId}/> 
-                            {file.length>0 && (
+                            {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -142,18 +157,14 @@ type OurHistoryProps={
                                                 style={{ display: "none" }}
                                                 onChange={HandleFileChange}
                                         />
-                                        <Button className={classes.AddMoreButton}
-                                            variant="outlined"
-                                            component="span"
-                                            >
-                                                +
-                                                </Button>
                                             </label>
                                         </Box>
                                         <Box>
-                                            <Typography className={classes.errorText}>
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography>  
+                                            </Typography> 
+                                            )} 
                                         </Box> 
                                 </Box>
                             )}
@@ -184,10 +195,11 @@ type OurHistoryProps={
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
                     <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                    <CancelButton onClick={handleDeleteAll}/>
+                    {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
+                <Subsection  id='Sub Section-1' accordianId="3" title={Accordiantitle} />
                 {subpages.map((sub) => (
-                    <Subsection key={sub.id} id={sub.id} accordianId={id} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Subsection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

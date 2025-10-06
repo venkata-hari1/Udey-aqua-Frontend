@@ -1,29 +1,31 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
-import { DeleteButton, SaveButton, UploadButton} from './AboutUsButtons';
-import { useState } from 'react';
-import {HelperTextValidate, NameandRoleValidate} from './validations';
+import { DeleteButton, SaveButton, UploadButton, EditButton, CancelButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
+import {HelperTextValidate, NameandRoleValidate, YearValidate} from './validations';
 
 type MilestoneSubpageProps={
     id:string;
     accordianId:string;
+    title:string
     onDelete?: () => void;
 }
-const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
+const MilestoneSubsection=({id,accordianId,title,onDelete}:MilestoneSubpageProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
-    const [role, setRole] = useState<string>('');
-    const [name, setName] = useState<string>('');
+    const [Title, setTitle] = useState<string>('');
+    const [year, setYear] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    
+    const [prevData, setPrevData] = useState<boolean>(false);
 
-    const roleFlied = NameandRoleValidate(role);
-    const nameFlied = NameandRoleValidate(name);
+
+    const TitleFlied = NameandRoleValidate(Title);
+    const YearFlied = YearValidate(year);
     const contentFlied = HelperTextValidate(content);
-    const isTextInvalid = role.length === 0 || role.length < 3 || role.length > 80 || name.length === 0 || name.length < 3 || name.length > 80 || content.length === 0 || content.length < 3 || content.length > 200;
+    const isTextInvalid = Title.length === 0 || Title.length < 3 || Title.length > 80 || year.length === 0 || year.length < 2 || year.length > 4 || content.length === 0 || content.length < 3 || content.length > 200;
     
 
     const validate = (file:File):string | null=>{
@@ -95,24 +97,44 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = ()=>{
-        const Data={
-            role,
-            name,
-            content,
-            image:Images
-        }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
-    };
+    const SaveData = (title:string,id:string)=>{
+                const Data={
+                    year:year,
+                    title:Title,
+                    content:content,
+                    image:Images
+                }
+                console.log(Data);
+            localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
+            setPrevData(true)
+            };
+            const CancelData = (title:string,id:string)=>{
+                const PrevData=localStorage.getItem(`${title}_${id}`);
+                if (PrevData) {
+                    const parsedData = JSON.parse(PrevData);
+                    setYear(parsedData.year || "");
+                    setTitle(parsedData.title || []);
+                    setContent(parsedData.content || []);
+                    setImage(parsedData.image || []);
+                    setFile([]); 
+                    setError("");
+                } else {
+                    alert("No previous data found!");
+                }
+            }
+            useEffect(() => {
+                const saved = localStorage.getItem(`${title}_${id}`);
+                if (saved) {
+                setPrevData(true);
+                }
+            }, []);
     return(
         <>
       <Box className={classes.whoWeareHeaderbox}>
         <Typography className={classes.HeaderText}>{id}</Typography>
         <Box display="flex" justifyContent="flex-end" gap={2}>
-          <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-          <DeleteButton onClick={handleDeleteClick}/>
+          <EditButton/>
+          {id != 'Milestone-1'&& <DeleteButton onClick={handleDeleteClick}/>}
         </Box>
       </Box>
       <Box className={classes.myuploadandheadingbox}>
@@ -129,7 +151,7 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
                                 onChange={HandleFileChange}
                                 />
                         <UploadButton id={id} accordianId={accordianId}/> 
-                        {file.length>0 && (
+                        {(file.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
                                     {Images.map((prev,index)=>
@@ -155,19 +177,15 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
                                             style={{ display: "none" }}
                                             onChange={HandleFileChange}
                                     />
-                                    <Button className={classes.AddMoreButton}
-                                        variant="outlined"
-                                        component="span">
-                                            +
-                                            </Button>
                                         </label>
                                     </Box>
                                     <Box>
-                                        <Typography className={classes.errorText}
-                                            >
-                                            *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                        </Typography>  
-                                    </Box> 
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
+                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
+                                            </Typography> 
+                                            )} 
+                                        </Box>  
                             </Box>
                         )}
                         <Box>
@@ -182,20 +200,20 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
                 </Stack>
                 <Box className={classes.TextFiledBox}>
                         <Typography className={classes.mytext}>
-                            name
+                            Year
                         </Typography>
                         <TextField className={classes.myTextFleid}
-                                    value={name}
-                                    onChange={(e)=>setName(e.target.value)}
-                                    helperText={nameFlied.message}
+                                    value={year}
+                                    onChange={(e)=>setYear(e.target.value)}
+                                    helperText={YearFlied.message}
                                     FormHelperTextProps={{className:classes.helperText}}/>
                         <Typography className={classes.mytext}>
-                            role
+                            title
                         </Typography>
                         <TextField className={classes.myTextFleid}
-                                    value={role}
-                                    onChange={(e)=>setRole(e.target.value)}
-                                    helperText={roleFlied.message}
+                                    value={Title}
+                                    onChange={(e)=>setTitle(e.target.value)}
+                                    helperText={TitleFlied.message}
                                     FormHelperTextProps={{className:classes.helperText}}/>
                         <Typography className={classes.mytext}>
                             content
@@ -234,7 +252,10 @@ const MilestoneSubsection=({id,accordianId,onDelete}:MilestoneSubpageProps)=>{
                 </DialogActions>
             </Dialog>
             </Box>    
- 
+            <Box className={classes.SeveandCancelBox}>
+                <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
+                {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+            </Box>
         </>
     )
 }

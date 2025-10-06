@@ -1,0 +1,152 @@
+import { TrainingStyles } from "./PricingStyles";
+import  {useUserEndwebStyles}  from "../userEnd-Aboutus/AboutusStyles";
+import { Box, Button, Typography, TextField,Dialog, DialogContent, DialogActions } from "@mui/material";
+import { DeleteButton } from "./PricingButtons";
+import { Checkbox } from "@mui/material";
+import { useState, useEffect } from "react";
+import { TitleValidate, PlanContentValidate, PriceValidate } from "../../utils/Validations";
+import EditIcon from "../../../../assets/Edit.png";
+import { EditButton, CancelButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
+
+
+type SubPriceplan={
+    id:string;
+    Section:string;
+    onDelete?:()=>void
+}
+const SubPriceplan=({id,onDelete,Section}:SubPriceplan)=>{
+    const {classes} = TrainingStyles();
+    const {classes:Aboutus}= useUserEndwebStyles();
+    const [title,setTitle] = useState<string>("");
+    const [price,setPrice] = useState<string>("");
+    const [content,setContent] = useState<string>("");
+    const [openDialog, setOpenDialog] = useState(false);
+    const [prevData, setPrevData] = useState<boolean>(false);
+
+    const TitleError= TitleValidate(title);
+    const PriceError = PriceValidate(price);
+    const ContentError = PlanContentValidate(content)
+
+    const isValid =title.length === 0 || title.length < 3 || title.length > 100 || price.length === 0 || price.length <2 || price.length > 12 ||content.length === 0 || content.length <3 || content.length > 2000;
+
+    const handleDeleteClick = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCancel = () => {
+        setOpenDialog(false);
+    };
+
+    const handleConfirmDelete = () => {
+        setOpenDialog(false);
+        if (onDelete) onDelete(); 
+    };
+    const SaveData = ()=>{
+            const Data={
+                title:title,
+                price:price,
+                content:content
+            }
+            console.log(Data);
+        localStorage.setItem(`${Section}_${id}`, JSON.stringify(Data));
+        setPrevData(true)
+        };
+        const CancelData = ()=>{
+            const PrevData=localStorage.getItem(`${Section}_${id}`);
+            if (PrevData) {
+                const parsedData = JSON.parse(PrevData);
+                setTitle(parsedData.title || "");
+                setPrice(parsedData.price || '');
+                setContent(parsedData.content || "");
+            } else {
+                alert("No previous data found!");
+            }
+        
+        }
+        useEffect(() => {
+            const saved = localStorage.getItem(`${Section}}_${id}`);
+            if (saved) {
+            setPrevData(true);
+            }
+        }, []);
+
+    return(
+        <>
+            <Box className={classes.PricingMainContainer}>
+                <Box className={classes.DeleteButtonBox} sx={{gap:'20px'}}>
+                    {id ==='Plan 1' && <EditButton/>}
+                    {id != 'Plan 1' && <DeleteButton onClick={handleDeleteClick}/>}
+                </Box>
+                <Box className={classes.PlanBox}>
+                    <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                        <Box sx={{display:'flex',flexDirection:'row',gap:1,alignItems:'center'}}>
+                            <Checkbox sx={{color:'#0A4FA4'}}/>
+                            <Typography className={classes.PlanText}>{id}</Typography>
+                        </Box>
+                        <Box component="img"
+                             src={EditIcon} alt="Editicon" width='19px' height='19px'
+                        />
+                    </Box>
+                    <Box className={classes.TitleandTextfieldBox}>
+                        <Box sx={{width:'100px'}}>
+                            <Typography className={classes.TitleandplanText}>Title</Typography>
+                        </Box>
+                        <TextField  className={classes.titleandpriceTextfield}
+                                    value={title}
+                                    onChange={(e)=>setTitle(e.target.value)}
+                                    helperText={TitleError.message}
+                                    FormHelperTextProps={{className:classes.helperText}}/>
+                    </Box>
+                    <Box className={classes.TitleandTextfieldBox} >
+                        <Box sx={{width:'100px'}}>
+                            <Typography className={classes.TitleandplanText}>price</Typography>
+                        </Box>
+                        <TextField  className={classes.titleandpriceTextfield}
+                                    value={price}
+                                    onChange={(e)=>setPrice(e.target.value)}
+                                    helperText={PriceError.message}
+                                    FormHelperTextProps={{className:classes.helperText}}/>
+                    </Box>
+                    <Box className={classes.TitleandTextfieldBoxMulti} >
+                        <Box sx={{width:'100px'}}>
+                            <Typography className={classes.TitleandplanText}>content</Typography>
+                        </Box>
+                        <TextField multiline minRows={5} className={classes.titleandpriceTextfield}
+                                    value={content}
+                                    onChange={(e)=>setContent(e.target.value)}
+                                    helperText={ContentError.message}
+                                    FormHelperTextProps={{className:classes.helperText}}/>
+                    </Box>
+                </Box>
+                <Box className={Aboutus.SeveandCancelBox}>
+                    <SaveButton error={  isValid}  onClick={SaveData}/>
+                    {prevData &&(<CancelButton onClick={CancelData}/>)}
+                </Box>
+                <Dialog open={openDialog} fullWidth onClose={handleCancel} className={Aboutus.DialoagBox} PaperProps={{
+                                    sx: {
+                                    width: 500,       
+                                    height: 250,      
+                                    borderRadius: 3,   
+                                    padding: 2,        
+                                    },
+                                }}>
+                    <DialogContent className={Aboutus.DialogContent}>
+                        <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
+                    </DialogContent>
+                    <DialogActions sx={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'center'  
+                                }}>
+                        <Button onClick={handleCancel} className={Aboutus.deleteButton}>
+                            Cancel
+                        </Button>
+                        <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
+                            Delete
+                        </Button>
+                    </DialogActions>
+            </Dialog>
+            </Box>
+        </>
+    )
+}
+export default SubPriceplan;

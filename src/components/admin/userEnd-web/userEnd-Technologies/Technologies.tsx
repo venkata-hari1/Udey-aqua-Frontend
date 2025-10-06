@@ -1,36 +1,28 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { AddSubpage, ArrowBack} from './AboutUsButtons';
-import Hero from './Hero';
-import WhoWeAre from './WhoWeAre';
-import OurHistory from './OurHistory';
+import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useNavigate } from 'react-router-dom';
-import OurDirectors from './OurDirectors';
-import Sustainable from './Sustainable';
-import Careers from './Careers';
-import MileStone from './MileStone';
-import Testimonials from './Testimonials';
+import HeroSection from './HeroSection_technologies';
+import RAS from './RAS';
+import CAS from './CAS';
+import PondFarming from './PondFarming';
+import FishHatchery from './FishHatchery';
+import CageCulture from './CageCulture';
 
 
-
-
-
-
-const AboutUs=()=>{
+const Technologies=()=>{
     const {classes}= useUserEndwebStyles();
     const naviagte = useNavigate();
     const AccordianData = [
-        {id:'1',title:'Hero Section',component:Hero},
-        {id:'2',title:'Who We Are',component: WhoWeAre},
-        {id:'3',title:'Our History',component: OurHistory},
-        {id:'4',title:'Our Directors & Advisors',component:OurDirectors},
-        {id:'5',title:'Sustainable Development',component:Sustainable},
-        {id:'6',title:'Careers',component:Careers},
-        {id:'7',title:'Milestones',component:MileStone},
-        {id:'8',title:'Testimonials',component:Testimonials}
+        {id:'1',title:'Hero Section',component:HeroSection},
+        {id:'2',title:'Recirculating Aquaculture Systems (RAS) ',component: RAS},
+        {id:'3',title:'Circulating Aquaculture Systems (CAS)  ', component: CAS},
+        {id:'4',title:'Pond Farming  ',component:PondFarming},
+        {id:'6',title:'fish hatchery',component:FishHatchery},
+        {id:'7',title:'cage culture',component:CageCulture}
     ]
     return(
         <>
@@ -39,7 +31,7 @@ const AboutUs=()=>{
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
                             <ArrowBack onClick={()=>naviagte(-1)}/>
-                            <Typography className={classes.AboutUsHeader}>About Us</Typography>
+                            <Typography className={classes.AboutUsHeader}> Technologies</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
                             <AddSubpage onClick={()=>(naviagte('subpage'))}/>
@@ -47,7 +39,7 @@ const AboutUs=()=>{
                     </Box>
                     <Stack className={classes.AccordianBox}>
                         {AccordianData.map((item)=>{
-                            const Component=item.component
+                            const Component = item.component
                             return(
                                 <Accordion key={item.id} className={classes.AccordiaStack}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
@@ -66,4 +58,4 @@ const AboutUs=()=>{
         </>
     )
 }
-export default AboutUs;
+export default Technologies;

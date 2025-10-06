@@ -1,7 +1,7 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
-import { CancelButton, DeleteButton, SaveButton, UploadButton} from './AboutUsButtons';
-import { useState } from 'react';
+import { CancelButton,  EditButton, SaveButton, UploadButton, DeleteButton} from './AboutUsButtons';
+import { useState, useEffect } from 'react';
 import { HelperTextValidate } from './validations';
 
 
@@ -19,6 +19,7 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false); 
+    const [prevData, setPrevData] = useState<boolean>(false);
 
     const ContentFiled=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -74,13 +75,6 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
     };
-    const handleDeleteAll = () => {
-            setFile([]);
-            setImage([]);
-            setError("");
-            setSubtitle('');
-            setContent('');
-    };
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };
@@ -93,15 +87,35 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = ()=>{
-        const Data={
-            subtitle,
-            image:Images
+    const SaveData = (title:string,id:string)=>{
+            const Data={
+                title:subtitle,
+                image:Images,
+                content:content
+            }
+            console.log(Data);
+        localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
+        setPrevData(true)
+        };
+        const CancelData = (title:string,id:string)=>{
+            const PrevData=localStorage.getItem(`${title}_${id}`);
+            if (PrevData) {
+                const parsedData = JSON.parse(PrevData);
+                setSubtitle(parsedData.title || "");
+                setImage(parsedData.image || []);
+                setContent(parsedData.content)
+                setFile([]); 
+                setError(""); 
+            } else {
+                alert("No previous data found!");
+            }
         }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
-    };
+        useEffect(() => {
+            const saved = localStorage.getItem(`${accordianId}_${id}`);
+            if (saved) {
+            setPrevData(true);
+            }
+        }, []);
     return(
         <>
             <Box className={classes.subSectionBox}>
@@ -110,37 +124,11 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                         {id}
                     </Typography>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
-                        <DeleteButton onClick={handleDeleteClick}/>
+                        <EditButton/>
+                        {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
                     </Box>
                 </Box>
-                <Box sx={{display:'flex',flexDirection:'row',gap:10}}>
-                    <Box sx={{display:'flex',flexDirection:'column',gap:2}}>
-                        <Box sx={{display:'flex',flexDirection:'row',gap:5}}>
-                            <Typography sx={{display:'inline-block',width:'100px',whiteSpace:'normal'}}>
-                                Subtitle
-                            </Typography>
-                            <TextField value={subtitle} 
-                                   className={classes.myTextFleid}
-                                   onChange={(e)=>setSubtitle(e.target.value)}
-                                   helperText={SubtitleField.message}
-                                   FormHelperTextProps={{className:classes.helperText}}
-                        />
-                        </Box>   
-                        <Box sx={{display:'flex',flexDirection:'row',gap:5}}>   
-                            <Typography sx={{display:'inline-block',width:'100px',whiteSpace:'normal'}}>
-                                    Content
-                                </Typography>                 
-                            <TextField 
-                                fullWidth
-                                multiline
-                                minRows={5}
-                                value={content} 
-                                className={classes.myTextFleid}
-                                onChange={(e)=>setContent(e.target.value)}
-                                helperText={ContentFiled.message}
-                                FormHelperTextProps={{className:classes.helperText}}/>
-                        </Box>
-                    </Box>
+                <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
                         <Typography className={classes.mytext}>
                             image
@@ -154,7 +142,7 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId}/> 
-                            {file.length>0 && (
+                            {(file.length>0 || prevData)&& (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -180,20 +168,15 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                                                 style={{ display: "none" }}
                                                 onChange={HandleFileChange}
                                         />
-                                        <Button className={classes.AddMoreButton}
-                                            variant="outlined"
-                                            component="span"
-                                            >
-                                                +
-                                                </Button>
                                             </label>
                                     </Box>
                                     <Box>
-                                            <Typography className={classes.errorText}
-                                                >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width x 100px height) Image Must be 5 MB
-                                            </Typography>  
-                                    </Box> 
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
+                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
+                                            </Typography> 
+                                            )} 
+                                        </Box>  
                                 </Box>
                             )}
                             <Box>
@@ -205,11 +188,35 @@ const TitleSubpage=({ accordianId, id, onDelete }: SubsectionProps)=>{
                                 }
                             </Box>
                         </Box>
-                </Stack>
+                    </Stack>
+                    <Box sx={{display:'flex',flexDirection:'column',gap:2}}>
+                            <Typography sx={{display:'inline-block',width:'100px',whiteSpace:'normal'}}>
+                                Subtitle
+                            </Typography>
+                            <TextField value={subtitle} 
+                                   className={classes.myTextFleid}
+                                   onChange={(e)=>setSubtitle(e.target.value)}
+                                   helperText={SubtitleField.message}
+                                   FormHelperTextProps={{className:classes.helperText}}
+                        />    
+                            <Typography sx={{display:'inline-block',width:'100px',whiteSpace:'normal'}}>
+                                    Content
+                                </Typography>                 
+                            <TextField 
+                                fullWidth
+                                multiline
+                                minRows={5}
+                                value={content} 
+                                className={classes.myTextFleid}
+                                onChange={(e)=>setContent(e.target.value)}
+                                helperText={ContentFiled.message}
+                                FormHelperTextProps={{className:classes.helperText}}/>
+
+                    </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                    <CancelButton onClick={handleDeleteAll}/>
+                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(accordianId,id)}/>
+                    {prevData &&(<CancelButton onClick={()=>CancelData(accordianId,id)}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

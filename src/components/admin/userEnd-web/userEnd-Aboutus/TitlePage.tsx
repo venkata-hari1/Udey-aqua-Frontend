@@ -1,29 +1,30 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, TextField, Typography, Stack, Button} from '@mui/material';
-import { DeleteButton, AddSection, UploadButton, SaveButton, AddSubpage } from './AboutUsButtons';
-import { useState } from "react";
+import { AddSection, UploadButton, SaveButton,CancelButton, EditButton } from './AboutUsButtons';
+import { useState, useEffect } from "react";
 import { HelperTextValidate, NameandRoleValidate } from './validations';
 import TitleSubpage from './TitleSubpage';
 
 type TitleProps={
     id:string;
-    accordianId:string
+    accordianId:string,
+    Section?:string;
 }
 
-const TitlePage=({id,accordianId}:TitleProps)=>{
+const TitlePage=({id,accordianId, Section}:TitleProps)=>{
     const {classes}=useUserEndwebStyles();
     const [Title, setTitle]=useState<string>('');
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
-    const [counter, setCounter] = useState<any>([]);
+    const [counter, setCounter] = useState<any>([1]);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+    const [prevData, setPrevData] = useState<boolean>(false);
 
     const TextFieldError=HelperTextValidate(subtitle)
     const TitleField=NameandRoleValidate(Title)
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
-    const isTitleInvalid = Title.length === 0 || Title.length < 3 || Title.length > 200;
  
 
     const validate = (file:File):string | null=>{
@@ -73,7 +74,7 @@ const TitlePage=({id,accordianId}:TitleProps)=>{
     };
 
     const handleAddSubpage = () => {
-        const newId = `Sub Section-${counter.length+1}`; // unique id
+        const newId = `Sub Section-${counter.length+1}`; 
         setSubpages((prev) => [...prev, { id: newId }]);
         setCounter((prev:any) => [...prev, newId])
     };
@@ -81,14 +82,31 @@ const TitlePage=({id,accordianId}:TitleProps)=>{
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
     }; 
     const SaveData = ()=>{
-        const Data={
-            subtitle,
-            image:Images
+            const Data={
+                subtitle,
+                image:Images
+            }
+        localStorage.setItem("AUHero", JSON.stringify(Data));
+        setPrevData(true)
+        };
+        const CancelData = ()=>{
+            const PrevData=localStorage.getItem('AUHero');
+            if (PrevData) {
+                const parsedData = JSON.parse(PrevData);
+                setSubtitle(parsedData.subtitle || "");
+                setImage(parsedData.image || []);
+                setFile([]);
+                setError("");
+            } else {
+                alert("No previous data found!");
+            }
         }
-        console.log(Data);
-    localStorage.setItem("myData", JSON.stringify(Data));
-    alert("Data saved!");
-    };
+        useEffect(() => {
+            const saved = localStorage.getItem("AUHero");
+            if (saved) {
+            setPrevData(true);
+            }
+        }, []);
     return(
         <>
             <Box className={classes.SubPageContainer}>
@@ -110,15 +128,13 @@ const TitlePage=({id,accordianId}:TitleProps)=>{
                                             }
                                         }
                                     }}/>
-                        <AddSubpage error={isTitleInvalid}/>
                     </Box>
                 </Box>
                 <Box className={classes.heroDivider}/>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
                     <Box className={classes.SeveandCancelBox}>
-                        <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                        <DeleteButton/>
+                        <EditButton/>
                     </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
@@ -130,12 +146,12 @@ const TitlePage=({id,accordianId}:TitleProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
-                            {file.length>0 && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
+                            {(file.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -152,28 +168,24 @@ const TitlePage=({id,accordianId}:TitleProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
                                                 onChange={HandleFileChange}
                                         />
-                                        <Button className={classes.AddMoreButton}
-                                            variant="outlined"
-                                            component="span"
-                                            >
-                                                +
-                                                </Button>
                                             </label>
                                         </Box>
                                         <Box>
-                                            <Typography className={classes.errorText}>
+                                            {(Images.length>0 ) &&(
+                                                <Typography className={classes.errorText}>
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography>  
-                                        </Box> 
+                                            </Typography> 
+                                            )} 
+                                        </Box>  
                                 </Box>
                             )}
                             <Box>
@@ -201,15 +213,19 @@ const TitlePage=({id,accordianId}:TitleProps)=>{
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
+                 <Box className={classes.SeveandCancelBox} >
+                                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
+                                    {prevData &&(<CancelButton onClick={CancelData}/>)}
+                                </Box>
                 <Box className={classes.heroDivider}/>
                 <Box sx={{marginTop:'20px'}}>
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
                         <AddSection onClick={handleAddSubpage}/>
                     </Box>
-                    <TitleSubpage id='Sub Section' accordianId='1'/>
+                    <TitleSubpage id='Sub Section-1' accordianId='custom'/>
                 </Box>
                 {subpages.map((sub) => (
-                    <TitleSubpage key={sub.id} id={sub.id} accordianId={id} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <TitleSubpage key={sub.id} id={sub.id} accordianId={accordianId} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

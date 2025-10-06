@@ -1,51 +1,58 @@
-import {useUserEndwebStyles} from './AboutusStyles';
-import { Box, Stack, Button, TextField, Typography} from '@mui/material';
-import { AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from './AboutUsButtons';
-import Subsection from './Subsection';
+import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { Box, Button, Stack, TextField, Typography} from '@mui/material';
+import { CancelButton, EditButton, SaveButton, UploadButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
-import { HelperTextValidate } from './validations';
+import { HelperTextValidate } from '../userEnd-Aboutus/validations';
 
 
-type WhoweareProps={
-    id:string;
-    accordianId:string
-    Accordiantitle:string
+
+type HeroProps={
+    id?:string;
+    accordianId?:string;
+    Accordiantitle?:string;
+    Section?:string;
 }
-const WhoWeAre=({id,accordianId,Accordiantitle}:WhoweareProps)=>{
-    const {classes} = useUserEndwebStyles();
+
+ const HeroSection=({id,accordianId,Section='TrainingPrograms'}:HeroProps)=>{
+    const {classes} =useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
-    const [counter, setCounter] = useState<any>([1]);
-    const [subpages, setSubpages] = useState<{ id:string}[]>([]);
     const [prevData, setPrevData] = useState<boolean>(false);
 
     const TextFieldError=HelperTextValidate(subtitle);
-    var isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
+    const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
+
+    
+
 
     const validate = (file:File):string | null=>{
         const maxSize=5 *1024*1024;
         const types=['image/jpg','image/png','image/jpeg'];
         if (file.size > maxSize){
             return ('File Must be Less Than 5MB');
+
         };
         if (!types.includes(file.type)){
             return ("File must be jpg,png,jpeg format");
         };
-        return null;
+       return null;
     };
-    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+   const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+    
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
+    
             selectedFiles.forEach(file => {
                 const errorMsg = validate(file);
                 if (errorMsg) {
                     setError(errorMsg);
                     return;
                 }
+    
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const imgs = new Image();
@@ -62,67 +69,44 @@ const WhoWeAre=({id,accordianId,Accordiantitle}:WhoweareProps)=>{
                 reader.readAsDataURL(file);
             });
         }
-        event.target.value = ''; 
+    
+        event.target.value = '';
     };
     const removeImage=(IndexToRemove:number)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
     };
-    {/*const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-        localStorage.removeItem("WWAHeader")
-      };*/}
-
-    const handleAddSubpage = () => {
-        const newId = `Sub Section-${counter.length+1}`; // unique id
-        setSubpages((prev) => [...prev, { id: newId }]);
-        setCounter((prev:any) => [...prev, newId])
-    };
-
-    const handleDeleteSubpage = (subId: string) => {
-        setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
-    }; 
     const SaveData = ()=>{
         const Data={
             subtitle,
             image:Images
         }
-        console.log(Data);
-    localStorage.setItem("WWAHeader", JSON.stringify(Data));
+    localStorage.setItem("Training_hero", JSON.stringify(Data));
     setPrevData(true)
     };
     const CancelData = ()=>{
-        const PrevData=localStorage.getItem('WWAHeader');
+        const PrevData=localStorage.getItem('Training_hero');
         if (PrevData) {
             const parsedData = JSON.parse(PrevData);
             setSubtitle(parsedData.subtitle || "");
             setImage(parsedData.image || []);
-            setFile([]); 
-            setError(""); 
+            setFile([]);
+            setError("");
         } else {
             alert("No previous data found!");
         }
-    
     }
     useEffect(() => {
-        const saved = localStorage.getItem("WWAHeader");
+        const saved = localStorage.getItem("Training_hero");
         if (saved) {
         setPrevData(true);
         }
     }, []);
     return(
         <>
-            <Box className={classes.WhoWeAreContainer}>
-                <Box className={classes.AddSectionBox}>
-                    <AddSection onClick={handleAddSubpage}/>
-                </Box>
-                <Box className={classes.whoWeareHeaderbox}>
-                    <Typography className={classes.HeaderText}>Header Section</Typography>
-                    {/*<DeleteButton onClick={handleDeleteAll}/>*/}
+            <Box className={classes.myHeroContainer}>
+                <Box className={classes.deleteButtonBox}>
                     <EditButton/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
@@ -134,12 +118,12 @@ const WhoWeAre=({id,accordianId,Accordiantitle}:WhoweareProps)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
-                            {(file.length>0|| prevData) && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
+                            {(file.length>0 ||prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
@@ -156,10 +140,10 @@ const WhoWeAre=({id,accordianId,Accordiantitle}:WhoweareProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                        <label htmlFor={`upload-${Section}-file-${accordianId}-${id}`}>
                                         <input
                                                 accept="image/*"
-                                                id={`upload-file-${accordianId}-${id}`}
+                                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                                 type="file"
                                                 multiple
                                                 style={{ display: "none" }}
@@ -177,7 +161,7 @@ const WhoWeAre=({id,accordianId,Accordiantitle}:WhoweareProps)=>{
                                 </Box>
                             )}
                             <Box>
-                                {  error && (
+                                { error && (
                                     <Typography className={classes.errorText}>
                                         {error}
                                     </Typography>
@@ -198,23 +182,15 @@ const WhoWeAre=({id,accordianId,Accordiantitle}:WhoweareProps)=>{
                             value={subtitle}
                             onChange={(e)=>setSubtitle(e.target.value)}
                             helperText={TextFieldError.message}
-                            FormHelperTextProps={{className:classes.helperText}}
-                            />
+                            FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
-                <Box className={classes.SeveandCancelBox}>
-                        <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                        {prevData &&(<CancelButton onClick={CancelData}/>)}
+                <Box className={classes.SeveandCancelBox} >
+                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
+                    {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <Subsection  id='Sub Section-1' accordianId="2" title={Accordiantitle} />
-                {subpages.map((sub) => (
-                    <Subsection key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
-                ))}
-
             </Box>
         </>
     )
-
 }
-
-export default WhoWeAre;
+export default HeroSection;
