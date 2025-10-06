@@ -69,7 +69,7 @@ const AppRoutes = () => {
     <Routes>
         {/* User Routes */}
       <Route path="/" element={<Layout />}>
-        <Route path="home"  element={<Home />} />
+        <Route path="home" element={<Home />} />
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="about" element={<AboutLayout />}>
           <Route index element={<WhoWeAre />} />
