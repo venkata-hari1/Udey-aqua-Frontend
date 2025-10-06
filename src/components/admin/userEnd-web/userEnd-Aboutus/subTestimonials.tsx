@@ -1,6 +1,6 @@
 import {useUserEndwebStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
-import { DeleteButton, SaveButton, UploadButton, UploadButtonTestimonials} from './AboutUsButtons';
+import { DeleteButton, SaveButton, UploadButtonTestimonials} from './AboutUsButtons';
 import { useState } from 'react';
 import { HelperTextValidate } from './validations';
 
@@ -74,13 +74,7 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
     };
-    const handleDeleteAll = () => {
-            setFile([]);
-            setImage([]);
-            setError("");
-            setSubtitle('');
-            setContent('');
-    };
+    
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };

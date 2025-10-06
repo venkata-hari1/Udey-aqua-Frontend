@@ -22,8 +22,6 @@ const MottoCard = ({ img, fishText, title, button, buttonText, aboutCard }: Mott
     } else {
       navigate('/about');
     }
-    // Ensure we land at the top of the destination page
-    try { setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 0); } catch {}
   };
 
   return (
