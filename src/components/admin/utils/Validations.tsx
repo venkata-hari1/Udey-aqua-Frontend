@@ -6,9 +6,13 @@ export const validateEmail = (email: string): string => {
     if(email.length===0){
       return "Email cannot be empty";
     }
+    if(email.startsWith(".") || email.endsWith(".")){
+      return "Email cannot start or end with '.'";
+    }
     if(!emailRegex.test(email)){
       return "Enter a valid email ID";
-    }else{
+    }
+    else{
         return ""
     }
  };
@@ -76,20 +80,17 @@ export const nameValidation=(name:any):string=>{
   return "";
 }
 
+export const phoneNumbervalidation=(phone:any):string=>{ 
+  if(phone.length===0){ 
+    return "Phone number cannot be empty" 
+  }else if(/[^0-9]/.test(phone)){ 
+    return "*Only numbers are allowed" 
+  }else if(phone.length!==10){
+     return "Phone number must be exactly 10 digits" 
+  } 
+    else{ return "" } 
+  }
 
-export const phoneNumbervalidation=(phone:any):string=>{
-  
-  if(phone.length===0){
-    return "Phone number cannot be empty"
-  }else if(/[^0-9]/.test(phone)){
-    return "*Only numbers are allowed"
-   }else if(phone.length!==10){
-    return "Phone number must be exactly 10 digits"
-  }
-  else{
-    return ""
-  }
-}
 
 export const addressContentValidation=(content:any)=>{
  
@@ -103,54 +104,61 @@ export const addressContentValidation=(content:any)=>{
     return ""
   }
 }
-export const PriceValidate = (text: string): { message: string } => {
-  const trimmedText = text.trim();
 
-  if (trimmedText.length === 0) {
-    return { message: "" };
-  }
 
-  if (!/^\d+$/.test(trimmedText)) {
-    return { message: "* Must be Numbers" };
+export const HeadingContentValidation=(content:any)=>{
+ 
+  const addressRegexp=/^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{1,200}$/;
+  
+  if(content.length===0){
+    return "Heading field should not be empty"
+  }else if(!addressRegexp.test(content)){
+    return "Maximum 100 characters required"
+  }else{
+    return ""
   }
+}
 
-  if (trimmedText.length < 2) {
-    return {
-      message: `* Must contain at least 2 characters. Remaining Characters ${trimmedText.length}/12`,
-    };
-  }
 
-  if (trimmedText.length > 12) {
-    return { message: "* Character Limit Exceeded" };
-  }
+export const validateImageFile=(file:File)=>{
+     //check file size <=5mb
+     if(file.size>5*1024*1024){
+      return "Image must be 5MB or less";
+     } 
+     if(!file.type.startsWith("image/")){
+      return "Invalid format.Only images are allowed";
+     }
+     return null; //no error
+}
 
-  return {
-    message: `* Remaining Characters ${trimmedText.length}/12`,
-  };
-};
-export const TitleValidate = (text: string): {  message: string } => {
-  if (text.length === 0) {
-    return {  message: "" }; 
-  } else if (text.length < 3) {
-    return {
-      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/100`,
-    };
-  } else if (text.length > 100) {
-    return {  message: "* Character Limit Exceeded" };
-  } else {
-    return {message: `* Remaining Characters ${text.length}/100` }; 
+export const validateImageDimensions=(file:File):Promise<string |null>=>{
+   return new Promise((resolve)=>{
+     const img=new Image();
+     img.src=URL.createObjectURL(file);
+     img.onload=()=>{
+        if(img.width<300 || img.height<100){
+          resolve("Please upload the image in landscape format (Preferred size: 300px × 100px"
+         );
+        }else{
+          resolve(null);
+        }
+      };
+     img.onerror=()=>resolve("Unable to read image dimensions");
+   })
+}
+
+export const validateVideo=(file:File)=>{
+   if(!file){
+    return "Please upload video";
+   }
+  const allowFormats=["video/mp4","video/quicktime"];
+  if(!allowFormats.includes(file.type)){
+    return "Recommended formats: MP4, MOV.";
   }
-};
-export const PlanContentValidate = (text: string): {  message: string } => {
-  if (text.length === 0) {
-    return {  message: "" }; 
-  } else if (text.length < 3) {
-    return {
-      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/2000`,
-    };
-  } else if (text.length > 2000) {
-    return {  message: "* Character Limit Exceeded" };
-  } else {
-    return {message: `* Remaining Characters ${text.length}/2000` }; 
+  
+  const maxSizinMB=5;
+  if(file.size>maxSizinMB*1024*1024){
+    return "video must be lessthan 5MB"
   }
-};
+  return null;
+}

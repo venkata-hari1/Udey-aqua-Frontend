@@ -37,10 +37,7 @@ const UserendHero = () => {
   ]);
 
  
-
-
-
-  const handleAddSlide = () => {
+const handleAddSlide = () => {
     const newSlide = {
       id: uuidv4(),
       name: `Slide${heroslide.length + 1}`,

@@ -29,7 +29,7 @@ import adv1 from "../../../assets/team/adv_1.png";
 import adv2 from "../../../assets/team/adv_2.png";
 import adv3 from "../../../assets/team/adv_3.png";
 import adv4 from "../../../assets/team/adv_4.png";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 
 // Types
 interface Member {
@@ -111,8 +111,7 @@ const OurTeam = () => {
   const { classes } = useAboutStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const navigate = useNavigate();
-  const { memberSlug } = useParams<{ memberSlug?: string }>();
+  /* const navigate = useNavigate(); */
 
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");

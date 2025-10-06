@@ -2,7 +2,7 @@ import { Box,Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/userendabout.jpg'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { DeleteButton, ErrorMessages, ErrormsgContent, TextFieldManyRows,Uploadbutton,UserEndSaveCancelButtons } from "./UserEndCommonButtons";
+import { EditButton, ErrorMessages, ErrormsgContent, TextFieldManyRows,Uploadbutton,UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -42,21 +42,34 @@ const handleContentchange=(value:string,error:string)=>{
     setChooseslide(updatedContent)
     console.log(updatedContent)
 }
-const onDelete=()=>{
-  setChooseslide({...chooseSlide,image:""}) 
+
+const handleSave=()=>{
+  setChooseslide({...chooseSlide,name:'',image:'',content:'',})
+  localStorage.setItem("chooseValues",JSON.stringify(chooseSlide)) 
+}   
+
+ const handleEdit=()=>{
+  const savedData=localStorage.getItem("chooseValues");
+  if(savedData){
+    const parsed=JSON.parse(savedData);
+     setChooseslide({
+      ...chooseSlide,
+      name:parsed.name,
+      content:parsed.content,
+      image:parsed.image
+     });   
+ }
 }
 
- const handleSave=()=>{
-   console.log(chooseSlide)
- }   
-
-  return (
+const onCancel=()=>{
+  setChooseslide({...chooseSlide,image:"",content:"",contenterror:"",imgerror:""})
+}
+return (
    <Box>    
       <Box className={classes.useHerocontainer}> 
       <Box mt={2}>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-          <DeleteButton message="Are you sure want to delete the Image?" 
-          onDelete={onDelete}/>
+          <EditButton sliceEdit={handleEdit}/>
       </Box>
      <Stack className={classes.UploadandAboutbox}>
            <Stack className={classes.UploadImageStack}>
@@ -74,13 +87,15 @@ const onDelete=()=>{
           </Stack>
            <Stack display="flex" justifyContent="flex-start" gap={1}>
            <Typography className={classes.titleText}>Content</Typography>
-           <TextFieldManyRows onChange={(value, error) =>
+           <TextFieldManyRows 
+           value={chooseSlide.content}onChange={(value, error) =>
                         handleContentchange(value, error)
                       }/>
            <ErrormsgContent message={chooseSlide.contenterror}/>
            </Stack>
          </Stack>
-        <UserEndSaveCancelButtons onSave={handleSave} disabled={isSaveDisabled}/>
+        <UserEndSaveCancelButtons onSave={handleSave} disabled={isSaveDisabled}
+        onCancel={onCancel}/>
      </Box>
      </Box>
        </Box>
