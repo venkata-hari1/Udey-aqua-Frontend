@@ -6,12 +6,13 @@ import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import heroImg from "../../../assets/home/hero_img.png";
 import useHomeStyles from "./homeStyles";
-import ParticlesBackground from "./ParticlesBackground";
+
 import {
   CULTURES_FISH_INITIAL,
   CULTURES_FISH_ANIMATE,
   CULTURES_FISH_TRANSITION,
 } from "../Shared/animations";
+import BubbleCanvas from "./BubbleCanvas";
 
 const Hero = () => {
   const theme = useTheme();
@@ -26,10 +27,23 @@ const Hero = () => {
         </IconButton>
       </Box> */}
       <Box className={classes.heroMain}>
-        <Box sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-          <ParticlesBackground />
-        </Box>
+      <Box className="herofish">
+ 
+    <Box
+      component="img"
+      src={heroImg}
+      className='fish'
+     alt='img'
+    />
+   <Box
+      component="img"
+      src={heroImg}
+      className='fish1'
+     alt='img'
+    />
+</Box>
         <Box className={classes.heroImgBox}>
+       
           <motion.img
             src={heroImg}
             alt="Hero"
@@ -56,11 +70,7 @@ const Hero = () => {
           </Box>
         </Box>
       </Box>
-      {/* <Box className={classes.heroRightArrowBox}>
-        <IconButton className={classes.heroArrowBtnRight}>
-          <ArrowForwardIosIcon className={classes.heroArrowForwardIcon} />
-        </IconButton>
-      </Box> */}
+     <BubbleCanvas/>
     </Box>
   );
 };
