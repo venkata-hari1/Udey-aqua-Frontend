@@ -6,8 +6,7 @@ import "./App.css"
 
 
 function App() {
-  const AppRoutes=React.lazy(()=>import('./routes/AppRoutes'))
-
+  const AppRoutes=React.lazy(()=>import('./routes/AppRoutes')
   return (
     <Suspense fallback={<Loading />}>
       <AppRoutes />
