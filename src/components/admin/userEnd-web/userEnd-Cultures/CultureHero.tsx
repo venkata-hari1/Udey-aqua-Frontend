@@ -4,6 +4,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
+import { nameValidation } from "../../utils/Validations";
 
 const CultureHero = () => {
 
@@ -33,9 +34,8 @@ const handleSave=()=>{
 
      <Box>
       <Typography className={classes.titleText}>SubTitle</Typography>
-      <TextFieldManyRows onChange={() =>
-                        console.log()
-                    }/>
+      <TextFieldManyRows onChange={() =>console.log()}
+        validationFn={nameValidation}            />
      </Box>
      </Box>
      <UserEndSaveCancelButtons onSave={handleSave}/>

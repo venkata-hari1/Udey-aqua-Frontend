@@ -71,7 +71,7 @@ export const confirmValidatePassword = (
 
 export const nameValidation=(name:any):string=>{
   if(name.length===0){
-    return "*Name cant be empty"
+    return "*Field cant be empty"
   }
   if(name.length>80){
     return "*Max 80 charecters required";

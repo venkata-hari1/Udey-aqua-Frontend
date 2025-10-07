@@ -254,7 +254,6 @@ export const Textfiledbox = () => {
   );
 };
 
-
 //Textfiled singlerow
 interface GenericTextfieldsinglerows {
   onChange: (value: string,error:string) => void;

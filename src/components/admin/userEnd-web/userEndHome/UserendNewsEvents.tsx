@@ -105,7 +105,7 @@ const handleRemoveImage = (id: string) => {
       news.id === id ? { ...news, image: "" } : news
     );
     setNewsdata(updatedslides);
-  };
+};
 
  const handleImageError=(id:string,msg:string)=>{
    setNewsdata((prev) =>
@@ -115,13 +115,13 @@ const handleRemoveImage = (id: string) => {
     );
  } 
 const handleHeadingChange=(id:string,value:string,error:string)=>{
-   const updatednews=newsData.map((prev)=>
+  const updatednews=newsData.map((prev)=>
   prev.id===id?{...prev,heading:value,headingerror:error}:prev);
    setNewsdata(updatednews);
 }
 const handleDescription=(id:string,value:string,error:string)=>{
    const updatednews=newsData.map((prev)=>
-   prev.id===id ? {...prev,description:value,descriptionerror:error}:prev)
+   prev.id===id ? {...prev,description:value,descripterror:error}:prev)
    setNewsdata(updatednews)
 }
 
@@ -133,12 +133,10 @@ return (
        onClick={handleAddblog}>Add Blog</Button>
       </Box>
     {newsData.map((news,index)=>{
-      
       const isDisabled=!news.image || !news.date ||
       !news.heading || !news.description || !!news.imgerror ||
       !!news.headingerror || !!news.descripterror
-    
-      return (
+     return (
         <>
         <Box className={classes.FormNewsblogBox} >
         <FormControl size="small" sx={{minWidth:{md:'170px',xs:'120px',mt:2}}}>
@@ -187,28 +185,27 @@ return (
         <Box className={classes.testimonialTextbox}>
         <Stack direction="column" gap={1}>
         <Typography className={classes.titleText}>Heading</Typography>
-        {/* <TextField size="small" className={classes.textfiledTestimonialblog} /> */}
         <TextFieldSingleRow 
         value={news.heading} 
-                  validationFn={HeadingContentValidation}
-                  onChange={(value,error)=>handleHeadingChange(news.id,value,error)}/>
-        <ErrormsgTitle />
-        </Stack>
+        validationFn={HeadingContentValidation}
+        onChange={(value,error)=>handleHeadingChange(news.id,value,error)}/>
+        {news.headingerror && <ErrormsgTitle message={news.headingerror}/>}
+      </Stack>
       </Box>
       <Stack gap={1} mt={2}>
         <Typography className={classes.titleText}>Description</Typography>
         <TextFieldManyRows 
-        value={news.description}
+          value={news.description}
           onChange={(value, error) =>
           handleDescription(news.id, value, error)}
-          validationFn={DescriptionContentValidation}/>
-        <ErrormsgContent />   
+          validationFn={DescriptionContentValidation} />
+        {news.descripterror && <ErrormsgContent message={news.descripterror}/>}
         </Stack>
         </Stack>
     </Stack>
-  {editNewsId===news.id ?<UserEndSaveCancelButtons onSave={()=>handleSave(news.id)} 
+    {editNewsId===news.id ?<UserEndSaveCancelButtons onSave={()=>handleSave(news.id)} 
       onCancel={()=>handleCancel(news.id)} disabled={isDisabled}/>:
-      <UserEndSaveButton onSave={()=>handleSave(news.id)} disabled={isDisabled}/>}
+     <UserEndSaveButton onSave={()=>handleSave(news.id)} disabled={isDisabled}/>}
 
     <Divider className={classes.heroDivider}/>
     

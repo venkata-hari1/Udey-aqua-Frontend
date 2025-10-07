@@ -23,7 +23,6 @@ const [aboutslide, setAboutslide] = useState(
  const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror  
 
  const handleUpload=(file:File)=>{
-  
   const imageUrl = URL.createObjectURL(file);
   const updatedAboutslide={...aboutslide,image:imageUrl,imgerror:""}
   setAboutslide(updatedAboutslide) 
