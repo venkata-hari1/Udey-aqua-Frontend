@@ -28,6 +28,7 @@ const UserendHero = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+       isSaved: false,
     },
     {
       id: uuidv4(),
@@ -36,6 +37,7 @@ const UserendHero = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+       isSaved: false,
     },
   ]);
 
@@ -48,6 +50,7 @@ const handleAddSlide = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+      isSaved: false,
     };
     const updateSlides = [...heroslide, newSlide];
     setHeroslide(updateSlides);
@@ -63,14 +66,14 @@ const handleAddSlide = () => {
   const handleUpload = (id: string, file: File) => {
     const imageUrl = URL.createObjectURL(file);
     const updateSlides = heroslide.map((slide) =>
-      slide.id === id ? { ...slide, image: imageUrl, imgerror: "" } : slide
+      slide.id === id ? { ...slide, image: imageUrl, imgerror: "",isSaved:false } : slide
     );
     setHeroslide(updateSlides);
   };
 
   const handleRemoveImage = (id: string) => {
     const updatedslides = heroslide.map((slide) =>
-      slide.id === id ? { ...slide, image: "" } : slide
+      slide.id === id ? { ...slide, image: "",isSaved:false } : slide
     );
     setHeroslide(updatedslides);
   };
@@ -78,7 +81,7 @@ const handleAddSlide = () => {
   const handleContentchange = (id: string, value: string, error: string) => {
     const updateSlides = heroslide.map((slide) =>
       slide.id === id
-        ? { ...slide, content: value, contenterror: error }
+        ? { ...slide, content: value, contenterror: error,isSaved:false }
         : slide
     );
     setHeroslide(updateSlides);
@@ -91,7 +94,7 @@ const handleAddSlide = () => {
   const handleImageError = (id: string, msg: string) => {
     setHeroslide((prev) =>
       prev.map((slide) =>
-        slide.id === id ? { ...slide, imgerror: msg } : slide
+        slide.id === id ? { ...slide, imgerror: msg,isSaved:false } : slide
       )
     );
   };
@@ -102,7 +105,7 @@ const handleAddSlide = () => {
      const parsedSlide=JSON.parse(savedSlide);
       setHeroslide((prev)=>
         prev.map((slide)=>
-        slide.id===id ?{...slide,...parsedSlide}:slide)
+        slide.id===id ?{...slide,...parsedSlide,isSaved:false}:slide)
        );
    }
    setEditSlideId(id)
@@ -116,7 +119,7 @@ const handleAddSlide = () => {
    }
   setHeroslide((prev)=>
   prev.map((slide)=>
-  slide.id===id ? {...slide,image:'',imgerror:'',content:''}:slide
+  slide.id===id ? {...slide,image:'',imgerror:'',content:'', isSaved: true,}:slide
   )
 );
 setEditSlideId(null);
@@ -125,7 +128,7 @@ setEditSlideId(null);
 const onCancel=(id:string)=>{
     setHeroslide((prev)=>
     prev.map((slide)=>
-    slide.id===id ?{...slide,image:'',imgerror:'',content:'',contenterror:''}:slide)
+    slide.id===id ?{...slide,image:'',imgerror:'',content:'',contenterror:'',isSaved:false}:slide)
     );
     setEditSlideId(null)
 }
@@ -135,7 +138,7 @@ const onCancel=(id:string)=>{
         <AddingButton onClick={handleAddSlide} />
         {heroslide.map((slide, index) => {
           const slideSaveDisabled =
-            !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror;
+            !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror ;
 
           return (
             <Fragment key={slide.id}>
@@ -144,11 +147,13 @@ const onCancel=(id:string)=>{
                   <Typography className={classes.titleText}>
                     {slide.name}
                   </Typography>
-                  {index===0 ? <EditButton sliceEdit={()=>sliceEdit(slide.id)}/>:
+                  {index===0 ? <EditButton sliceEdit={()=>sliceEdit(slide.id)}
+                    disabled={!slide.isSaved}/>:
                   <UserendEditandDeletebuttons 
                    message={`Are you sure want to delete ${slide.name} ?`} 
                    onDelete={() => onDelete(slide.id)}
-                   sliceEdit={()=>sliceEdit(slide.id)}/>}
+                   sliceEdit={()=>sliceEdit(slide.id)}
+                   disabled={!slide.isSaved}/>}
                   </Stack>
                 <Stack className={classes.Uploadandheadingbox}>
                   <Stack className={classes.UploadImageStack}>
@@ -179,7 +184,7 @@ const onCancel=(id:string)=>{
                       Heading Content
                     </Typography>
                     <TextFieldManyRows
-                    value={slide.content}
+                      value={slide.content}
                       onChange={(value, error) =>
                         handleContentchange(slide.id, value, error)
                       }

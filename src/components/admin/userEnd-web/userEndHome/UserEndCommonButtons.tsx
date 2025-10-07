@@ -67,8 +67,9 @@ interface GenericSaveEdit {
   value?:string;
   message: string;
   onDelete: () => void;
+  disabled?:boolean;
 }
-export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSaveEdit)=>{
+export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit,disabled=false}:GenericSaveEdit)=>{
   
   const [open, setOpen] = useState(false);
   
@@ -89,6 +90,7 @@ export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSa
         className={classes.heroSave}
         variant="contained"
         onClick={sliceEdit}
+        disabled={disabled}
         >
         Edit
       </Button>
@@ -110,8 +112,9 @@ export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSa
 interface GenericEdit {
   sliceEdit:() => void;
   value?:string;
+  disabled?:boolean;
 }
-export const EditButton=({sliceEdit}:GenericEdit)=>{
+export const EditButton=({sliceEdit,disabled = false}:GenericEdit)=>{
  
   const { classes } = useUserEndwebStyles();
  
@@ -121,7 +124,7 @@ export const EditButton=({sliceEdit}:GenericEdit)=>{
         className={classes.heroSave}
         variant="contained"
         onClick={sliceEdit}
-        
+        disabled={disabled}
       >
         Edit
       </Button>
@@ -255,19 +258,23 @@ export const Textfiledbox = () => {
 };
 
 //Textfiled singlerow
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+}
 interface GenericTextfieldsinglerows {
   onChange: (value: string,error:string) => void;
-  validationFn:(value:string)=>string;
-  value: string;
-}
+  value?: string;
+  validationFn:(value:string)=>ValidationResult;
+ }
 
 export const TextFieldSingleRow = ({ onChange,validationFn,value }: GenericTextfieldsinglerows) => {
   const { classes } = useUserEndwebStyles();
 
 const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const contenterror=validationFn(value);
-    onChange(value,contenterror);    
+    const {error}=validationFn(value);
+    onChange(value,error);    
   };
 
   return(
@@ -280,18 +287,22 @@ const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
 }
 
 //Textfiled multirows
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+}
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
   value?:string;
-  validationFn:(value:string)=>string;
+  validationFn:(value:string)=>ValidationResult;
   }
 export const TextFieldManyRows = ({ onChange,value,validationFn}: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
 
   const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const contenterror=validationFn(value);
-    onChange(value,contenterror);    
+    const {error}=validationFn(value);
+    onChange(value,error);    
   };
 
   return (

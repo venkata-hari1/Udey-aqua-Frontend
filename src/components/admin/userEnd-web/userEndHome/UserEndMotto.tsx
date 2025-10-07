@@ -27,6 +27,7 @@ const UserEndMotto = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+      isSaved:false,
     },
     {
       id: uuidv4(),
@@ -35,6 +36,7 @@ const UserEndMotto = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+      isSaved:false,
     },
   ]);
 
@@ -46,6 +48,7 @@ const UserEndMotto = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+      isSaved:false,
     };
     setMottobox([...mottobox, newmottobox]);
   };
@@ -59,7 +62,7 @@ const UserEndMotto = () => {
   const handleUpload = (id: string, file: File) => {
     const imageUrl = URL.createObjectURL(file);
     const updateBoxes = mottobox.map((box) =>
-      box.id === id ? { ...box, image: imageUrl,imgerror:"" } : box
+      box.id === id ? { ...box, image: imageUrl,imgerror:"",isSaved:false } : box
     );
     setMottobox(updateBoxes);
   };
@@ -108,7 +111,7 @@ const handleSave = (id:string) => {
    }
   setMottobox((prev)=>
   prev.map((box)=>
-  box.id===id ? {...box,image:'',imgerror:'',content:''}:box
+  box.id===id ? {...box,image:'',imgerror:'',content:'',isSaved:true}:box
   )
 );
 setMotoId(null);
@@ -145,11 +148,13 @@ const onCancel=(id:string)=>{
               <Typography className={classes.MottoBoxText}>
                 {box.boxname}
               </Typography>
-              {index===0 ?<EditButton sliceEdit={()=>sliceEdit(box.id)}/>: 
+              {index===0 ?<EditButton sliceEdit={()=>sliceEdit(box.id)}
+                disabled={!box.isSaved}/>: 
                <UserendEditandDeletebuttons 
                 message={`Are you sure want to delete ${box.boxname} ?`} 
                 onDelete={() => onDelete(box.id)}
-                sliceEdit={()=>sliceEdit(box.id)}/>
+                sliceEdit={()=>sliceEdit(box.id)}
+                disabled={!box.isSaved}/>
                }
               
               
@@ -182,10 +187,10 @@ const onCancel=(id:string)=>{
                 <TextFieldManyRows 
                 value={box.content}  
                 onChange={(value, error) =>
-                        handleContentchange(box.id, value, error)
+                handleContentchange(box.id, value, error)
                     }
                    validationFn={HeadingContentValidation}  />
-                <ErrormsgContent />
+                <ErrormsgContent message={box.contenterror}/>
                 </Stack>
               </Stack>
           {editmotoId===box.id ? <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 

@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import CancelIcon from '@mui/icons-material/Cancel';
 import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages,ErrormsgContent, EditButton, TextFieldSingleRow, ErrorName, TextFieldManyRows, UserEndSaveButton } from "./UserEndCommonButtons";
 import { useState } from "react";
-import { addressContentValidation, nameValidation, phoneNumbervalidation} from "../../utils/Validations";
+import { addressContentValidation, nameValidation, phoneNumberValidation} from "../../utils/Validations";
 
 const UserendGetintouch = () => {
 const{classes}=useUserEndwebStyles() 
@@ -107,7 +107,7 @@ const handleCancel=()=>{
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Phone</Typography>
-        <TextFieldSingleRow onChange={handlePhoneChange} validationFn={phoneNumbervalidation}
+        <TextFieldSingleRow onChange={handlePhoneChange} validationFn={phoneNumberValidation}
                  value={getinSlide.phone}/>
         <ErrorName message={getinSlide.phoneError}/>
         </Stack>

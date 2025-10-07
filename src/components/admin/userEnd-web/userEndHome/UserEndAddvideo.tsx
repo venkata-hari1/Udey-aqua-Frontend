@@ -14,6 +14,7 @@ const{classes}=useUserEndwebStyles()
           name: "Video",
           video: "",
           videoerror: "",
+          isSaved:false,
   })
 
   const videoSaveDisabled =
@@ -38,7 +39,7 @@ const handleRemoveVideo=()=>{
 
 const handleSave=()=>{
   localStorage.setItem("addVideo",JSON.stringify(video))
-  setVideo({...video,video:"",videoerror:""})
+  setVideo({...video,video:"",videoerror:"",isSaved:true,})
   setIsediting(false) 
 }  
 const handleEdit=()=>{
@@ -62,7 +63,8 @@ const handleEdit=()=>{
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <EditButton sliceEdit={handleEdit}/>
+       <EditButton sliceEdit={handleEdit}
+       disabled={!video.isSaved}/>
    </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>

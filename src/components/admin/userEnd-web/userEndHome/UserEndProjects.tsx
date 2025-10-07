@@ -41,6 +41,7 @@ const UserEndProjects = () => {
       imgerror: "",
       headingerror: "",
       descriptionerror: "",
+      isSaved:false,
     },
   ]);
 
@@ -58,6 +59,7 @@ const UserEndProjects = () => {
         imgerror: "",
         headingerror: "",
         descriptionerror: "",
+        isSaved:false,
       },
     ]);
   };
@@ -104,7 +106,7 @@ const UserEndProjects = () => {
     setProjects((prev) =>
       prev.map((p) =>
         p.id === id
-          ? { ...p, image: "", heading: "", description: "" }
+          ? { ...p, image: "", heading: "", description: "",isSaved:true, }
           : p
       )
     );
@@ -186,11 +188,13 @@ const UserEndProjects = () => {
                     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
                   </Select>
                 </FormControl>
-                {index===0 ? <EditButton sliceEdit={() => handleEdit(proj.id)}/> : 
+                {index===0 ? <EditButton sliceEdit={() => handleEdit(proj.id)}
+                  disabled={!proj.isSaved}/> : 
                 <UserendEditandDeletebuttons
                     message={`Are you sure want to delete this project ${projects.length} in Our project?`}
                     onDelete={() => handleDelete(proj.id)}
                     sliceEdit={() => handleEdit(proj.id)}
+                    disabled={!proj.isSaved}
                 />}
                 
                 </Box>

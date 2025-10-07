@@ -183,16 +183,18 @@ const isSaveEnabled=()=>{
 
 const handleDirectorEdit=(id:string)=>{
   const savedDirectors=JSON.parse(localStorage.getItem("Directorsdata") || "[]");
-  if(savedDirectors.length){
-    setDirectorslist(savedDirectors);
+  const directorToEdit=savedDirectors.find((d:any)=>d.id==id);
+  if(directorToEdit){
+    setDirectorslist([directorToEdit]);
      setIsEditMode(true);
   } 
  }
 
 const handleAdvisorEdit=(id:string)=>{
   const savedAdvisors = JSON.parse(localStorage.getItem("AdvisorsData") || "[]");
-  if(savedAdvisors.length){
-    setAdvisorslist(savedAdvisors);
+   const advisorToEdit = savedAdvisors.find((a: any) => a.id === id);
+  if(advisorToEdit){
+    setAdvisorslist([advisorToEdit]);
     setIsEditMode(true);
   }
   

@@ -3,7 +3,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import CancelIcon from '@mui/icons-material/Cancel';
 import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages, TextFieldManyRows, ErrormsgContent, ErrorName, TextFieldSingleRow, EditButton, UserEndSaveButton } from "./UserEndCommonButtons";
 import { useState } from "react";
-import { addressContentValidation, nameValidation, validateEmail } from "../../utils/Validations";
+import { addressContentValidation, nameValidation, validateEmail1 } from "../../utils/Validations";
 
 
 const UserendFooter = () => {
@@ -116,7 +116,7 @@ return (
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Email</Typography>
-        <TextFieldSingleRow onChange={handleEmailChange} validationFn={validateEmail}
+        <TextFieldSingleRow onChange={handleEmailChange} validationFn={validateEmail1}
          value={footerslide.email}/>
          <ErrorMessages message={footerslide.emailError}/>
         </Stack>

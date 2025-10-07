@@ -7,14 +7,14 @@ import Avatar from '@mui/material/Avatar';
 import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { DescriptionContentValidation, nameValidation, occupationValidation } from "../../utils/Validations";
+import { DescriptionContentValidation, nameValidation, } from "../../utils/Validations";
 
 const UserendTestimonials = () => {
   
  const{classes}=useUserEndwebStyles()
  const[testimonial,setTestimonial]=useState([
   {id:uuidv4(),title:"Testimonal1",name:'',image:'',occupation:'',content:'',nameerror:'',
-    imgerror:'',occupationerror:'',contenterror:''
+    imgerror:'',occupationerror:'',contenterror:'',isSaved:false,
   }
  ])
 const[editSlideId,setEditSlideId]=useState<string |null>(null)
@@ -23,7 +23,7 @@ const[editSlideId,setEditSlideId]=useState<string |null>(null)
    const newTestimonial={id:uuidv4(),
      title: `Testimonial ${testimonial.length+1}`,
      name:'',image:'',occupation:'',content:'',nameerror:'',
-    imgerror:'',occupationerror:'',contenterror:''
+    imgerror:'',occupationerror:'',contenterror:'',isSaved:false,
    };
    setTestimonial([...testimonial,newTestimonial]);
  }
@@ -65,7 +65,7 @@ const[editSlideId,setEditSlideId]=useState<string |null>(null)
    }
   setTestimonial((prev)=>
   prev.map((test)=>
-  test.id===id ? {...test,image:'',imgerror:'',name:'',occupation:'',content:''}:test
+  test.id===id ? {...test,image:'',imgerror:'',name:'',occupation:'',content:'',isSaved:true,}:test
   )
 );
 setEditSlideId(null)
@@ -93,16 +93,16 @@ const handleCancel=(id:string)=>{
 }
 
 const changeNameHandler=(id:string,value:string)=>{
-    const errorvalue=nameValidation(value);
+    const {error}=nameValidation(value);
     const updateTestimonial=testimonial.map((test)=>
-    test.id===id ? {...test,name:value,nameerror:errorvalue}:test);
+    test.id===id ? {...test,name:value,nameerror:error}:test);
     setTestimonial(updateTestimonial)
 }
 
 const occupationHandler=(id:string,value:string)=>{
-  const errorvalue=occupationValidation(value);
+  const {error}=nameValidation(value);
     const updateTestimonial=testimonial.map((test)=>
-    test.id===id ? {...test,occupation:value,occupationerror:errorvalue}:test);
+    test.id===id ? {...test,occupation:value,occupationerror:error}:test);
     setTestimonial(updateTestimonial)
 }
 
@@ -131,11 +131,12 @@ return (
   
   <Box sx={{display:'flex',justifyContent:'end',mt:2}}>
   {index===0 ?
-  <EditButton sliceEdit={()=>sliceEdit(test.id)}/>:
+  <EditButton sliceEdit={()=>sliceEdit(test.id)}
+  disabled={!test.isSaved}/>:
   <UserendEditandDeletebuttons message={`Are you sure wnant to delete ${test.name}`}
   onDelete={()=>onDelete(test.id)}
   sliceEdit={() =>sliceEdit(test.id)}
-  />}
+  disabled={!test.isSaved}/>}
 </Box>
 
   <Stack className={classes.Uploadandheadingbox}>

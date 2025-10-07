@@ -18,6 +18,7 @@ const[chooseSlide,setChooseslide]=useState({
         content: "",
         imgerror: "",
         contenterror: "",
+        isSaved:false,
       }
     )
 const[isEditing,setIsediting]=useState(false)
@@ -45,7 +46,7 @@ const handleContentchange=(value:string,error:string)=>{
 }
 
 const handleSave=()=>{
-  setChooseslide({...chooseSlide,name:'',image:'',content:'',})
+  setChooseslide({...chooseSlide,name:'',image:'',content:'',isSaved:true,})
   localStorage.setItem("chooseValues",JSON.stringify(chooseSlide)) 
  setIsediting(false)
 }   
@@ -73,7 +74,7 @@ return (
       <Box className={classes.useHerocontainer}> 
       <Box mt={2}>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-          <EditButton sliceEdit={handleEdit}/>
+          <EditButton sliceEdit={handleEdit} disabled={!chooseSlide.isSaved}/>
       </Box>
      <Stack className={classes.UploadandAboutbox}>
            <Stack className={classes.UploadImageStack}>

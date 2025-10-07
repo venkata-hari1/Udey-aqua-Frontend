@@ -18,6 +18,7 @@ const [aboutslide, setAboutslide] = useState(
       content: "",
       imgerror: "",
       contenterror: "",
+      isSaved:false,
     })
  const[isEditing,setIsediting]=useState(false)
  const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror  
@@ -46,7 +47,7 @@ const handleContentchange=(value:string,error:string)=>{
 
 
 const handleSave=()=>{
-  setAboutslide({...aboutslide,name:'',image:'',content:'',})
+  setAboutslide({...aboutslide,name:'',image:'',content:'',isSaved:true,})
   localStorage.setItem("aboutValues",JSON.stringify(aboutslide)) 
   setIsediting(false)
 }
@@ -77,7 +78,7 @@ return (
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
        {/* <DeleteButton message="Are you sure want to delte the image?" 
        onDelete={onDelete}/> */}
-       <EditButton sliceEdit={handleEdit}/>
+       <EditButton sliceEdit={handleEdit} disabled={!aboutslide.isSaved}/>
     </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>
