@@ -108,7 +108,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     marginTop: 10,
     marginLeft: 0,
     maxHeight: "80vh",
-    maxWidth: "90%",
+    maxWidth: "80%",
     objectFit: "contain",
     display: "block",
     [theme.breakpoints.down("md")]: {
