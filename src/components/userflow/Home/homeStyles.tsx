@@ -80,7 +80,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   heroMain: {
     width: "100%",
     maxWidth: 1400,
-    minHeight: "60vh",
+    minHeight: "80vh",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

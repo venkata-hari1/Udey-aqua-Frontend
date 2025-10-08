@@ -6,13 +6,18 @@ import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import heroImg from "../../../assets/home/hero_img.png";
 import useHomeStyles from "./homeStyles";
-
+import bluefish from '../../../assets/home/bluefish.gif'
+// import sunfish from '../../../assets/home/sunfish.gif'
+import clownfish from '../../../assets/home/clownfish.gif'
+import angerfish from '../../../assets/home/angelfish.gif'
 import {
   CULTURES_FISH_INITIAL,
   CULTURES_FISH_ANIMATE,
   CULTURES_FISH_TRANSITION,
 } from "../Shared/animations";
 import BubbleCanvas from "./BubbleCanvas";
+import FishAnimation from "./SunFishAnimation";
+import BlueFishAnimation from "./BlueFishAnimation";
 
 const Hero = () => {
   const theme = useTheme();
@@ -20,29 +25,26 @@ const Hero = () => {
   const { classes } = useHomeStyles();
 
   return (
-    <Box className={classes.heroRoot}>
-      {/* <Box className={classes.heroLeftArrowBox}>
-        <IconButton className={classes.heroArrowBtn}>
-          <ArrowBackIosNewIcon className={classes.heroArrowBackIcon} />
-        </IconButton>
-      </Box> */}
+    <Box className={classes.heroRoot} sx={{position:'relative'}}>
+    
       <Box className={classes.heroMain}>
       <Box className="herofish">
- 
-    <Box
+      <Box
       component="img"
-      src={heroImg}
-      className='fish'
+      src={clownfish}
+      className='fish2'
      alt='img'
     />
+    <FishAnimation/>
+    <BlueFishAnimation/>
    <Box
       component="img"
-      src={heroImg}
+      src={angerfish}
       className='fish1'
      alt='img'
     />
-</Box>
-        <Box className={classes.heroImgBox}>
+       </Box>
+        <Box className={classes.heroImgBox} sx={{position:'absolute',left:0}}>
        
           <motion.img
             src={heroImg}
@@ -53,7 +55,7 @@ const Hero = () => {
             transition={CULTURES_FISH_TRANSITION}
           />
         </Box>
-        <Box className={classes.heroTextBoxWrap}>
+        <Box className={classes.heroTextBoxWrap} sx={{position:'absolute',left:0}}>
           <Box className={classes.heroTextBox}>
             <Typography
               variant={isMobile ? "h4" : "h2"}

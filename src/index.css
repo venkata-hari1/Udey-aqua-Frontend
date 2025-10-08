@@ -9,76 +9,55 @@
     overflow: hidden; 
  } 
  
-  .herofish .fish,
-  .herofish .fish1 {
+
+  .herofish .fish1 ,
+  .herofish .fish2
+  {
     position: absolute;
-    width: 20%;
+
   }
   
-  .herofish .fish {
-    left: -30%;
-    margin-top: -3%;
-    animation: fishSwim 12s linear infinite;
+  
+  .herofish .fish2 {
+    width:100px;
+    right: -20%;
+    margin-top: 10%;
+    animation: fishSwimReverse 20s linear infinite;
   }
   
   .herofish .fish1 {
-    right: -30%;
+    width: fit-content;
+    right: -20%;
     bottom: 0;
-    margin-bottom: -3%;
-    animation: fishSwimReverse 12s linear infinite;
+    animation: fishSwimReverse 20s linear infinite;
   }
   
- @keyframes fishSwim {
-    0% {
-      left: -30%;
-      transform: scaleX(1) rotate(20deg);
-    }
-    25% {
-      left: 30%;
-      transform: scaleX(1) rotate(10deg);
-    }
-    50% {
-      left: 100%;
-      transform: scaleX(1) rotate(20deg);
-    }
-    51% {
-      left: 100%;
-      transform: scaleX(-1) rotate(10deg);
-    }
-    75% {
-      left: 30%;
-      transform: scaleX(-1) rotate(20deg);
-    }
-    100% {
-      left: -30%;
-      transform: scaleX(-1) rotate(20deg);
-    }
-  } 
+  
   
   @keyframes fishSwimReverse {
     0% {
-      right: -30%;
-      transform: scaleX(-1) rotate(20deg);
+      right: -20%;
+      transform: scaleX(1)
     }
     25% {
       right: 30%;
-      transform: scaleX(-1) rotate(10deg);
+      transform: scaleX(1)
     }
     50% {
       right: 100%;
-      transform: scaleX(-1) rotate(20deg);
+      transform: scaleX(1);
     }
     51% {
       right: 100%;
-      transform: scaleX(1) rotate(10deg);
+      transform: scaleX(-1);
     }
     75% {
       right: 30%;
-      transform: scaleX(1) rotate(20deg);
+      transform: scaleX(-1);
     }
     100% {
-      right: -30%;
-      transform: scaleX(1) rotate(10deg);
+      right: -20%;
+      transform: scaleX(-1);
     }
   } 
   
