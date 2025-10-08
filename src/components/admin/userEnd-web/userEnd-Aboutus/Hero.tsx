@@ -19,9 +19,13 @@ type HeroProps={
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(subtitle);
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
+    file
 
     
 
@@ -41,6 +45,7 @@ type HeroProps={
    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
     
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
@@ -75,6 +80,7 @@ type HeroProps={
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
     const SaveData = ()=>{
         const Data={
@@ -82,7 +88,12 @@ type HeroProps={
             image:Images
         }
     localStorage.setItem("AUHero", JSON.stringify(Data));
-    setPrevData(true)
+     setIsSaved(true);
+     setPrevData(true);
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
     };
     const CancelData = ()=>{
         const PrevData=localStorage.getItem('AUHero');
@@ -91,22 +102,33 @@ type HeroProps={
             setSubtitle(parsedData.subtitle || "");
             setImage(parsedData.image || []);
             setFile([]);
+            setIsSaved(true);
             setError("");
+
+            
         } else {
             alert("No previous data found!");
         }
+         if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!PrevData);
     }
     useEffect(() => {
         const saved = localStorage.getItem("AUHero");
         if (saved) {
         setPrevData(true);
+         setIsSaved(true);
         }
     }, []);
     return(
         <>
             <Box className={classes.myHeroContainer}>
                 <Box className={classes.deleteButtonBox}>
-                    <EditButton/>
+                    <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
+                        setEdit(true)
+                    }}/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -119,14 +141,15 @@ type HeroProps={
                                     accept="image/*" 
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
+                                    disabled={!Edit}
                                     onChange={HandleFileChange}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                            {(file.length>0 ||prevData) && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(Images.length>0) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -134,6 +157,7 @@ type HeroProps={
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -150,17 +174,28 @@ type HeroProps={
                                         />
                                             </label>
                                         </Box>
-                                        <Box>
+                                        <Box> 
                                             {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box> 
                                 </Box>
                             )}
                             <Box>
-                                { error && (
+                                {  error && (
                                     <Typography className={classes.errorText}>
                                         {error}
                                     </Typography>
@@ -179,14 +214,16 @@ type HeroProps={
                             minRows={5}
                             className={classes.myTextFleid}
                             value={subtitle}
-                            onChange={(e)=>setSubtitle(e.target.value)}
+                            onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={TextFieldError.message}
+                           disabled={!Edit}
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox} >
-                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                    {prevData &&(<CancelButton onClick={CancelData}/>)}
+                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                    {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
             </Box>
         </>

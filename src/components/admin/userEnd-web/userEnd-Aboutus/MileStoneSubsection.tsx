@@ -20,11 +20,15 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
     const [year, setYear] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
 
     const TitleFlied = NameandRoleValidate(Title);
     const YearFlied = YearValidate(year);
     const contentFlied = HelperTextValidate(content);
+    file
     const isTextInvalid = Title.length === 0 || Title.length < 3 || Title.length > 80 || year.length === 0 || year.length < 2 || year.length > 4 || content.length === 0 || content.length < 3 || content.length > 200;
     
 
@@ -43,6 +47,7 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
     
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
@@ -78,13 +83,8 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
-    {/*const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-    };*/}
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };
@@ -106,7 +106,12 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                 }
                 console.log(Data);
             localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
+            setIsSaved(true);
             setPrevData(true)
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
             };
             const CancelData = (title:string,id:string)=>{
                 const PrevData=localStorage.getItem(`${title}_${id}`);
@@ -117,15 +122,22 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                     setContent(parsedData.content || []);
                     setImage(parsedData.image || []);
                     setFile([]); 
+                    setIsSaved(true);
                     setError("");
                 } else {
                     alert("No previous data found!");
                 }
+                if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!prevData)
             }
             useEffect(() => {
                 const saved = localStorage.getItem(`${Section}_${id}`);
                 if (saved) {
                 setPrevData(true);
+                setIsSaved(true);
                 }
             }, []);
     return(
@@ -133,7 +145,9 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
       <Box className={classes.whoWeareHeaderbox}>
         <Typography className={classes.HeaderText}>{id}</Typography>
         <Box display="flex" justifyContent="flex-end" gap={2}>
-          <EditButton/>
+          <EditButton error={! prevData} onClick={()=> {setCancel(true);
+            setEdit(true)
+          }}/>
           {id != 'Milestone-1'&& <DeleteButton onClick={handleDeleteClick}/>}
         </Box>
       </Box>
@@ -149,13 +163,14 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                 id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
                                 onChange={HandleFileChange}
+                                disabled={!Edit}
                                 />
-                        <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                        {(file.length>0 || prevData) && (
+                        <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                        {(Images.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
                                     {Images.map((prev,index)=>
-                                        <Box key={index} sx={{position:'relative'}} >
+                                        <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
                                             <img 
                                                 src={prev}
                                                 alt={`preview ${index+1}`}
@@ -163,6 +178,7 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                             />
                                             <Button className={classes.cancelImgIcon}
                                                      onClick={()=>{removeImage(index)}}
+                                                     disabled={!Edit}
                                                             >
                                                 x
                                             </Button>
@@ -181,9 +197,20 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                     </Box>
                                     <Box>
                                             {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box>  
                             </Box>
@@ -204,16 +231,20 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                         </Typography>
                         <TextField className={classes.myTextFleid}
                                     value={year}
-                                    onChange={(e)=>setYear(e.target.value)}
+                                    onChange={(e)=>{setYear(e.target.value);
+                                            setIsSaved(false)}}
                                     helperText={YearFlied.message}
+                                    disabled={!Edit}
                                     FormHelperTextProps={{className:classes.helperText}}/>
                         <Typography className={classes.mytext}>
                             title
                         </Typography>
                         <TextField className={classes.myTextFleid}
                                     value={Title}
-                                    onChange={(e)=>setTitle(e.target.value)}
+                                    onChange={(e)=>{setTitle(e.target.value);
+                                            setIsSaved(false)}}
                                     helperText={TitleFlied.message}
+                                    disabled={!Edit}
                                     FormHelperTextProps={{className:classes.helperText}}/>
                         <Typography className={classes.mytext}>
                             content
@@ -224,8 +255,10 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                             minRows={5}
                             className={classes.myTextFleid}
                             value={content}
-                            onChange={(e)=>setContent(e.target.value)}
+                            onChange={(e)=>{setContent(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={contentFlied.message}
+                            disabled={!Edit}
                             FormHelperTextProps={{className:classes.helperText}}/>
                 </Box>
                 <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
@@ -253,8 +286,8 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
             </Dialog>
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
-                {prevData &&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
+                <SaveButton error={ isSaved||file.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
+                {cancel&&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
             </Box>
         </>
     )

@@ -21,9 +21,13 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false); 
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const ContentFiled=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
+    file
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200 || content.length === 0 || content.length < 3 || content.length > 200;
 
 
@@ -41,6 +45,7 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const files = event.target.files;
             setError('');
+            setIsSaved(false);
         
             if (files && files.length > 0) {
                 const selectedFiles: File[] = Array.from(files);
@@ -75,6 +80,7 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
+            setIsSaved(false);
     };
     const handleDeleteClick = () => {
         setOpenDialog(true);
@@ -96,7 +102,12 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
             }
             console.log(Data);
         localStorage.setItem(`${Section}_Custom_Subsection_${id}`, JSON.stringify(Data));
-        setPrevData(true)
+         setIsSaved(true);
+         setPrevData(true)
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
         };
         const CancelData = (id:string)=>{
             const PrevData=localStorage.getItem(`${Section}_Custom_Subsection_${id}`);
@@ -105,16 +116,23 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                 setSubtitle(parsedData.title || "");
                 setImage(parsedData.image || []);
                 setContent(parsedData.content)
-                setFile([]); 
+                setFile([]);
+                setIsSaved(true); 
                 setError(""); 
             } else {
                 alert("No previous data found!");
             }
+             if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!prevData)
         }
         useEffect(() => {
             const saved = localStorage.getItem(`${Section}_Custom_Subsection_${id}`);
             if (saved) {
             setPrevData(true);
+            setIsSaved(true);
             }
         }, []);
     return(
@@ -125,7 +143,9 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                         {id}
                     </Typography>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
-                        <EditButton/>
+                        <EditButton error={!prevData} onClick={()=> {setCancel(true);
+                            setEdit(true)
+                        }}/>
                         {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
                     </Box>
                 </Box>
@@ -141,13 +161,14 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                            {(file.length>0 || prevData)&& (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(Images.length>0 || prevData)&& (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -155,6 +176,7 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -172,10 +194,21 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                                             </label>
                                     </Box>
                                     <Box>
-                                            {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                             {(Images.length>0 ) &&(
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box>  
                                 </Box>
@@ -196,8 +229,10 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                             </Typography>
                             <TextField value={subtitle} 
                                    className={classes.myTextFleid}
-                                   onChange={(e)=>setSubtitle(e.target.value)}
+                                   onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                                    helperText={SubtitleField.message}
+                                   disabled={!Edit}
                                    FormHelperTextProps={{className:classes.helperText}}
                         />    
                             <Typography sx={{display:'inline-block',width:'100px',whiteSpace:'normal'}}>
@@ -209,15 +244,17 @@ const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
                                 minRows={5}
                                 value={content} 
                                 className={classes.myTextFleid}
-                                onChange={(e)=>setContent(e.target.value)}
+                                onChange={(e)=>{setContent(e.target.value);
+                                            setIsSaved(false)}}
+                                disabled={!Edit}
                                 helperText={ContentFiled.message}
                                 FormHelperTextProps={{className:classes.helperText}}/>
 
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(id)}/>
-                    {prevData &&(<CancelButton onClick={()=>CancelData(id)}/>)}
+                     <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={()=>SaveData(id)}/>
+                    {cancel &&(<CancelButton onClick={()=>CancelData(id)}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

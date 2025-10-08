@@ -21,9 +21,13 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false); 
     const [prevData, setPrevData] = useState<boolean>(false);
+     const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
+    file
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200 || content.length === 0 || content.length < 3 || content.length > 200;
 
     const validate = (file:File):string | null=>{
@@ -40,6 +44,7 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const files = event.target.files;
             setError('');
+            setIsSaved(false);
         
             if (files && files.length > 0) {
                 const selectedFiles: File[] = Array.from(files);
@@ -74,6 +79,7 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
+            setIsSaved(false);
     };
     const handleDeleteClick = () => {
         setOpenDialog(true);
@@ -95,7 +101,12 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                 }
                 console.log(Data);
             localStorage.setItem(`${subSection}_${id}`, JSON.stringify(Data));
+            setIsSaved(true);
             setPrevData(true)
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
             };
             const CancelData = (subSection:string,id:string)=>{
                 const PrevData=localStorage.getItem(`${subSection}_${id}`);
@@ -104,17 +115,24 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                     setSubtitle(parsedData.subtitle || "");
                     setContent(parsedData.content || "");
                     setImage(parsedData.image || []);
-                    setFile([]); 
+                    setFile([]);
+                    setIsSaved(true); 
                     setError(""); 
                 } else {
                     alert("No previous data found!");
                 }
             
+                 if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!prevData)
             }
             useEffect(() => {
                 const saved = localStorage.getItem(`${subSection}_${id}`);
                 if (saved) {
                 setPrevData(true);
+                setIsSaved(true);
                 }
             }, []);
     return(
@@ -125,8 +143,9 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                         Regular {subSection}
                     </Typography>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
-                        {/*<SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>*/}
-                        <EditButton/>
+                        <EditButton error={ Edit} onClick={()=> {setCancel(true);
+                            setEdit(true)
+                        }}/>
                         <DeleteButton onClick={handleDeleteClick}/>
                     </Box>
                 </Box>
@@ -145,13 +164,14 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                                     id={`upload-file-${accordianId}-${subSection}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButtonTestimonials id={id} accordianId={accordianId} subSection={subSection}/> 
-                            {(file.length>0 || prevData) && (
+                            <UploadButtonTestimonials id={id} accordianId={accordianId} subSection={subSection} disable={!Edit}/> 
+                            {(Images.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index}  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -159,6 +179,7 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -176,10 +197,21 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                                             </label>
                                     </Box>
                                     <Box>
-                                            {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                          {(Images.length>0 ) &&(
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box> 
                                 </Box>
@@ -200,8 +232,10 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                         </Typography>
                         <TextField value={subtitle} 
                                    className={classes.myTextFleid}
-                                   onChange={(e)=>setSubtitle(e.target.value)}
+                                   onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                                    helperText={SubtitleField.message}
+                                   disabled={!Edit}
                                    FormHelperTextProps={{className:classes.helperText}}
                         />
                         <Typography className={classes.mytext}>
@@ -213,14 +247,16 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
                             minRows={5}
                             value={content} 
                             className={classes.myTextFleid}
-                            onChange={(e)=>setContent(e.target.value)}
+                            onChange={(e)=>{setContent(e.target.value);
+                                            setIsSaved(false)}}
+                            disabled={!Edit}
                             helperText={TextFieldError.message}
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                     <SaveButton error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(subSection,id)}/>
-                     {prevData &&(<CancelButton onClick={()=>CancelData(subSection,id)}/>)}
+                     <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={()=>SaveData(subSection,id)}/>
+                    {cancel &&(<CancelButton onClick={()=>CancelData(subSection,id)}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

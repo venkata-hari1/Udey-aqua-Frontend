@@ -44,7 +44,7 @@ const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes } = useSharedStyles();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -55,7 +55,7 @@ const Footer = () => {
 
   const HandleSubscribe=()=>{
     setEmailTouched(true)
-    if (isValidEmail(email)) {
+    if (emailHasError) {
     showToast(true, "Subscribed successfully!");
   } else {
     showToast(false, "Invalid email!");
@@ -159,7 +159,7 @@ const Footer = () => {
               </Box>
             </Box>
             <Box className={classes.flexRoot}>
-              <Box className={classes.navLinksBoxMobile}>
+              <Box className={classes.navLinksBoxMobile} sx={{padding:'0px 15px 0px 15px'}}>
                 {navLinks1.map((link) => (
                   <Typography
                     key={link}

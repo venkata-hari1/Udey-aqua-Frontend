@@ -12,7 +12,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     position: "fixed",
     top: 0,
     left: 0,
-    width: "100%",
+    width: "100%", 
     height: "100vh",
     backgroundColor: "#FFFFFFE5",
   },
@@ -170,7 +170,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("md")]: {
       paddingBottom: 50,
       marginTop: "50px",
       paddingLeft: theme.spacing(1),
@@ -182,7 +182,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     marginBottom: 0,
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("md")]: {
       justifyContent: "flex-start",
       marginBottom: theme.spacing(2),
     },
@@ -190,7 +190,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   footerLogo: {
     width: 180,
     marginBottom: theme.spacing(2),
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("md")]: {
       width: 80,
       marginTop: 20,
     },
@@ -206,10 +206,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     gap: 0,
     justifyContent: "center",
     position: "relative",
-    [theme.breakpoints.down("lg")]: {
-      flexDirection: "column",
-      gap: theme.spacing(2),
-    },
+    //[theme.breakpoints.down("md")]: {
+    //  flexDirection: "column",
+    //  gap: theme.spacing(2),
+    //  },
   },
   subscribeInput: {
     flex: 1,
@@ -226,16 +226,17 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: "auto",
     minWidth: 0,
     marginBottom: 0,
-    [theme.breakpoints.down("lg")]: {
-      ...TYPOGRAPHY.body1(theme),
-      height: "24px",
-      fontSize: "12px",
-      width: "100%",
-      borderRadius: 10,
-      marginTop: 30,
-      marginBottom: 10,
-      padding: "1.5px 0px 1.5px 10px",
-    },
+    //[theme.breakpoints.down("md")]: {
+      //...TYPOGRAPHY.body1(theme),
+     // height: "24px",
+     // fontSize: "12px",
+      //width: "auto",
+     // borderRadius: 10,
+      //marginTop: 30,
+      //marginBottom: 10,
+      //padding: "1.5px 0px 1.5px 10px",
+        
+   // },
   },
   subscribeInputError: {
     border: `1px solid #d32f2f`,
@@ -249,9 +250,16 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     letterSpacing: 0.5,
     minWidth: 0,
     "&:hover": { background: COLORS.HERO_BLUE },
-    [theme.breakpoints.down("lg")]: {
-      ...TYPOGRAPHY.body1(theme),
-    },
+    //[theme.breakpoints.down("md")]: {
+      //...TYPOGRAPHY.body1(theme),
+      //...baseStyles.button(theme),
+      //background: COLORS.SECONDARY_BLUE,
+      //color: COLORS.WHITE,
+     // marginRight: theme.spacing(1),
+      //height: 28,
+      //letterSpacing: 0.5,
+      //width:100
+    //},
   },
   topInBig: {
     marginTop: "90px",
@@ -416,6 +424,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     display: "flex",
     flexWrap: "wrap",
+    
   },
   flexSide: {
     display: "flex",

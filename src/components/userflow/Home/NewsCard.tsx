@@ -53,14 +53,16 @@ const NewsCard: React.FC<NewsCardProps> = ({
           alt={title}
           className={classes.newsCardImg}
         />
-        <PDFButton
-          imageUrl={image}
-          title={title}
-          author={author}
-          date={date}
-          description={description}
-          body={[]} // News cards don't have full body content
-        />
+        <Box sx={{ position: 'absolute', top:12,right:60 }}>
+          <PDFButton
+            imageUrl={image}
+            title={title}
+            author={author}
+            date={date}
+            description={description}
+            body={[]} // News cards don't have full body content
+          />
+        </Box>
         <Box className={classes.newsCardDateBox}>
           <Typography className={classes.newsCardDateDay}>{day}</Typography>
           <Typography className={classes.newsCardDateMonth}>{month}</Typography>

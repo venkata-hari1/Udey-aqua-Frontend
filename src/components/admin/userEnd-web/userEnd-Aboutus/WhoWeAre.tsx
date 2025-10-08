@@ -20,9 +20,13 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
     const [counter, setCounter] = useState<any>([1]);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(subtitle);
     var isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
+    file
 
     const validate = (file:File):string | null=>{
         const maxSize=5 *1024*1024;
@@ -38,6 +42,9 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
+
+
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
             selectedFiles.forEach(file => {
@@ -68,14 +75,8 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
-    {/*const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-        localStorage.removeItem("WWAHeader")
-      };*/}
 
     const handleAddSubpage = () => {
         const newId = `Sub Section-${counter.length+1}`; // unique id
@@ -93,7 +94,12 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
         }
         console.log(Data);
     localStorage.setItem("WWAHeader", JSON.stringify(Data));
-    setPrevData(true)
+    setIsSaved(true);
+    setPrevData(true);
+    setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
     };
     const CancelData = ()=>{
         const PrevData=localStorage.getItem('WWAHeader');
@@ -102,16 +108,23 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
             setSubtitle(parsedData.subtitle || "");
             setImage(parsedData.image || []);
             setFile([]); 
+            setIsSaved(true);
             setError(""); 
         } else {
             alert("No previous data found!");
         }
+         if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!PrevData);
     
     }
     useEffect(() => {
         const saved = localStorage.getItem("WWAHeader");
         if (saved) {
         setPrevData(true);
+        setIsSaved(true);
         }
     }, []);
     return(
@@ -122,8 +135,9 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                 </Box>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
-                    {/*<DeleteButton onClick={handleDeleteAll}/>*/}
-                    <EditButton/>
+                    <EditButton error={!prevData} onClick={()=>{ setCancel(true);
+                        setEdit(true)
+                    }}/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -137,13 +151,14 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                            {(file.length>0|| prevData) && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(Images.length>0|| prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -151,6 +166,7 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -168,10 +184,21 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                                             </label>
                                         </Box>
                                         <Box>
-                                            {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                             {(Images.length>0 ) &&(
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box> 
                                 </Box>
@@ -194,17 +221,19 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                             fullWidth
                             multiline
                             minRows={5}
+                            disabled={!Edit}
                             className={classes.myTextFleid}
                             value={subtitle}
-                            onChange={(e)=>setSubtitle(e.target.value)}
+                            onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             FormHelperTextProps={{className:classes.helperText}}
                             />
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                        <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                        {prevData &&(<CancelButton onClick={CancelData}/>)}
+                        <UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                        {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <Subsection  id='Sub Section-1' accordianId="2" Section={Section} />
                 {subpages.map((sub) => (
