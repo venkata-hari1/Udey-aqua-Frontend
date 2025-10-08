@@ -1,4 +1,3 @@
-// src/components/userflow/About/OurTeam.tsx
 import {
   Box,
   Grid,
@@ -18,7 +17,7 @@ import {
 } from "@mui/icons-material";
 import useAboutStyles from "./aboutStyles";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/about_us/team.png";
 
 // Images
@@ -44,7 +43,7 @@ interface Member {
 
 const membersData: Member[] = [
   {
-    name: "Mr. Uday Kishan Cherukuneedi",
+    name: "Mr. Uday Kishan",
     designation: "Managing Director",
     bigDesignation: "Managing Director – Uday Aqua Connects Private Ltd.",
     qualification: "(M.Pharm,MBA(IIM-Kolkata))",
@@ -111,7 +110,8 @@ const OurTeam = () => {
   const { classes } = useAboutStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  /* const navigate = useNavigate(); */
+  const navigate = useNavigate();
+  const { memberSlug } = useParams<{ memberSlug?: string }>();
 
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");

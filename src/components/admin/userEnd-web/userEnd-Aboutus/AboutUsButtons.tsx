@@ -14,10 +14,15 @@ export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
         </Button>
     )
 }
-export const EditButton=()=>{
+type Editprops={
+    onClick?:()=>void;
+    error?:boolean
+}
+export const EditButton=({onClick, error}:Editprops)=>{
     const {classes} =useUserEndwebStyles();
     return(
-        <Button variant="contained"   className={classes.SaveButton}  >
+         <Button variant="contained" disabled={error}  className={classes.SaveButton} sx={{backgroundColor: error ? "grey" : "#0A4FA4",}} onClick={onClick}>
+        
             edit
         </Button>
     )
@@ -27,14 +32,16 @@ type UploadProps={
     id?:string;
     accordianId?:string;
     Section?:string;
+    disable?:boolean
 }
-export const UploadButton=({id,accordianId,Section}:UploadProps)=>{
+export const UploadButton=({id,accordianId,Section,disable}:UploadProps)=>{
     return(
         <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                         <Button
                         variant="outlined"
                         component="span"
-                        endIcon={<FileUploadOutlinedIcon sx={{color:'rgba(10,79,164,1)'}}/>}
+                        disabled={disable}
+                        endIcon={<FileUploadOutlinedIcon sx={{color: disable ? "grey" : "#0A4FA4",}}/>}
                         >
                         Upload
                         </Button>
@@ -45,14 +52,16 @@ type TestimonialProps={
     id?:string;
     accordianId?:string
     subSection?:string
+    disable?:boolean
 }
-export const UploadButtonTestimonials=({id,accordianId, subSection}:TestimonialProps)=>{
+export const UploadButtonTestimonials=({id,accordianId, subSection, disable}:TestimonialProps)=>{
     return(
         <label htmlFor={`upload-file-${accordianId}-${subSection}-${id}`}>
                         <Button
                         variant="outlined"
                         component="span"
-                        endIcon={<FileUploadOutlinedIcon sx={{color:'rgba(10,79,164,1)'}}/>}
+                        disabled={disable}
+                        endIcon={<FileUploadOutlinedIcon sx={{color: disable ? "grey" : "#0A4FA4",}}/>}
                         >
                         Upload
                         </Button>

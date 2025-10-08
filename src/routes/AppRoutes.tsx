@@ -51,6 +51,8 @@ import UserEndweb from "../components/admin/userEnd-web/UserEndweb";
 import UserEndHome from "../components/admin/userEnd-web/userEndHome/UserEndHome";
 import Logout from "../components/admin/auth/Logout";
 import CultureHome from "../components/admin/userEnd-web/userEnd-Cultures/CultureHome";
+import TrainingPrograms from "../components/admin/userEnd-web/userEnd-TrainingPrograms/TrainingPrograms";
+import Technologies from "../components/admin/userEnd-web/userEnd-Technologies/Technologies";
 //user
 import Layout from "../components/userflow/Shared/Layout";
 import Home from "../components/userflow/Home/Home";
@@ -132,8 +134,12 @@ const AppRoutes = () => {
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
         <Route path="userend-web/userend-aboutus" element={<AboutUs/>}/>
-        <Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage/>}/>
-        <Route path="userend-web/userend-culture" element={<CultureHome />} />        
+        <Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage Section='About us'/>}/>
+        <Route path="userend-web/userend-culture" element={<CultureHome />} />
+        <Route path="userend-web/userend-trainingprograms" element={<TrainingPrograms/>}/>
+        <Route path='userend-web/userend-trainingprograms/subpage' element={<Addsubpage Section='Training Programs'/>}/>
+        <Route path="userend-web/userend-technologies" element={<Technologies/>}/>
+        <Route path='userend-web/userend-technologies/subpage' element={<Addsubpage Section='Technologies'/>}/>        
         
         <Route path="logout" element={<Logout />} />  
       </Route>
