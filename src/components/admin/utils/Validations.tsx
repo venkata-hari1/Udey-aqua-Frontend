@@ -6,9 +6,13 @@ export const validateEmail = (email: string): string => {
     if(email.length===0){
       return "Email cannot be empty";
     }
+    if(email.startsWith(".") || email.endsWith(".")){
+      return "Email cannot start or end with '.'";
+    }
     if(!emailRegex.test(email)){
       return "Enter a valid email ID";
-    }else{
+    }
+    else{
         return ""
     }
  };
@@ -76,20 +80,17 @@ export const nameValidation=(name:any):string=>{
   return "";
 }
 
+export const phoneNumbervalidation=(phone:any):string=>{ 
+  if(phone.length===0){ 
+    return "Phone number cannot be empty" 
+  }else if(/[^0-9]/.test(phone)){ 
+    return "*Only numbers are allowed" 
+  }else if(phone.length!==10){
+     return "Phone number must be exactly 10 digits" 
+  } 
+    else{ return "" } 
+  }
 
-export const phoneNumbervalidation=(phone:any):string=>{
-  
-  if(phone.length===0){
-    return "Phone number cannot be empty"
-  }else if(/[^0-9]/.test(phone)){
-    return "*Only numbers are allowed"
-   }else if(phone.length!==10){
-    return "Phone number must be exactly 10 digits"
-  }
-  else{
-    return ""
-  }
-}
 
 export const addressContentValidation=(content:any)=>{
  
@@ -196,3 +197,26 @@ export const validateVideo=(file:File)=>{
   }
   return null;
 }
+
+export const HeadingContentValidation = (content: string) => {
+  const maxChars = 100;
+  const minChars = 3;
+
+  if (content.length === 0 || content.length < minChars) {
+    return {
+      error: `* Must contain at least ${minChars} characters. Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else if (content.length > maxChars) {
+    return {
+      error: `* Character limit exceeded. Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else {
+    return {
+      error: "",
+      isError: false,
+    };
+  }
+};
+

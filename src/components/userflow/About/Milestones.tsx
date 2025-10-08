@@ -1,5 +1,7 @@
 // src/components/userflow/About/Milestones.tsx
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography,useMediaQuery,
+  useTheme, } from "@mui/material";
+import AboutHero from "./AboutHero";
 import useAboutStyles from "./aboutStyles";
 import fishSvg from "../../../assets/icons/fish.svg";
 import img from "../../../assets/about_us/milestones.png";
@@ -61,8 +63,11 @@ const Milestones = () => {
   const { classes } = useAboutStyles();
   const navigate = useNavigate();
 
+  const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
+      {!isMobile&&<AboutHero currentLabel="Milestones" />}
       <Typography className={classes.mileStoneHeader}>Milestones</Typography>
       <Typography className={classes.mileStoneSubtitle}>
         Our Journey in Aquaculture Innovation
@@ -132,12 +137,13 @@ const Milestones = () => {
             );
           })}
         </Box>
-        <Box className={classes.backButtonWrapper} onClick={() => navigate(-1)}>
+       
+      </Box>
+       <Box className={classes.backButtonWrapper} onClick={() => navigate(-1)}>
           <Box className={classes.backButton}>
             <ArrowBack />
           </Box>
         </Box>
-      </Box>
     </>
   );
 };

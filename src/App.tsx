@@ -9,7 +9,6 @@ import 'react-quill-new/dist/quill.snow.css';
 
 function App() {
   const AppRoutes=React.lazy(()=>import('./routes/AppRoutes'))
-
   return (
     <Suspense fallback={<Loading />}>
       <AppRoutes />

@@ -2,3 +2,89 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.herofish { 
+    width: 100%; 
+    height: 100%;
+    position: absolute; 
+    overflow: hidden; 
+ } 
+ 
+
+  .herofish .fish1 ,
+  .herofish .fish2
+  {
+    position: absolute;
+
+  }
+  
+  
+  .herofish .fish2 {
+    width:25%;
+    right: -30%;
+    margin-top: -1%;
+    transform: scaleX(-1);
+    animation: fishSwimReverse 13s linear infinite;
+  }
+  
+  .herofish .fish1 {
+    width: 25%;
+    left: -30%;
+    bottom: 0;
+    margin-bottom: -5% !important;
+    animation: fishSwim 13s linear infinite;
+  }
+  @keyframes fishSwim {
+    0% {
+      left: -30%;
+      transform: scaleX(1) rotate(25deg)
+    }
+    25% {
+      left: 30%;
+      transform: scaleX(1) rotate(15deg)
+    }
+    50% {
+      left: 100%;
+      transform: scaleX(1) rotate(25deg)
+    }
+    51% {
+      left: 100%;
+      transform: scaleX(-1) rotate(15deg)
+    }
+    75% {
+      left: 30%;
+      transform: scaleX(-1) rotate(25deg)
+    }
+    100% {
+      left: -30%;
+      transform: scaleX(-1) rotate(15deg)
+    }
+  } 
+  
+  
+  @keyframes fishSwimReverse {
+    0% {
+      right: -30%;
+      transform: scaleX(-1)  rotate(25deg)
+    }
+    25% {
+      right: 30%;
+      transform: scaleX(-1)  rotate(15deg)
+    }
+    50% {
+      right: 100%;
+      transform: scaleX(-1)  rotate(25deg)
+    }
+    51% {
+      right: 100%;
+      transform: scaleX(1)  rotate(15deg)
+    }
+    75% {
+      right: 30%;
+      transform: scaleX(1)  rotate(25deg)
+    }
+    100% {
+      right: -30%;
+      transform: scaleX(1)  rotate(15deg)
+    }
+  } 
+  

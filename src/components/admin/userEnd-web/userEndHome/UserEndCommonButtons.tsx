@@ -299,11 +299,15 @@ export const ErrorMessages = ({message}:ErrorMessageProps) => {
   );
 };
 
-export const ErrormsgTitle = () => {
+interface ErrorHeadingProps{
+  message?:string;
+}
+
+export const ErrormsgTitle = ({message}:ErrorHeadingProps) => {
   const { classes } = useUserEndwebStyles();
   return (
     <Typography className={classes.errorUpload}>
-      Max 200 characters required
+      {message}
     </Typography>
   );
 };

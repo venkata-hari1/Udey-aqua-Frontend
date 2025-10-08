@@ -4,10 +4,10 @@ import {
   Box,
   Typography,
   Button,
-  InputBase,
   InputAdornment,
   useTheme,
   useMediaQuery,
+  TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -63,7 +63,7 @@ const Footer = () => {
 
   }
 
-  const handleNavigation = (link: string) => {
+ const handleNavigation = (link: string) => {
     switch (link) {
       case "Home":
         navigate("/");
@@ -300,8 +300,11 @@ const Footer = () => {
               />
             </Box>
             <Box>
-              <Box className={classes.subscribeBox}>
-                <InputBase
+              <Box /* className={classes.subscribeBox} */>
+                <TextField
+                  size="small"
+                  fullWidth
+                  variant="outlined"
                   placeholder="Enter Email"
                   value={email}
                   onChange={(e) => {setEmail(e.target.value);

@@ -1,6 +1,5 @@
 // src/components/userflow/Home/Partners.tsx
 import { Box } from "@mui/material";
-import { motion } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import fishBg from "../../../assets/home/partners_img.png";
 
@@ -11,11 +10,7 @@ import nabard from "../../../assets/partners/nabard.png";
 import icar from "../../../assets/partners/icar.png";
 import { useRef, useState, useEffect } from "react";
 import useHomeStyles from "./homeStyles";
-import {
-  PARTNERS_FISH_INITIAL,
-  PARTNERS_FISH_ANIMATE,
-  PARTNERS_FISH_TRANSITION,
-} from "../Shared/animations";
+
 
 const partners = [
   { src: ciba, alt: "CIBA" },
@@ -101,14 +96,23 @@ const PartnersSection = () => {
           ))}
         </Box>
       </Box>
-      <motion.img
+      <Box className='herofish'>
+      <Box
+        src={fishBg}
+        component={'img'}
+        alt=""
+        className="fish1"
+       
+      />
+      </Box>
+      {/* <motion.img
         src={fishBg}
         alt=""
         className={classes.partnersBgImg}
         initial={PARTNERS_FISH_INITIAL}
         animate={PARTNERS_FISH_ANIMATE}
         transition={PARTNERS_FISH_TRANSITION}
-      />
+      /> */}
     </Box>
   );
 };

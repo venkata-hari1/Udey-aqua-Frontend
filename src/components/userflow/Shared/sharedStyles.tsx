@@ -215,7 +215,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     flex: 1,
     borderRadius: 999,
     background: COLORS.WHITE,
-    border: `1px solid transparent`,
+   /*  border: `1px solid transparent`, */
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
@@ -238,9 +238,38 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
         
    // },
   },
-  subscribeInputError: {
+  /* subscribeInputError: {
     border: `1px solid #d32f2f`,
   },
+  */
+
+  subscribeInput2:{
+    "& .MuiOutlinedInput-root": {
+            backgroundColor: "#FFFFFF", 
+            borderRadius: "28px",
+            paddingTop: "3px",
+            paddingBottom: "3px",
+             "& fieldset": {
+              borderColor: "#ccc",
+            },
+            "&:hover fieldset": {
+              borderColor: "#999",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#156082",
+            },
+            "& input::placeholder": {
+              color:'#4F7596',
+              fontFamily:"Inter",
+              fontSize:"18px",
+              paddingTop:'2px',
+            }
+          },
+          // helper text stays outside background
+          "& .MuiFormHelperText-root": {
+            marginTop: "4px",
+          },
+},
   subscribeButton: {
     ...baseStyles.button(theme),
     background: COLORS.SECONDARY_BLUE,

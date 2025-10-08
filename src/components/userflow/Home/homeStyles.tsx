@@ -80,17 +80,20 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   heroMain: {
     width: "100%",
     maxWidth: 1400,
-    minHeight: "60vh",
+    minHeight: "80vh",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     background: "transparent",
+    position:'relative !important' as 'relative',
+    overflow:'hidden' as 'hidden',
     marginTop: "100px",
     [theme.breakpoints.down("md")]: {
       minHeight: "30vh",
     },
   },
+  
   heroImgBox: {
     flex: "0 0 60%",
     display: "flex",
@@ -105,7 +108,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     marginTop: 10,
     marginLeft: 0,
     maxHeight: "80vh",
-    maxWidth: "100%",
+    maxWidth: "80%",
     objectFit: "contain",
     display: "block",
     [theme.breakpoints.down("md")]: {
@@ -796,6 +799,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
     position: "relative",
     overflow: "visible",
+    [theme.breakpoints.down('md')]:{
+      paddingTop:'10px',
+      paddingLeft:"10px",
+      paddingRight:'10px'
+    }
   },
   aboutUsVideo: {
     width: "100%",

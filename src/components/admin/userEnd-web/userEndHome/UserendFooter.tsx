@@ -23,7 +23,10 @@ const[footerslide,setFooterslide]=useState({
 })
 
 
- const handleUpload=(file:File)=>{
+const isDisabled= !footerslide.image || !footerslide.email ||!footerslide.address
+||!!footerslide.nameError || !!footerslide.imgError || !!footerslide.emailError || !!footerslide.addressError
+ 
+const handleUpload=(file:File)=>{
   const imageUrl = URL.createObjectURL(file);
   const updatedFooterslide={...footerslide,image:imageUrl,imgError:''}
   setFooterslide(updatedFooterslide) 
@@ -69,6 +72,7 @@ const sliceEdit=()=>{
       name:parsed.name,
       email:parsed.email,
       address:parsed.address,
+      image:parsed.image
      });
    }
 }
@@ -120,8 +124,7 @@ return (
         </Stack> 
       </Box>
       </Stack> 
-      <UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel}/> 
-       
+      <UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel} disabled={isDisabled}/> 
        </Box> 
        </Box>
   )

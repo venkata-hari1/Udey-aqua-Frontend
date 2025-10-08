@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 /* import fishImg from './../../../../assets/admin/userendabout.jpg' */
 import CancelIcon from '@mui/icons-material/Cancel';
-import { DeleteButton, ErrorMessages, ErrormsgContent, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
+import {EditButton, ErrorMessages, ErrormsgContent, TextFieldManyRows, Uploadbutton, UserEndSaveCancelButtons } from "./UserEndCommonButtons";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
@@ -43,19 +43,37 @@ const handleContentchange=(value:string,error:string)=>{
     console.log(updatedContent)
 }
 
-const onDelete=()=>{
-  setAboutslide({...aboutslide,image:""}) 
-}
+
 const handleSave=()=>{
-   console.log(aboutslide)
+  setAboutslide({...aboutslide,name:'',image:'',content:'',})
+  localStorage.setItem("aboutValues",JSON.stringify(aboutslide)) 
 }
-      return (
+
+const handleEdit=()=>{
+  const savedData=localStorage.getItem("aboutValues");
+  if(savedData){
+    const parsed=JSON.parse(savedData);
+     setAboutslide({
+      ...aboutslide,
+      name:parsed.name,
+      content:parsed.content,
+      image:parsed.image
+     });
+  }
+}
+
+const onCancel=()=>{
+   setAboutslide({...aboutslide,image:"",content:"",contenterror:"",imgerror:""})  
+}
+  
+return (
    <Box>    
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <DeleteButton message="Are you sure want to delte the image?" 
-       onDelete={onDelete}/>
+       {/* <DeleteButton message="Are you sure want to delte the image?" 
+       onDelete={onDelete}/> */}
+       <EditButton sliceEdit={handleEdit}/>
     </Box>
   <Stack className={classes.UploadandAboutbox}>
         <Stack className={classes.UploadImageStack}>
@@ -74,13 +92,14 @@ const handleSave=()=>{
         </Stack>
         <Stack display="flex" justifyContent="flex-start" gap={1}>
         <Typography className={classes.titleText}>Content</Typography>
-        <TextFieldManyRows onChange={(value, error) =>
+        <TextFieldManyRows value={aboutslide.content} onChange={(value, error) =>
                         handleContentchange(value, error)
                       }/>   
         <ErrormsgContent message={aboutslide.contenterror}/>
         </Stack>
       </Stack>
-      <UserEndSaveCancelButtons onSave={handleSave} disabled={isSaveDisabled}/>
+      <UserEndSaveCancelButtons onSave={handleSave} 
+      onCancel={onCancel}disabled={isSaveDisabled}/>
   </Box>
   </Box>
     </Box>
