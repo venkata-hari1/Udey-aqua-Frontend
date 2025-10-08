@@ -1046,6 +1046,15 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   footerSocialIconWhite: {
     color: COLORS.WHITE,
+    width: 24,
+    height: 24,
+    objectFit: "contain",
+  },
+  twitterIconWhite: {
+    color: COLORS.WHITE,
+    width: 14,
+    height: 14,
+    objectFit: "contain",
   },
   headerSearchIcon: {
     ...TYPOGRAPHY.subtitle1(theme),

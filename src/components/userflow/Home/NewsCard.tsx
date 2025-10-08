@@ -12,6 +12,7 @@ export interface NewsCardProps {
   author: string;
   authorLink?: string;
   autoWidth?: boolean;
+  hidePdfMark?: boolean;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({
@@ -22,6 +23,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
   author,
   authorLink,
   autoWidth = false,
+  hidePdfMark = false,
 }) => {
   const [day, month, year] = date.split(" ");
   const { classes } = useHomeStyles();
@@ -53,7 +55,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
           alt={title}
           className={classes.newsCardImg}
         />
-        <Box sx={{ position: 'absolute', top:12,right:60 }}>
+        {!hidePdfMark && (
           <PDFButton
             imageUrl={image}
             title={title}
@@ -62,7 +64,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
             description={description}
             body={[]} // News cards don't have full body content
           />
-        </Box>
+        )}
         <Box className={classes.newsCardDateBox}>
           <Typography className={classes.newsCardDateDay}>{day}</Typography>
           <Typography className={classes.newsCardDateMonth}>{month}</Typography>

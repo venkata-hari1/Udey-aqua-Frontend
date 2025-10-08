@@ -34,6 +34,7 @@ import newsImg3 from "../../../assets/news_and_blogs/news_3.jpg";
 
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
 import calendarIcon2 from "../../../assets/icons/calendar.svg";
+import PdfMark from "./components/PdfMark";
 
 interface NewsItem {
   id: number;
@@ -420,22 +421,31 @@ const News = () => {
     return (
       <Box className={classes.newsDetailView} ref={detailTopRef}>
         <Box className={classes.newsDetailHeader}>
-          <Box className={classes.newsDetailCalendarTopRight}>
+          <Box sx={{ position: 'relative' }}>
             <Box
               component="img"
-              src={calendarIcon}
-              alt="Calendar"
-              width={16}
-              height={16}
+              src={detail.image}
+              alt={detail.title}
+              className={classes.newsDetailImage}
             />
-            <Typography variant="body2">{detail.date}</Typography>
+            <Box sx={{ position: 'absolute', top: 8, left: 8, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box component="img" src={calendarIcon} alt="Calendar" width={16} height={16} />
+              <Typography variant="body2">{detail.date}</Typography>
+            </Box>
+            <PdfMark 
+              imageUrl={detail.image}
+              newsData={{
+                imageUrl: detail.image,
+                title: detail.title,
+                date: detail.date,
+                description: detail.description,
+                author: detail.author,
+                body: detail.body,
+              }}
+              position="top-right" 
+              size="medium" 
+            />
           </Box>
-          <Box
-            component="img"
-            src={detail.image}
-            alt={detail.title}
-            className={classes.newsDetailImage}
-          />
         </Box>
 
         <Box className={classes.newsDetailContent}>
@@ -515,9 +525,9 @@ const News = () => {
                   >
                     {news.title}
                   </Typography>
-                  <Typography className={classes.newsDate}>
-                    Date: {news.date}
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
+                    <Typography className={classes.newsDate}>{news.date}</Typography>
+                  </Box>
                   <Typography
                     variant="body2"
                     className={classes.newsDescription}
@@ -543,8 +553,8 @@ const News = () => {
               />
               <PdfMark 
                 imageUrl={update.image}
-                position="top-right"
-                size="small"
+                position="bottom-left"
+                size="large"
               />
             </Box>
           ))}
@@ -614,8 +624,10 @@ const News = () => {
               className={
                 news.id === lastReadId ? classes.newsCardHighlight : undefined
               }
+              sx={{ position: 'relative' }}
             >
-              <NewsCard autoWidth {...news} />
+              <NewsCard autoWidth hidePdfMark {...news} />
+              <PdfMark imageUrl={news.image} position="bottom-left" size="large" />
             </Box>
           ))}
         </Box>

@@ -1,6 +1,6 @@
 // src/components/userflow/NewsEvents/components/PdfMark.tsx
-import { Box, IconButton, Tooltip } from '@mui/material';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { Box, Tooltip } from '@mui/material';
+import pdfIcon from '../../../../assets/icons/pdf_red.svg';
 import { useState } from 'react';
 import { convertImageToPDF, convertNewsImageToPDF, type NewsImageData } from '../../../../utils/pdfConverter';
 
@@ -21,7 +21,6 @@ const PdfMark: React.FC<PdfMarkProps> = ({
 
   const handlePdfConversion = async () => {
     if (isConverting) return;
-    
     setIsConverting(true);
     try {
       if (newsData) {
@@ -31,7 +30,6 @@ const PdfMark: React.FC<PdfMarkProps> = ({
       }
     } catch (error) {
       console.error('PDF conversion failed:', error);
-      // You could show a toast notification here
       alert('Failed to generate PDF. Please try again.');
     } finally {
       setIsConverting(false);
@@ -65,35 +63,18 @@ const PdfMark: React.FC<PdfMarkProps> = ({
     };
   };
 
+  const sizePx = 36;
+
   return (
     <Tooltip title={isConverting ? "Generating PDF..." : "Convert to PDF"} arrow>
-      <Box sx={getPositionStyles()}>
-        <IconButton
-          onClick={handlePdfConversion}
-          disabled={isConverting}
-          sx={{
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            backdropFilter: 'blur(4px)',
-            border: '2px solid #1976d2',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-            '&:hover': {
-              backgroundColor: 'rgba(25, 118, 210, 0.1)',
-              transform: 'scale(1.05)',
-            },
-            '&:disabled': {
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              color: 'rgba(0, 0, 0, 0.3)',
-            },
-            transition: 'all 0.2s ease-in-out',
-          }}
-        >
-          <PictureAsPdfIcon 
-            sx={{ 
-              color: isConverting ? 'rgba(0, 0, 0, 0.3)' : '#1976d2',
-              fontSize: size === 'small' ? 18 : size === 'medium' ? 22 : 26,
-            }} 
-          />
-        </IconButton>
+      <Box
+        onClick={handlePdfConversion}
+        sx={{
+          ...getPositionStyles(),
+          cursor: isConverting ? 'default' : 'pointer',
+        }}
+      >
+        <img src={pdfIcon} alt="PDF" style={{ width: sizePx, height: sizePx, display: 'block'}} />
       </Box>
     </Tooltip>
   );

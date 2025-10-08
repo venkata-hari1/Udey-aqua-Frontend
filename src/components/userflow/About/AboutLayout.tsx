@@ -1,17 +1,16 @@
 // src/components/userflow/About/AboutLayout.tsx
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
+// import { motion } from "framer-motion";
+// import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useAboutStyles from "./aboutStyles";
 import ContactBox from "../Shared/ContactBox";
 import AboutHero from "./AboutHero";
-
-import {
-  ABOUT_FISH_INITIAL,
-  ABOUT_FISH_ANIMATE,
-  ABOUT_FISH_TRANSITION,
-} from "../Shared/animations";
+// import {
+//   ABOUT_FISH_INITIAL,
+//   ABOUT_FISH_ANIMATE,
+//   ABOUT_FISH_TRANSITION,
+// } from "../Shared/animations";
 
 const sidebarItems = [
   { label: "Who We Are", path: "/about" },
@@ -62,19 +61,11 @@ const AboutLayout = () => {
                 ))}
               </Box>
               <ContactBox />
-              <Box className={classes.aboutSidebarFish}>
-                <motion.img
-                  src={aboutSideFish}
-                  alt="Fish"
-                  initial={ABOUT_FISH_INITIAL}
-                  animate={ABOUT_FISH_ANIMATE}
-                  transition={ABOUT_FISH_TRANSITION}
-                />
-              </Box>
+              {/* Removed side fish to allow main content to take full width */}
             </Grid>
           )}
           {isMobile && <ContactBox />}
-          <Grid size={{ xs: 12, md: 10 }} className={classes.aboutMainContent}>
+          <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
             <Outlet />
           </Grid>
         </Grid>

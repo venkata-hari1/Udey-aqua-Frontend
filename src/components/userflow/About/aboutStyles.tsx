@@ -98,9 +98,11 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     maxWidth: "100%",
     marginLeft: "auto",
     marginRight: "auto",
+    zIndex: 1,
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(2),
       marginBottom: theme.spacing(6),
+      zIndex: 1,
     },
   },
   aboutCardTitle: {
@@ -185,6 +187,11 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     minHeight: "100vh",
     background: COLORS.BLUE_GRAY,
+    overflow: "visible",
+    [theme.breakpoints.down("sm")]: {
+      minHeight: "auto",
+      height: "auto",
+    },
   },
   aboutHero: {
     width: "100vw",
@@ -200,6 +207,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       minHeight: "30vh",
       height: "30vh",
+    },
+    [theme.breakpoints.down("sm")]: {
+      minHeight: "20vh",
+      height: "20vh",
     },
   },
   aboutHeroImg: {
@@ -355,10 +366,19 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(20),
     position: "relative",
+    overflow: "visible",
+    transform: "none",
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(3),
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
+      overflow: "visible",
+      transform: "none",
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
   },
   aboutMainRow: {
@@ -368,11 +388,20 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginRight: 64,
     marginTop: 48,
     minHeight: "100vh",
+    transform: "none",
     [theme.breakpoints.down("md")]: {
       marginLeft: 0,
       marginRight: 0,
       marginTop: 16,
-      minHeight: "fit-content",
+      minHeight: "auto",
+      height: "auto",
+      overflow: "visible",
+      transform: "none",
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginTop: 8,
+      minHeight: "auto",
+      height: "auto",
     },
   },
   aboutSidebarContactTitle: {
@@ -1103,9 +1132,19 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   // Testimonials Styles
   
   testimonialCarouselWrapper: {
-    maxWidth: 1200,
-    margin: "40px auto",
+    width: "85vw",
+    maxWidth: "100vw",
+    margin: "24px 0 40px 0",
+    marginLeft: "calc(50% - 50vw)",
+    marginRight: "calc(50% - 50vw)",
     position: "relative",
+    paddingLeft: 0,
+    paddingRight: 0,
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      margin: "16px 0 24px 0",
+    },
   },
 testimonialRoot: {
     width: "100%",
@@ -1122,7 +1161,7 @@ testimonialRoot: {
     right:-150,
     top: -70,
     zIndex: 100,
-    display: "block",
+    display: "none",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -1145,9 +1184,11 @@ testimonialRoot: {
     position: "relative",
     marginBottom: 24,
     minHeight: 400,
+    marginLeft: 200,
     [theme.breakpoints.down("md")]: {
       marginBottom: 16,
       minHeight: 300,
+      marginLeft: 0,
     },
   },
   testimonialCarouselContent: {
@@ -1155,6 +1196,10 @@ testimonialRoot: {
     gap: 12,
     alignItems: "stretch",
     height: "100%",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      gap: 8,
+    },
   },
   testimonialImageContainer: {
     flexShrink: 0,
@@ -1162,6 +1207,10 @@ testimonialRoot: {
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      height: 220,
+    },
   },
   testimonialImage: {
     width: "100%",
@@ -1174,7 +1223,7 @@ testimonialRoot: {
     display: "flex",
     flexDirection: "column",
     gap: 16,
-    padding: "32px 16px",
+    padding: "20px 12px",
     justifyContent: "space-between",
   },
   testimonialTitle: {
@@ -1439,24 +1488,27 @@ testimonialRoot: {
 
   // Bottom section full-width
   testimonialBottomWrapper: {
-    width: "100%",
+    width: "100vw",
+    maxWidth: "100vw",
+    // marginLeft: "calc(50%  -50vw)",
+    // marginRight: "calc(50% - 50vw)",
     background: "#DBECF9",
-    paddingTop: 24,
-    paddingBottom: 48,
-    marginTop: 62,
-    marginBottom: 80,
+    paddingTop: 12,
+    paddingBottom: 24,
+    marginTop: 40,
+    marginBottom: 60,
     [theme.breakpoints.down("md")]: {
-      paddingTop: 16,
-      paddingBottom: 32,
+      paddingTop: 8,
+      paddingBottom: 20,
       marginTop: 16,
-      marginBottom: 40,
+      marginBottom: 32,
     },
   },
   extraWidth: {
-    width: 1,
-    paddingLeft: "60px",
+    width: 0,
+    paddingLeft: 0,
     [theme.breakpoints.down("md")]: {
-      paddingLeft: "20px",
+      paddingLeft: 0,
     },
   },
   testimonialWideCards: {
@@ -1465,17 +1517,19 @@ testimonialRoot: {
     display: "flex",
     gap: 24,
     overflowX: "auto",
-    paddingLeft: 64,
-    paddingRight: 64,
+    paddingLeft: 0,
+    paddingRight: 0,
     zIndex:101,
     scrollbarWidth: "none",
     "&::-webkit-scrollbar": {
       display: "none",
     },
     [theme.breakpoints.down("md")]: {
-      gap: 16,
-      paddingLeft: 16,
-      paddingRight: 16,
+      gap: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      justifyContent: "flex-start",
+      scrollSnapType: "x mandatory",
     },
   },
   testimonialWideCard: {
@@ -1489,8 +1543,12 @@ testimonialRoot: {
     overflow: "hidden",
     boxShadow: SHADOWS.CARD,
     [theme.breakpoints.down("md")]: {
-      minWidth: 400,
+      minWidth: "100vw",
+      maxWidth: "100vw",
+      width: "100vw",
       height: 180,
+      flex: "0 0 100vw",
+      scrollSnapAlign: "center",
     },
   },
   testimonialWideOverlay: {

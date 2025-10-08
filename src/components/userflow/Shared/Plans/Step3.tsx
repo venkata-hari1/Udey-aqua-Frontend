@@ -231,7 +231,9 @@ const Step3 = ({
   };
 
   // Ensure Select never receives out-of-range value while options are loading or changed
-  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {});
+  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {}).sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
   const safeDistrictValue = availableDistrictNames.includes(formData.district)
     ? formData.district
     : "";
@@ -416,7 +418,7 @@ const Step3 = ({
                   <MenuItem value="" disabled>
                     Select State
                   </MenuItem>
-                  {statesList.map((s) => (
+                  {[...statesList].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" })).map((s) => (
                     <MenuItem key={s} value={s}>
                       {s}
                     </MenuItem>
@@ -429,6 +431,52 @@ const Step3 = ({
                 )}
               </Box>
             </Grid>
+            {isMobile ? (
+              <>
+                {/* District first on mobile */}
+                <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField}`}>
+                  <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
+                    <Typography className={classes.step3Label}>
+                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
+                    </Typography>
+                    <Select
+                      value={safeDistrictValue}
+                      onChange={(e) =>
+                        handleDistrictChange(e.target.value as string)
+                      }
+                      className={classes.step3Field}
+                      error={showErrors ? !!formErrors.district : false}
+                      disabled={!formData.state || loadingDistricts}
+                      IconComponent={KeyboardArrowDown}
+                      MenuProps={{
+                        PaperProps: { className: classes.step4MenuPaper },
+                      }}
+                      displayEmpty
+                      renderValue={(selected) =>
+                        (selected as string)
+                          ? (selected as string)
+                          : "Select District"
+                      }
+                      fullWidth
+                    >
+                      <MenuItem value="" disabled>
+                        Select District
+                      </MenuItem>
+                      {availableDistrictNames.map(
+                        (name) => (
+                          <MenuItem key={name} value={name}>
+                            {name}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                    {showErrors && formErrors.district && (
+                      <Typography className={classes.step3Error}>
+                        {formErrors.district}
+                      </Typography>
+                    )}
+                  </Box>
+                </Grid>
                 <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField}`}>
                   <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
                     <Typography className={classes.step3Label}>
@@ -576,11 +624,13 @@ const Step3 = ({
                   <MenuItem value="" disabled>
                     Select State
                   </MenuItem>
-                  {statesList.map((s) => (
-                    <MenuItem key={s} value={s}>
-                      {s}
-                    </MenuItem>
-                  ))}
+                  {availableDistrictNames.map(
+                    (name) => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    )
+                  )}
                 </Select>
                 {showErrors && formErrors.state && (
                   <Typography className={classes.step3Error}>

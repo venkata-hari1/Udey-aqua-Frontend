@@ -1,6 +1,5 @@
 // src/components/userflow/About/Milestones.tsx
 import { Box, Grid, Typography } from "@mui/material";
-import AboutHero from "./AboutHero";
 import useAboutStyles from "./aboutStyles";
 import fishSvg from "../../../assets/icons/fish.svg";
 import img from "../../../assets/about_us/milestones.png";
@@ -64,8 +63,6 @@ const Milestones = () => {
 
   return (
     <>
-      <AboutHero currentLabel="Milestones" />
-
       <Typography className={classes.mileStoneHeader}>Milestones</Typography>
       <Typography className={classes.mileStoneSubtitle}>
         Our Journey in Aquaculture Innovation

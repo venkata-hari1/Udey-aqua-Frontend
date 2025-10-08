@@ -61,12 +61,12 @@ const membersData: Member[] = [
     category: "Directors",
   },
   {
-    name: "Sridhar Devineni",
-    designation: "Co-Director",
+    name: "Dr. Rajesh Kumar",
+    designation: "Director",
     bigDesignation: "Managing Director – Uday Aqua Connects Private Ltd.",
-    qualification: "(M.Pharm,MBA(IIM-Kolkata))",
+    qualification: "(Ph.D., Aquaculture)",
     image: team3,
-    description: "Another image of Sridhar Devineni",
+    description: "Director with expertise in sustainable aquaculture and RAS/CAS systems.",
     category: "Directors",
   },
   {
@@ -117,13 +117,31 @@ const OurTeam = () => {
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Handle URL parameter for direct member access
+  useEffect(() => {
+    if (memberSlug) {
+      const memberIndex = membersData.findIndex(
+        (member) => member.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === memberSlug
+      );
+      if (memberIndex !== -1) {
+        const member = membersData[memberIndex];
+        setActiveTab(member.category);
+        const categoryMembers = membersData.filter((m) => m.category === member.category);
+        const categoryIndex = categoryMembers.findIndex((m) => m.name === member.name);
+        setCurrentIndex(categoryIndex);
+        setOpen(true);
+      }
+    }
+  }, [memberSlug]);
+
   const handleCardClick = (
     category: "Directors" | "Advisors",
     index: number
   ) => {
-    setActiveTab(category);
-    setCurrentIndex(index);
-    setOpen(true);
+    const categoryMembers = membersData.filter((m) => m.category === category);
+    const member = categoryMembers[index];
+    const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    navigate(`/about/our-team/${slug}`);
   };
 
   const handlePrev = () => {
@@ -374,7 +392,7 @@ const OurTeam = () => {
               {/* Back Button */}
               <Box className={classes.backButtonWrapper}>
                 <IconButton
-                  onClick={() => setOpen(false)}
+                  onClick={() => navigate("/about/our-team")}
                   className={classes.backButton}
                 >
                   <ArrowBack className={classes.backIconSmall} />
@@ -393,7 +411,11 @@ const OurTeam = () => {
                 className={`${classes.dot} ${
                   i === currentIndex ? classes.activeDot : ""
                 }`}
-                onClick={() => setCurrentIndex(i)}
+                onClick={() => {
+                  const member = selectedMembers[i];
+                  const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                  navigate(`/about/our-team/${slug}`);
+                }}
               />
             ))}
           </Box>

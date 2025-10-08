@@ -3,21 +3,15 @@ import {
   Box,
   Grid,
   Typography,
-  useMediaQuery,
-  useTheme,
   IconButton,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import fishesImg from "../../../assets/home/news_img.png";
-import { NavLink, useLocation } from "react-router-dom";
 import useAboutStyles from "./aboutStyles";
-import AboutHero from "./AboutHero";
-import HelpSection from "../Shared/HelpSection";
 import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowForward from "@mui/icons-material/ArrowForward";
-import aboutImg from "../../../assets/about_us/testimonials.png";
 import person3 from "../../../assets/testimonials/person_3.jpg";
 import person4 from "../../../assets/testimonials/person_4.jpg";
 import person5 from "../../../assets/testimonials/person_5.jpg";
@@ -27,16 +21,6 @@ import {
   NEWS_FISHES_TRANSITION,
 } from "../Shared/animations";
 import { useState, useEffect, useRef } from "react";
-
-const sidebarItems = [
-  { label: "Who We Are", path: "/about" },
-  { label: "Our History", path: "/about/our-history" },
-  { label: "Our Directors & Advisors", path: "/about/our-team" },
-  { label: "Sustainable Development", path: "/about/sustainable-development" },
-  { label: "Careers", path: "/about/careers" },
-  { label: "Milestones", path: "/about/milestones" },
-  { label: "Testimonials", path: "/about/testimonials" },
-];
 
 const testimonials = [
   {
@@ -93,16 +77,11 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const location = useLocation();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useAboutStyles();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isReadMoreMode, setIsReadMoreMode] = useState(false);
   const [bottomScrollIndex, setBottomScrollIndex] = useState(0);
   const bottomCardsRef = useRef<HTMLDivElement>(null);
-
-  const currentLabel = "Testimonials";
 
   const handlePrev = () => {
     setCurrentIndex((prev) => {
@@ -130,14 +109,10 @@ const Testimonials = () => {
     setCurrentIndex(index);
   };
 
-  // bottom carousel lines are decorative; no state needed
-
   const currentTestimonial = testimonials[currentIndex];
   const quotes = ((currentTestimonial as any).quotes as string[]) || [""];
 
-  const bottomCards = testimonials.filter(
-    (t) => t.id !== currentTestimonial.id
-  );
+  const bottomCards = testimonials.filter((t) => t.id !== currentTestimonial.id);
   const totalBottomSlides = bottomCards.length;
 
   useEffect(() => {
@@ -150,7 +125,6 @@ const Testimonials = () => {
     return () => clearInterval(id);
   }, []);
 
-  // Update active line based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       if (bottomCardsRef.current && bottomCards.length > 0) {
@@ -173,57 +147,17 @@ const Testimonials = () => {
     <>
       <Grid container className={classes.aboutLayoutRoot} direction="column">
         <Grid size={{ xs: 12 }}>
-          <AboutHero currentLabel={currentLabel} />
-        </Grid>
-        <Grid size={{ xs: 12 }}>
           <Grid container className={classes.aboutMainRow} wrap="nowrap">
-            {!isMobile && (
-              <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper}>
-                <Box className={classes.aboutSidebar}>
-                  <Box className={classes.aboutSidebarNavTitle}>About Us</Box>
-                  {sidebarItems.map((item) => (
-                    <NavLink
-                      key={item.path}
-                      to={item.path}
-                      className={() =>
-                        cx(classes.aboutSidebarNavItem, {
-                          active: location.pathname === item.path,
-                        })
-                      }
-                    >
-                      {item.label}
-                    </NavLink>
-                  ))}
-                </Box>
-                <HelpSection />
-              </Grid>
-            )}
-            <Grid
-              size={{ xs: 12, md: 10 }}
-              className={classes.aboutMainContent}
-            >
-              {/* Header Section */}
+            <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
               <Grid container size={{ xs: 12 }}>
-                <Grid size={isMobile ? 12 : 9}>
-                  <Typography className={classes.aboutHeaderTitle}>
-                    Testimonials
-                  </Typography>
+                <Grid size={{ xs: 12 }}>
+                  <Typography className={classes.aboutHeaderTitle}>Testimonials</Typography>
                   <Typography className={classes.aboutHeaderSubtitle}>
                     Real Journeys of Growth Through Aquaculture Innovation
                   </Typography>
                 </Grid>
-                {!isMobile && (
-                  <Grid size={{ xs: 3 }} className={classes.aboutHeaderSideGrid}>
-                    <Box
-                      component="img"
-                      src={aboutImg}
-                      className={classes.sideImg}
-                    />
-                  </Grid>
-                )}
               </Grid>
 
-              {/* Main Testimonial Carousel */}
               <Box className={classes.testimonialCarouselWrapper}>
                 <Box
                   className={cx(
@@ -240,8 +174,7 @@ const Testimonials = () => {
                     <Box
                       className={cx(
                         classes.testimonialImageContainer,
-                        isReadMoreMode &&
-                          classes.testimonialReadMoreImageContainer
+                        isReadMoreMode && classes.testimonialReadMoreImageContainer
                       )}
                     >
                       <Box
@@ -254,8 +187,7 @@ const Testimonials = () => {
                     <Box
                       className={cx(
                         classes.testimonialTextContainer,
-                        isReadMoreMode &&
-                          classes.testimonialReadMoreTextContainer
+                        isReadMoreMode && classes.testimonialReadMoreTextContainer
                       )}
                     >
                       <Typography className={classes.testimonialTitle}>
@@ -264,10 +196,7 @@ const Testimonials = () => {
                       {!isReadMoreMode ? (
                         <Typography className={classes.testimonialQuote}>
                           {quotes[0].slice(0, 200)}
-                          <Typography
-                            component="span"
-                            className={classes.testimonialDots}
-                          >
+                          <Typography component="span" className={classes.testimonialDots}>
                             ...
                           </Typography>
                           <Typography
@@ -281,10 +210,7 @@ const Testimonials = () => {
                       ) : (
                         <Box>
                           {quotes.map((q: string, idx: number) => (
-                            <Typography
-                              key={idx}
-                              className={classes.testimonialQuoteCompact}
-                            >
+                            <Typography key={idx} className={classes.testimonialQuoteCompact}>
                               {q}
                             </Typography>
                           ))}
@@ -299,35 +225,24 @@ const Testimonials = () => {
                           {isReadMoreMode ? "," : ""}
                         </Typography>
                         <Typography className={classes.testimonialPlace}>
-                          {currentTestimonial.designation.split(",")[1] ||
-                            currentTestimonial.designation}
+                          {currentTestimonial.designation.split(",")[1] || currentTestimonial.designation}
                         </Typography>
                       </Box>
                     </Box>
                   </Box>
 
-                  {/* Navigation Arrows in middle - hidden in Read More mode */}
                   {!isReadMoreMode && (
                     <>
-                      <IconButton
-                        onClick={handlePrev}
-                        className={classes.testimonialArrowButton}
-                        size="small"
-                      >
+                      <IconButton onClick={handlePrev} className={classes.testimonialArrowButton} size="small">
                         <ArrowBackIosNew fontSize="small" />
                       </IconButton>
-                      <IconButton
-                        onClick={handleNext}
-                        className={classes.testimonialArrowButton}
-                        size="small"
-                      >
+                      <IconButton onClick={handleNext} className={classes.testimonialArrowButton} size="small">
                         <ArrowForwardIos fontSize="small" />
                       </IconButton>
                     </>
                   )}
                 </Box>
               </Box>
-                            {/* Fish animation for Read More */}
               {isReadMoreMode && (
                 <Box className={classes.testimonialRoot}>
                   <motion.img
@@ -341,44 +256,28 @@ const Testimonials = () => {
                 </Box>
               )}
 
-
-              {/* Back to overview button - bottom right, only in Read More mode */}
               {isReadMoreMode && (
                 <Box className={classes.backButtonWrapper}>
-                  <IconButton
-                    className={classes.backButton}
-                    onClick={handleBack}
-                  >
+                  <IconButton className={classes.backButton} onClick={handleBack}>
                     <ArrowBack fontSize="small" />
                   </IconButton>
                 </Box>
               )}
 
-              {/* Pagination Section - Only show in Read More mode */}
               {isReadMoreMode && (
                 <Box className={classes.testimonialPaginationWrapper}>
                   <Box className={classes.testimonialPagination}>
-                    {/* Prev Arrow: acts as previous, hidden on first slide */}
                     {currentIndex > 0 && (
-                      <IconButton
-                        onClick={handlePrev}
-                        className={classes.testimonialBackButton}
-                        size="small"
-                      >
-                        <ArrowBack
-                          fontSize="small"
-                          className={classes.smallText}
-                        />
+                      <IconButton onClick={handlePrev} className={classes.testimonialBackButton} size="small">
+                        <ArrowBack fontSize="small" className={classes.smallText} />
                       </IconButton>
                     )}
 
-                    {/* Page Numbers */}
                     {testimonials.map((_, index) => (
                       <Box
                         key={index}
                         className={cx(classes.testimonialPageButton, {
-                          [classes.testimonialActivePageButton]:
-                            index === currentIndex,
+                          [classes.testimonialActivePageButton]: index === currentIndex,
                         })}
                         onClick={() => handlePageClick(index)}
                       >
@@ -386,17 +285,9 @@ const Testimonials = () => {
                       </Box>
                     ))}
 
-                    {/* Next Button: hidden on last slide */}
                     {currentIndex < testimonials.length - 1 && (
-                      <IconButton
-                        onClick={handleNext}
-                        className={classes.testimonialNextButton}
-                        size="small"
-                      >
-                        <ArrowForward
-                          className={classes.smallText}
-                          fontSize="small"
-                        />
+                      <IconButton onClick={handleNext} className={classes.testimonialNextButton} size="small">
+                        <ArrowForward className={classes.smallText} fontSize="small" />
                       </IconButton>
                     )}
                   </Box>
@@ -406,46 +297,23 @@ const Testimonials = () => {
           </Grid>
         </Grid>
 
-        {/* Bottom section - Hide when in Read More mode */}
         {!isReadMoreMode && (
           <Grid size={{ xs: 12 }}>
             <Box className={classes.testimonialBottomWrapper}>
-            <Box className={classes.testimonialRoot}>
-            <motion.img
-              src={fishesImg}
-              alt="Fishes"
-              className={classes.testimonialFishesImg}
-              initial={NEWS_FISHES_INITIAL}
-              animate={NEWS_FISHES_ANIMATE}
-              transition={NEWS_FISHES_TRANSITION}
-            />
-            </Box>
-              <Box
-                ref={bottomCardsRef}
-                className={classes.testimonialWideCards}
-              >
+              <Box ref={bottomCardsRef} className={classes.testimonialWideCards}>
                 {bottomCards.map((t) => (
                   <Box key={t.id} className={classes.testimonialWideCard}>
                     <Box className={classes.testimonialWideContent}>
                       <Box className={classes.testimonialWideImageContainer}>
-                        <Box
-                          component="img"
-                          src={t.image}
-                          alt={t.name}
-                          className={classes.testimonialImage}
-                        />
+                        <Box component="img" src={t.image} alt={t.name} className={classes.testimonialImage} />
                       </Box>
                       <Box className={classes.testimonialWideTextBox}>
                         <Typography className={classes.testimonialWideQuote}>
                           "{((t as any).quotes?.[0] || "").slice(0, 150)}..."
                         </Typography>
                         <Box className={classes.testimonialWideAttribution}>
-                          <Typography className={classes.testimonialWideName}>
-                            {t.name}
-                          </Typography>
-                          <Typography
-                            className={classes.testimonialWideDesignation}
-                          >
+                          <Typography className={classes.testimonialWideName}>{t.name}</Typography>
+                          <Typography className={classes.testimonialWideDesignation}>
                             {t.designation.split(",")[0]}
                           </Typography>
                           <Typography className={classes.testimonialWidePlace}>
@@ -459,24 +327,17 @@ const Testimonials = () => {
                 <Box className={classes.extraWidth} />
               </Box>
 
-              {/* Line Pagination for Bottom Carousel */}
               <Box className={classes.testimonialLinePagination}>
                 {Array.from({ length: totalBottomSlides }, (_, index) => (
                   <Box
                     key={index}
                     className={cx(classes.testimonialLine, {
-                      [classes.testimonialActiveLine]:
-                        index === bottomScrollIndex,
+                      [classes.testimonialActiveLine]: index === bottomScrollIndex,
                     })}
                     onClick={() => {
                       if (bottomCardsRef.current) {
-                        const cardWidth =
-                          bottomCardsRef.current.scrollWidth /
-                          bottomCards.length;
-                        bottomCardsRef.current.scrollTo({
-                          left: index * cardWidth,
-                          behavior: "smooth",
-                        });
+                        const cardWidth = bottomCardsRef.current.scrollWidth / bottomCards.length;
+                        bottomCardsRef.current.scrollTo({ left: index * cardWidth, behavior: "smooth" });
                         setBottomScrollIndex(index);
                       }
                     }}

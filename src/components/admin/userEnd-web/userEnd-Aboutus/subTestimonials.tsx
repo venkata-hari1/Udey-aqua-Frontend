@@ -81,6 +81,10 @@ const SubTestimonials=({ accordianId, id,subSection, onDelete }: SubTestimonials
             setError('');
             setIsSaved(false);
     };
+<<<<<<< HEAD
+=======
+    
+>>>>>>> yasvanth
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };
