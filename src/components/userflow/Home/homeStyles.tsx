@@ -51,6 +51,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     color: "#57B6FF",
     fontSize: "6rem",
+
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down("lg")]: {
       fontSize: "4rem",
@@ -79,13 +80,13 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   heroMain: {
     width: "100%",
-    maxWidth: 1400,
+
     minHeight: "80vh",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    background: "transparent",
+   
     position:'relative !important' as 'relative',
     overflow:'hidden' as 'hidden',
     marginTop: "100px",
