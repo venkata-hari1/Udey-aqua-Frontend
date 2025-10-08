@@ -205,7 +205,7 @@ export const HeadingContentValidation = (content: string) => {
     };
   } else if (content.length > maxChars) {
     return {
-      error: `* Character limit exceeded. Remaining Characters ${content.length}/${maxChars}`,
+      error: `* Character limit exceeded.${content.length}/${maxChars}`,
       isError: true,
     };
   } else {

@@ -21,16 +21,17 @@ const [aboutslide, setAboutslide] = useState(
       isSaved:false,
     })
  const[isEditing,setIsediting]=useState(false)
- const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror  
+ const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror 
+  ||aboutslide.isSaved
 
  const handleUpload=(file:File)=>{
   const imageUrl = URL.createObjectURL(file);
-  const updatedAboutslide={...aboutslide,image:imageUrl,imgerror:""}
+  const updatedAboutslide={...aboutslide,image:imageUrl,imgerror:"",isSaved:false}
   setAboutslide(updatedAboutslide) 
 }
 
 const handleImageError=(msg:string)=>{
-  const updatedImgerror={...aboutslide,imgerror:msg}
+  const updatedImgerror={...aboutslide,imgerror:msg,isSaved:false}
   setAboutslide(updatedImgerror)
 }
 
@@ -40,14 +41,14 @@ const handleRemoveImage=()=>{
 }
 
 const handleContentchange=(value:string,error:string)=>{
-    const updatedContent={...aboutslide,content:value,contenterror:error}
+    const updatedContent={...aboutslide,content:value,contenterror:error,isSaved:false}
     setAboutslide(updatedContent)
     console.log(updatedContent)
 }
 
 
 const handleSave=()=>{
-  setAboutslide({...aboutslide,name:'',image:'',content:'',isSaved:true,})
+  setAboutslide({...aboutslide,isSaved:true,})
   localStorage.setItem("aboutValues",JSON.stringify(aboutslide)) 
   setIsediting(false)
 }
@@ -61,14 +62,20 @@ const handleEdit=()=>{
       ...aboutslide,
       name:parsed.name,
       content:parsed.content,
-      image:parsed.image
+      image:parsed.image,
+      isSaved:false
      });
   }
 }
 
 const onCancel=()=>{
-   setAboutslide({...aboutslide,image:"",content:"",contenterror:"",imgerror:""})
-   setIsediting(false)  
+  const aboutSavedData=localStorage.getItem(`aboutValues`);
+  if (aboutSavedData) {
+    const parsedData = JSON.parse(aboutSavedData);
+   setAboutslide({...aboutslide,...parsedData,isSaved:true})
+   setIsediting(false)
+  }
+     
 }
   
 return (
@@ -100,7 +107,8 @@ return (
         <TextFieldManyRows value={aboutslide.content} onChange={(value, error) =>
                         handleContentchange(value, error)
                       }
-            validationFn={HeadingContentValidation} />   
+            validationFn={HeadingContentValidation}
+             disabled={aboutslide.isSaved} />   
         <ErrormsgContent message={aboutslide.contenterror}/>
         </Stack>
       </Stack>

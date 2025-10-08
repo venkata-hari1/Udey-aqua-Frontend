@@ -73,7 +73,7 @@ const handleAddSlide = () => {
 
   const handleRemoveImage = (id: string) => {
     const updatedslides = heroslide.map((slide) =>
-      slide.id === id ? { ...slide, image: "",isSaved:false } : slide
+      slide.id === id ? { ...slide, image: "", } : slide
     );
     setHeroslide(updatedslides);
   };
@@ -119,18 +119,24 @@ const handleAddSlide = () => {
    }
   setHeroslide((prev)=>
   prev.map((slide)=>
-  slide.id===id ? {...slide,image:'',imgerror:'',content:'', isSaved: true,}:slide
+  slide.id===id ? {...slide,isSaved: true,}:slide
   )
 );
 setEditSlideId(null);
 };
 
 const onCancel=(id:string)=>{
-    setHeroslide((prev)=>
-    prev.map((slide)=>
-    slide.id===id ?{...slide,image:'',imgerror:'',content:'',contenterror:'',isSaved:false}:slide)
+    
+    const savedSlide = localStorage.getItem(`heroSlide${id}`);
+  if (savedSlide) {
+    const parsedSlide = JSON.parse(savedSlide);
+    setHeroslide((prev) =>
+      prev.map((slide) =>
+        slide.id === id ? { ...slide, ...parsedSlide, isSaved: true } : slide
+      )
     );
-    setEditSlideId(null)
+  }
+  setEditSlideId(null);
 }
   return (
     <Box>
@@ -138,7 +144,8 @@ const onCancel=(id:string)=>{
         <AddingButton onClick={handleAddSlide} />
         {heroslide.map((slide, index) => {
           const slideSaveDisabled =
-            !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror ;
+            !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror
+            || slide.isSaved ;
 
           return (
             <Fragment key={slide.id}>
@@ -161,9 +168,8 @@ const onCancel=(id:string)=>{
                     <Uploadbutton type="image"
                       onUpload={(file) => handleUpload(slide.id, file)}
                       onError={(msg) => handleImageError(slide.id, msg)}
-                    />
-
-                    {slide.image && (
+                      />
+                      {slide.image && (
                       <Box className={classes.herouploadImageBox}>
                         <img
                           src={slide.image}
@@ -172,6 +178,7 @@ const onCancel=(id:string)=>{
                         <CancelIcon
                           className={classes.cancelImgIcon}
                           onClick={() => handleRemoveImage(slide.id)}
+                          
                         />
                       </Box>
                     )}
@@ -189,6 +196,7 @@ const onCancel=(id:string)=>{
                         handleContentchange(slide.id, value, error)
                       }
                       validationFn={HeadingContentValidation}
+                      disabled={slide.isSaved}
                     />
                     {slide.contenterror && (
                       <ErrormsgContent message={slide.contenterror} />

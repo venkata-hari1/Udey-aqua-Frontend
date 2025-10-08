@@ -290,13 +290,15 @@ const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
 interface ValidationResult {
   error: string;
   isError: boolean;
+  
 }
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
   value?:string;
   validationFn:(value:string)=>ValidationResult;
-  }
-export const TextFieldManyRows = ({ onChange,value,validationFn}: GenericTextfieldmutlirows) => {
+  disabled?:boolean;  
+ }
+export const TextFieldManyRows = ({ onChange,value,validationFn,disabled=false}: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
 
   const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -313,6 +315,18 @@ export const TextFieldManyRows = ({ onChange,value,validationFn}: GenericTextfie
       minRows={5}
       onChange={handleChangeManyrows}
       value={value}
+      disabled={disabled}
+       InputProps={{
+        sx: disabled
+          ? {
+              color: "#9e9e9e", // gray text
+               // light gray bg
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ddd", // light border
+              },
+            }
+          : {},
+      }}
     />
   );
 };
@@ -384,6 +398,7 @@ export const ErrormsgPrice = () => {
 interface UploadButtonPropsBase {
   onError?: (msg: string,id?:string) => void;
   type?: "image" | "video";
+  disabled?: boolean;
 }
 
 interface UploadButtonSingle extends UploadButtonPropsBase {
@@ -402,6 +417,7 @@ export const Uploadbutton = ({
   onError,
   type = "image",
   multiple = false,
+  disabled=false,
 }: UploadButtonProps) => {
   const { classes } = useUserEndwebStyles();
 
@@ -454,13 +470,14 @@ export const Uploadbutton = ({
       className={classes.uploadHerobutton}
       component="label"
       endIcon={<FileUploadOutlinedIcon />}
+      disabled={disabled} 
     >
       <input
         type="file"
         accept={accept}
         hidden
         multiple={multiple}
-        onChange={handleChangeUpload}
+        onChange={!disabled ?handleChangeUpload:undefined}
       />
       Upload
     </Button>

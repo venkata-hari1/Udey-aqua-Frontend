@@ -77,7 +77,7 @@ const UserEndMotto = () => {
   const handleContentchange = (id: string, value: string, error: string) => {
     const updateBoxes = mottobox.map((box) =>
       box.id === id
-        ? { ...box, content: value, contenterror: error }
+        ? { ...box, content: value, contenterror: error,isSaved:false }
         : box
     );
     setMottobox(updateBoxes);
@@ -88,7 +88,7 @@ const UserEndMotto = () => {
   const handleImageError = (id: string, msg: string) => {
     setMottobox((prev) =>
       prev.map((box) =>
-        box.id === id ? { ...box, imgerror: msg } : box
+        box.id === id ? { ...box, imgerror: msg, isSaved:false } : box
       )
     );
   };
@@ -99,7 +99,7 @@ const UserEndMotto = () => {
       const parsedBox=JSON.parse(savedBox);
       setMottobox((prev)=>
         prev.map((box)=>
-        box.id===id ?{...box,...parsedBox}:box)
+        box.id===id ?{...box,...parsedBox,isSaved:false}:box)
        )
    }
    setMotoId(id);
@@ -111,18 +111,23 @@ const handleSave = (id:string) => {
    }
   setMottobox((prev)=>
   prev.map((box)=>
-  box.id===id ? {...box,image:'',imgerror:'',content:'',isSaved:true}:box
+  box.id===id ? {...box,isSaved:true}:box
   )
 );
 setMotoId(null);
 };
 
 const onCancel=(id:string)=>{
-   setMottobox((prev)=>
-    prev.map((box)=>
-    box.id===id ?{...box,image:'',imgerror:'',content:'',contenterror:''}:box)
-    )
- setMotoId(null)
+  const savedBox = localStorage.getItem(`motobox${id}`);
+  if(savedBox){
+    const parsedBox = JSON.parse(savedBox);
+    setMottobox((prev) =>
+      prev.map((box) =>
+        box.id === id ? { ...box, ...parsedBox, isSaved: true } : box
+      )
+    );
+  }
+  setMotoId(null)
 }
   return (
     <Box>
@@ -140,8 +145,7 @@ const onCancel=(id:string)=>{
 
         {mottobox.map((box, index) => {
           const motoboxSaveDisabled =
-            !box.content || !box.image || !!box.contenterror || !!box.imgerror;
-        
+            !box.content || !box.image || !!box.contenterror || !!box.imgerror ||box.isSaved;
             return(
             <Box mt={2} key={index}> 
             <Stack className={classes.slideAndButtons}>
@@ -189,13 +193,15 @@ const onCancel=(id:string)=>{
                 onChange={(value, error) =>
                 handleContentchange(box.id, value, error)
                     }
-                   validationFn={HeadingContentValidation}  />
+                   validationFn={HeadingContentValidation} 
+                   disabled={box.isSaved} />
                 <ErrormsgContent message={box.contenterror}/>
                 </Stack>
               </Stack>
           {editmotoId===box.id ? <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
           onCancel={()=>onCancel(box.id)}
-          disabled={motoboxSaveDisabled}/> : <UserEndSaveButton onSave={()=>handleSave(box.id)}
+          disabled={motoboxSaveDisabled}/> : 
+          <UserEndSaveButton onSave={()=>handleSave(box.id)}
           disabled={motoboxSaveDisabled}/>}
          
             {index !== mottobox.length - 1 && (
