@@ -16,6 +16,6 @@ function App() {
       <ToastContainer/>
     </Suspense>
   )
-}
+} 
 
 export default App

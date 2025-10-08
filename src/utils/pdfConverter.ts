@@ -76,11 +76,7 @@ export const convertNewsImageToPDF = async (newsData: NewsImageData): Promise<vo
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
 
-<<<<<<< HEAD
-      newsData.body.forEach((paragraph) => {
-=======
   newsData.body.forEach((paragraph) => {
->>>>>>> yasvanth
         const paragraphLines = pdf.splitTextToSize(paragraph, contentWidth);
         
         if (currentY + (paragraphLines.length * 5) > pageHeight - margin) {

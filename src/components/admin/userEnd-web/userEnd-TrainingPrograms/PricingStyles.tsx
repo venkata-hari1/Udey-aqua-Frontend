@@ -82,11 +82,20 @@ export const TrainingStyles=makeStyles()(()=>({
         alignItems:'flext-start',
         height:'170px'
     },
+    
     UpdateandCancelButtonBox:{
         display:'flex',
         flexDirection:'row',
         justifyContent:'center',
         gap:20
+    },
+    quillEditor: {
+        "& .ql-editor": {
+        minHeight: "250px",
+        maxHeight: "500px",
+        overflowY: "auto",
+        //color:'#0A4FA4'
+        },
     },
     updatebutton:{
         background:'#0A4FA4',

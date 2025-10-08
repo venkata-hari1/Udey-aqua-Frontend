@@ -44,25 +44,11 @@ const Step3 = ({
   // Show validation messages only after user clicks Continue
   const [showErrors, setShowErrors] = useState(false);
 
-  const [statesList, setStatesList] = useState<string[]>([...ALL_INDIA_STATES].sort((a, b) => a.localeCompare(b)));
+  const [statesList, setStatesList] = useState<string[]>(ALL_INDIA_STATES);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
   const [stateDistrictPin, setStateDistrictPin] = useState<
     Record<string, Record<string, Set<string>>>
   >({});
-
-
-
-   const Emailerror = validateForm({...formData,email:formData.email}).errors.email
-  const Nameerror = validateForm({...formData,name:formData.name}).errors.name
-  const Pincodeerror = validateForm({...formData,pincode:formData.pincode}).errors.pincode
-  const Phoneerror = validateForm({...formData,phone:formData.phone}).errors.phone
-  const Adresserror = validateForm({...formData,phone:formData.phone}).errors.address
-  
-  const isValid = Emailerror || Nameerror || Pincodeerror || Phoneerror || Adresserror 
-
-
-
-
 
   useEffect(() => {
     try {
@@ -70,12 +56,12 @@ const Step3 = ({
       if (cachedStates) {
         const parsed = JSON.parse(cachedStates) as string[];
         if (Array.isArray(parsed) && parsed.length) {
-          setStatesList(parsed.sort((a, b) => a.localeCompare(b)));
+          setStatesList(parsed);
           return;
         }
       }
     } catch {}
-    setStatesList([...ALL_INDIA_STATES].sort((a, b) => a.localeCompare(b)));
+    setStatesList(ALL_INDIA_STATES);
     try {
       localStorage.setItem(
         "pin_states_list_v1",
@@ -144,16 +130,7 @@ const Step3 = ({
           Object.keys(parsed).forEach((dist) => {
             fromCache[dist] = new Set(parsed[dist]);
           });
-          const sortedCache: Record<string, Set<string>> = {};
-          Object.keys(fromCache)
-          .sort((a, b) => a.localeCompare(b))
-          .forEach((dist) => {
-            sortedCache[dist] = new Set(
-              [...fromCache[dist]].sort((a, b) => a.localeCompare(b)) 
-            );
-          });
-
-          setStateDistrictPin((prev) => ({ ...prev, [stateName]: sortedCache }));
+          setStateDistrictPin((prev) => ({ ...prev, [stateName]: fromCache }));
 
           return;
         }
@@ -185,18 +162,7 @@ const Step3 = ({
         }
         if (records.length < pageSize) break;
       }
-
-      const sortedMap: Record<string, Set<string>> = {};
-    Object.keys(mapForState)
-      .sort((a, b) => a.localeCompare(b)) 
-      .forEach((dist) => {
-        sortedMap[dist] = new Set(
-          [...mapForState[dist]].sort((a, b) => a.localeCompare(b))
-        );
-      });
-    
-
-      setStateDistrictPin((prev) => ({ ...prev, [stateName]: sortedMap }));
+      setStateDistrictPin((prev) => ({ ...prev, [stateName]: mapForState }));
       try {
         const serializable: Record<string, string[]> = {};
         Object.entries(mapForState).forEach(([dist, pins]) => {
@@ -299,8 +265,7 @@ const Step3 = ({
                 required
                 value={formData.name}
                 onChange={(value) => handleInputChange("name", value)}
-              //error={showErrors ? formErrors.name : undefined}
-              error={formData.name.length>0 ? Nameerror: " "}
+              error={showErrors ? formErrors.name : undefined}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -317,8 +282,7 @@ const Step3 = ({
                   const tenDigits = withoutCountry.slice(0, 10);
                   handleInputChange("phone", tenDigits);
                 }}
-              //error={showErrors ? formErrors.phone : undefined}
-              error={formData.phone.length>0 ? Phoneerror: " "}
+              error={showErrors ? formErrors.phone : undefined}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -328,8 +292,7 @@ const Step3 = ({
                 required
                 value={formData.email}
                 onChange={(value) => handleInputChange("email", value)}
-              //error={showErrors ? formErrors.email : undefined}
-              error={formData.email.length>0 ? Emailerror: " "} 
+              error={showErrors ? formErrors.email : undefined}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -340,57 +303,10 @@ const Step3 = ({
                 rows={3}
                 value={formData.address}
                 onChange={(value) => handleInputChange("address", value)}
-              //error={showErrors ? formErrors.address : undefined}
-              error={formData.address.length>0 ? Adresserror: " "} 
+              error={showErrors ? formErrors.address : undefined}
               />
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField} ${classes.step3FieldTop}`}>
-                  <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
-                <Typography className={classes.step3Label}>
-                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
-                </Typography>
-                <Select
-                  value={safeDistrictValue}
-                  onChange={(e) =>
-                    handleDistrictChange(e.target.value as string)
-                  }
-                  className={classes.step3Field}
-                  error={!!formErrors.district}
-                  disabled={!formData.state || loadingDistricts}
-                  IconComponent={KeyboardArrowDown}
-                  MenuProps={{
-                    PaperProps: { className: classes.step4MenuPaper },
-                  }}
-                  displayEmpty
-                  renderValue={(selected) =>
-                    (selected as string)
-                      ? (selected as string)
-                      : "Select District"
-                  }
-                  fullWidth
-                >
-                  <MenuItem value="" disabled>
-                    Select District
-                  </MenuItem>
-                  {Object.keys(stateDistrictPin[formData.state] || {}).map(
-                    (name) => (
-                      <MenuItem key={name} value={name}>
-                        {name}
-                      </MenuItem>
-                    )
-                  )}
-                </Select>
-                {formErrors.district && (
-                  <Typography className={classes.step3Error}>
-                    {formErrors.district}
-                  </Typography>
-                )}
-              </Box>
-            </Grid>
-            {isMobile ? (
-              <>
-                {/* District first on mobile */}
-                 <Grid
+            <Grid
               size={{ xs: 12, md: 6 }}
               className={`${classes.step3FormField} ${classes.step3FieldTop}`}
             >
@@ -516,10 +432,8 @@ const Step3 = ({
                       }}
                       placeholder="Enter 6-digit pincode"
                       className={classes.step3Field}
-                     // error={showErrors ? !!formErrors.pincode : false}
-                      //helperText={showErrors ? formErrors.pincode : undefined}
-                      error={!!formErrors.pincode}
-                      helperText={formErrors.pincode || ""}
+                      error={showErrors ? !!formErrors.pincode : false}
+                      helperText={showErrors ? formErrors.pincode : undefined}
                       disabled={
                         !formData.state || !formData.district || loadingDistricts
                       }
@@ -580,10 +494,8 @@ const Step3 = ({
                   }}
                   placeholder="Enter 6-digit pincode"
                   className={classes.step3Field}
-                  //error={showErrors ? !!formErrors.pincode : false}
-                  //helperText={showErrors ? formErrors.pincode : undefined}
-                  error={formData.pincode.length>0 ? !!formErrors.pincode : false}
-                  helperText={formData.pincode.length>0 ?formErrors.pincode : ""}
+                  error={showErrors ? !!formErrors.pincode : false}
+                  helperText={showErrors ? formErrors.pincode : undefined}
                   disabled={
                     !formData.state || !formData.district || loadingDistricts
                   }
@@ -596,33 +508,33 @@ const Step3 = ({
                 />
               </Box>
             </Grid>
-                        <Grid
-              size={{ xs: 12, md: 6 }}
-              className={`${classes.step3FormField} ${classes.step3FieldTop}`}
-            >
-              <Box
-                className={`${classes.step3FormField} ${classes.step3FlexColumn}`}
-              >
+                <Grid size={{ xs: 12, md: 6 }} className={`${classes.step3FormField} ${classes.step3FieldTop}`}>
+                  <Box className={`${classes.step3FormField} ${classes.step3FlexColumn}`}>
                 <Typography className={classes.step3Label}>
-                  <Typography component="span" className={classes.step3Asterisk}>*</Typography> State
+                      <Typography component="span" className={classes.step3Asterisk}>*</Typography> District
                 </Typography>
                 <Select
-                  value={formData.state || ""}
-                  onChange={(e) => handleStateChange(e.target.value as string)}
+                  value={safeDistrictValue}
+                  onChange={(e) =>
+                    handleDistrictChange(e.target.value as string)
+                  }
                   className={classes.step3Field}
-                  error={showErrors ? !!formErrors.state : false}
+                  error={!!formErrors.district}
+                  disabled={!formData.state || loadingDistricts}
                   IconComponent={KeyboardArrowDown}
                   MenuProps={{
                     PaperProps: { className: classes.step4MenuPaper },
                   }}
                   displayEmpty
                   renderValue={(selected) =>
-                    (selected as string) ? (selected as string) : "Select State"
+                    (selected as string)
+                      ? (selected as string)
+                      : "Select District"
                   }
                   fullWidth
                 >
                   <MenuItem value="" disabled>
-                    Select State
+                    Select District
                   </MenuItem>
                   {availableDistrictNames.map(
                     (name) => (
@@ -632,9 +544,9 @@ const Step3 = ({
                     )
                   )}
                 </Select>
-                {showErrors && formErrors.state && (
+                {formErrors.district && (
                   <Typography className={classes.step3Error}>
-                    {formErrors.state}
+                    {formErrors.district}
                   </Typography>
                 )}
               </Box>
@@ -647,7 +559,6 @@ const Step3 = ({
                   variant="contained"
                   className={classes.plansCardButton}
                   onClick={handleContinue}
-                  disabled={!!isValid}
                 >
                   Continue
                 </Button>

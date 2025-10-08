@@ -81,10 +81,6 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
             setError('');
             setIsSaved(false);
     };
-<<<<<<< HEAD
-=======
-    
->>>>>>> yasvanth
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };

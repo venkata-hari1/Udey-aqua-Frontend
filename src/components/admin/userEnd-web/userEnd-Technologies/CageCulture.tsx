@@ -24,6 +24,9 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
     const [banner, setBanner] = useState<{id:string}[]>([]);
     const [bannercount, setBannerCount] = useState<any>([]);
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(subtitle);
     var isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
@@ -42,6 +45,7 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
             selectedFiles.forEach(file => {
@@ -72,6 +76,7 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
    
 
@@ -100,25 +105,39 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
         }
         console.log(Data);
     localStorage.setItem("CageCulture", JSON.stringify(Data));
-    setPrevData(true)
+    setIsSaved(true);
+     setPrevData(true);
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
     };
     const CancelData = ()=>{
         const PrevData=localStorage.getItem('CageCulture');
-        if (PrevData) {
+       if (PrevData) {
             const parsedData = JSON.parse(PrevData);
             setSubtitle(parsedData.subtitle || "");
             setImage(parsedData.image || []);
-            setFile([]); 
-            setError(""); 
+            setFile([]);
+            setIsSaved(true);
+            setError("");
+
+            
         } else {
             alert("No previous data found!");
         }
+         if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!PrevData);
     
     }
     useEffect(() => {
         const saved = localStorage.getItem("CageCulture");
         if (saved) {
         setPrevData(true);
+        setIsSaved(true);
         }
     }, []);
     return(
@@ -131,7 +150,9 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
                     {/*<DeleteButton onClick={handleDeleteAll}/>*/}
-                    <EditButton/>
+                    <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
+                        setEdit(true)
+                    }}/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -145,13 +166,14 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                            {(file.length>0|| prevData) && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(Images.length>0) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -159,6 +181,7 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -177,9 +200,19 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
                                         </Box>
                                         <Box>
                                             {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                                 <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box> 
                                 </Box>
@@ -204,15 +237,17 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
                             minRows={5}
                             className={classes.myTextFleid}
                             value={subtitle}
-                            onChange={(e)=>setSubtitle(e.target.value)}
+                            disabled={!Edit}
+                            onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             FormHelperTextProps={{className:classes.helperText}}
                             />
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                        <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                        {prevData &&(<CancelButton onClick={CancelData}/>)}
+                        <UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                                           {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <SubSection id='Sub Section-1' accordianId='6' title={Accordiantitle}/>
                 {subpages.map((sub) => (

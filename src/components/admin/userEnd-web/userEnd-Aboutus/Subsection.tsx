@@ -81,10 +81,6 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
             setError('');
             setIsSaved(false);
     };
-<<<<<<< HEAD
-=======
-    
->>>>>>> yasvanth
     const handleDeleteClick = () => {
         setOpenDialog(true);
     };
