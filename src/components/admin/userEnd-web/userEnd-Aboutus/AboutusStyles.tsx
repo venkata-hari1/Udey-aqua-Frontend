@@ -163,6 +163,14 @@ AddSection:{
   textTransform:'capitalize',
   boxShadow:'none'
 },
+AddButton:{
+  color:"#0A4FA4",
+  borderRadius:'7px',
+  textTransform:'capitalize',
+  boxShadow:'none',
+  fontSize:'16px',
+  fontWeight:500
+},
 AddSectionBox:{
   display:'flex',
   justifyContent:'end',

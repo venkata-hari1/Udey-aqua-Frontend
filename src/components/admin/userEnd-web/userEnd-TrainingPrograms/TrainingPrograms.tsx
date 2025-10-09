@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import HeroSection from './HeroSection';
 import PricePlan from './PricePlan';
 import AquacultureType from './AcqacultureType';
+import FormDetails from './FormDetails';
 
 
 
@@ -18,7 +19,7 @@ const TrainingPrograms=()=>{
         {id:'1',title:'Hero Section',component:HeroSection},
         {id:'2',title:'Price Plans ',component:PricePlan},
         {id:'3',title:'Aquaculture Type  ',component:AquacultureType},
-       // {id:'4',title:'Form Details '},
+        {id:'4',title:'Form Details ', component:FormDetails},
     ]
     return(
         <>

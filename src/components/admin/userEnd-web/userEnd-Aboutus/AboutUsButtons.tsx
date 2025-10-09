@@ -1,9 +1,9 @@
 import { useUserEndwebStyles } from "./AboutusStyles";
-import { Button, IconButton} from "@mui/material";
+import { Button, IconButton, Box, Checkbox, Typography} from "@mui/material";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import DeleteIcon from "../../../../assets/Delete.png";
 
 
 export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
@@ -159,5 +159,31 @@ export const AddHighlights=({onClick}:{onClick?:()=>void})=>{
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             Add Highlights
         </Button>
+    )
+}
+export const AddButton=()=>{
+    const {classes} =useUserEndwebStyles();
+    return(
+        <Button variant='outlined' disableElevation className={classes.AddButton} startIcon={<AddOutlinedIcon/>} >
+            Add 
+        </Button>
+    )
+}
+
+export const FormData=({title}:{title:string})=>{
+    return(
+        <>
+            <Box sx={{flexDirection:'row',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <Box sx={{flexDirection:'row',display:'flex',gap:1,alignItems:'center'}}>
+                    <Checkbox sx={{color:'#0A4FA4'}}/>
+                    <Typography sx={{fontSize:'16px',fontWeight:600}}>{title}</Typography>
+                </Box>
+                <Box component="img"
+                    src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
+                />
+            </Box>
+            
+            
+        </>
     )
 }

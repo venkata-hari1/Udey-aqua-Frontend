@@ -19,7 +19,7 @@ import { useLocation } from "react-router-dom";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
 import { useScrollWithOffset } from "./hooks";
-//import PdfMark from "./components/PdfMark";
+import PdfMark from "./components/PdfMark";
 
 import latest1 from "../../../assets/news/latest/img0.png";
 import latest2 from "../../../assets/news/latest/img1.png";

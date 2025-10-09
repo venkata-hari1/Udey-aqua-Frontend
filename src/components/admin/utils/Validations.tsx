@@ -194,27 +194,6 @@ export const addressContentValidation = (content: string): ValidationResult => {
   }
 };
 
-export const HeadingContentValidation = (content: string) => {
-  const maxChars = 100;
-  const minChars = 3;
-
-  if (content.length === 0 || content.length < minChars) {
-    return {
-      error: `* Must contain at least ${minChars} characters. Remaining Characters ${content.length}/${maxChars}`,
-      isError: true,
-    };
-  } else if (content.length > maxChars) {
-    return {
-      error: `* Character limit exceeded.${content.length}/${maxChars}`,
-      isError: true,
-    };
-  } else {
-    return {
-      error: "",
-      isError: false,
-    };
-  }
-};
 
 
 //descriptive content
@@ -317,3 +296,54 @@ export const HeadingContentValidation = (content: string) => {
   }
 };
 
+export const PriceValidate = (text: string): { message: string } => {
+  const trimmedText = text.trim();
+
+  if (trimmedText.length === 0) {
+    return { message: "" };
+  }
+
+  if (!/^\d+$/.test(trimmedText)) {
+    return { message: "* Must be Numbers" };
+  }
+
+  if (trimmedText.length < 2) {
+    return {
+      message: `* Must contain at least 2 characters. Remaining Characters ${trimmedText.length}/12`,
+    };
+  }
+
+  if (trimmedText.length > 12) {
+    return { message: "* Character Limit Exceeded" };
+  }
+
+  return {
+    message: `* Remaining Characters ${trimmedText.length}/12`,
+  };
+};
+export const TitleValidate = (text: string): {  message: string } => {
+  if (text.length === 0) {
+    return {  message: "" }; 
+  } else if (text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/100`,
+    };
+  } else if (text.length > 100) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${text.length}/100` }; 
+  }
+};
+export const PlanContentValidate = (text: string): {  message: string } => {
+  if (text.length === 0) {
+    return {  message: "" }; 
+  } else if (text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/2000`,
+    };
+  } else if (text.length > 2000) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${text.length}/2000` }; 
+  }
+};
