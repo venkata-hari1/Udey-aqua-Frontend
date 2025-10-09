@@ -1,8 +1,7 @@
 export const validateEmail = (email: string): string => {
 
-    // Broader email pattern: allows dots/plus/hyphen, subdomains, and TLDs >=2
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; 
-       
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+           
     if(email.length===0){
       return "Email cannot be empty";
     }
@@ -16,6 +15,27 @@ export const validateEmail = (email: string): string => {
         return ""
     }
  };
+
+
+//validation email for userend
+
+export const validateEmail1 = (email: string): ValidationResult => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+  let error = "";
+
+  if (email.length === 0) {
+    error = "Email cannot be empty";
+  } else if (email.startsWith(".") || email.endsWith(".")) {
+    error = "Email cannot start or end with '.'";
+  } else if (!emailRegex.test(email)) {
+    error = "Enter a valid email ID";
+  }
+
+  return {
+    error,
+    isError: !!error,
+  };
+};
 
 
 export const validatePassword = (pword: any):string => {
@@ -69,92 +89,169 @@ export const confirmValidatePassword = (
   }
 };
 
+//name validation
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+}
+export const nameValidation = (name: string): ValidationResult => {
+  const maxChars = 80;
+  const minChars = 3;
 
-export const nameValidation=(name:any):string=>{
-  if(name.length===0){
-    return "*Name cant be empty"
+  if (name.length === 0 || name.length < minChars) {
+    return {
+      error: `* Must contain at least ${minChars} characters. Remaining Characters ${name.length}/${maxChars}`,
+      isError: true,
+    };
+  } else if (name.length > maxChars) {
+    return {
+      error: `* Character limit exceeded. Remaining Characters ${name.length}/${maxChars}`,
+      isError: true,
+    };
+  } else {
+    return {
+      error: "",
+      isError: false,
+    };
   }
-  if(name.length>80){
+};
+
+
+export const occupationValidation=(occupation:any):string=>{
+  if(occupation.length===0){
+    return "*Occupation cant be empty"
+  }
+  if(occupation.length>80){
     return "*Max 80 charecters required";
   }
   return "";
 }
 
-export const phoneNumbervalidation=(phone:any):string=>{ 
-  if(phone.length===0){ 
-    return "Phone number cannot be empty" 
-  }else if(/[^0-9]/.test(phone)){ 
-    return "*Only numbers are allowed" 
-  }else if(phone.length!==10){
-     return "Phone number must be exactly 10 digits" 
-  } 
-    else{ return "" } 
-  }
-
-
-export const addressContentValidation=(content:any)=>{
- 
-  const addressRegexp=/^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{1,200}$/;
-  
-  if(content.length===0){
-    return "Address field should not be empty"
-  }else if(!addressRegexp.test(content)){
-    return "Maximum 200 characters allowed and valid characters only"
-  }else{
-    return ""
-  }
+//phone number validation
+interface ValidationResult {
+  error: string;
+  isError: boolean;
 }
-export const PriceValidate = (text: string): { message: string } => {
-  const trimmedText = text.trim();
 
-  if (trimmedText.length === 0) {
-    return { message: "" };
-  }
+export const phoneNumberValidation = (phone: string): ValidationResult => {
+  const requiredLength = 10;
 
-  if (!/^\d+$/.test(trimmedText)) {
-    return { message: "* Must be Numbers" };
-  }
-
-  if (trimmedText.length < 2) {
+  if (phone.length === 0) {
     return {
-      message: `* Must contain at least 2 characters. Remaining Characters ${trimmedText.length}/12`,
+      error: "* Phone number cannot be empty",
+      isError: true,
     };
-  }
-
-  if (trimmedText.length > 12) {
-    return { message: "* Character Limit Exceeded" };
-  }
-
-  return {
-    message: `* Remaining Characters ${trimmedText.length}/12`,
-  };
-};
-export const TitleValidate = (text: string): {  message: string } => {
-  if (text.length === 0) {
-    return {  message: "" }; 
-  } else if (text.length < 3) {
+  } else if (/[^0-9]/.test(phone)) {
     return {
-      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/100`,
+      error: "* Only numbers are allowed",
+      isError: true,
     };
-  } else if (text.length > 100) {
-    return {  message: "* Character Limit Exceeded" };
+  } else if (phone.length !== requiredLength) {
+    return {
+      error: `* Phone number must be exactly ${requiredLength} digits. Entered: ${phone.length}/${requiredLength}`,
+      isError: true,
+    };
   } else {
-    return {message: `* Remaining Characters ${text.length}/100` }; 
-  }
-};
-export const PlanContentValidate = (text: string): {  message: string } => {
-  if (text.length === 0) {
-    return {  message: "" }; 
-  } else if (text.length < 3) {
     return {
-      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/2000`,
+      error: "",
+      isError: false,
     };
-  } else if (text.length > 2000) {
-    return {  message: "* Character Limit Exceeded" };
-  } else {
-    return {message: `* Remaining Characters ${text.length}/2000` }; 
   }
 };
+
+//address validation
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+}
+
+export const addressContentValidation = (content: string): ValidationResult => {
+  const maxChars = 200;
+  const minChars = 3; // or set your desired minimum
+
+  const addressRegexp = /^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{0,200}$/;
+
+  if (content.length === 0 || content.length < minChars) {
+    return {
+      error: `* Must contain at least ${minChars} character(s). Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else if (!addressRegexp.test(content)) {
+    return {
+      error: `* Maximum ${maxChars} characters allowed and valid characters only`,
+      isError: true,
+    };
+  } else if (content.length > maxChars) {
+    return {
+      error: `* Character limit exceeded. Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else {
+    return {
+      error: "",
+      isError: false,
+    };
+  }
+};
+
+export const HeadingContentValidation = (content: string) => {
+  const maxChars = 100;
+  const minChars = 3;
+
+  if (content.length === 0 || content.length < minChars) {
+    return {
+      error: `* Must contain at least ${minChars} characters. Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else if (content.length > maxChars) {
+    return {
+      error: `* Character limit exceeded.${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else {
+    return {
+      error: "",
+      isError: false,
+    };
+  }
+};
+
+
+//descriptive content
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+}
+
+export const DescriptionContentValidation = (content: string): ValidationResult => {
+  const maxChars = 2000;
+  const minChars = 3; // or set your desired minimum
+
+  const contentRegexp = /^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{0,2000}$/;
+
+  if (content.length === 0 || content.length < minChars) {
+    return {
+      error: `* Must contain at least ${minChars} character(s). Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else if (!contentRegexp.test(content)) {
+    return {
+      error: `* Maximum ${maxChars} characters allowed and valid characters only`,
+      isError: true,
+    };
+  } else if (content.length > maxChars) {
+    return {
+      error: `* Character limit exceeded. Remaining Characters ${content.length}/${maxChars}`,
+      isError: true,
+    };
+  } else {
+    return {
+      error: "",
+      isError: false,
+    };
+  }
+};
+
 export const validateImageFile=(file:File)=>{
      //check file size <=5mb
      if(file.size>5*1024*1024){

@@ -4,9 +4,31 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { addressContentValidation, validateImageDimensions, validateImageFile,validateVideo 
-} from "../../utils/Validations";
+import { validateImageDimensions, validateImageFile,validateVideo } from "../../utils/Validations";
 
+
+//SAVE
+interface SaveProps{
+  onSave: () => void;
+  disabled?: boolean;
+}
+export const UserEndSaveButton=({onSave,
+disabled = false}:SaveProps)=>{
+
+  const { classes } = useUserEndwebStyles();
+  return (
+    <Box className={classes.buttonContainer}>
+      <Button
+        className={classes.headerSaveButton}
+        onClick={onSave}
+        disabled={disabled}
+        variant="contained"
+      >
+        Save
+      </Button>
+      </Box>
+  );
+}
 //SAVE and CANCEL buttons
 interface SaveCancelProps {
   onSave: () => void;
@@ -45,8 +67,9 @@ interface GenericSaveEdit {
   value?:string;
   message: string;
   onDelete: () => void;
+  disabled?:boolean;
 }
-export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSaveEdit)=>{
+export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit,disabled=false}:GenericSaveEdit)=>{
   
   const [open, setOpen] = useState(false);
   
@@ -67,6 +90,7 @@ export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSa
         className={classes.heroSave}
         variant="contained"
         onClick={sliceEdit}
+        disabled={disabled}
         >
         Edit
       </Button>
@@ -88,8 +112,9 @@ export const UserendEditandDeletebuttons=({message,onDelete,sliceEdit}:GenericSa
 interface GenericEdit {
   sliceEdit:() => void;
   value?:string;
+  disabled?:boolean;
 }
-export const EditButton=({sliceEdit}:GenericEdit)=>{
+export const EditButton=({sliceEdit,disabled = false}:GenericEdit)=>{
  
   const { classes } = useUserEndwebStyles();
  
@@ -99,7 +124,7 @@ export const EditButton=({sliceEdit}:GenericEdit)=>{
         className={classes.heroSave}
         variant="contained"
         onClick={sliceEdit}
-        
+        disabled={disabled}
       >
         Edit
       </Button>
@@ -232,21 +257,24 @@ export const Textfiledbox = () => {
   );
 };
 
-
 //Textfiled singlerow
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+}
 interface GenericTextfieldsinglerows {
   onChange: (value: string,error:string) => void;
-  validationFn:(value:string)=>string;
-  value: string;
-}
+  value?: string;
+  validationFn:(value:string)=>ValidationResult;
+ }
 
 export const TextFieldSingleRow = ({ onChange,validationFn,value }: GenericTextfieldsinglerows) => {
   const { classes } = useUserEndwebStyles();
 
 const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const contenterror=validationFn(value);
-    onChange(value,contenterror);    
+    const {error}=validationFn(value);
+    onChange(value,error);    
   };
 
   return(
@@ -259,17 +287,24 @@ const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
 }
 
 //Textfiled multirows
+interface ValidationResult {
+  error: string;
+  isError: boolean;
+  
+}
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
   value?:string;
-  }
-export const TextFieldManyRows = ({ onChange,value}: GenericTextfieldmutlirows) => {
+  validationFn:(value:string)=>ValidationResult;
+  disabled?:boolean;  
+ }
+export const TextFieldManyRows = ({ onChange,value,validationFn,disabled=false}: GenericTextfieldmutlirows) => {
   const { classes } = useUserEndwebStyles();
 
   const handleChangeManyrows = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const contenterror=addressContentValidation(value);
-    onChange(value,contenterror);    
+    const {error}=validationFn(value);
+    onChange(value,error);    
   };
 
   return (
@@ -280,6 +315,18 @@ export const TextFieldManyRows = ({ onChange,value}: GenericTextfieldmutlirows) 
       minRows={5}
       onChange={handleChangeManyrows}
       value={value}
+      disabled={disabled}
+       InputProps={{
+        sx: disabled
+          ? {
+              color: "#9e9e9e", // gray text
+               // light gray bg
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ddd", // light border
+              },
+            }
+          : {},
+      }}
     />
   );
 };
@@ -351,6 +398,7 @@ export const ErrormsgPrice = () => {
 interface UploadButtonPropsBase {
   onError?: (msg: string,id?:string) => void;
   type?: "image" | "video";
+  disabled?: boolean;
 }
 
 interface UploadButtonSingle extends UploadButtonPropsBase {
@@ -369,6 +417,7 @@ export const Uploadbutton = ({
   onError,
   type = "image",
   multiple = false,
+  disabled=false,
 }: UploadButtonProps) => {
   const { classes } = useUserEndwebStyles();
 
@@ -421,13 +470,14 @@ export const Uploadbutton = ({
       className={classes.uploadHerobutton}
       component="label"
       endIcon={<FileUploadOutlinedIcon />}
+      disabled={disabled} 
     >
       <input
         type="file"
         accept={accept}
         hidden
         multiple={multiple}
-        onChange={handleChangeUpload}
+        onChange={!disabled ?handleChangeUpload:undefined}
       />
       Upload
     </Button>

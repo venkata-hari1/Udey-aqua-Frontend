@@ -20,6 +20,11 @@ import {
   ErrormsgContent,
   ErrormsgTitle,
   TextFieldSingleRow,
+<<<<<<< HEAD
+=======
+  UserEndSaveButton,
+  EditButton,
+>>>>>>> sanjeev2
 } from "./UserEndCommonButtons";
 import { Fragment } from "react";
 import { useState } from "react";
@@ -39,6 +44,7 @@ const UserEndProjects = () => {
       imgerror: "",
       headingerror: "",
       descriptionerror: "",
+<<<<<<< HEAD
     },
   ]);
 
@@ -137,6 +143,112 @@ const UserEndProjects = () => {
   };
 
  
+=======
+      isSaved:false,
+    },
+  ]);
+
+ const[editSlideId,setEditSlideId]=useState<string |null>(null)
+ 
+  const handleAddProject = () => {
+    setProjects((prev) => [
+      ...prev,
+      {
+        id: uuidv4(),
+        type: "Cage Culture",
+        image: "",
+        heading: "",
+        description: "",
+        imgerror: "",
+        headingerror: "",
+        descriptionerror: "",
+        isSaved:false,
+      },
+    ]);
+  };
+
+  
+  const handleDelete = (id: string) => {
+    setProjects((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  
+  const handleUpload = (id: string, file: File) => {
+    const url = URL.createObjectURL(file);
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, image: url, imgerror: "" } : p
+      )
+    );
+  };
+
+  const handleRemoveImage = (id: string) => {
+    setProjects((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, image: "" } : p))
+    );
+  };
+
+  const handleChange = (
+    id: string,
+    field: string,
+    value: string,
+    error: string = ""
+  ) => {
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, [field]: value, [`${field}error`]: error } : p
+      )
+    );
+  };
+
+  const handleSave = (id: string) => {
+    const project = projects.find((p) => p.id === id);
+    if (project) {
+      localStorage.setItem(`ProjectValues_${id}`, JSON.stringify(project));
+    }
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? { ...p, image: "", heading: "", description: "",isSaved:true, }
+          : p
+      )
+    );
+    setEditSlideId(null)
+  };
+
+
+  const handleCancel = (id: string) => {
+    setProjects((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              image: "",
+              heading: "",
+              description: "",
+              imgerror: "",
+              headingerror: "",
+              descriptionerror: "",
+            }
+          : p
+      )
+    );
+    setEditSlideId(null)
+  };
+
+  const handleEdit = (id: string) => {
+    const saved = localStorage.getItem(`ProjectValues_${id}`);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setProjects((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, ...parsed } : p))
+      );
+    }
+    setEditSlideId(id)
+  };
+
+ 
+>>>>>>> sanjeev2
   return (
     <Box>
       <Box className={classes.useHerocontainer}>
@@ -180,11 +292,22 @@ const UserEndProjects = () => {
                     <MenuItem value="Acqua Culture">Acqua Culture</MenuItem>
                   </Select>
                 </FormControl>
+<<<<<<< HEAD
+=======
+                {index===0 ? <EditButton sliceEdit={() => handleEdit(proj.id)}
+                  disabled={!proj.isSaved}/> : 
+>>>>>>> sanjeev2
                 <UserendEditandDeletebuttons
                     message={`Are you sure want to delete this project ${projects.length} in Our project?`}
                     onDelete={() => handleDelete(proj.id)}
                     sliceEdit={() => handleEdit(proj.id)}
+<<<<<<< HEAD
                 />
+=======
+                    disabled={!proj.isSaved}
+                />}
+                
+>>>>>>> sanjeev2
                 </Box>
 
               {/* Upload + Heading + Description */}
@@ -223,6 +346,7 @@ const UserEndProjects = () => {
                     <TextFieldSingleRow value={proj.heading} 
                     onChange={(val,error)=>handleChange(proj.id,"heading",val,error)}
                     validationFn={HeadingContentValidation}/>
+<<<<<<< HEAD
                     
                     {/* <TextField
                       className={classes.heroTextfiled}
@@ -233,6 +357,8 @@ const UserEndProjects = () => {
                         handleChange(proj.id, "heading", e.target.value)
                       }
                     /> */}
+=======
+>>>>>>> sanjeev2
                     {proj.headingerror && (
                       <ErrormsgTitle message={proj.headingerror} />
                     )}
@@ -245,8 +371,14 @@ const UserEndProjects = () => {
                     <TextFieldManyRows
                       value={proj.description}
                       onChange={(value, error) =>
+<<<<<<< HEAD
                         handleChange(proj.id, "description", value, error)
                       }
+=======
+                      handleChange(proj.id, "description", value, error)
+                       }
+                      validationFn={HeadingContentValidation} 
+>>>>>>> sanjeev2
                     />
                     {proj.descriptionerror && (
                       <ErrormsgContent message={proj.descriptionerror} />
@@ -256,11 +388,21 @@ const UserEndProjects = () => {
               </Stack>
 
               {/* Save / Cancel buttons */}
+<<<<<<< HEAD
               <UserEndSaveCancelButtons
                 onSave={() => handleSave(proj.id)}
                 onCancel={() => handleCancel(proj.id)}
                 disabled={saveDisabled}
               />
+=======
+              {editSlideId===proj.id ? <UserEndSaveCancelButtons
+                onSave={() => handleSave(proj.id)}
+                onCancel={() => handleCancel(proj.id)}
+                disabled={saveDisabled}
+              />: <UserEndSaveButton onSave={() => handleSave(proj.id)}
+              disabled={saveDisabled}/>}
+              
+>>>>>>> sanjeev2
 
               {index !== projects.length - 1 && (
                 <Divider className={classes.heroDivider} />

@@ -388,6 +388,7 @@ flexDirection:'row',
 FormCurageBox:{
 display:'flex',
 width:'100%',
+marginTop:'10px',
 justifyContent:'space-between',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',

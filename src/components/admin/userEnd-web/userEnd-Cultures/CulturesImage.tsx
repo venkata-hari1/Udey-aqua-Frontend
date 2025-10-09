@@ -4,6 +4,7 @@ import useUserEndwebStyles from "../UserendwebStyles"
 import fishImg from './../../../../assets/admin/fishImg.jpg';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
+import { nameValidation } from "../../utils/Validations";
 
 const CulturesImage = () => {
 
@@ -33,7 +34,8 @@ const CulturesImage = () => {
      <Box>
       <Typography className={classes.titleText}>SubTitle</Typography>
       <TextFieldManyRows onChange={() =>
-                        console.log("")}/>
+                        console.log("")}
+                        validationFn={nameValidation}/>
      </Box>
      </Box>
      <Box className={classes.buttonContainer}>

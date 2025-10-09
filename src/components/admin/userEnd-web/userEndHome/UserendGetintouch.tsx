@@ -1,13 +1,12 @@
 import { Box,Stack,Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages,ErrormsgContent, EditButton, TextFieldSingleRow, ErrorName, TextFieldManyRows } from "./UserEndCommonButtons";
+import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages,ErrormsgContent, EditButton, TextFieldSingleRow, ErrorName, TextFieldManyRows, UserEndSaveButton } from "./UserEndCommonButtons";
 import { useState } from "react";
-import { nameValidation, phoneNumbervalidation} from "../../utils/Validations";
-
+import { addressContentValidation, nameValidation, phoneNumberValidation} from "../../utils/Validations";
 
 const UserendGetintouch = () => {
-      const{classes}=useUserEndwebStyles() 
+const{classes}=useUserEndwebStyles() 
 
 const[getinSlide,setGetinSlide]=useState({
         title: "Image",
@@ -21,7 +20,13 @@ const[getinSlide,setGetinSlide]=useState({
         msgContentError:'',
 })
 
- const handleUpload=(file:File)=>{
+const isDisabled= !getinSlide.image || !getinSlide.name || !getinSlide.phone
+|| !getinSlide.msgContent || !!getinSlide.imgError || !!getinSlide.nameError
+|| !!getinSlide.phoneError || !!getinSlide.msgContentError
+
+const[isEdit,setIsEdit]=useState(false)
+ 
+const handleUpload=(file:File)=>{
   const imageUrl = URL.createObjectURL(file);
   const updatedGetinslide={...getinSlide,image:imageUrl,imgError:''}
   setGetinSlide(updatedGetinslide) 
@@ -48,12 +53,14 @@ const handleContentchange=(value:string,error:string)=>{
     console.log(updatedContent)
 }
 const sliceEdit=()=>{
+  setIsEdit(true)
  const savedData=localStorage.getItem("getInvalues");
  if(savedData){
   const parsed=JSON.parse(savedData);
   setGetinSlide({...getinSlide,
     name:parsed.name,
     phone:parsed.phone,
+    image:parsed.image,
     image:parsed.image,
     msgContent:parsed.msgContent
   })
@@ -65,12 +72,13 @@ const handleCancel=()=>{
     nameError:"",
     phoneError:"",msgContentError:"",imgError:""}
   console.log(setGetinSlide(updatedvalues))
+  setIsEdit(false)
 }
 
  const handleSave=()=>{
    localStorage.setItem("getInvalues",JSON.stringify(getinSlide));
    setGetinSlide({...getinSlide,name:"",phone:'',msgContent:'',image:""})
-   
+   setIsEdit(false)
  }   
   return (
     <Box>
@@ -100,18 +108,22 @@ const handleCancel=()=>{
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Phone</Typography>
-        <TextFieldSingleRow onChange={handlePhoneChange} validationFn={phoneNumbervalidation}
+        <TextFieldSingleRow onChange={handlePhoneChange} validationFn={phoneNumberValidation}
                  value={getinSlide.phone}/>
         <ErrorName message={getinSlide.phoneError}/>
         </Stack>
         <Stack>
          <Typography className={classes.titleText} >Message</Typography>
-         <TextFieldManyRows value={getinSlide.msgContent} onChange={(value, error) => handleContentchange(value, error)}/>
+         <TextFieldManyRows value={getinSlide.msgContent} onChange={(value, error) => handleContentchange(value, error)}
+          validationFn={addressContentValidation}/>
          <ErrormsgContent message={getinSlide.msgContentError}/>
         </Stack> 
       </Box>
       </Stack> 
-       <UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel}/> 
+      {isEdit ?<UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel}
+      disabled={isDisabled}/>:
+      <UserEndSaveButton onSave={handleSave} disabled={isDisabled}/>}
+        
        </Box> 
        </Box>
   )

@@ -36,7 +36,7 @@ import {
   FOOTER_BG3_ANIMATE,
   FOOTER_BG3_TRANSITION,
 } from "./animations";
-import { showToast } from "../../admin/utils/Toast";
+/* import { getValue } from "@mui/system"; */
 import { validateEmail } from "../../admin/utils/Validations";
 
 const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
@@ -48,20 +48,20 @@ const Footer = () => {
   const { classes } = useSharedStyles();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [emailTouched, setEmailTouched] = useState(false);
-  const isValidEmail = (v: string) =>
-   /^(?!.*\.\.)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
- const emailHasError = emailTouched && !validateEmail(email);
+  const[error,setError]=useState("") 
 
-  const HandleSubscribe=()=>{
-    setEmailTouched(true)
-    if (emailHasError) {
-    showToast(true, "Subscribed successfully!");
-  } else {
-    showToast(false, "Invalid email!");
-  }
+  const handleEmailChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
+       const value=e.target.value;
+       setEmail(value);
+       if(value===''){
+         setError("")
+       }else{
+        setError(validateEmail(value))
+       }
+       
+ }
 
-  }
+const isEmailValid=error==="" &&email.length>0
 
  const handleNavigation = (link: string) => {
     switch (link) {
@@ -135,26 +135,32 @@ const Footer = () => {
                 />
               </Box>
               <Box className={classes.subscribeBox}>
-                <Box display="flex" gap={1} alignItems="center">
-                    <InputBase
-                      placeholder="Enter Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      onBlur={() => setEmailTouched(true)}
-                      className={`${classes.subscribeInput}  ${classes.hideInBig} ${
-                        emailHasError ? classes.subscribeInputError : ""
-                      }`}
-                    />
-                    <Button
+                <TextField 
+                size="small"
+                fullWidth
+                variant="outlined"
+                placeholder="enter email"
+                value={email}
+                
+                onChange={handleEmailChange}
+                error={!!error}
+                helperText={error}
+                InputProps={{
+                  endAdornment:(
+                    <InputAdornment position="end">
+                      <Button
                       variant="contained"
-                      className={classes.subscribeButton}
-                      onClick={HandleSubscribe}  // ✅ now triggers
-                      disabled={!isValidEmail(email)}
-                    >
+                      className={classes.subscribeButton} 
+                      disabled={!isEmailValid}
+                      onClick={()=>console.log(email)}
+                      >
                       Subscribe
-                    </Button>
-                  </Box>
-
+                      </Button>
+                    </InputAdornment>
+                  )
+                }}
+                className={classes.subscribeInput2}
+                />
          
               </Box>
             </Box>
@@ -307,23 +313,26 @@ const Footer = () => {
                   variant="outlined"
                   placeholder="Enter Email"
                   value={email}
-                  onChange={(e) => {setEmail(e.target.value);
-                                    setEmailTouched(true); } }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <Button
-                        variant="contained"
-                        className={`${classes.subscribeButton}`}
-                        onClick={() => HandleSubscribe()}
-                        disabled={!isValidEmail(email)}
-                      >
-                        Subscribe
-                      </Button>
-                    </InputAdornment>
-                  }
-                  className={`${classes.subscribeInput} ${
-                    emailHasError ? classes.subscribeInputError : ""
-                  }`}
+                  onChange={handleEmailChange}
+                  error={!!error}
+                  helperText={error}
+                  
+                   InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Button
+                          variant="contained"
+                          className={classes.subscribeButton} 
+                          disabled={!isEmailValid}
+                          onClick={()=>console.log(email)}
+                       >
+                          Subscribe
+                        </Button>
+                      </InputAdornment>
+                    ),
+                  }}
+
+                className={classes.subscribeInput2} 
                 />
                 {/* Error message removed: button stays disabled on invalid email */}
               </Box>
