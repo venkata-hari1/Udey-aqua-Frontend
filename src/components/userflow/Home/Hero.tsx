@@ -24,9 +24,7 @@ const Hero = () => {
 
   return (
     <Box className={classes.heroRoot} sx={{position:'relative'}}>
-    
-      <Box className={classes.heroMain}>
-      <Box className="herofish">
+    <Box className="herofish">
       <Box
       component="img"
       src={giphyunscreen}
@@ -48,6 +46,8 @@ const Hero = () => {
      alt='img'
     />
        </Box>
+      <Box className={classes.heroMain}>
+      
         <Box className={classes.heroImgBox}>
        
           <motion.img

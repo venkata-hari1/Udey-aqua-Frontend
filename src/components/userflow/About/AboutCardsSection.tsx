@@ -76,9 +76,11 @@ const AboutCardsSection = ({
         img={headerImg}
         aboutImg={headerImgSide}
       />
+     
       <Grid className={classes.aboutCardsGrid} ref={containerRef}>
         {cards.map((card, idx) => (
           <Box key={idx}>
+  
             <AboutInfoCard
               {...card}
               expanded={openSet.has(idx)}

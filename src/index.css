@@ -21,7 +21,7 @@
   .herofish .fish2 {
     width:25%;
     right: -30%;
-    margin-top: -1%;
+    margin-top: 8%;
     transform: scaleX(-1);
     animation: fishSwimReverse 13s linear infinite;
   }
@@ -30,8 +30,18 @@
     width: 25%;
     left: -30%;
     bottom: 0;
-    margin-bottom: -5% !important;
+    margin-bottom: -2% ;
     animation: fishSwim 13s linear infinite;
+  }
+  @media(max-width:830px){
+    .herofish .fish2 {
+      width: 30%;
+      margin-top:18%;
+    }
+    .herofish .fish1 {
+      width: 30%;
+      margin-bottom: -1% ;
+    }
   }
   @keyframes fishSwim {
     0% {

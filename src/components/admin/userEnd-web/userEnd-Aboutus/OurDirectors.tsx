@@ -9,9 +9,9 @@ import {HelperTextValidate, NameandRoleValidate} from './validations';
 type HeroProps={
     id:string;
     accordianId:string;
-    Accordiantitle:string,
+    Section:string,
 }
-const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
+const OurDirectors=({id,accordianId,Section}:HeroProps)=>{
     const {classes} = useUserEndwebStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -23,11 +23,15 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
     const options = ["Directors", "Advisors", "Managers"];
 
     const roleFlied = NameandRoleValidate(role);
     const nameFlied = NameandRoleValidate(name);
     const contentFlied = HelperTextValidate(content);
+    file
     const isTextInvalid = role.length === 0 || role.length < 3 || role.length > 80 || name.length === 0 || name.length < 3 || name.length > 80 || content.length === 0 || content.length < 3 || content.length > 200;
 
     const validate = (file:File):string | null=>{
@@ -45,6 +49,7 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
     
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
@@ -80,13 +85,8 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
-    {/*const handleDeleteAll = () => {
-        setFile([]);
-        setImage([]);
-        setError("");
-        setSubtitle('');
-    };*/}
     const handleAddSubpage = () => {
         const newId = `subpage-${counter.length+1}`; 
         setSubpages((prev) => [...prev, { id: newId }]);
@@ -104,7 +104,12 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
             }
             console.log(Data);
         localStorage.setItem("OurDirectors", JSON.stringify(Data));
-        setPrevData(true)
+         setIsSaved(true);
+         setPrevData(true)
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
         };
         const CancelData = ()=>{
             const PrevData=localStorage.getItem('OurDirectors');
@@ -114,17 +119,24 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                 setRole(parsedData.role || []);
                 setContent(parsedData.content || []);
                 setImage(parsedData.image || []);
-                setFile([]); 
+                setFile([]);
+                setIsSaved(true); 
                 setError(""); 
             } else {
                 alert("No previous data found!");
             }
+            if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!prevData)
         
         }
         useEffect(() => {
             const saved = localStorage.getItem("OurDirectors");
             if (saved) {
             setPrevData(true);
+            setIsSaved(true);
             }
         }, []);
     return (
@@ -153,8 +165,9 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
 
         </Select>
         <Box display="flex" justifyContent="flex-end" gap={2}>
-          {/*<SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>*/}
-          <EditButton/>
+          <EditButton error={ Edit} onClick={()=> {setCancel(true);
+            setEdit(true)
+          }}/>
         </Box>
       </Box>
       <Box className={classes.myuploadandheadingbox}>
@@ -166,16 +179,17 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                         <input type='file'
                                 multiple
                                 accept="image/*" 
-                                id={`upload-file-${accordianId}-${id}`}
+                                id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
+                                disabled={!Edit}
                                 onChange={HandleFileChange}
                                 />
-                        <UploadButton id={id} accordianId={accordianId}/> 
-                        {(file.length>0 || prevData) && (
+                        <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                        {(Images.length>0 || prevData) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
                                     {Images.map((prev,index)=>
-                                        <Box key={index} sx={{position:'relative'}} >
+                                        <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                             <img 
                                                 src={prev}
                                                 alt={`preview ${index+1}`}
@@ -183,15 +197,16 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                                             />
                                             <Button className={classes.cancelImgIcon}
                                                      onClick={()=>{removeImage(index)}}
+                                                     disabled={!Edit}
                                                             >
                                                 x
                                             </Button>
                                         </Box>
                                     )}
-                                    <label htmlFor={`upload-file-${accordianId}-${id}`}>
+                                    <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
                                     <input
                                             accept="image/*"
-                                            id={`upload-file-${accordianId}-${id}`}
+                                            id={`upload-file-${Section}-${accordianId}-${id}`}
                                             type="file"
                                             multiple
                                             style={{ display: "none" }}
@@ -200,10 +215,21 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                                         </label>
                                     </Box>
                                     <Box>
-                                            {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                           {(Images.length>0 ) &&(
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                     </Box>  
                             </Box>
@@ -224,16 +250,20 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                         </Typography>
                         <TextField className={classes.myTextFleid}
                                     value={name}
-                                    onChange={(e)=>setName(e.target.value)}
+                                    onChange={(e)=>{setName(e.target.value);
+                                            setIsSaved(false)}}
                                     helperText={nameFlied.message}
+                                    disabled={!Edit}
                                     FormHelperTextProps={{className:classes.helperText}}/>
                         <Typography className={classes.mytext}>
                             role
                         </Typography>
                         <TextField className={classes.myTextFleid}
                                     value={role}
-                                    onChange={(e)=>setRole(e.target.value)}
+                                    onChange={(e)=>{setRole(e.target.value);
+                                            setIsSaved(false)}}
                                     helperText={roleFlied.message}
+                                    disabled={!Edit}
                                     FormHelperTextProps={{className:classes.helperText}}/>
                         <Typography className={classes.mytext}>
                             content
@@ -244,17 +274,19 @@ const OurDirectors=({id,accordianId,Accordiantitle}:HeroProps)=>{
                             multiline
                             minRows={5}
                             className={classes.myTextFleid}
-                            onChange={(e)=>setContent(e.target.value)}
+                            onChange={(e)=>{setContent(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={contentFlied.message}
+                            disabled={!Edit}
                             FormHelperTextProps={{className:classes.helperText}}/>
                 </Box>
             </Box> 
             <Box className={classes.SeveandCancelBox}>
-                            <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                            {prevData &&(<CancelButton onClick={CancelData}/>)}
+                            <UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                                                {cancel &&(<CancelButton onClick={CancelData}/>)}
                         </Box>
             {subpages.map((sub) => (
-                    <Advisors key={sub.id} id={sub.id} accordianId={id} title={Accordiantitle} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Advisors key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))} 
  
     </Box>

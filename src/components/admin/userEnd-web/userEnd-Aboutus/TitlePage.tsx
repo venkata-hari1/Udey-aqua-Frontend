@@ -8,7 +8,7 @@ import TitleSubpage from './TitleSubpage';
 type TitleProps={
     id:string;
     accordianId:string,
-    Section?:string;
+    Section:string;
 }
 
 const TitlePage=({id,accordianId, Section}:TitleProps)=>{
@@ -21,9 +21,13 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
     const [counter, setCounter] = useState<any>([1]);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(subtitle)
     const TitleField=NameandRoleValidate(Title)
+    file
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
  
 
@@ -41,6 +45,7 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
             selectedFiles.forEach(file => {
@@ -71,6 +76,7 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
 
     const handleAddSubpage = () => {
@@ -86,25 +92,37 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                 subtitle,
                 image:Images
             }
-        localStorage.setItem("AUHero", JSON.stringify(Data));
-        setPrevData(true)
+        localStorage.setItem(`${Section}_Custom_Header`, JSON.stringify(Data));
+         setIsSaved(true);
+         setPrevData(true)
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
         };
         const CancelData = ()=>{
-            const PrevData=localStorage.getItem('AUHero');
+            const PrevData=localStorage.getItem(`${Section}_Custom_Header`);
             if (PrevData) {
                 const parsedData = JSON.parse(PrevData);
                 setSubtitle(parsedData.subtitle || "");
                 setImage(parsedData.image || []);
                 setFile([]);
+                setIsSaved(true);
                 setError("");
             } else {
                 alert("No previous data found!");
             }
+            if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!prevData)
         }
         useEffect(() => {
-            const saved = localStorage.getItem("AUHero");
+            const saved = localStorage.getItem(`${Section}_Custom_Header`);
             if (saved) {
             setPrevData(true);
+            setIsSaved(true);
             }
         }, []);
     return(
@@ -134,7 +152,9 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
                     <Box className={classes.SeveandCancelBox}>
-                        <EditButton/>
+                        <EditButton error={!prevData} onClick={()=> {setCancel(true);
+                            setEdit(true)
+                        }}/>
                     </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
@@ -149,13 +169,14 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                            {(file.length>0 || prevData) && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(Images.length>0 || prevData) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -163,6 +184,7 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -180,10 +202,21 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                                             </label>
                                         </Box>
                                         <Box>
-                                            {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                             {(Images.length>0 ) &&(
+                                               
+                                                <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box>  
                                 </Box>
@@ -208,24 +241,26 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                             minRows={5}
                             className={classes.myTextFleid}
                             value={subtitle}
-                            onChange={(e)=>setSubtitle(e.target.value)}
+                             onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={TextFieldError.message}
+                            disabled={!Edit}
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
                  <Box className={classes.SeveandCancelBox} >
-                                    <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                                    {prevData &&(<CancelButton onClick={CancelData}/>)}
+                                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                    {cancel &&(<CancelButton onClick={CancelData}/>)}
                                 </Box>
                 <Box className={classes.heroDivider}/>
                 <Box sx={{marginTop:'20px'}}>
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
                         <AddSection onClick={handleAddSubpage}/>
                     </Box>
-                    <TitleSubpage id='Sub Section-1' accordianId='custom'/>
+                    <TitleSubpage id='Sub Section-1' accordianId='custom' Section={Section}/>
                 </Box>
                 {subpages.map((sub) => (
-                    <TitleSubpage key={sub.id} id={sub.id} accordianId={accordianId} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <TitleSubpage key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

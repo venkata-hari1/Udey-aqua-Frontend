@@ -4,7 +4,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { addressContentValidation, validateImageDimensions, validateImageFile,validateVideo } from "../../utils/Validations";
+import { addressContentValidation, validateImageDimensions, validateImageFile,validateVideo 
+} from "../../utils/Validations";
 
 //SAVE and CANCEL buttons
 interface SaveCancelProps {

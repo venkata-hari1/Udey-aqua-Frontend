@@ -239,7 +239,7 @@ AboutUscontainer:{
   flexDirection:'column',
   gap:5,
   color:'#fff',
-  padding:'15px',
+  padding:'15px 15px 15px 30px',
 },
 AboutUsHeaderbox:{
   display:'flex',

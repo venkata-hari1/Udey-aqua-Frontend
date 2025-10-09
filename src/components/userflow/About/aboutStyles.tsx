@@ -532,6 +532,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       fontSize: 14,
       lineHeight: 1.4,
+      textAlign:'left'
     },
   },
   milestoneYear: {

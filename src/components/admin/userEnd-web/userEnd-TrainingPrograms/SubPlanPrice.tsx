@@ -7,6 +7,10 @@ import { useState, useEffect } from "react";
 import { TitleValidate, PlanContentValidate, PriceValidate } from "../../utils/Validations";
 import EditIcon from "../../../../assets/Edit.png";
 import { EditButton, CancelButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
+import ReactQuill from 'react-quill-new';
+
+
+
 
 
 type SubPriceplan={
@@ -87,37 +91,92 @@ const SubPriceplan=({id,onDelete,Section}:SubPriceplan)=>{
                              src={EditIcon} alt="Editicon" width='19px' height='19px'
                         />
                     </Box>
-                    <Box className={classes.TitleandTextfieldBox}>
-                        <Box sx={{width:'100px'}}>
-                            <Typography className={classes.TitleandplanText}>Title</Typography>
+                    <Box sx={{display:'flex',flexDirection:'row',paddingLeft:'48px',}}>
+                        <Box sx={{display:'flex',flexDirection:'column', gap:10, marginTop:'10px'}}>
+                            <Box sx={{width:'100px'}}>
+                                <Typography className={classes.TitleandplanText}>Title</Typography>
+                            </Box>
+                            <Box sx={{width:'100px'}}>
+                                <Typography className={classes.TitleandplanText}>price</Typography>
+                            </Box>
+                            <Box sx={{width:'100px'}}>
+                                <Typography className={classes.TitleandplanText}>content</Typography>
+                            </Box>
+                            {/*<TextField  className={classes.titleandpriceTextfield}
+                                        value={title}
+                                        onChange={(e)=>setTitle(e.target.value)}
+                                        helperText={TitleError.message}
+                                        FormHelperTextProps={{className:classes.helperText}}/>*/}
                         </Box>
-                        <TextField  className={classes.titleandpriceTextfield}
-                                    value={title}
-                                    onChange={(e)=>setTitle(e.target.value)}
-                                    helperText={TitleError.message}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
-                    </Box>
-                    <Box className={classes.TitleandTextfieldBox} >
-                        <Box sx={{width:'100px'}}>
-                            <Typography className={classes.TitleandplanText}>price</Typography>
+                        <Box sx={{display:'flex',flexDirection:'column', gap:5, paddingLeft:'30px'}} >
+                            <TextField  className={classes.titleandpriceTextfield}
+                                        value={title}
+                                        onChange={(e)=>setTitle(e.target.value)}
+                                        helperText={TitleError.message}
+                                        FormHelperTextProps={{className:classes.helperText}}/>
+                            <TextField  className={classes.titleandpriceTextfield}
+                                        value={price}
+                                        onChange={(e)=>setPrice(e.target.value)}
+                                        helperText={PriceError.message}
+                                        FormHelperTextProps={{className:classes.helperText}}/>
+                            <Box sx={{minHeight: '200px',overflow: 'visible'}}>
+                                    <ReactQuill
+                                    theme="snow"
+                                    className={classes.quillEditor}
+                                    value={content}
+                                    onChange={setContent}
+                                    modules={{
+                                        toolbar: [
+                                        [{ 'font': [] }, { 'size': [] }],
+                                        ['bold', 'italic', 'underline', 'strike'],
+                                        [{ 'script': 'sub' }, { 'script': 'super' }],
+                                        [{ 'header': [1, 2, 3, false] }],
+                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                        ['link', 'image'],
+                                        ['clean']
+                                        ]
+                                    }}
+                                    style={{border:'1px solid #0A4FA4', borderRadius:'4px' }}
+                                    />
+                                   {/* {ContentError.message && (
+                                    <Typography className={classes.helperText}>
+                                        {ContentError.message}
+                                    </Typography>
+                                    )}*/}
+                                </Box>
                         </Box>
-                        <TextField  className={classes.titleandpriceTextfield}
-                                    value={price}
-                                    onChange={(e)=>setPrice(e.target.value)}
-                                    helperText={PriceError.message}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
-                    <Box className={classes.TitleandTextfieldBoxMulti} >
-                        <Box sx={{width:'100px'}}>
+                   {/* <Box className= {classes.TitleandTextfieldBox}>
+                         <Box sx={{width:'100px'}}>
                             <Typography className={classes.TitleandplanText}>content</Typography>
                         </Box>
-                        <TextField multiline minRows={5} className={classes.titleandpriceTextfield}
-                                    value={content}
-                                    onChange={(e)=>setContent(e.target.value)}
-                                    helperText={ContentError.message}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
-                    </Box>
-                </Box>
+                            <Box sx={{minHeight: '200px',overflow: 'visible'}}>
+                                <ReactQuill
+                                theme="snow"
+                                className={classes.titleandpriceTextfield}
+                                value={content}
+                                onChange={setContent}
+                                modules={{
+                                    toolbar: [
+                                    [{ 'font': [] }, { 'size': [] }],
+                                    ['bold', 'italic', 'underline', 'strike'],
+                                    [{ 'script': 'sub' }, { 'script': 'super' }],
+                                    [{ 'header': [1, 2, 3, false] }],
+                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                    ['link', 'image'],
+                                    ['clean']
+                                    ]
+                                }}
+                                style={{ minHeight: '150px' }}
+                                />
+                                {ContentError.message && (
+                                <Typography className={classes.helperText}>
+                                    {ContentError.message}
+                                </Typography>
+                                )}
+                            </Box>
+                        </Box>*/}
+            </Box>
                 <Box className={Aboutus.SeveandCancelBox}>
                     <SaveButton error={  isValid}  onClick={SaveData}/>
                     {prevData &&(<CancelButton onClick={CancelData}/>)}

@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import sunfish from '../../../assets/home/200.gif';
 import { motion } from "framer-motion";
 import MailOutlineIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -38,6 +39,7 @@ import {
 } from "./animations";
 /* import { getValue } from "@mui/system"; */
 import { validateEmail } from "../../admin/utils/Validations";
+import SunFishAnimation from "../Home/SunFishAnimation";
 
 const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
 const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
@@ -92,6 +94,7 @@ const isEmailValid=error==="" &&email.length>0
   };
   return (
     <Box className={classes.footerRoot}>
+      <SunFishAnimation Fish={sunfish} Zindex={100} Count={5}/>
       <Box
         component="img"
         src={footerBg}

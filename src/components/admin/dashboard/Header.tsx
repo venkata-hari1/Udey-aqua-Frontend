@@ -61,6 +61,9 @@ switch(path){
   case "userend-trainingprograms":
     title="User End Website"
     break;
+  case "subpage":
+    title="User End Website"
+    break;
   case "logout":
     title="Logout"
 }
