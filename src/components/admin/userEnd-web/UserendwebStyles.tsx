@@ -674,6 +674,18 @@ bannerRightsidestack:{
    gap:"10px"
 },
 
+//subpage creation
+
+Subpagetitlecontainer:{
+  display:'flex',
+  justifyContent:'flex-start',
+  gap:"80px",
+  [theme.breakpoints.down('md')]:{
+    flexDirection:'column'
+  }
+}
+
+
 }));
 
 export default useUserEndwebStyles;

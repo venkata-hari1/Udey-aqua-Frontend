@@ -83,8 +83,6 @@ return (
    <Box className={classes.useHerocontainer}> 
    <Box mt={2}>
        <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       {/* <DeleteButton message="Are you sure want to delte the image?" 
-       onDelete={onDelete}/> */}
        <EditButton sliceEdit={handleEdit} disabled={!aboutslide.isSaved}/>
     </Box>
   <Stack className={classes.UploadandAboutbox}>
@@ -105,10 +103,10 @@ return (
         <Stack display="flex" justifyContent="flex-start" gap={1}>
         <Typography className={classes.titleText}>Content</Typography>
         <TextFieldManyRows value={aboutslide.content} onChange={(value, error) =>
-                        handleContentchange(value, error)
+          handleContentchange(value, error)
                       }
-            validationFn={HeadingContentValidation}
-             disabled={aboutslide.isSaved} />   
+          validationFn={HeadingContentValidation}
+          disabled={aboutslide.isSaved} />   
         <ErrormsgContent message={aboutslide.contenterror}/>
         </Stack>
       </Stack>
