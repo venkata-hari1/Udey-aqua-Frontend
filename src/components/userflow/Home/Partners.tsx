@@ -10,6 +10,9 @@ import nabard from "../../../assets/partners/nabard.png";
 import icar from "../../../assets/partners/icar.png";
 import { useRef, useState, useEffect } from "react";
 import useHomeStyles from "./homeStyles";
+import SunFishAnimation from "./SunFishAnimation";
+
+import Fish from '../../../assets/home/fish12.gif'
 
 
 const partners = [
@@ -53,7 +56,8 @@ const PartnersSection = () => {
   }, [carouselSlides.length]);
 
   return (
-    <Box className={classes.partnersRoot}>
+    <Box className={classes.partnersRoot} >
+     {/* <SunFishAnimation Fish={Fish} Zindex={100} Count={1}/> */}
       <SectionTitle title="Our Corporates" />
       <Box className={classes.partnersInner}>
         <Box className={classes.partnersDesktopLayout}>
@@ -96,6 +100,7 @@ const PartnersSection = () => {
           ))}
         </Box>
       </Box>
+      
       <Box className='herofish'>
       <Box
         src={fishBg}
@@ -105,14 +110,7 @@ const PartnersSection = () => {
        
       />
       </Box>
-      {/* <motion.img
-        src={fishBg}
-        alt=""
-        className={classes.partnersBgImg}
-        initial={PARTNERS_FISH_INITIAL}
-        animate={PARTNERS_FISH_ANIMATE}
-        transition={PARTNERS_FISH_TRANSITION}
-      /> */}
+
     </Box>
   );
 };

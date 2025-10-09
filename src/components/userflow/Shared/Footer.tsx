@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import sunfish from '../../../assets/home/200.gif';
 import { motion } from "framer-motion";
 import MailOutlineIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -38,13 +39,14 @@ import {
 } from "./animations";
 /* import { getValue } from "@mui/system"; */
 import { validateEmail } from "../../admin/utils/Validations";
+import SunFishAnimation from "../Home/SunFishAnimation";
 
 const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
 const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { classes } = useSharedStyles();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -92,6 +94,7 @@ const isEmailValid=error==="" &&email.length>0
   };
   return (
     <Box className={classes.footerRoot}>
+      <SunFishAnimation Fish={sunfish} Zindex={100} Count={5}/>
       <Box
         component="img"
         src={footerBg}
@@ -165,7 +168,7 @@ const isEmailValid=error==="" &&email.length>0
               </Box>
             </Box>
             <Box className={classes.flexRoot}>
-              <Box className={classes.navLinksBoxMobile} sx={{padding:'0px 15px 0px 15px'}}>
+              <Box className={classes.navLinksBoxMobile}>
                 {navLinks1.map((link) => (
                   <Typography
                     key={link}
@@ -417,7 +420,7 @@ const isEmailValid=error==="" &&email.length>0
                     component="img"
                     src={TwitterIcon}
                     alt="Twitter"
-                    className={classes.twitterIconWhite}
+                    className={classes.footerSocialIconWhite}
                   />
                 </Box>
                 <Box

@@ -58,6 +58,7 @@ const aboutCards = [
 
 const WhoWeAre = () => {
   return (
+    
     <AboutCardsSection
       headerTitle="Who We Are"
       headerSubtitle="Empowering Coastal Communities Through Innovation In Aquaculture"

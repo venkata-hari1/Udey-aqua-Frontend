@@ -6,6 +6,7 @@ import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useAboutStyles from "./aboutStyles";
 import ContactBox from "../Shared/ContactBox";
 import AboutHero from "./AboutHero";
+
 // import {
 //   ABOUT_FISH_INITIAL,
 //   ABOUT_FISH_ANIMATE,
@@ -41,6 +42,7 @@ const AboutLayout = () => {
         <AboutHero currentLabel={currentLabel} />
       </Grid>
       <Grid size={{ xs: 12 }}>
+
         <Grid container className={classes.aboutMainRow} wrap="nowrap">
           {!isMobile && (
             <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper}>
@@ -62,13 +64,17 @@ const AboutLayout = () => {
               </Box>
               <ContactBox />
               {/* Removed side fish to allow main content to take full width */}
+   
             </Grid>
           )}
+          
           {isMobile && <ContactBox />}
           <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
             <Outlet />
           </Grid>
+    
         </Grid>
+        
       </Grid>
     </Grid>
   );

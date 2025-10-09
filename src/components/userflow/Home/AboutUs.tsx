@@ -18,6 +18,7 @@ const AboutUs = () => {
   return (
     <>
       <Grid container spacing={2} className={classes.aboutUsRoot}>
+        
         <Grid size={{ xs: 12, md: 6 }} className={classes.aboutUsLeft}>
           <Box className={classes.aboutUsTitleWrap}>
             <Box

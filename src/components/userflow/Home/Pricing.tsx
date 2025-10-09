@@ -1,6 +1,6 @@
 // src/components/userflow/Home/Pricing.tsx
 import { Box } from "@mui/material";
-import { motion } from "framer-motion";
+
 import SectionTitle from "./SectionTitle";
 import PricingCard from "./PricingCard";
 import pricingImg1 from "../../../assets/pricing/pricing_img_1.png";
@@ -14,11 +14,8 @@ import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
-import {
-  PARTNERS_FISH_INITIAL,
-  PARTNERS_FISH_ANIMATE,
-  PARTNERS_FISH_TRANSITION,
-} from "../Shared/animations";
+import anglesfish from '../../../assets/home/angelfish.gif'
+import SunFishAnimation from "./SunFishAnimation";
 
 const pricingData = [
   {
@@ -91,14 +88,7 @@ const Pricing = () => {
 
   return (
     <Box className={classes.pricingRoot}>
-      <motion.img
-        src={pricingTopImg}
-        alt="Pricing Fishes"
-        className={classes.pricingTopImgBase}
-        initial={PARTNERS_FISH_INITIAL}
-        animate={PARTNERS_FISH_ANIMATE}
-        transition={PARTNERS_FISH_TRANSITION}
-      />
+      <SunFishAnimation Fish={anglesfish} Count={4} Zindex={0} />
       <SectionTitle title="Pricing" />
       <Box
         ref={scrollRef}

@@ -51,6 +51,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     color: "#57B6FF",
     fontSize: "6rem",
+
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down("lg")]: {
       fontSize: "4rem",
@@ -79,15 +80,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   heroMain: {
     width: "100%",
-    maxWidth: 1400,
-    minHeight: "80vh",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    alignContent:"center",
     justifyContent: "center",
-    background: "transparent",
-    position:'relative !important' as 'relative',
-    overflow:'hidden' as 'hidden',
     marginTop: "100px",
     [theme.breakpoints.down("md")]: {
       minHeight: "30vh",
@@ -97,8 +94,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   heroImgBox: {
     flex: "0 0 60%",
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    alignContent:'flex-start',
+ 
     height: "100%",
     [theme.breakpoints.down("md")]: {
       flex: "0 0 40%",
@@ -121,6 +118,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     width: "100%",
+    marginRight:'3%',
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     marginTop: -80,
     [theme.breakpoints.down("md")]: {

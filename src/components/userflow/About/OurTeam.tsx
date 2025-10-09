@@ -1,4 +1,3 @@
-// src/components/userflow/About/OurTeam.tsx
 import {
   Box,
   Grid,
@@ -17,7 +16,8 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material";
 import useAboutStyles from "./aboutStyles";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/about_us/team.png";
 
 // Images
@@ -43,7 +43,7 @@ interface Member {
 
 const membersData: Member[] = [
   {
-    name: "Mr. Uday Kishan Cherukuneedi",
+    name: "Mr. Uday Kishan",
     designation: "Managing Director",
     bigDesignation: "Managing Director – Uday Aqua Connects Private Ltd.",
     qualification: "(M.Pharm,MBA(IIM-Kolkata))",
@@ -145,24 +145,21 @@ const OurTeam = () => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => {
-    const newIndex = prev > 0 ? prev - 1 : prev;
-    setTimeout(() => {
-      memberref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
- // scroll to top)
-    return newIndex;})
+    const list = membersData.filter((m) => m.category === activeTab);
+    if (currentIndex > 0) {
+      const prevMember = list[currentIndex - 1];
+      const slug = prevMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      navigate(`/about/our-team/${slug}`);
+    }
   };
 
   const handleNext = () => {
-     const list = membersData.filter((m) => m.category === activeTab);
-  setCurrentIndex((prev) => {
-    const newIndex = prev < list.length - 1 ? prev + 1 : prev;
-    setTimeout(() => {
-      memberref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100); // scroll to top
-    return newIndex;
-  });
+    const list = membersData.filter((m) => m.category === activeTab);
+    if (currentIndex < list.length - 1) {
+      const nextMember = list[currentIndex + 1];
+      const slug = nextMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      navigate(`/about/our-team/${slug}`);
+    }
   };
 
   const renderMembers = (category: "Directors" | "Advisors") => (
@@ -212,15 +209,6 @@ const OurTeam = () => {
   const selectedMembers = membersData.filter((m) => m.category === activeTab);
   const currentMember = selectedMembers[currentIndex];
 
-  useEffect(() => {
-  if (open && memberref.current) {
-    // Wait for layout update, then scroll smoothly
-    setTimeout(() => {
-      memberref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 200);
-  }
-}, [activeTab, currentIndex, open]);
-
   return (
     <Box>
       {/* Header Section */}
@@ -239,7 +227,7 @@ const OurTeam = () => {
             />
           </Box>
         ) : (
-          <Box ref={memberref}  className={classes.autoHeaderTabWrapper}>
+          <Box className={classes.autoHeaderTabWrapper}>
             <Typography
               className={`${classes.autoHeaderTab} ${
                 activeTab === "Directors" ? classes.autoHeaderTabActive : ""
