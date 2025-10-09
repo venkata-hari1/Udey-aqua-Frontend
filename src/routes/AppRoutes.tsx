@@ -48,6 +48,7 @@ import Awards from "../components/userflow/NewsEvents/Awards";
 import Blog from "../components/userflow/NewsEvents/Blog";
 import Contact from "../components/userflow/Contact/Contact";
 import Maps from "../components/userflow/Shared/Maps";
+import Culturessubpage from "../components/admin/userEnd-web/userEnd-Cultures/Culturessubpage";
 const AppRoutes = () => {
   const location = useLocation();
 
@@ -123,8 +124,7 @@ const AppRoutes = () => {
         <Route path="profile" element={<Profile />}/>
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
-        <Route path="userend-web/userend-culture" element={<CultureHome />} />        
-        
+        <Route path="userend-web/userend-culture" element={<CultureHome />} />
         <Route path="logout" element={<Logout />} />  
       </Route>
 
