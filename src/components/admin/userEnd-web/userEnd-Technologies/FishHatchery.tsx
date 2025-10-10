@@ -2,7 +2,7 @@ import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
 import { AddBanner, AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { HelperTextValidate } from '../userEnd-Aboutus/validations';
 import Banner from './Banner';
 
@@ -142,6 +142,7 @@ const FishHatchery=({id,accordianId,Accordiantitle,Section='FishHatchery'}:FishH
     }, []);
     return(
         <>
+           {file&&<Fragment></Fragment>}
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
                     <AddBanner onClick={handleAddBanner}/>

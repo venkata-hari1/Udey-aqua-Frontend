@@ -1,7 +1,7 @@
 import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Button, Stack, TextField, Typography} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton} from '../userEnd-Aboutus/AboutUsButtons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { HelperTextValidate } from '../userEnd-Aboutus/validations';
 
 
@@ -124,6 +124,7 @@ type HeroProps={
     }, []);
     return(
         <>
+           {file&&<Fragment></Fragment>}
             <Box className={classes.myHeroContainer}>
                 <Box className={classes.deleteButtonBox}>
                      <EditButton error={ !prevData} onClick={()=>{ setCancel(true);

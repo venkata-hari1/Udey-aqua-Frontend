@@ -14,8 +14,7 @@ import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
-import Fish123 from '../../../assets/home/Fish123.gif'
-import SunFishAnimation from "./SunFishAnimation";
+
 
 const pricingData = [
   {

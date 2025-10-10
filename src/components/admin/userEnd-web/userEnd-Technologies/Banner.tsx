@@ -149,8 +149,10 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
             setIsSaved(true);
             }
         }, []);
+     
     return(
         <>
+         {file&&<span></span>}
             <Box className={classes.subSectionBox}>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>
