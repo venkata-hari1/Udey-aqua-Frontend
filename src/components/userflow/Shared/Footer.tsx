@@ -89,7 +89,7 @@ const isEmailValid=error==="" &&email.length>0
       default:
         break;
     }
-  };
+  }
   return (
     <Box className={classes.footerRoot}>
       <Box
