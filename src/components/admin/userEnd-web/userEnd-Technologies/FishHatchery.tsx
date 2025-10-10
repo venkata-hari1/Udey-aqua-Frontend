@@ -15,7 +15,7 @@ type FishHatcheryProps={
 }
 const FishHatchery=({id,accordianId,Accordiantitle,Section='FishHatchery'}:FishHatcheryProps)=>{
     const {classes} = useUserEndwebStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');

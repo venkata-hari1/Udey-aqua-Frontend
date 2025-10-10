@@ -61,7 +61,7 @@ const sliceEdit=()=>{
     name:parsed.name,
     phone:parsed.phone,
     image:parsed.image,
-    image:parsed.image,
+    //image:parsed.image,
     msgContent:parsed.msgContent
   })
  }

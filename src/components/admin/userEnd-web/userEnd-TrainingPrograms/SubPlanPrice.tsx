@@ -4,7 +4,7 @@ import { Box, Button, Typography, TextField,Dialog, DialogContent, DialogActions
 import { DeleteButton } from "./PricingButtons";
 import { Checkbox } from "@mui/material";
 import { useState, useEffect } from "react";
-import { TitleValidate, PlanContentValidate, PriceValidate } from "../../utils/Validations";
+import { TitleValidate, PriceValidate } from "../../utils/Validations";
 import EditIcon from "../../../../assets/Edit.png";
 import { EditButton, CancelButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
 import ReactQuill from 'react-quill-new';
@@ -29,7 +29,7 @@ const SubPriceplan=({id,onDelete,Section}:SubPriceplan)=>{
 
     const TitleError= TitleValidate(title);
     const PriceError = PriceValidate(price);
-    const ContentError = PlanContentValidate(content)
+    //const ContentError = PlanContentValidate(content)
 
     const isValid =title.length === 0 || title.length < 3 || title.length > 100 || price.length === 0 || price.length <2 || price.length > 12 ||content.length === 0 || content.length <3 || content.length > 2000;
 

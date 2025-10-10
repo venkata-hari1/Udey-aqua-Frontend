@@ -15,7 +15,7 @@ interface Bannerprops {
 
 const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
     const {classes} = useUserEndwebStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [pdf, setPdf] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
