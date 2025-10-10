@@ -20,7 +20,8 @@ const [aboutslide, setAboutslide] = useState(
       contenterror: "",
       isSaved:false,
     })
- const[isEditing,setIsediting]=useState(false)
+
+  const[isEditing,setIsediting]=useState(false)
  const isSaveDisabled=!aboutslide.image || !aboutslide.content || !!aboutslide.contenterror || !!aboutslide.imgerror 
   ||aboutslide.isSaved
 

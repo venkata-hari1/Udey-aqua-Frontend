@@ -58,6 +58,7 @@ import Addsubpage from "../components/admin/userEnd-web/userEnd-Aboutus/AddsubPa
 import TrainingPrograms from "../components/admin/userEnd-web/userEnd-TrainingPrograms/TrainingPrograms";
 import Technologies from "../components/admin/userEnd-web/userEnd-Technologies/Technologies";
 import AboutUs from "../components/admin/userEnd-web/userEnd-Aboutus/AboutUs";
+import Culturessubpage from "../components/admin/userEnd-web/userEnd-Cultures/Culturessubpage";
 const AppRoutes = () => {
   const location = useLocation();
 
@@ -139,7 +140,9 @@ const AppRoutes = () => {
         <Route path="userend-web/userend-trainingprograms" element={<TrainingPrograms/>}/>
         <Route path='userend-web/userend-trainingprograms/subpage' element={<Addsubpage Section='Training Programs'/>}/>
         <Route path="userend-web/userend-technologies" element={<Technologies/>}/>
-        <Route path='userend-web/userend-technologies/subpage' element={<Addsubpage Section='Technologies'/>}/>        
+        <Route path='userend-web/userend-technologies/subpage' element={<Addsubpage Section='Technologies'/>}/>      
+        <Route path='userend-web/userend-culture/subpage' element={<Culturessubpage />}/>      
+          
         
         <Route path="logout" element={<Logout />} />  
       </Route>

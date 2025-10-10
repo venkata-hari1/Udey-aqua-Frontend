@@ -4,7 +4,46 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { validateImageDimensions, validateImageFile,validateVideo } from "../../utils/Validations";
+import { validateImageDimensions, validateImageFile,validatePdfFile,validateVideo } from "../../utils/Validations";
+
+
+//ADD Section
+
+interface SectionProps{
+  onClick: () => void;
+  disabled?: boolean;
+}
+export const UserendAddSection=({onClick}:SectionProps)=>{
+  
+  const { classes } = useUserEndwebStyles();
+  <Button
+          variant="contained"
+          className={classes.addSubpagebutton}
+          startIcon={<AddIcon />}
+          onClick={onClick}
+        >
+          Add Banner
+        </Button>
+}
+
+
+//ADD BANNER 
+interface BannerProps{
+  onClick: () => void;
+  disabled?: boolean;
+}
+export const UserendAddBanner=({onClick}:BannerProps)=>{
+  
+  const { classes } = useUserEndwebStyles();
+  <Button
+          variant="contained"
+          className={classes.addSubpagebutton}
+          startIcon={<AddIcon />}
+          onClick={onClick}
+        >
+          Add Banner
+        </Button>
+}
 
 
 //SAVE
@@ -29,6 +68,32 @@ disabled = false}:SaveProps)=>{
       </Box>
   );
 }
+
+//CANCEL buttons
+interface CancelProps {
+  
+  onCancel?: () => void;
+  disabled?: boolean;
+}
+
+export const UserEndCancelButton = ({
+  onCancel,
+  disabled = false,
+}:CancelProps) => {
+  const { classes } = useUserEndwebStyles();
+
+  return (
+    <Box className={classes.buttonContainer}>
+      <Button className={classes.headerCancelButton} 
+      onClick={onCancel}
+      disabled={disabled}>
+        Cancel
+      </Button>
+    </Box>
+  );
+};
+
+
 //SAVE and CANCEL buttons
 interface SaveCancelProps {
   onSave: () => void;
@@ -60,6 +125,29 @@ export const UserEndSaveCancelButtons = ({
   );
 };
 
+//UPDATE BUTTON
+
+interface SaveProps{
+  onSave: () => void;
+  disabled?: boolean;
+}
+export const UserendUpdatedheader=({onSave,
+disabled = false}:SaveProps)=>{
+
+  const { classes } = useUserEndwebStyles();
+  return (
+    <Box className={classes.buttonContainer}>
+      <Button
+        className={classes.headerSaveButton}
+        onClick={onSave}
+        disabled={disabled}
+        variant="contained"
+      >
+        Update Header
+      </Button>
+      </Box>
+  );
+}
 
 //EDIT and DELETE BUTTONS
 interface GenericSaveEdit {
@@ -397,7 +485,7 @@ export const ErrormsgPrice = () => {
 
 interface UploadButtonPropsBase {
   onError?: (msg: string,id?:string) => void;
-  type?: "image" | "video";
+  type?: "image" | "video" |"pdf";
   disabled?: boolean;
 }
 
@@ -478,6 +566,69 @@ export const Uploadbutton = ({
         hidden
         multiple={multiple}
         onChange={!disabled ?handleChangeUpload:undefined}
+      />
+      Upload
+    </Button>
+  );
+};
+
+
+//PDF upload button
+interface UploadPdfButtonProps {
+  onUpload: (file: File) => void;
+  onError?: (msg: string) => void;
+  disabled?: boolean;
+  multiple?: boolean;
+}
+
+export const UploadPdfButton = ({
+  onUpload,
+  onError,
+  disabled = false,
+  multiple = false,
+}: UploadPdfButtonProps) => {
+  const { classes } = useUserEndwebStyles();
+
+  const handleChangeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+
+    const files = Array.from(event.target.files);
+    const validFiles: File[] = [];
+
+    for (const file of files) {
+      const error = validatePdfFile(file);
+      if (error) {
+        onError?.(error);
+        continue;
+      }
+      validFiles.push(file);
+    }
+
+    if (validFiles.length > 0) {
+      onError?.("");
+      if (multiple) {
+        validFiles.forEach((file) => onUpload(file));
+      } else {
+        onUpload(validFiles[0]);
+      }
+    }
+
+    event.target.value = ""; // reset input
+  };
+   return (
+    <Button
+      variant="outlined"
+      className={classes.uploadHerobutton}
+      component="label"
+      endIcon={<FileUploadOutlinedIcon />}
+      disabled={disabled}
+    >
+      <input
+        type="file"
+        accept="application/pdf"
+        hidden
+        multiple={multiple}
+        onChange={!disabled ? handleChangeUpload : undefined}
       />
       Upload
     </Button>

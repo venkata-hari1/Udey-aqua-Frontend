@@ -1,5 +1,5 @@
-import { Box,Button,Divider, Stack, TextField, Typography} from "@mui/material"
-import {EditButton, ErrorMessages, ErrormsgContent, ErrormsgTitle, TextFieldManyRows, TextFieldSingleRow, Uploadbutton, UserendEditandDeletebuttons } from "../userEndHome/UserEndCommonButtons"
+import { Box,Button,Divider, Stack, TextField, Typography,} from "@mui/material"
+import {EditButton, ErrorMessages, ErrormsgContent, ErrormsgTitle, TextFieldManyRows, TextFieldSingleRow, Uploadbutton, UserendEditandDeletebuttons, UserEndSaveButton, UserEndSaveCancelButtons } from "../userEndHome/UserEndCommonButtons"
 import { nameValidation } from "../../utils/Validations"
 import useUserEndwebStyles from "../UserendwebStyles"
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -7,53 +7,88 @@ import fishImg from './../../../../assets/admin/fishImg.jpg';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from "react-router-dom";
 
 const Culturessubpage=()=>{
 
 const{classes}=useUserEndwebStyles()
 
-const handleTitleChange=()=>{
-}
 
 const handleEdit=()=>{
 }
 
+const[subpage,setSubpage]=useState(
+  { 
+    id:uuidv4(),
+    title:'',
+    titleerror:''
+  }
+)
 const [subsection,setSubsection]=useState([{
   id:uuidv4(),
   sectionname:`Subsection1`,
   name:'Image',
   image: "",
-  title:'',
+  sectiontitle:'',
   content: "",
   imgerror: "",
   contenterror: "",
 }])
+
 const handleAddsection=()=>{
   const newsection={id:uuidv4(),
   sectionname:`Subsection${subsection.length+1}`,
   name:'Image',
   image: "",
-  title:'',
+  sectiontitle:'',
   content: "",
   imgerror: "",
   contenterror: "", }
 
   setSubsection([...subsection,newsection])
-}
+ }
+
+
 
 const onDelete=(id:string)=>{
  const updatedsection=subsection.filter((sub)=>sub.id!==id)
  setSubsection(updatedsection) 
 }
+
+const handleSave=()=>{
+}
+const handleCancel=()=>{
+}
+
+const navigate=useNavigate()
+const subPagetitlechange=(value:string,error:string)=>{
+   setSubpage({ ...subpage, title: value, titleerror: error });
+}
+
+const subpageSave=()=>{
+  const cullturetitle={
+    titlename:subpage.title
+}
+console.log(cullturetitle)
+}
 return(
-        <Box>
-         <Box className={classes.Subpagetitlecontainer}>
+        <Box p={3}>
+        
+          <Box display="flex" justifyContent="start" alignItems="center" gap={2}>
+          <ArrowBackIcon onClick={()=>navigate(-1)} sx={{color:'#0a4fa4'}}/>
+          <Typography sx={{fontSize:"20px",fontWeight:700,color:'#0a4fa4'}} >Cultures/Add Subpage</Typography>
+          </Box>
+         <Box className={classes.Subpagetitlecontainer} mt={3}>
          <Typography>
-         Title
-         </Typography>
-         <TextFieldSingleRow onChange={()=>handleTitleChange()} validationFn={nameValidation}
-         />  
-        </Box>
+           Title
+          </Typography>
+         <Box>
+         <TextFieldSingleRow onChange={(value, error)=>subPagetitlechange(value,error)} validationFn={nameValidation}/>  
+         <ErrorMessages message={subpage.titleerror}/>
+         </Box>
+         </Box>
+         
         <Divider className={classes.heroDivider}/>
          {/* 2nd section */}
           <Box sx={{display:'flex', justifyContent:'space-between',mt:2}}>
@@ -77,6 +112,8 @@ return(
                  validationFn={nameValidation}/>
               </Box>
          </Box>
+         <UserEndSaveCancelButtons onSave={handleSave} 
+                onCancel={handleCancel} />
          <Divider className={classes.heroDivider}/>
          <Box>
         <Box display="flex" justifyContent="end" mt={2} mb={2}>    
@@ -142,15 +179,17 @@ return(
                      </Stack>
                    </Box>
             </Box>
+              <UserEndSaveCancelButtons onSave={handleSave} 
+                onCancel={handleCancel} />
           <Divider className={classes.heroDivider}/>
+          <UserEndSaveButton onSave={subpageSave}/>
           </Box>
             </>
           )
         })}
     
-             </Box>
-
-         </Box>
+           </Box>
+           </Box>
     )
 }
 export default Culturessubpage
