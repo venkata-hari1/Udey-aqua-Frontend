@@ -141,6 +141,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   culturesSidebarWrapper: {
     width: 240,
     display: "flex",
+    position:'relative',
     flexDirection: "column",
     alignItems: "center",
     gap: theme.spacing(3),
@@ -151,6 +152,8 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     },
   },
   culturesSidebar: {
+    position:'absolute',
+    zIndex:'100',
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,

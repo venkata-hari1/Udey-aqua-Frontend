@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Button, Stack, TextField, Typography} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -13,7 +13,7 @@ type HeroProps={
 }
 
  const Hero=({id,accordianId,Section}:HeroProps)=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
@@ -125,11 +125,26 @@ type HeroProps={
     return(
         <>
             <Box className={classes.myHeroContainer}>
-                <Box className={classes.deleteButtonBox}>
-                    <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
-                        setEdit(true)
-                    }}/>
-                </Box>
+                {id !='1' && (                
+                        <Box className={classes.whoWeareHeaderbox}>
+                            <Typography className={classes.HeaderText}>
+                                Highlight Section 1
+                            </Typography>
+                            <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
+                                {/*<SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>*/}
+                                <EditButton error={!prevData} onClick={()=>{ setCancel(true);
+                                    setEdit(true)
+                                }}/>
+                            </Box>
+                        </Box>
+                    )}
+                {id ==='1' && (
+                    <Box className={classes.deleteButtonBox}>
+                        <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
+                            setEdit(true)
+                        }}/>
+                    </Box>
+                )}
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
                         <Typography className={classes.mytext}>

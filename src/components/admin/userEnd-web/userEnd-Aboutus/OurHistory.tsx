@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
 import { AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from './AboutUsButtons';
 import Subsection from './Subsection';
@@ -13,7 +13,7 @@ type OurHistoryProps={
 
 
  const OurHistory=({id,accordianId,Section}:OurHistoryProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

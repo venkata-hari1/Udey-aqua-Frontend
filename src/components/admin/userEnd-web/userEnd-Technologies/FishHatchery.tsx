@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
 import { AddBanner, AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
@@ -14,7 +14,7 @@ type FishHatcheryProps={
     Section?:string;
 }
 const FishHatchery=({id,accordianId,Accordiantitle,Section='FishHatchery'}:FishHatcheryProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

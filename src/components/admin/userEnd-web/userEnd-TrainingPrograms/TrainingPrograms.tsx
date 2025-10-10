@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -13,7 +13,7 @@ import FormDetails from './FormDetails';
 
 
 const TrainingPrograms=()=>{
-    const {classes}= useUserEndwebStyles();
+    const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
     const AccordianData = [
         {id:'1',title:'Hero Section',component:HeroSection},

@@ -6,6 +6,7 @@ import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
 const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutHeaderTitle: {
     color: theme.palette.primary.dark,
+
     fontWeight: 500,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontSize: 55,
@@ -309,6 +310,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutSidebarWrapper: {
     width: 240,
     display: "flex",
+    position:'relative',
     flexDirection: "column",
     alignItems: "center",
     gap: theme.spacing(3),
@@ -319,6 +321,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutSidebar: {
+    position:'absolute',
+    zIndex:'100',
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,

@@ -227,11 +227,13 @@ const isEmailValid=error==="" &&email.length>0
                 >
                   <LocationOnIcon fontSize="small" />
                   <Box
-                    component="a"
-                    href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                    component="div"
+                  //href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  //target="_blank"
+                  //rel="noopener noreferrer"
+                  onClick={()=>navigate('map')}
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                  sx={{cursor:'pointer',textDecoration:'underline'}}
                   >
                     Mulapolam, Srikakulam
                   </Box>
@@ -283,10 +285,13 @@ const isEmailValid=error==="" &&email.length>0
               </Box>
               <Box className={classes.mapBoxMobile}>
                 <Box
-                  component="a"
-                  href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  component="div"
+                  //href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  //target="_blank"
+                  //rel="noopener noreferrer"
+                  onClick={()=>navigate('map')}
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                  //sx={{cursor:'pointer',textDecoration:'underline'}}
                 >
                   <Box
                     component="img"
@@ -399,11 +404,13 @@ const isEmailValid=error==="" &&email.length>0
               <Box className={`${classes.contactRow} ${classes.contactRowInline}`}>
                 <LocationOnIcon fontSize="small" />
                 <Box
-                  component="a"
-                  href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  component="div"
+                  //href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  //target="_blank"
+                  //rel="noopener noreferrer"
+                  onClick={()=>navigate('map')}
                   className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                  sx={{cursor:'pointer',textDecoration:'underline'}}
                 >
                   Mulapolam, Srikakulam
                 </Box>
@@ -459,7 +466,7 @@ const isEmailValid=error==="" &&email.length>0
                 src={footerMap}
                 alt="Map"
                 className={`${classes.mapImg} ${classes.mapImgDesktop} ${classes.cursorPointer}`}
-                onClick={() => navigate('/maps')}
+                onClick={() => navigate('/map')}
               />
             </Box>
           </Box>

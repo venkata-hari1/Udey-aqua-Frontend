@@ -10,9 +10,13 @@ import nabard from "../../../assets/partners/nabard.png";
 import icar from "../../../assets/partners/icar.png";
 import { useRef, useState, useEffect } from "react";
 import useHomeStyles from "./homeStyles";
+<<<<<<< HEAD
 //import SunFishAnimation from "./SunFishAnimation";
 
 //import Fish from '../../../assets/home/fish12.gif'
+=======
+
+>>>>>>> d8950879b4ac588e82bb4df1ef7ea8c36ef79391
 
 
 const partners = [

@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
 import { AddBanner, AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
@@ -14,7 +14,7 @@ type RASProps={
     Section?:string;
 }
 const CAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

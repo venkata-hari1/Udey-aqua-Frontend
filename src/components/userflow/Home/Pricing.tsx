@@ -9,12 +9,16 @@ import pricingImg3 from "../../../assets/pricing/pricing_img_3.png";
 import pricingImg4 from "../../../assets/pricing/pricing_img_4.png";
 import pricingImg5 from "../../../assets/pricing/pricing_img_5.png";
 import pricingImg6 from "../../../assets/pricing/pricing_img_6.png";
+<<<<<<< HEAD
 //import pricingTopImg from "../../../assets/home/pricing_image.png";
+=======
+
+>>>>>>> d8950879b4ac588e82bb4df1ef7ea8c36ef79391
 import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
-import anglesfish from '../../../assets/home/angelfish.gif'
+import Fish123 from '../../../assets/home/Fish123.gif'
 import SunFishAnimation from "./SunFishAnimation";
 
 const pricingData = [
@@ -88,7 +92,6 @@ const Pricing = () => {
 
   return (
     <Box className={classes.pricingRoot}>
-      <SunFishAnimation Fish={anglesfish} Count={4} Zindex={0} />
       <SectionTitle title="Pricing" />
       <Box
         ref={scrollRef}

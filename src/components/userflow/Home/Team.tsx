@@ -256,15 +256,7 @@ const Team: React.FC<TeamProps> = ({
 
   return (
     <Box className={classes.teamRoot}>
-      <Box
-        component={motion.img}
-        src={fishesImg}
-        alt="Fishes"
-        className={classes.teamFishesImg}
-        initial={TEAM_FISH_INITIAL}
-        animate={TEAM_FISH_ANIMATE}
-        transition={TEAM_FISH_TRANSITION}
-      />
+    
       <SectionTitle
         title="Our Directors & Advisors"
         

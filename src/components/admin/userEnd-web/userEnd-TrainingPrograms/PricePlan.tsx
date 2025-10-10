@@ -1,4 +1,4 @@
-import { TrainingStyles } from "./PricingStyles";
+import { useAboutusStyles } from "../userEnd-Aboutus/AboutusStyles";
 import { Box } from "@mui/material";
 import { useState } from "react";
 import SubPriceplan from "./SubPlanPrice";
@@ -10,7 +10,7 @@ import { AddPricePlan } from "./PricingButtons";
    // Section:string;
 //}
 const PricePlan=()=>{
-    const {classes} = TrainingStyles();
+    const {classes} = useAboutusStyles();
     const [counter, setCounter] = useState(1);
     const [subprice, setSubprice] = useState<{ id:string}[]>([]);
 

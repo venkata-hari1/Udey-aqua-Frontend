@@ -12,7 +12,7 @@ const SunFishAnimation = ({ Fish, Zindex, Count }: { Fish: string; Zindex: numbe
       id: i,
       x: -20 - i * spacing,
        y: centerY - 80 + i * 10,
-      baseY: Count === 4 ? centerY - 450 : centerY - 400,
+      baseY: Count === 5 ?centerY - 360 :Count === 4 ? centerY - 450 :Count===3?centerY - 490:Count===2? centerY - 530:centerY - 400,
       speed: 3,
       direction: 1, // 1 = right, -1 = left
       targetDirection: 1, // Target direction for smooth transitions
@@ -92,9 +92,9 @@ const SunFishAnimation = ({ Fish, Zindex, Count }: { Fish: string; Zindex: numbe
             position: 'absolute',
             left: `${fish.x}px`,
             top: `${fish.y}px`,
-            width: Count===1?'fit-content':'140px',
+            width: Count===1 ?'fit-content':Count===2?"280px":Count===3?'250px':'140px',
             height: 'auto',
-            transform:`scaleX(${Count === 3 || Count === 4 ? -fish.direction : fish.direction})`,
+            transform:`scaleX(${Count === 3 || Count === 4  || Count===1? -fish.direction : fish.direction})`,
             transition: fish.isTurning ? 'transform 0.6s ease-in-out' : 'none',
             pointerEvents: 'none',
           }}

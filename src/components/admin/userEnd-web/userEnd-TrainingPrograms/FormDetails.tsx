@@ -1,5 +1,5 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box,  Checkbox, TextField, Typography,IconButton, Popper, Paper, ClickAwayListener,} from '@mui/material';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { Box,  Checkbox, TextField, Typography,IconButton, Popper, Paper, ClickAwayListener, } from '@mui/material';
 import { AddButton, CancelButton, EditButton, FormData, SaveButton, } from '../userEnd-Aboutus/AboutUsButtons';
 import { useState,  } from 'react';
 
@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
 const FormDetails= ()=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
 
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);

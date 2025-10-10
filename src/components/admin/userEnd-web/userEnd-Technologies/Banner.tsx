@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, UploadButton, CancelButton, EditButton, UpdateHeader} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -14,7 +14,7 @@ interface Bannerprops {
 }
 
 const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [pdf, setPdf] = useState<string[]>([]);

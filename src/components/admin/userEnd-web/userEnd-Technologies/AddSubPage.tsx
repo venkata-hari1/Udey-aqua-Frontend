@@ -1,11 +1,11 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Typography,} from '@mui/material';
 import {  ArrowBack } from '../userEnd-Aboutus/AboutUsButtons';
 import {  useNavigate } from "react-router-dom";
 import TitlePage from '../userEnd-Aboutus/TitlePage';
 
 const AddSubPage=()=>{
-    const {classes}=useUserEndwebStyles();
+    const {classes}=useAboutusStyles();
     const navigate=useNavigate();
     return(
         <>
