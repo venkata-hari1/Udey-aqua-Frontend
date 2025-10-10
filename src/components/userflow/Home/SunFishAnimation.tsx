@@ -12,7 +12,7 @@ const SunFishAnimation = ({ Fish, Zindex, Count }: { Fish: string; Zindex: numbe
       id: i,
       x: -20 - i * spacing,
        y: centerY - 80 + i * 10,
-      baseY: Count === 4 ? centerY - 450 :Count===3?centerY - 490:Count===2? centerY - 530:centerY - 400,
+      baseY: Count === 5 ?centerY - 360 :Count === 4 ? centerY - 450 :Count===3?centerY - 490:Count===2? centerY - 530:centerY - 400,
       speed: 3,
       direction: 1, // 1 = right, -1 = left
       targetDirection: 1, // Target direction for smooth transitions
