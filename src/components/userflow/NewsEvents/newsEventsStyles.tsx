@@ -135,6 +135,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
 
   newsEventsSidebarWrapper: {
+    position:'relative',
     width: 240,
     display: "flex",
     flexDirection: "column",
@@ -147,6 +148,8 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     },
   },
   newsEventsSidebar: {
+    position:'absolute',
+    zIndex:100,
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,

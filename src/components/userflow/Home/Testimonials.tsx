@@ -11,7 +11,9 @@ import useHomeStyles from "./homeStyles";
 import img1 from "../../../assets/testimonials/person_1.jpg";
 import img2 from "../../../assets/testimonials/person_2.jpg";
 import img3 from "../../../assets/testimonials/person_3.jpg";
-
+import SunFishAnimation from "./SunFishAnimation";
+import fishes from '../../../assets/home/giphyunscreen.gif'
+import SwimmingFish from "./SwimmingFish";
 const testimonials: Testimonial[] = [
   {
     name: "Ramesh",
@@ -44,6 +46,7 @@ const Testimonials: React.FC = () => {
 
   return (
     <Box className={classes.testimonialsRoot}>
+      <SwimmingFish  Position="absolute"  Count={30} Height={3000}/>
       <SectionTitle title="Our Testimonials" />
       <Box
         ref={scrollRef}

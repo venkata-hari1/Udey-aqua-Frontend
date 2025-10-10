@@ -17,7 +17,8 @@ const AboutHeader = ({ title, subtitle, img, aboutImg }: AboutHeaderProps) => {
   return (
     <>
       <Grid container size={{ xs: 12 }}>
-        <Grid size={isMobile ? 12 : 9}>
+        <Grid size={isMobile ? 12 : 9} sx={{ background:'#F7FAFC',
+    borderRadius:'10%',}}>
           <Typography className={classes.aboutHeaderTitle}>{title}</Typography>
           <Typography className={classes.aboutHeaderSubtitle}>
             {subtitle}

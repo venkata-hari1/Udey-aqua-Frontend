@@ -6,11 +6,10 @@ import { useRef } from "react";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
-import Clownfish from "../../../assets/home/clownfish.gif"
 import newsImg1 from "../../../assets/news_and_blogs/news_1.jpg";
 import newsImg2 from "../../../assets/news_and_blogs/news_2.jpg";
 import newsImg3 from "../../../assets/news_and_blogs/news_3.jpg";
-import SunFishAnimation from "./SunFishAnimation";
+
 
 const newsData = [
   {
@@ -50,7 +49,6 @@ const NewsAndBlogs = () => {
 
   return (
     <Box className={classes.newsRoot}>
-      <SunFishAnimation Zindex={0}  Fish={Clownfish} Count={3} />
       <SectionTitle title="News & Blogs" />
       <Box
         ref={scrollRef}
