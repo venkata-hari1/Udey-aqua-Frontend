@@ -12,6 +12,7 @@ import {
   Uploadbutton,
   UploadPdfButton,
   UserendEditandDeletebuttons,
+  UserEndSaveButton,
   UserEndSaveCancelButtons,
   UserendSaveDeleteButtons,
 } from "../userEndHome/UserEndCommonButtons";
@@ -38,6 +39,8 @@ const [basssection,setbasssection]=useState([
    content:'',
    contenterror:'',
    isSaved:false,
+   isEditable:false,
+   isCancelable:false,
   }
 ])
 
@@ -54,11 +57,12 @@ const handleSection=()=>{
    titleerror:'',
    content:'',
    contenterror:'',
-   isSaved:false 
+   isSaved:false,
+   isEditable:false,
+   isCancelable:false,
   }
    setbasssection([...basssection,newsection])
 }
-
 
 const[bassbanner,setBassbanner]=useState([{
    id:uuidv4(),
@@ -100,6 +104,8 @@ const handleBanner=()=>{
   }
    setBassbanner([...bassbanner,newBanner])
 }
+
+
 
 const handleSectionUpload=(id:string,file:File)=>{
     const imageUrl = URL.createObjectURL(file);
@@ -154,9 +160,79 @@ const handleSectionContentchange=(id:string,value:string,error:string)=>{
   setbasssection(updatedSection);
 }
 
-const handleSave=()=>{
-  console.log("saving")
-} 
+const[savedSection,setSavedsection]=useState<any[]>([])
+
+const handleSectionSave=(id:string)=>{
+   const sectionTosave=basssection.find((section)=>section.id===id);
+   if(!sectionTosave)return; 
+  
+    const sectionObj={
+      savedid:sectionTosave?.id,
+      savedimg:sectionTosave?.image,
+      savedimgpdf:sectionTosave?.imgpdf,
+      savedtitle:sectionTosave.title,
+      savedcontent:sectionTosave.content
+  }
+ console.log(sectionObj);
+ setSavedsection((prev)=>{
+   const existing=prev.filter((item)=>item.savedid!==id);
+   return [...existing,sectionObj]
+ })
+ const updatedSections = basssection.map((section) =>
+    section.id === id
+      ? {
+          ...section,
+          image: "",
+          imgpdf: "",
+          title: "",
+          content: "",
+          isSaved: true,
+          isEditable: false,
+          isCancelable: false,
+        }
+      : section
+  );
+  setbasssection(updatedSections);
+}
+
+const handleSectionEdit = (id: string) => {
+  const saved = savedSection.find((item) => item.savedid === id);
+  if (!saved) return;
+
+  const updatedSection = basssection.map((section) =>
+    section.id === id
+      ? {
+          ...section,
+          image: saved.savedimg,
+          imgpdf: saved.savedimgpdf,
+          title: saved.savedtitle,
+          content: saved.savedcontent,
+          isEditable: true,
+          isCancelable: true,
+          isSaved: false,
+        }
+      : section
+  );
+  setbasssection(updatedSection);
+};
+
+const handleSectionCancel = (id: string) => {
+  const updatedSection = basssection.map((section) =>
+    section.id === id
+      ? {
+          ...section,
+          image: "",        // clear image
+          imgpdf: "",       // clear pdf
+          title: "",        // clear title
+          content: "",      // clear content
+          isEditable: false, 
+          isSaved: true,    // edit button re-enabled
+        }
+      : section
+  );
+  setbasssection(updatedSection);
+};
+
   return (
     <Box className={classes.SeaBassContainer}>
       <Stack className={classes.Seabassstack}>
@@ -166,13 +242,16 @@ const handleSave=()=>{
       
        <Box>
         {basssection.map((section,index)=>{
+          const isSaveDisabled=
+          !section.image || !section.imgpdf || !section.title || !section.content 
+          || section.isSaved
           return (
           <>
           <Stack className={classes.newsectionStack} mt={2}>
           <Typography className={classes.MottoBoxText}>{section.sectionname}</Typography>
-          {index===0? <EditButton sliceEdit={()=>console.log("edit")} />:
-           <UserendEditandDeletebuttons sliceEdit={()=>console.log("edit")}
-            onDelete={()=>console.log("ondelete")} message=""/> 
+          {index===0? <EditButton sliceEdit={()=>handleSectionEdit(section.id)}   disabled={!section.isSaved}/> :
+           <UserendEditandDeletebuttons sliceEdit={()=>handleSectionEdit(section.id)}
+           disabled={!section.isSaved} onDelete={()=>console.log("ondelete")} message=""/> 
           }
           </Stack>
         
@@ -223,7 +302,8 @@ const handleSave=()=>{
                value={section.title}
                onChange={(value, error) =>
                handleTitlechange(section.id, value, error)}
-               validationFn={addressContentValidation}/>
+               validationFn={addressContentValidation}
+                />
               <ErrormsgTitle message={section.titleerror}/>
               </Box>
               <Box>
@@ -233,14 +313,20 @@ const handleSave=()=>{
               onChange={(value, error) =>
                 handleSectionContentchange(section.id, value, error)
               }
-              validationFn={DescriptionContentValidation}/>
+              validationFn={DescriptionContentValidation}
+              />
               <ErrormsgContent message={section.contenterror}/>
              </Box> 
             </Stack>
           </Box>
         </Box>
         
-        <UserEndSaveCancelButtons onSave={handleSave}/> 
+
+        {section.isEditable? 
+        <UserEndSaveCancelButtons onSave={()=>handleSectionSave(section.id)} disabled={isSaveDisabled}
+        onCancel={()=>handleSectionCancel(section.id)}/>: 
+          <UserEndSaveButton onSave={()=>handleSectionSave(section.id)} disabled={isSaveDisabled}/>}       
+       
         <Divider className={classes.heroDivider}/>
         </>
           )
@@ -272,7 +358,8 @@ const handleSave=()=>{
           <Stack className={classes.bannerImageStack}>
             <Typography className={classes.titleText}>Image</Typography>
             <Uploadbutton onUpload={() =>console.log("")}/>
-            <Box className={classes.herouploadImageBox1}>
+            {banner.image&&
+             <Box className={classes.herouploadImageBox1}>
               <img src={fishImg} className={classes.herouploadImage} />
               <CancelIcon className={classes.cancelImgIcon} />
               <Button
@@ -282,6 +369,8 @@ const handleSave=()=>{
                 <AddIcon />
               </Button>
             </Box>
+            }
+            
             <ErrorMessages />
           </Stack>
          
@@ -322,16 +411,18 @@ const handleSave=()=>{
             </Typography>
             <Typography>Upload Pdf</Typography>
             <Uploadbutton onUpload={() =>console.log("")}/>
-            <Box className={classes.herouploadImageBox1}>
-              <img src={fishImg} className={classes.herouploadImage} />
+              {banner.imgpdf &&
+               <Box className={classes.herouploadImageBox1}>
+              <img src={banner.imgpdf} className={classes.herouploadImage} />
               <CancelIcon className={classes.cancelImgIcon} />
               <Button
                 variant="contained"
-                className={classes.pdfButtonbox}
-              >
+                className={classes.pdfButtonbox}>
                 <img src={PdfImg} width="40px" height="40px" alt="pdf image1"/>
-              </Button>
+               </Button>
             </Box>
+              }
+           
             <ErrorMessages />
           </Stack>
         </Box>

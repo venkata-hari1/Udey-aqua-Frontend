@@ -246,13 +246,15 @@ export const addressContentValidation = (content: string): ValidationResult => {
 
 
 
+
+
 //descriptive content
-interface ValidationResult {
+interface decValidationResult {
   error: string;
   isError: boolean;
 }
 
-export const DescriptionContentValidation = (content: string): ValidationResult => {
+export const DescriptionContentValidation = (content: string): decValidationResult => {
   const maxChars = 2000;
   const minChars = 3; // or set your desired minimum
 
@@ -289,7 +291,7 @@ export const validateImageFile=(file:File)=>{
    if(!file.type.startsWith("image/")){
     return "Invalid format.Only images are allowed";
    }
-   return null; //no error
+   return null; 
 }
 
 export const validateImageDimensions=(file:File):Promise<string |null>=>{

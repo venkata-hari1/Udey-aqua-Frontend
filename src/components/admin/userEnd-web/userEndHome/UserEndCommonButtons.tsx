@@ -71,7 +71,6 @@ disabled = false}:SaveProps)=>{
 
 //CANCEL buttons
 interface CancelProps {
-  
   onCancel?: () => void;
   disabled?: boolean;
 }
@@ -354,9 +353,10 @@ interface GenericTextfieldsinglerows {
   onChange: (value: string,error:string) => void;
   value?: string;
   validationFn:(value:string)=>ValidationResult;
+  disabled?:boolean;
  }
 
-export const TextFieldSingleRow = ({ onChange,validationFn,value }: GenericTextfieldsinglerows) => {
+export const TextFieldSingleRow = ({ onChange,validationFn,value,disabled=false }: GenericTextfieldsinglerows) => {
   const { classes } = useUserEndwebStyles();
 
 const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -370,7 +370,8 @@ const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
          fullWidth
          size="small"
          value={value}
-         onChange={handleChangeSinglerow}/>
+         onChange={handleChangeSinglerow}
+         disabled={disabled}/>
   ) 
 }
 
@@ -378,7 +379,6 @@ const handleChangeSinglerow = (event: React.ChangeEvent<HTMLInputElement>) => {
 interface ValidationResult {
   error: string;
   isError: boolean;
-  
 }
 interface GenericTextfieldmutlirows {
   onChange: (value: string,error:string) => void;
