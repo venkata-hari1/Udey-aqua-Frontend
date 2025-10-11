@@ -17,7 +17,7 @@ import {
 } from "@mui/icons-material";
 import useAboutStyles from "./aboutStyles";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {  useParams, useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/about_us/team.png";
 
 // Images
@@ -111,11 +111,12 @@ const OurTeam = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
-  const { memberSlug } = useParams<{ memberSlug?: string }>();
+  //const memberref= useRef<HTMLDivElement | null>(null)
 
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { memberSlug } = useParams<{ memberSlug?: string }>();
 
   // Handle URL parameter for direct member access
   useEffect(() => {
@@ -311,6 +312,7 @@ const OurTeam = () => {
                       <ArrowBackIosNew fontSize="small" />
                     </IconButton>
                     <IconButton
+                      //onClick={() => navigate("/about/our-team")}
                       onClick={handleNext}
                       disabled={currentIndex === selectedMembers.length - 1}
                       className={classes.arrowButtonMobile}

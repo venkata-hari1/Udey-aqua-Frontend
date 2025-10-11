@@ -1,203 +1,286 @@
-import  { useEffect, useRef } from 'react';
+import React from 'react';
 
-interface Fish {
-  x: number;
-  y: number;
-  speed: number;
-  direction: number;
-  size: number;
-  tailSwing: number;
-  color: string;
-  yOffset: number;
-
+interface SwimmingFishProps {
+  Position?: string;
+  Count: number;
+  Height?: number | string;
 }
 
-const SwimmingFish = ({Position,Count,Height}:any) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const fishesRef = useRef<Fish[]>([]);
-  const timeRef = useRef(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = 3000;
-    canvas.height = Height;
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Initialize fishes
-    const FISH_COUNT = Count;
-    const FISH_MIN_SPEED = 1;
-    const FISH_MAX_SPEED = 10;
-    const FISH_MIN_SIZE = 40;
-    const FISH_MAX_SIZE = 70;
+const SwimmingFish: React.FC<SwimmingFishProps> = ({ Position = 'absolute', Count, Height = '100%' }) => {
+  const colors = ['#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8', '#1e40af', '#0ea5e9', '#0284c7', '#0369a1', '#075985', '#0c4a6e'];
+  
+  const fishes = Array.from({ length: Count }, (_, i) => {
+    const size = 40 + Math.random() * 30;
+    const duration = 8 + Math.random() * 12;
+    const delay = Math.random() * -20;
+    const yPosition = (Height === '100%' || typeof Height === 'string') 
+      ? (i / Count) * 95 + 2.5 
+      : Math.random() * 95; // Random distribution for fixed heights
+    const swimDirection = Math.random() > 0.5 ? 'swim-right' : 'swim-left';
+    const waveDelay = Math.random() * -4;
     
-    // Initialize fishes with all blue colors
-    const colors = ['#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8', '#1e40af', '#0ea5e9', '#0284c7', '#0369a1', '#075985', '#0c4a6e'];
-    
-    // Calculate vertical spacing with 5% margin
-    const canvasHeight = canvas.height;
-    const totalMargin = (FISH_COUNT - 1) * (canvasHeight * 0.05); // 5% margin between each fish
-    const availableHeight = canvasHeight - totalMargin;
-    const verticalSpacing = availableHeight / FISH_COUNT;
-    
-    for (let i = 0; i < FISH_COUNT; i++) {
-      // Calculate y position with 5% margin between fishes
-      const marginTop = i * (canvasHeight * 0.05);
-      const baseYPosition = i * verticalSpacing;
-      const y = baseYPosition + marginTop;
-      
-      fishesRef.current.push({
-        x: Math.random() * canvas.width,
-        y: y,
-        speed: FISH_MIN_SPEED + Math.random() * (FISH_MAX_SPEED - FISH_MIN_SPEED),
-        direction: Math.random() > 0.5 ? 1 : -1,
-        size: FISH_MIN_SIZE + Math.random() * (FISH_MAX_SIZE - FISH_MIN_SIZE),
-        tailSwing: Math.random() * Math.PI * 2,
-        color: colors[i % colors.length],
-        yOffset: Math.random() * Math.PI * 2
-      });
-    }
-
-    const drawFish = (fish: Fish, tailAngle: number) => {
-      ctx.save();
-      ctx.translate(fish.x, fish.y);
-      
-      if (fish.direction === -1) {
-        ctx.scale(-1, 1);
-      }
-
-      // Body - use solid colors instead of gradients with opacity suffixes
-      const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, fish.size);
-      gradient.addColorStop(0, fish.color);
-      gradient.addColorStop(0.7, fish.color);
-      gradient.addColorStop(1, fish.color);
-      
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, fish.size, fish.size * 0.6, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Tail with swing - use rgba for opacity
-      ctx.save();
-      ctx.translate(-fish.size, 0);
-      ctx.rotate(tailAngle);
-      ctx.fillStyle = fish.color;
-      ctx.globalAlpha = 0.8;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(-fish.size * 0.5, -fish.size * 0.4);
-      ctx.lineTo(-fish.size * 0.5, fish.size * 0.4);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-      ctx.globalAlpha = 1;
-
-      // Top fin
-      ctx.fillStyle = fish.color;
-      ctx.globalAlpha = 0.9;
-      ctx.beginPath();
-      ctx.moveTo(0, -fish.size * 0.6);
-      ctx.lineTo(fish.size * 0.15, -fish.size * 0.6 - fish.size * 0.3);
-      ctx.lineTo(fish.size * 0.3, -fish.size * 0.6);
-      ctx.closePath();
-      ctx.fill();
-      ctx.globalAlpha = 1;
-
-      // Side fin
-      ctx.save();
-      ctx.translate(-fish.size * 0.15, fish.size * 0.3);
-      ctx.rotate(Math.sin(tailAngle * 3) * 0.2);
-      ctx.fillStyle = fish.color;
-      ctx.globalAlpha = 0.7;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, fish.size * 0.25, fish.size * 0.13, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-      ctx.globalAlpha = 1;
-
-      // Eye
-      ctx.fillStyle = 'white';
-      ctx.beginPath();
-      ctx.arc(fish.size * 0.5, -fish.size * 0.15, fish.size * 0.13, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.fillStyle = 'black';
-      ctx.beginPath();
-      ctx.arc(fish.size * 0.5, -fish.size * 0.15, fish.size * 0.07, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Mouth
-      ctx.strokeStyle = fish.color;
-      ctx.globalAlpha = 0.9;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(fish.size * 0.7, fish.size * 0.1, fish.size * 0.13, 0, Math.PI);
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-
-      // Scales
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.lineWidth = 1;
-      for (let i = -fish.size * 0.5; i < fish.size * 0.5; i += fish.size * 0.25) {
-        ctx.beginPath();
-        ctx.arc(i, 0, fish.size * 0.17, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      ctx.restore();
+    return {
+      id: i,
+      size,
+      duration,
+      delay,
+      yPosition,
+      color: colors[i % colors.length],
+      swimDirection,
+      waveDelay,
+      bodyDuration: 0.6 + Math.random() * 0.4
     };
-
-    const animate = () => {
-      timeRef.current += 0.05;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      fishesRef.current.forEach((fish) => {
-        // Update tail swing
-        fish.tailSwing = Math.sin(timeRef.current * 3) * 0.3;
-
-        // Add vertical wave motion
-        fish.y = fish.y + Math.sin(timeRef.current * 2 + fish.yOffset) * 0.3;
-
-        // Move horizontally
-        fish.x += fish.speed * fish.direction;
-
-        // Turn around at edges
-        if (fish.direction === 1 && fish.x > canvas.width + fish.size) {
-          fish.x = -fish.size;
-        } else if (fish.direction === -1 && fish.x < -fish.size) {
-          fish.x = canvas.width + fish.size;
-        }
-
-        drawFish(fish, fish.tailSwing);
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  });
 
   return (
-    <div style={{position:Position}}>
-      <canvas
-        ref={canvasRef}
-        className="w-full"
-        
-      />
-    </div>
+    <>
+      <style>{`
+        @keyframes swim-right {
+          0% {
+            transform: translateX(-100px);
+          }
+          100% {
+            transform: translateX(calc(100vw + 100px));
+          }
+        }
+
+        @keyframes swim-left {
+          0% {
+            transform: translateX(calc(100vw + 100px)) scaleX(-1);
+          }
+          100% {
+            transform: translateX(-100px) scaleX(-1);
+          }
+        }
+
+        @keyframes tail-swing {
+          0%, 100% {
+            transform: rotate(-20deg) scaleY(1);
+          }
+          25% {
+            transform: rotate(-5deg) scaleY(1.1);
+          }
+          50% {
+            transform: rotate(20deg) scaleY(1);
+          }
+          75% {
+            transform: rotate(5deg) scaleY(1.1);
+          }
+        }
+
+        @keyframes body-wave {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+
+        @keyframes fin-flap {
+          0%, 100% {
+            transform: rotate(-5deg);
+          }
+          50% {
+            transform: rotate(15deg);
+          }
+        }
+
+        .fish-container {
+          position: absolute;
+          pointer-events: none;
+          will-change: transform;
+        }
+
+        .fish-body {
+          position: relative;
+          display: inline-block;
+          will-change: transform;
+        }
+
+        .fish-tail {
+          position: absolute;
+          left: -20px;
+          top: 20%;
+          transform-origin: right center;
+          will-change: transform;
+        }
+
+        .fish-fin-top {
+          position: absolute;
+          left: 40%;
+          top: -8px;
+          transform-origin: bottom center;
+          will-change: transform;
+        }
+
+        .fish-fin-side {
+          position: absolute;
+          left: 20%;
+          top: 55%;
+          transform-origin: left center;
+          will-change: transform;
+        }
+
+        .fish-eye {
+          position: absolute;
+          right: 20%;
+          top: 35%;
+          background: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .fish-pupil {
+          background: black;
+          border-radius: 50%;
+        }
+      `}</style>
+
+      <div style={{ position: Position as any, width: '100%', height: Height, overflow: 'hidden', top: 0, left: 0, right: 0, bottom: 0 }}>
+        {fishes.map((fish) => (
+          <div
+            key={fish.id}
+            className="fish-container"
+            style={{
+              top: `${fish.yPosition}%`,
+              animation: `${fish.swimDirection} ${fish.duration}s linear ${fish.delay}s infinite`,
+            }}
+          >
+            <div
+              className="fish-body"
+              style={{
+                width: fish.size,
+                height: fish.size * 0.6,
+                animation: `body-wave ${fish.bodyDuration}s ease-in-out ${fish.waveDelay}s infinite`,
+              }}
+            >
+              {/* Body */}
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: fish.color,
+                  borderRadius: '50%',
+                  position: 'relative',
+                }}
+              >
+                {/* Tail */}
+                <div
+                  className="fish-tail"
+                  style={{
+                    animation: `tail-swing ${fish.bodyDuration * 0.8}s ease-in-out ${fish.waveDelay}s infinite`,
+                  }}
+                >
+                  <svg
+                    width={fish.size * 0.6}
+                    height={fish.size * 0.8}
+                    viewBox="0 0 60 80"
+                    style={{ 
+                      display: 'block',
+                      marginTop: '-50%',
+                    }}
+                  >
+                    <path
+                      d="M 60 40 Q 30 10, 0 0 Q 20 20, 20 40 Q 20 60, 0 80 Q 30 70, 60 40 Z"
+                      fill={fish.color}
+                      opacity="0.85"
+                    />
+                  </svg>
+                </div>
+
+                {/* Top Fin */}
+                <div
+                  className="fish-fin-top"
+                  style={{
+                    animation: `fin-flap ${fish.bodyDuration * 0.8}s ease-in-out ${fish.waveDelay}s infinite`,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 0,
+                      height: 0,
+                      borderLeft: `${fish.size * 0.1}px solid transparent`,
+                      borderRight: `${fish.size * 0.1}px solid transparent`,
+                      borderBottom: `${fish.size * 0.3}px solid ${fish.color}`,
+                      opacity: 0.9,
+                    }}
+                  />
+                </div>
+
+                {/* Side Fin */}
+                <div
+                  className="fish-fin-side"
+                  style={{
+                    animation: `fin-flap ${fish.bodyDuration * 1.2}s ease-in-out ${fish.waveDelay + 0.2}s infinite`,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: fish.size * 0.25,
+                      height: fish.size * 0.15,
+                      background: fish.color,
+                      borderRadius: '50%',
+                      opacity: 0.7,
+                    }}
+                  />
+                </div>
+
+                {/* Eye */}
+                <div
+                  className="fish-eye"
+                  style={{
+                    width: fish.size * 0.15,
+                    height: fish.size * 0.15,
+                  }}
+                >
+                  <div
+                    className="fish-pupil"
+                    style={{
+                      width: fish.size * 0.08,
+                      height: fish.size * 0.08,
+                    }}
+                  />
+                </div>
+
+                {/* Mouth */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '10%',
+                    top: '55%',
+                    width: fish.size * 0.15,
+                    height: fish.size * 0.08,
+                    borderBottom: `2px solid ${fish.color}`,
+                    borderRadius: '0 0 50% 50%',
+                    opacity: 0.8,
+                  }}
+                />
+
+                {/* Scales */}
+                {[...Array(3)].map((_, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      position: 'absolute',
+                      left: `${30 + idx * 20}%`,
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: fish.size * 0.2,
+                      height: fish.size * 0.2,
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      borderRadius: '50%',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

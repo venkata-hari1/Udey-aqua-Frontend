@@ -13,7 +13,7 @@ const navigation=[
 {id:3,menu:"Cultures",path:'/admin/userend-web/userend-culture'},
 {id:4,menu:"Training Programs",path:'/admin/userend-web/userend-trainingprograms'},
 {id:5,menu:"Technologies",path:'/admin/userend-web/userend-technologies'},
-{id:6,menu:"News & Events",path:'/userend-news-events'},
+{id:6,menu:"News & Events",path:'/admin/userend-web/userend-news&events'},
 {id:7,menu:"Contact Us",path:'/userend-contact-us'}
 ]
   const{classes,cx}=useUserEndwebStyles();

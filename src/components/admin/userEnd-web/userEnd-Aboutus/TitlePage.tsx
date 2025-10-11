@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, TextField, Typography, Stack, Button} from '@mui/material';
 import { AddSection, UploadButton, SaveButton,CancelButton, EditButton } from './AboutUsButtons';
 import { useState, useEffect } from "react";
@@ -12,7 +12,7 @@ type TitleProps={
 }
 
 const TitlePage=({id,accordianId, Section}:TitleProps)=>{
-    const {classes}=useUserEndwebStyles();
+    const {classes}=useAboutusStyles();
     const [Title, setTitle]=useState<string>('');
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);

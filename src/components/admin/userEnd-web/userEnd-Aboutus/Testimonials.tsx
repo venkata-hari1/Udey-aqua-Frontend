@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button} from '@mui/material';
 import { AddHighlights, AddTestimonials, CancelButton, UpdateHeader,  UploadButtonTestimonials, EditButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ interface TestimonialsProps {
 }
 
 const Testimonials=({ accordianId, id,  }: TestimonialsProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

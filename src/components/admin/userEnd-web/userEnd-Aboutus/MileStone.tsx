@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
 import { AddSection, CancelButton,  UpdateHeader, UploadButton, EditButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -12,7 +12,7 @@ type MileStoneProps={
     Section:string
 }
 const MileStone=({id,accordianId,Section}:MileStoneProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Typography,} from '@mui/material';
 import {  ArrowBack } from './AboutUsButtons';
 import {  useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ type AddsubPageprops={
 }
 
 const Addsubpage=({Section}:AddsubPageprops)=>{
-    const {classes}=useUserEndwebStyles();
+    const {classes}=useAboutusStyles();
     const navigate=useNavigate();
     return(
         <>

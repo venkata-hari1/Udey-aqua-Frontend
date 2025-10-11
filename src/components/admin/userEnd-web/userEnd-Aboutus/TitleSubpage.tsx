@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { CancelButton,  EditButton, SaveButton, UploadButton, DeleteButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -13,7 +13,7 @@ interface SubsectionProps {
 }
 
 const TitleSubpage=({ accordianId, id, onDelete, Section }: SubsectionProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

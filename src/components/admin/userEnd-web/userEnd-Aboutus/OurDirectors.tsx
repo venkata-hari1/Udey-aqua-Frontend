@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, MenuItem, Select} from '@mui/material';
 import { AddSection, EditButton,  UploadButton, UpdateHeader, CancelButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -12,7 +12,7 @@ type HeroProps={
     Section:string,
 }
 const OurDirectors=({id,accordianId,Section}:HeroProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

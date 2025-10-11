@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -8,17 +8,18 @@ import { useNavigate } from 'react-router-dom';
 import HeroSection from './HeroSection';
 import PricePlan from './PricePlan';
 import AquacultureType from './AcqacultureType';
+import FormDetails from './FormDetails';
 
 
 
 const TrainingPrograms=()=>{
-    const {classes}= useUserEndwebStyles();
+    const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
     const AccordianData = [
         {id:'1',title:'Hero Section',component:HeroSection},
         {id:'2',title:'Price Plans ',component:PricePlan},
         {id:'3',title:'Aquaculture Type  ',component:AquacultureType},
-       // {id:'4',title:'Form Details '},
+        {id:'4',title:'Form Details ', component:FormDetails},
     ]
     return(
         <>

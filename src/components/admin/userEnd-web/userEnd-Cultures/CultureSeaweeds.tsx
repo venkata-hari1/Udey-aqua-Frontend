@@ -2,7 +2,6 @@ import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/materia
 import useUserEndwebStyles from "../UserendwebStyles";
 import AddIcon from "@mui/icons-material/Add";
 import {
-  EditButton,
   ErrorMessages,
   ErrormsgContent,
   ErrormsgPrice,
@@ -15,7 +14,7 @@ import fishImg from "./../../../../assets/admin/fishImg.jpg";
 import PdfImg from "./../../../../assets/admin/pdf_icon.png";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-const CultureSeabass = () => {
+const CultureSeaweeds = () => {
   const { classes } = useUserEndwebStyles();
 
  const handleSave=()=>{
@@ -45,7 +44,9 @@ const CultureSeabass = () => {
        <Box>
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
-          <EditButton sliceEdit={()=>console.log("edit")}/>
+          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Pear Spot?" 
+          onDelete={()=>console.log("deleting")}
+           sliceSave={() => console.log("")}/>
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}
@@ -63,13 +64,7 @@ const CultureSeabass = () => {
                   <AddIcon />
                 </Button>
               </Box>
-              <Typography className={classes.errorUpload}>
-                *Please upload the sponsor logo in landscape format (Preferred
-                size: 300px width × 100px height)
-                <Typography className={classes.errorUpload}>
-                  Image Must be 5 MB
-                </Typography>
-              </Typography>
+              <ErrorMessages />
             </Stack>
             <Stack className={classes.leftsideSectionbox}>
               <Typography color="black">Upload Pdf</Typography>
@@ -81,7 +76,8 @@ const CultureSeabass = () => {
                   variant="contained"
                   className={classes.pdfButtonbox}
                 >
-                <img src={PdfImg}  width="40px" height="40px" alt="pdf image"/>
+                  {/* <AddIcon /> */}
+                  <img src={PdfImg}  width="40px" height="40px" alt="pdf image"/>
                 </Button>
               </Box>
               <ErrorMessages />
@@ -99,7 +95,7 @@ const CultureSeabass = () => {
               />
               <ErrormsgTitle />
               </Box>
-              <Box>
+               <Box>
               <Typography className={classes.titleText}>Content</Typography>
               <TextField
                 className={classes.heroTextfiled}
@@ -108,23 +104,22 @@ const CultureSeabass = () => {
                 minRows={10}
               />
               <ErrormsgContent />
-             </Box> 
+              </Box>
             </Stack>
           </Box>
         </Box>
         <Divider className={classes.heroDivider}/>
        </Box>
-        <UserEndSaveCancelButtons onSave={handleSave}/>  
+       <UserEndSaveCancelButtons onSave={handleSave}/>
       
       
       {/* FOR BANNER PART */}
 
       <Stack className={classes.bannerStacktitle}>
         <Typography className={classes.MottoBoxText}>Banner</Typography>
-        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Sae Bass?" 
+        <UserendSaveDeleteButtons message="Are you sure want to delete Banner in Pear spot?" 
         onDelete={()=>console.log("deleting")}
-        sliceSave={() => console.log("deleted")}/>
-      
+         sliceSave={() => console.log("")}/>
       </Stack>
       <Box>
       
@@ -148,13 +143,12 @@ const CultureSeabass = () => {
             </Box>
             <ErrorMessages />
           </Stack>
-         
         </Box>
 
       {/* banner rightside start */}
         <Box>
           <Stack direction="column" gap={1}>
-           <Box>
+            <Box>
             <Typography className={classes.titleText}>Title</Typography>
             <TextField
               size="small"
@@ -162,7 +156,7 @@ const CultureSeabass = () => {
             />
             <ErrormsgTitle />
             </Box>
-            <Box>
+            <Box> 
             <Typography className={classes.titleText}>Content</Typography>
             <TextField
               className={classes.heroTextfiled}
@@ -199,7 +193,7 @@ const CultureSeabass = () => {
             <ErrorMessages />
           </Stack>
         </Box>
-        
+
         {/* for  banner rightside box */}
         <Box>
           <Stack className={classes.bannerRightsidestack}>
@@ -210,7 +204,7 @@ const CultureSeabass = () => {
             />
             <ErrormsgPrice />
             </Box>
-            <Box>
+
             <Typography className={classes.titleText}>Content</Typography>
             <TextField
               className={classes.heroTextfiled}
@@ -219,7 +213,6 @@ const CultureSeabass = () => {
               minRows={3}
             />
             <ErrormsgContent />
-            </Box>
           </Stack>
         </Box>
       </Box>
@@ -233,4 +226,4 @@ const CultureSeabass = () => {
   );
 };
 
-export default CultureSeabass;
+export default CultureSeaweeds;

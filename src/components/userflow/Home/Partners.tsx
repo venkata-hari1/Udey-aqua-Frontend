@@ -12,7 +12,6 @@ import { useRef, useState, useEffect } from "react";
 import useHomeStyles from "./homeStyles";
 
 
-
 const partners = [
   { src: ciba, alt: "CIBA" },
   { src: cmfri, alt: "CMFRI" },

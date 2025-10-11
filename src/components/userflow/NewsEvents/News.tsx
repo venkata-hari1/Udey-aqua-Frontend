@@ -19,7 +19,7 @@ import { useLocation } from "react-router-dom";
 import useNewsEventsStyles from "./newsEventsStyles";
 import NewsCard from "../Home/NewsCard";
 import { useScrollWithOffset } from "./hooks";
-//import PdfMark from "./components/PdfMark";
+import PdfMark from "./components/PdfMark";
 
 import latest1 from "../../../assets/news/latest/img0.png";
 import latest2 from "../../../assets/news/latest/img1.png";
@@ -34,7 +34,7 @@ import newsImg3 from "../../../assets/news_and_blogs/news_3.jpg";
 
 import calendarIcon from "../../../assets/icons/calendar-color.svg";
 import calendarIcon2 from "../../../assets/icons/calendar.svg";
-import PdfMark from "./components/PdfMark";
+
 
 
 interface NewsItem {

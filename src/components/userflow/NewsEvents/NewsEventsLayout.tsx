@@ -30,7 +30,7 @@ const NewsEventsLayout = () => {
 
   return (
     <Grid container className={classes.newsEventsLayoutRoot} direction="column">
-      <SwimmingFish  Position="absolute" Count={60} Height={3000}/>
+      <SwimmingFish  Position="absolute" Count={40} Height={isMobile?1000:2500}/>
       <Grid size={{ xs: 12 }}>
         <NewsEventsHero currentLabel={currentLabel} />
       </Grid>

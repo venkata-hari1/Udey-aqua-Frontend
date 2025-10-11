@@ -9,11 +9,11 @@ import pricingImg3 from "../../../assets/pricing/pricing_img_3.png";
 import pricingImg4 from "../../../assets/pricing/pricing_img_4.png";
 import pricingImg5 from "../../../assets/pricing/pricing_img_5.png";
 import pricingImg6 from "../../../assets/pricing/pricing_img_6.png";
-
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 
 
 const pricingData = [

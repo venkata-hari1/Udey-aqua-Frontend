@@ -27,7 +27,7 @@ const sidebarItems = [
 const AboutLayout = () => {
   const location = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { classes, cx } = useAboutStyles();
 
   const currentLabel =
@@ -39,7 +39,7 @@ const AboutLayout = () => {
 
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
-         <SwimmingFish  Position="absolute" Count={60} Height={3000}/>
+         <SwimmingFish  Position="absolute" Count={60}  Height={isMobile?2000:3000} />
       <Grid size={{ xs: 12 }}>
         <AboutHero currentLabel={currentLabel} />
       </Grid>
