@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 //import { TrainingStyles } from './PricingStyles';
 import { Box} from '@mui/material';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ type AquacultureTypeProps={
    //Section?:string
 }
 const AquacultureType=({accordianId}:AquacultureTypeProps)=>{
-    const {classes:Aboutus} = useUserEndwebStyles();
+    const {classes:Aboutus} = useAboutusStyles();
     //const {classes} = TrainingStyles();
     const [counter, setCounter] = useState(1);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);

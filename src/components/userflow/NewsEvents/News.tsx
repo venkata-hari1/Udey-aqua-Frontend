@@ -36,6 +36,7 @@ import calendarIcon from "../../../assets/icons/calendar-color.svg";
 import calendarIcon2 from "../../../assets/icons/calendar.svg";
 
 
+
 interface NewsItem {
   id: number;
   title: string;

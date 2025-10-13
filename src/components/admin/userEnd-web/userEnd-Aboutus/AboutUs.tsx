@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -20,7 +20,7 @@ import Testimonials from './Testimonials';
 
 
 const AboutUs=()=>{
-    const {classes}= useUserEndwebStyles();
+    const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
     const AccordianData = [
         {id:'1',title:'Hero Section',component:Hero},
@@ -35,7 +35,7 @@ const AboutUs=()=>{
     return(
         <>
             
-                <Box className={classes.AboutUscontainer}>
+                <Box className={classes.AboutUscontainer} >
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
                             <ArrowBack onClick={()=>naviagte(-1)}/>
@@ -54,7 +54,7 @@ const AboutUs=()=>{
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Component id={item.id} accordianId={item.id} Accordiantitle={item.title} />
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
                        );

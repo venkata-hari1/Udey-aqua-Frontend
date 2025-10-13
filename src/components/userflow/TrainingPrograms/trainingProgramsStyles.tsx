@@ -27,6 +27,14 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
   trainingContent: {
     width: "100%",
   },
+  Training:{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    width: "100%"
+  },
   px3: {
     // paddingLeft: theme.spacing(3),
     // paddingRight: theme.spacing(3),
@@ -100,7 +108,7 @@ const useTrainingProgramsStyles = makeStyles()((theme: Theme) => ({
     fontSize: 18,
     fontFamily: FONTS.INTER,
     textAlign: "center",
-    maxWidth: 700,
+   
     letterSpacing: 0.5,
     margin: 0,
     opacity: 0.95,

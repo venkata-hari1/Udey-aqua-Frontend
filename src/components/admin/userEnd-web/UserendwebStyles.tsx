@@ -388,6 +388,7 @@ flexDirection:'row',
 FormCurageBox:{
 display:'flex',
 width:'100%',
+marginTop:'10px',
 justifyContent:'space-between',
 [theme.breakpoints.down('md')]:{
   flexDirection:'column',
@@ -672,6 +673,18 @@ bannerRightsidestack:{
   flexDirection:"column",
    gap:"10px"
 },
+
+//subpage creation
+
+Subpagetitlecontainer:{
+  display:'flex',
+  justifyContent:'flex-start',
+  gap:"80px",
+  [theme.breakpoints.down('md')]:{
+    flexDirection:'column'
+  }
+}
+
 
 }));
 

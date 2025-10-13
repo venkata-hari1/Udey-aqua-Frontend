@@ -1,7 +1,6 @@
 // src/components/userflow/Contact/Contact.tsx
 import { Box, Container, Grid, Card, Typography } from "@mui/material";
 import { Phone, Email, Language } from "@mui/icons-material";
-import { motion } from "framer-motion";
 import ContactHero from "./ContactHero";
 import ContactLayout from "./ContactLayout";
 import useContactStyles from "./contactStyles";
@@ -9,17 +8,11 @@ import ContactForm from "../Home/Contact";
 import headOfficeSvg from "../../../assets/contact/head_office.svg";
 import regionalOfficeSvg from "../../../assets/contact/regional_office.svg";
 import rdSvg from "../../../assets/contact/r&d.svg";
-import contactFishImage from "../../../assets/contact/contact_fish.png";
-import {
-  NEWS_FISHES_INITIAL,
-  NEWS_FISHES_TRANSITION,
-} from "../Shared/animations";
+import fish123 from '../../../assets/home/fish123.gif'
+import SunFishAnimation from "../../animations/SunFishAnimation";
 
 // Opposite direction animation for contact fish
-const CONTACT_FISH_ANIMATE = {
-  x: [0, -20, 0, -20, 0],
-  y: [0, 0, -15, 0, -15, 0],
-};
+
 
 const Contact = () => {
   const { classes } = useContactStyles();
@@ -149,16 +142,7 @@ const Contact = () => {
 
       <Box className={classes.contactFishSection}>
         <Container className={classes.contactFishContainer}>
-          <Box className={classes.contactFishContent}>
-            <motion.img
-              src={contactFishImage}
-              alt="Contact Fish"
-              className={classes.contactFishImage}
-              initial={NEWS_FISHES_INITIAL}
-              animate={CONTACT_FISH_ANIMATE}
-              transition={NEWS_FISHES_TRANSITION}
-            />
-          </Box>
+        <SunFishAnimation Fish={fish123} Zindex={100} Count={2}/>
         </Container>
       </Box>
 

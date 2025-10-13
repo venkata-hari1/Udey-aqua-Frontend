@@ -6,6 +6,7 @@ import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
 const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutHeaderTitle: {
     color: theme.palette.primary.dark,
+
     fontWeight: 500,
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontSize: 55,
@@ -21,6 +22,14 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       color: COLORS.WHITE,
       background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     },
+  },
+  About:{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    width: "100%"
   },
   mileStoneHeader: {
     textAlign: "center",
@@ -286,7 +295,6 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 700,
     fontSize: 22,
     textAlign: "center",
-    maxWidth: 700,
     letterSpacing: 0.5,
     [theme.breakpoints.down("md")]: {
       fontSize: 12,
@@ -309,6 +317,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   aboutSidebarWrapper: {
     width: 240,
     display: "flex",
+    position:'relative',
     flexDirection: "column",
     alignItems: "center",
     gap: theme.spacing(3),
@@ -319,6 +328,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutSidebar: {
+    position:'absolute',
+    zIndex:'100',
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,
@@ -532,6 +543,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       fontSize: 14,
       lineHeight: 1.4,
+      textAlign:'left'
     },
   },
   milestoneYear: {

@@ -10,13 +10,16 @@ import {
   ErrormsgContent,
   UserendEditandDeletebuttons,
   EditButton,
+  UserEndSaveButton,
 } from "./UserEndCommonButtons";
 import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { HeadingContentValidation } from "../../utils/Validations";
 
 const UserendHero = () => {
   const { classes } = useUserEndwebStyles();
+ const[editSlideId,setEditSlideId]=useState<string |null>(null)
   const [heroslide, setHeroslide] = useState([
     {
       id: uuidv4(),
@@ -25,6 +28,7 @@ const UserendHero = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+       isSaved: false,
     },
     {
       id: uuidv4(),
@@ -33,6 +37,7 @@ const UserendHero = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+       isSaved: false,
     },
   ]);
 
@@ -45,6 +50,7 @@ const handleAddSlide = () => {
       content: "",
       imgerror: "",
       contenterror: "",
+      isSaved: false,
     };
     const updateSlides = [...heroslide, newSlide];
     setHeroslide(updateSlides);
@@ -60,14 +66,14 @@ const handleAddSlide = () => {
   const handleUpload = (id: string, file: File) => {
     const imageUrl = URL.createObjectURL(file);
     const updateSlides = heroslide.map((slide) =>
-      slide.id === id ? { ...slide, image: imageUrl, imgerror: "" } : slide
+      slide.id === id ? { ...slide, image: imageUrl, imgerror: "",isSaved:false } : slide
     );
     setHeroslide(updateSlides);
   };
 
   const handleRemoveImage = (id: string) => {
     const updatedslides = heroslide.map((slide) =>
-      slide.id === id ? { ...slide, image: "" } : slide
+      slide.id === id ? { ...slide, image: "", } : slide
     );
     setHeroslide(updatedslides);
   };
@@ -75,7 +81,7 @@ const handleAddSlide = () => {
   const handleContentchange = (id: string, value: string, error: string) => {
     const updateSlides = heroslide.map((slide) =>
       slide.id === id
-        ? { ...slide, content: value, contenterror: error }
+        ? { ...slide, content: value, contenterror: error,isSaved:false }
         : slide
     );
     setHeroslide(updateSlides);
@@ -88,7 +94,7 @@ const handleAddSlide = () => {
   const handleImageError = (id: string, msg: string) => {
     setHeroslide((prev) =>
       prev.map((slide) =>
-        slide.id === id ? { ...slide, imgerror: msg } : slide
+        slide.id === id ? { ...slide, imgerror: msg,isSaved:false } : slide
       )
     );
   };
@@ -96,31 +102,41 @@ const handleAddSlide = () => {
   const sliceEdit=(id:string)=>{
     const savedSlide=localStorage.getItem(`heroSlide${id}`) 
     if(savedSlide){
-      const parsedSlide=JSON.parse(savedSlide);
+     const parsedSlide=JSON.parse(savedSlide);
       setHeroslide((prev)=>
         prev.map((slide)=>
-        slide.id===id ?{...slide,...parsedSlide}:slide)
-       )
+        slide.id===id ?{...slide,...parsedSlide,isSaved:false}:slide)
+       );
    }
+   setEditSlideId(id)
   }
 
   const handleSave = (id:string) => {
+    
    const slideTosave= heroslide.find((slide)=>slide.id===id)  
    if(slideTosave){
     localStorage.setItem(`heroSlide${id}`,JSON.stringify(slideTosave))
    }
   setHeroslide((prev)=>
   prev.map((slide)=>
-  slide.id===id ? {...slide,image:'',imgerror:'',content:''}:slide
+  slide.id===id ? {...slide,isSaved: true,}:slide
   )
 );
+setEditSlideId(null);
 };
 
 const onCancel=(id:string)=>{
-    setHeroslide((prev)=>
-    prev.map((slide)=>
-    slide.id===id ?{...slide,image:'',imgerror:'',content:'',contenterror:''}:slide)
-    )
+    
+    const savedSlide = localStorage.getItem(`heroSlide${id}`);
+  if (savedSlide) {
+    const parsedSlide = JSON.parse(savedSlide);
+    setHeroslide((prev) =>
+      prev.map((slide) =>
+        slide.id === id ? { ...slide, ...parsedSlide, isSaved: true } : slide
+      )
+    );
+  }
+  setEditSlideId(null);
 }
   return (
     <Box>
@@ -128,7 +144,8 @@ const onCancel=(id:string)=>{
         <AddingButton onClick={handleAddSlide} />
         {heroslide.map((slide, index) => {
           const slideSaveDisabled =
-            !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror;
+            !slide.content || !slide.image || !!slide.contenterror || !!slide.imgerror
+            || slide.isSaved ;
 
           return (
             <Fragment key={slide.id}>
@@ -137,22 +154,22 @@ const onCancel=(id:string)=>{
                   <Typography className={classes.titleText}>
                     {slide.name}
                   </Typography>
-                  {index===0 ? <EditButton sliceEdit={()=>sliceEdit(slide.id)}/>:
+                  {index===0 ? <EditButton sliceEdit={()=>sliceEdit(slide.id)}
+                    disabled={!slide.isSaved}/>:
                   <UserendEditandDeletebuttons 
                    message={`Are you sure want to delete ${slide.name} ?`} 
                    onDelete={() => onDelete(slide.id)}
-                   sliceEdit={()=>sliceEdit(slide.id)}/>}
+                   sliceEdit={()=>sliceEdit(slide.id)}
+                   disabled={!slide.isSaved}/>}
                   </Stack>
                 <Stack className={classes.Uploadandheadingbox}>
                   <Stack className={classes.UploadImageStack}>
                     <Typography className={classes.titleText}>Image</Typography>
-
                     <Uploadbutton type="image"
                       onUpload={(file) => handleUpload(slide.id, file)}
                       onError={(msg) => handleImageError(slide.id, msg)}
-                    />
-
-                    {slide.image && (
+                      />
+                      {slide.image && (
                       <Box className={classes.herouploadImageBox}>
                         <img
                           src={slide.image}
@@ -161,6 +178,7 @@ const onCancel=(id:string)=>{
                         <CancelIcon
                           className={classes.cancelImgIcon}
                           onClick={() => handleRemoveImage(slide.id)}
+                          
                         />
                       </Box>
                     )}
@@ -173,18 +191,26 @@ const onCancel=(id:string)=>{
                       Heading Content
                     </Typography>
                     <TextFieldManyRows
-                    value={slide.content}
+                      value={slide.content}
                       onChange={(value, error) =>
                         handleContentchange(slide.id, value, error)
                       }
+                      validationFn={HeadingContentValidation}
+                      disabled={slide.isSaved}
                     />
                     {slide.contenterror && (
                       <ErrormsgContent message={slide.contenterror} />
                     )}
                   </Stack>
                 </Stack>
+                
+                {editSlideId==slide.id?
                 <UserEndSaveCancelButtons onSave={()=>handleSave(slide.id)} 
-                onCancel={()=>onCancel(slide.id)}disabled={slideSaveDisabled}/>
+                onCancel={()=>onCancel(slide.id)}disabled={slideSaveDisabled}/>:
+                <UserEndSaveButton onSave={()=>handleSave(slide.id)}
+                 disabled={slideSaveDisabled}/>
+                }   
+
                 {index !== heroslide.length - 1 && (
                   <Divider className={classes.heroDivider} />
                 )}

@@ -39,6 +39,8 @@ import {
 /* import { getValue } from "@mui/system"; */
 import { validateEmail } from "../../admin/utils/Validations";
 
+
+
 const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
 const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
 
@@ -92,12 +94,15 @@ const isEmailValid=error==="" &&email.length>0
   }
   return (
     <Box className={classes.footerRoot}>
+ 
+
       <Box
         component="img"
         src={footerBg}
         alt="Footer Waves"
         className={classes.footerBg}
       />
+    
       <motion.img
         src={footerBg1}
         alt="Footer Waves"
@@ -105,8 +110,8 @@ const isEmailValid=error==="" &&email.length>0
         initial={FOOTER_BG1_INITIAL}
         animate={FOOTER_BG1_ANIMATE}
         transition={FOOTER_BG1_TRANSITION}
-      />
-      <motion.img
+      /> 
+       <motion.img
         src={footerBg2}
         alt="Footer Waves"
         className={classes.footerBg2}
@@ -121,7 +126,7 @@ const isEmailValid=error==="" &&email.length>0
         initial={FOOTER_BG3_INITIAL}
         animate={FOOTER_BG3_ANIMATE}
         transition={FOOTER_BG3_TRANSITION}
-      />
+      /> 
       <Box className={classes.footerContent}>
         {isMobile ? (
           <>
@@ -224,11 +229,13 @@ const isEmailValid=error==="" &&email.length>0
                 >
                   <LocationOnIcon fontSize="small" />
                   <Box
-                    component="a"
-                    href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${classes.contactText} ${classes.contactTextMobile}`}
+                    component="div"
+                  //href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  //target="_blank"
+                  //rel="noopener noreferrer"
+                  onClick={()=>navigate('map')}
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                  sx={{cursor:'pointer',textDecoration:'underline'}}
                   >
                     Mulapolam, Srikakulam
                   </Box>
@@ -280,10 +287,13 @@ const isEmailValid=error==="" &&email.length>0
               </Box>
               <Box className={classes.mapBoxMobile}>
                 <Box
-                  component="a"
-                  href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  component="div"
+                  //href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  //target="_blank"
+                  //rel="noopener noreferrer"
+                  onClick={()=>navigate('map')}
+                  className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                  //sx={{cursor:'pointer',textDecoration:'underline'}}
                 >
                   <Box
                     component="img"
@@ -396,11 +406,13 @@ const isEmailValid=error==="" &&email.length>0
               <Box className={`${classes.contactRow} ${classes.contactRowInline}`}>
                 <LocationOnIcon fontSize="small" />
                 <Box
-                  component="a"
-                  href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  component="div"
+                  //href="https://www.google.com/maps/search/?api=1&query=Mulapolam%2C%20Srikakulam"
+                  //target="_blank"
+                  //rel="noopener noreferrer"
+                  onClick={()=>navigate('map')}
                   className={`${classes.contactText} ${classes.contactTextDesktop}`}
+                  sx={{cursor:'pointer',textDecoration:'underline'}}
                 >
                   Mulapolam, Srikakulam
                 </Box>
@@ -456,7 +468,7 @@ const isEmailValid=error==="" &&email.length>0
                 src={footerMap}
                 alt="Map"
                 className={`${classes.mapImg} ${classes.mapImgDesktop} ${classes.cursorPointer}`}
-                onClick={() => navigate('/maps')}
+                onClick={() => navigate('/map')}
               />
             </Box>
           </Box>

@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, Button, TextField, Typography} from '@mui/material';
 import { AddBanner, AddSection, CancelButton, EditButton, UpdateHeader, UploadButton} from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
@@ -14,8 +14,8 @@ type RASProps={
     Section?:string;
 }
 const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
-    const {classes} = useUserEndwebStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const {classes} = useAboutusStyles();
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
@@ -24,6 +24,9 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
     const [banner, setBanner] = useState<{id:string}[]>([]);
     const [bannercount, setBannerCount] = useState<any>([]);
     const [prevData, setPrevData] = useState<boolean>(false);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(subtitle);
     var isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
@@ -42,6 +45,7 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         setError('');
+        setIsSaved(false);
         if (files && files.length > 0) {
             const selectedFiles: File[] = Array.from(files);
             selectedFiles.forEach(file => {
@@ -72,6 +76,7 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
         setError('');
+        setIsSaved(false);
     };
    
 
@@ -100,7 +105,12 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
         }
         console.log(Data);
     localStorage.setItem("RAS", JSON.stringify(Data));
-    setPrevData(true)
+    setIsSaved(true);
+     setPrevData(true);
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
     };
     const CancelData = ()=>{
         const PrevData=localStorage.getItem('RAS');
@@ -108,21 +118,32 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
             const parsedData = JSON.parse(PrevData);
             setSubtitle(parsedData.subtitle || "");
             setImage(parsedData.image || []);
-            setFile([]); 
-            setError(""); 
+            setFile([]);
+            setIsSaved(true);
+            setError("");
+
+            
         } else {
             alert("No previous data found!");
         }
+         if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!PrevData);
+    
     
     }
     useEffect(() => {
         const saved = localStorage.getItem("RAS");
         if (saved) {
         setPrevData(true);
+        setIsSaved(true);
         }
     }, []);
     return(
         <>
+     
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
                     <AddBanner onClick={handleAddBanner}/>
@@ -131,7 +152,9 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>Header Section</Typography>
                     {/*<DeleteButton onClick={handleDeleteAll}/>*/}
-                    <EditButton/>
+                    <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
+                        setEdit(true)
+                    }}/>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -145,13 +168,14 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
-                            {(file.length>0|| prevData) && (
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(Images.length>0) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -159,6 +183,7 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
@@ -177,9 +202,19 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
                                         </Box>
                                         <Box>
                                             {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                                 <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography>
                                             )} 
                                         </Box> 
                                 </Box>
@@ -204,15 +239,17 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
                             minRows={5}
                             className={classes.myTextFleid}
                             value={subtitle}
-                            onChange={(e)=>setSubtitle(e.target.value)}
+                            disabled={!Edit}
+                            onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             FormHelperTextProps={{className:classes.helperText}}
                             />
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                        <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
-                        {prevData &&(<CancelButton onClick={CancelData}/>)}
+                       <UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                                           {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <SubSection id='Sub Section-1' accordianId='2' title='RAS'/>
                 {subpages.map((sub) => (

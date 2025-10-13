@@ -6,6 +6,8 @@ import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useAboutStyles from "./aboutStyles";
 import ContactBox from "../Shared/ContactBox";
 import AboutHero from "./AboutHero";
+import SwimmingFish from "../../animations/SwimmingFish";
+
 // import {
 //   ABOUT_FISH_INITIAL,
 //   ABOUT_FISH_ANIMATE,
@@ -25,7 +27,7 @@ const sidebarItems = [
 const AboutLayout = () => {
   const location = useLocation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { classes, cx } = useAboutStyles();
 
   const currentLabel =
@@ -37,13 +39,16 @@ const AboutLayout = () => {
 
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
+         <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
       <Grid size={{ xs: 12 }}>
         <AboutHero currentLabel={currentLabel} />
       </Grid>
       <Grid size={{ xs: 12 }}>
+    
         <Grid container className={classes.aboutMainRow} wrap="nowrap">
+       
           {!isMobile && (
-            <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper}>
+            <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper} >
               <Box className={classes.aboutSidebar}>
                 <Box className={classes.aboutSidebarNavTitle}>About Us</Box>
                 {sidebarItems.map((item) => (
@@ -61,15 +66,22 @@ const AboutLayout = () => {
                 ))}
               </Box>
               <ContactBox />
+           
+              
               {/* Removed side fish to allow main content to take full width */}
+   
             </Grid>
+            
           )}
           {isMobile && <ContactBox />}
           <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
             <Outlet />
           </Grid>
+         
         </Grid>
+       
       </Grid>
+     
     </Grid>
   );
 };

@@ -1,9 +1,8 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, UploadButton, CancelButton, EditButton, UpdateHeader} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
 import { HelperTextValidate, PriceValidate } from '../userEnd-Aboutus/validations';
-
 
 interface Bannerprops {
   accordianId:string
@@ -13,10 +12,10 @@ interface Bannerprops {
 }
 
 const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
-    const {classes} = useUserEndwebStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const {classes} = useAboutusStyles();
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
-   // const [pdf, setPdf] = useState<string[]>([]);
+    const [pdf, setPdf] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
@@ -24,6 +23,9 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
     const [prevData, setPrevData] = useState<boolean>(false); 
     const [pdfPrice, setPdfPrice] = useState<string>("");
     const [pdfContent, setPdfcontent] = useState<string>("");
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -45,7 +47,7 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
     const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const files = event.target.files;
             setError('');
-        
+            setIsSaved(false);
             if (files && files.length > 0) {
                 const selectedFiles: File[] = Array.from(files);
         
@@ -55,21 +57,31 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                         setError(errorMsg);
                         return;
                     }
-        
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const imgs = new Image();
-                        imgs.onload = () => {
-                            if (imgs.width <= 300 || imgs.height <= 100) {
-                                setError('File must be in landscape format (min 300x100)');
-                                return; 
-                            }
-                            setFile(prev => [...prev, file]);
-                            setImage(prev => [...prev, e.target?.result as string]);
-                        };
-                        imgs.src = e.target?.result as string;
-                    };
-                    reader.readAsDataURL(file);
+                    if (file.type.startsWith("image/")) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                            const imgs = new Image();
+                            imgs.onload = () => {
+                                if (imgs.width <= 300 || imgs.height <= 100) {
+                                setError("File must be in landscape format (min 300x100)");
+                                return;
+                                }
+                                setFile((prev) => [...prev, file]);
+                                setImage((prev) => [...prev, e.target?.result as string]);
+                            };
+                            imgs.src = e.target?.result as string;
+                            };
+                            reader.readAsDataURL(file);
+                    }
+                    else if (file.type === 'application/pdf'){
+                        const pdfUrl = URL.createObjectURL(file); 
+                        setPdf((prev) => [...prev, pdfUrl]);
+                        setFile((prev) => [...prev, file]);
+                        return;
+                    }    
+                    else {
+                        setError("Unsupported file type. Only images and PDFs are allowed.");
+                    }
                 });
             }
         
@@ -79,6 +91,7 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
+            setIsSaved(false);
     };
     const handleDeleteClick = () => {
         setOpenDialog(true);
@@ -100,36 +113,53 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
             }
             console.log(Data);
         localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
-        setPrevData(true)
+        setIsSaved(true);
+     setPrevData(true);
+     setEdit(false)
+     if (cancel){
+        setCancel(false)
+     }
         };
         const CancelData = (title:string,id:string)=>{
             const PrevData=localStorage.getItem(`${title}_${id}`);
             if (PrevData) {
-                const parsedData = JSON.parse(PrevData);
-                setSubtitle(parsedData.title || "");
-                setImage(parsedData.image || []);
-                setContent(parsedData.content)
-                setFile([]); 
-                setError(""); 
-            } else {
-                alert("No previous data found!");
-            }
+            const parsedData = JSON.parse(PrevData);
+            setSubtitle(parsedData.subtitle || "");
+            setImage(parsedData.image || []);
+            setFile([]);
+            setIsSaved(true);
+            setError("");
+
+            
+        } else {
+            alert("No previous data found!");
+        }
+         if (cancel){
+        setCancel(false)
+     }
+        setEdit(false)
+        setPrevData(!!PrevData);
         }
         useEffect(() => {
             const saved = localStorage.getItem(`${title}_${id}`);
             if (saved) {
             setPrevData(true);
+            setIsSaved(true);
             }
         }, []);
+     
     return(
         <>
+ 
             <Box className={classes.subSectionBox}>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>
                         {id}
                     </Typography>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
-                        <EditButton/>
+                        <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
+                        setEdit(true)
+                    }}/>
                         {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
                     </Box>
                 </Box>
@@ -145,13 +175,14 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                                     id={`upload-file-${title}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={HandleFileChange}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={title}/> 
-                            {(file.length>0|| prevData)  && (
+                            <UploadButton id={id} accordianId={accordianId} Section={title} disable={!Edit}/> 
+                            {(Images.length>0)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
@@ -159,27 +190,29 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                                                 />
                                                 <Button className={classes.cancelImgIcon}
                                                         onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
                                                                 >
                                                     x
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${title}-${accordianId}-${id}`}>
-                                        <input
-                                                accept="image/*"
-                                                id={`upload-file-${title}-${accordianId}-${id}`}
-                                                type="file"
-                                                multiple
-                                                style={{ display: "none" }}
-                                                onChange={HandleFileChange}
-                                        />
-                                            </label>
+                                       
                                     </Box>
                                     <Box>
                                             {(Images.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
+                                                 <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
                                                 *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
+                                                </Typography> 
                                             )} 
                                         </Box> 
                                 </Box>
@@ -200,8 +233,10 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                         </Typography>
                         <TextField value={subtitle} 
                                    className={classes.myTextFleid}
-                                   onChange={(e)=>setSubtitle(e.target.value)}
+                                   onChange={(e)=>{setSubtitle(e.target.value);
+                                            setIsSaved(false)}}
                                    helperText={SubtitleField.message}
+                                   disabled={!Edit}
                                    FormHelperTextProps={{className:classes.helperText}}
                         />
                         <Typography className={classes.mytext}>
@@ -213,8 +248,10 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                             minRows={5}
                             value={content} 
                             className={classes.myTextFleid}
-                            onChange={(e)=>setContent(e.target.value)}
+                            onChange={(e)=>{setContent(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={TextFieldError.message}
+                            disabled={!Edit}
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
@@ -238,7 +275,45 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                                     onChange={HandleFileChange}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={title}/> 
-
+                            {(pdf.length>0)  && (
+                                <Box className={classes.ImagesBox}>
+                                    <Box className={classes.ImagespicBox}>
+                                        {pdf.map((prev,index)=>
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                                <img 
+                                                    src={prev}
+                                                    alt={`preview ${index+1}`}
+                                                    className={classes.ImagePic}
+                                                />
+                                                <Button className={classes.cancelImgIcon}
+                                                        onClick={()=>{removeImage(index)}}
+                                                        disabled={!Edit}
+                                                                >
+                                                    x
+                                                </Button>
+                                            </Box>
+                                        )}
+                                       
+                                    </Box>
+                                    <Box>
+                                            {(Images.length>0 ) &&(
+                                                 <Typography   className={Edit ? classes.errorText : undefined}
+                                                                sx={
+                                                                    Edit
+                                                                    ? {}
+                                                                    : {
+                                                                        color: 'grey',
+                                                                        fontWeight: 400,
+                                                                        fontSize: '14px',
+                                                                        textTransform: 'none',
+                                                                        }
+                                                                } >
+                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
+                                                </Typography> 
+                                            )} 
+                                        </Box> 
+                                </Box>
+                            )}
                         </Box> 
                 </Stack>
                     <Box className={classes.TextFiledBox}>
@@ -247,7 +322,8 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                         </Typography>
                         <TextField value={pdfPrice} 
                                    className={classes.myTextFleid}
-                                   onChange={(e)=>setPdfPrice(e.target.value)}
+                                   onChange={(e)=>{setPdfPrice(e.target.value);
+                                            setIsSaved(false)}}
                                    helperText={PriceField.message}
                                    FormHelperTextProps={{className:classes.helperText}}
                         />
@@ -260,14 +336,16 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
                             minRows={5}
                             value={pdfContent} 
                             className={classes.myTextFleid}
-                            onChange={(e)=>setPdfcontent(e.target.value)}
+                            onChange={(e)=>{setPdfcontent(e.target.value);
+                                            setIsSaved(false)}}
                             helperText={PriceContent.message}
                             FormHelperTextProps={{className:classes.helperText}}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <UpdateHeader error={ file.length ===0  || isTextInvalid} onClick={()=>SaveData(title,id)}/>
-                    {prevData &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                    <UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={()=>SaveData(title,id)}/>
+                                           {cancel &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                    
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

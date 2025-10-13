@@ -94,6 +94,14 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
       marginTop: theme.spacing(6),
     },
   },
+  news:{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    width: "100%"
+  },
   newsEventsHeroTitle: {
     color: COLORS.WHITE,
     fontWeight: 400,
@@ -113,7 +121,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 700,
     fontSize: 18,
     textAlign: "center",
-    maxWidth: 700,
+
     letterSpacing: 0.5,
     [theme.breakpoints.down("md")]: {
       fontSize: 12,
@@ -135,6 +143,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
 
   newsEventsSidebarWrapper: {
+    position:'relative',
     width: 240,
     display: "flex",
     flexDirection: "column",
@@ -147,6 +156,8 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     },
   },
   newsEventsSidebar: {
+    position:'absolute',
+    zIndex:100,
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,

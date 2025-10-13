@@ -1,6 +1,6 @@
 // src/components/userflow/Home/Pricing.tsx
 import { Box } from "@mui/material";
-import { motion } from "framer-motion";
+
 import SectionTitle from "./SectionTitle";
 import PricingCard from "./PricingCard";
 import pricingImg1 from "../../../assets/pricing/pricing_img_1.png";
@@ -9,16 +9,12 @@ import pricingImg3 from "../../../assets/pricing/pricing_img_3.png";
 import pricingImg4 from "../../../assets/pricing/pricing_img_4.png";
 import pricingImg5 from "../../../assets/pricing/pricing_img_5.png";
 import pricingImg6 from "../../../assets/pricing/pricing_img_6.png";
-import pricingTopImg from "../../../assets/home/pricing_image.png";
 import { useRef } from "react";
-import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+
 import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
-import {
-  PARTNERS_FISH_INITIAL,
-  PARTNERS_FISH_ANIMATE,
-  PARTNERS_FISH_TRANSITION,
-} from "../Shared/animations";
+import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
+
 
 const pricingData = [
   {
@@ -91,14 +87,6 @@ const Pricing = () => {
 
   return (
     <Box className={classes.pricingRoot}>
-      <motion.img
-        src={pricingTopImg}
-        alt="Pricing Fishes"
-        className={classes.pricingTopImgBase}
-        initial={PARTNERS_FISH_INITIAL}
-        animate={PARTNERS_FISH_ANIMATE}
-        transition={PARTNERS_FISH_TRANSITION}
-      />
       <SectionTitle title="Pricing" />
       <Box
         ref={scrollRef}

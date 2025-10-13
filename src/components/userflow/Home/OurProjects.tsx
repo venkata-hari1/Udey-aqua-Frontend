@@ -11,6 +11,7 @@ import project1 from "../../../assets/projects/project_1.jpg";
 import project2 from "../../../assets/projects/project_2.jpg";
 import project3 from "../../../assets/projects/project_3.jpg";
 import project4 from "../../../assets/projects/project_4.png";
+import { Fade } from "react-awesome-reveal";
 
 const categories = [
   "All",
@@ -91,9 +92,12 @@ const OurProjects = () => {
           }
         >
           {isOverflowing && <Box />}
+         
           {projects.map((project, idx) => (
             <Box key={idx} className={classes.ourProjectsCardOuter}>
+            <Fade>
               <ProjectCard {...project} />
+              </Fade>
             </Box>
           ))}
           {isOverflowing && <Box />}

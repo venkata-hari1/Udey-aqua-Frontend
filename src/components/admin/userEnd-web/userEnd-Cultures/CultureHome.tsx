@@ -13,30 +13,43 @@ import CultureSeabass from "./CultureSeabass";
 import CulturePearsport from "./CulturePearspot";
 import CultureMudcrabs from "./CultureMudcrabs";
 import CultureMurrel from "./CultureMurrel";
+import CultureTelipia from "./CultureTelipia";
+import CultureSeaweeds from "./CultureSeaweeds";
+import { useState, type ReactNode } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Culturessubpage from "./Culturessubpage";
+
+
+interface CultureItem{
+  id:string,
+  menu:string,
+  content:ReactNode
+}
 
 const CultureHome = () => {
 
   const{classes}=useUserEndwebStyles()
   const navigate=useNavigate()
+  const[culturesdata,setCulturesdata]=useState<CultureItem[]>([
+    
+   {id:uuidv4(),menu:"Hero Section",content:<CultureHero />} ,
+   {id:uuidv4(),menu:"Cultures Image",content:<CulturesImage />} ,
+   {id:uuidv4(),menu:"Sae Bass",content:<CultureSeabass />} ,
+   {id:uuidv4(),menu:"Pear Spot",content:<CulturePearsport />} ,
+   {id:uuidv4(),menu: "Mud Crab",content:<CultureMudcrabs />} ,
+   {id:uuidv4(),menu:"Murrel",content:<CultureMurrel />} ,
+   {id:uuidv4(),menu:"Tilapia",content:<CultureTelipia />} ,
+   {id:uuidv4(),menu:"Sea Weed",content:<CultureSeaweeds />} , 
+  ])
   
-  const culturemenudata=[
-   
-   {id:1,menu:"Hero Section",content:<CultureHero />} ,
-   {id:2,menu:"Cultures Image",content:<CulturesImage />} ,
-   {id:3,menu:"Sae Bass",content:<CultureSeabass />} ,
-   {id:4,menu:"Pear Spot",content:<CulturePearsport />} ,
-   {id:5,menu: "Mud Crab",content:<CultureMudcrabs />} ,
-   {id:6,menu:"Murrel",content:<CultureMurrel />} ,
-   {id:7,menu:"Tilapia",content:''} ,
-   {id:8,menu:"Our Projects",content:""} ,
-   {id:9,menu:"Sea Weed",content:''} , 
-]
-
 const handleBackarrow=()=>{
  navigate('/admin/userend-web')
 }
 
-
+const handleAddSubpage=()=>{
+  const newCulturedata={id:uuidv4(),menu:`Subpage ${culturesdata.length+1}`,content:<Culturessubpage />}; 
+  setCulturesdata((prev)=>[...prev,newCulturedata]);
+}
   return (
    
      <Box>
@@ -47,10 +60,11 @@ const handleBackarrow=()=>{
           <Typography className={classes.cultureHomeTitle}>Cultures</Typography>
           </Box>
           <Button variant="contained" className={classes.addSubpagebutton}
-          startIcon={<AddIcon />}>Add Subpage</Button>
+          startIcon={<AddIcon />}
+          onClick={handleAddSubpage}>Add Subpage</Button>
       </Box>
       <Box className={classes.CulturehomeMaincontainer}>
-    {culturemenudata.map((menu,index)=>(
+    {culturesdata.map((menu,index)=>(
        <Accordion key={index} className={classes.userEndHeaderContainer}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

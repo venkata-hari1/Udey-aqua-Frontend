@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { TrainingStyles } from './PricingStyles';
 import { Box,  TextField, Typography, Dialog, DialogContent, DialogActions, Button, Stack} from '@mui/material';
 import {  EditButton,  UploadButton, SaveButton, CancelButton} from '../userEnd-Aboutus/AboutUsButtons';
@@ -14,7 +14,7 @@ type AquacultureTypeProps={
     onDelete?:()=>void
 }
 const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProps)=>{
-    const {classes:Aboutus} = useUserEndwebStyles();
+    const {classes:Aboutus} = useAboutusStyles();
     const {classes} = TrainingStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);

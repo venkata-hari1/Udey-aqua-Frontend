@@ -2,6 +2,8 @@
 import { Box, Typography, IconButton, Collapse } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useAboutStyles from "./aboutStyles";
+import { ArrowBack } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface AboutInfoCardProps {
   title: string;
@@ -22,6 +24,7 @@ const AboutInfoCard = ({
   onExpand,
   onCloseComplete,
 }: AboutInfoCardProps) => {
+  const navigate= useNavigate();
   const { classes } = useAboutStyles();
   const slug = title
     .toLowerCase()
@@ -43,6 +46,11 @@ const AboutInfoCard = ({
         <Typography className={classes.aboutCardLargeDesc}>
           {largeDesc}
         </Typography>
+        <Box sx={{ display: "flex", justifyContent: "flex-end",marginBottom:'16px', }}>
+          <IconButton onClick={()=>navigate(-1)} className={classes.backButton}>
+            <ArrowBack />
+          </IconButton>
+        </Box>
       </Collapse>
       {!expanded ? (
         <IconButton onClick={onExpand} className={classes.aboutCardExpandBtn}>

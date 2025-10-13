@@ -2,22 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useTechnologiesStyles from "./technologiesStyles";
 import ContactBox from "../Shared/ContactBox";
 import TechnologiesHero from "./TechnologiesHero";
-import {
-  ABOUT_FISH_INITIAL,
-  ABOUT_FISH_ANIMATE,
-  ABOUT_FISH_TRANSITION,
-  NEWS_FISH_CIRCLE_INITIAL,
-  NEWS_FISH_CIRCLE_ANIMATE,
-  NEWS_FISH_CIRCLE_TRANSITION,
-} from "../Shared/animations";
-import sideFish from "../../../assets/technologies/main.png";
+
 import PdfDownloadSection from "../Cultures/PdfDownloadSection";
 import PlansSection from "../Shared/PlansSection";
+import SwimmingFish from "../../animations/SwimmingFish";
 
 const sidebarItems = [
   { label: "Recirculating Aquaculture System (RAS)", path: "/technologies" },
@@ -71,6 +62,7 @@ const TechnologiesLayout: React.FC = () => {
       className={classes.technologiesLayoutRoot}
       direction="column"
     >
+       <SwimmingFish  Position="absolute" Count={30} Height={3000}/>
       <Grid size={{ xs: 12 }}>
         <TechnologiesHero currentLabel={currentLabel} />
       </Grid>
@@ -104,15 +96,7 @@ const TechnologiesLayout: React.FC = () => {
                 ))}
               </Box>
               <ContactBox />
-              <Box className={classes.technologiesSidebarFish}>
-                <motion.img
-                  src={aboutSideFish}
-                  alt="Fish"
-                  initial={ABOUT_FISH_INITIAL}
-                  animate={ABOUT_FISH_ANIMATE}
-                  transition={ABOUT_FISH_TRANSITION}
-                />
-              </Box>
+             
             </Grid>
           )}
           {isMobile && <ContactBox />}
@@ -120,16 +104,7 @@ const TechnologiesLayout: React.FC = () => {
             size={{ xs: 12, md: 10 }}
             className={classes.technologiesMainContent}
           >
-            {!isMobile && (
-              <motion.img
-                src={sideFish}
-                alt="Fish"
-                className={classes.sideFish}
-                initial={NEWS_FISH_CIRCLE_INITIAL}
-                animate={NEWS_FISH_CIRCLE_ANIMATE}
-                transition={NEWS_FISH_CIRCLE_TRANSITION}
-              />
-            )}
+        
             <Outlet />
           </Grid>
         </Grid>

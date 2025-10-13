@@ -4,6 +4,9 @@ import SectionTitle from "./SectionTitle";
 import { useState } from "react";
 import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
+import { showToast } from "../../admin/utils/Toast";
+import { Slide } from "react-awesome-reveal";
+
 
 const Contact = ({ title = true }: { title?: boolean }) => {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
@@ -119,15 +122,28 @@ const Contact = ({ title = true }: { title?: boolean }) => {
       });
     }
   };
-
+  const HandleSend=()=>{
+   if (
+      isValidName(form.name) &&
+      isValidPhone(form.phone) &&
+      isValidMessage(form.message)
+    ) {
+     showToast(true, "Sent successfully!");
+    } else {
+     showToast(false, "Error occured while Sending!");
+    }
+  }
   return (
     <>
       {title && (
         <Grid size={12}>
+ 
           <SectionTitle title="Get In Touch" />
         </Grid>
       )}
+       <Slide direction="left">
       <Grid container spacing={2} className={classes.contactRoot}>
+       
         <Grid container size={12} spacing={2} className={classes.contactMain}>
           <Grid size={{ xs: 12, md: 6 }} className={classes.contactImgWrap}>
             <Box
@@ -245,7 +261,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                 </Grid>
 
                 <Grid size={12} className={classes.fullWidth}>
-                  <Button type="submit" className={classes.contactButton}>
+                  <Button type="submit" className={classes.contactButton} onClick={HandleSend}>
                     Send
                   </Button>
                 </Grid>
@@ -254,6 +270,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
           </Grid>
         </Grid>
       </Grid>
+      </Slide>
     </>
   );
 };

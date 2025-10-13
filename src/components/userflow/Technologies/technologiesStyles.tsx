@@ -23,6 +23,14 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
       marginTop: 16,
     },
   },
+  technology:{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    width: "100%"
+  },
   technologiesMainContent: {
     flex: 1,
     padding: theme.spacing(3),
@@ -105,7 +113,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 700,
     fontSize: 18,
     textAlign: "center",
-    maxWidth: 700,
+
     letterSpacing: 0.5,
     [theme.breakpoints.down("md")]: {
       fontSize: 12,
@@ -130,6 +138,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   technologiesSidebarWrapper: {
     width: 240,
     display: "flex",
+    position:'relative',
     flexDirection: "column",
     alignItems: "center",
     gap: theme.spacing(3),
@@ -141,6 +150,8 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   },
   technologiesSidebar: {
     width: "100%",
+    position:'absolute',
+    zIndex:100,
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,
     color: COLORS.WHITE,

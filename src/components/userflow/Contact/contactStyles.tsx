@@ -20,7 +20,14 @@ const useContactStyles = makeStyles()((theme: Theme) => ({
       marginTop: 16,
     },
   },
-
+  contact:{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    width: "100%"
+  },
   // Content styles
   contactContent: {
     width: "100%",
@@ -94,7 +101,7 @@ const useContactStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.INTER,
     textAlign: "center",
     margin: theme.spacing(1, 0),
-    maxWidth: 600,
+
     [theme.breakpoints.down("md")]: {
       fontSize: 16,
       margin: theme.spacing(0.5, 0),

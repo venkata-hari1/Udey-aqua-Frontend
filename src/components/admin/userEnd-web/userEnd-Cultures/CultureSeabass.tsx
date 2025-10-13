@@ -2,6 +2,7 @@ import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/materia
 import useUserEndwebStyles from "../UserendwebStyles";
 import AddIcon from "@mui/icons-material/Add";
 import {
+  EditButton,
   ErrorMessages,
   ErrormsgContent,
   ErrormsgPrice,
@@ -44,9 +45,7 @@ const CultureSeabass = () => {
        <Box>
         <Stack className={classes.newsectionStack}>
           <Typography className={classes.MottoBoxText}>Sub Section1</Typography>
-          <UserendSaveDeleteButtons message="Are you sure want to delete Sub section1 in Sae Bass?" 
-          onDelete={()=>console.log("on deleting")}
-           sliceSave={() => console.log("deleted")}/>
+          <EditButton sliceEdit={()=>console.log("edit")}/>
         </Stack>
         <Box className={classes.sectionSeabassBox} >
           {/* for lefside box */}

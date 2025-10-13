@@ -1,4 +1,4 @@
-import {useUserEndwebStyles} from './AboutusStyles';
+import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, EditButton, SaveButton,  UploadButtonTestimonials, CancelButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -13,7 +13,7 @@ interface SubHighlightsProps {
 }
 
 const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProps)=>{
-    const {classes} = useUserEndwebStyles();
+    const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');

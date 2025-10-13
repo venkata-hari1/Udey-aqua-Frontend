@@ -1,4 +1,4 @@
-import { TrainingStyles } from "./PricingStyles";
+import { useAboutusStyles } from '../userEnd-Aboutus/AboutusStyles';
 import { Button } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
@@ -8,7 +8,7 @@ type AddPricePlanProps={
 }
 
 export const AddPricePlan =({onClick}:AddPricePlanProps)=>{
-    const {classes}=TrainingStyles()
+    const {classes}=useAboutusStyles()
     return(
         <Button variant="contained" disableElevation startIcon={<AddOutlinedIcon/>} className={classes.AddplanButton} onClick={onClick}>
             Add Price Plan
@@ -16,7 +16,7 @@ export const AddPricePlan =({onClick}:AddPricePlanProps)=>{
     )
 }
 export const DeleteButton =({onClick}:{onClick?:()=>void})=>{
-    const {classes}=TrainingStyles()
+    const {classes}=useAboutusStyles()
     return(
         <Button variant="contained" className={classes.DeleteButton} onClick={onClick}>
             delete
@@ -24,7 +24,7 @@ export const DeleteButton =({onClick}:{onClick?:()=>void})=>{
     )
 }
 export const UpdateButton=()=>{
-    const {classes} =TrainingStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant="contained"   className={classes.updatebutton}>
             update
@@ -32,7 +32,7 @@ export const UpdateButton=()=>{
     )
 }
 export const CancelButton=()=>{
-    const {classes} =TrainingStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant="contained" disableElevation className={classes.CancelButton}>
             cancel
@@ -44,7 +44,7 @@ type AddTypeProps={
 }
 
 export const AddType =({onClick}:AddTypeProps)=>{
-    const {classes}=TrainingStyles()
+    const {classes}=useAboutusStyles()
     return(
         <Button variant="contained" disableElevation startIcon={<AddOutlinedIcon/>} className={classes.AddplanButton} onClick={onClick}>
             Add Type

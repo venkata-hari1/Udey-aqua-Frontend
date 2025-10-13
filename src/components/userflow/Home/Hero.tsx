@@ -6,12 +6,16 @@ import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import heroImg from "../../../assets/home/hero_img.png";
 import useHomeStyles from "./homeStyles";
-import ParticlesBackground from "./ParticlesBackground";
+// import sunfish from '../../../assets/home/sunfish.gif'
+import giphyunscreen from '../../../assets/home/giphy-unscreen.gif'
+
 import {
   CULTURES_FISH_INITIAL,
   CULTURES_FISH_ANIMATE,
   CULTURES_FISH_TRANSITION,
 } from "../Shared/animations";
+import BubbleCanvas from "../../animations/BubbleCanvas";
+
 
 const Hero = () => {
   const theme = useTheme();
@@ -19,17 +23,33 @@ const Hero = () => {
   const { classes } = useHomeStyles();
 
   return (
-    <Box className={classes.heroRoot}>
-      {/* <Box className={classes.heroLeftArrowBox}>
-        <IconButton className={classes.heroArrowBtn}>
-          <ArrowBackIosNewIcon className={classes.heroArrowBackIcon} />
-        </IconButton>
-      </Box> */}
+    <Box className={classes.heroRoot} sx={{position:'relative'}}>
+    <Box className="herofish">
+      <Box
+      component="img"
+      src={giphyunscreen}
+      className='fish1'
+     alt='img'
+    />
+    {/* <FishAnimation/>
+    <BlueFishAnimation/> */}
+   {/* <Box
+      component="img"
+      src={angerfish}
+      className='fish1'
+     alt='img'
+    /> */}
+      <Box
+      component="img"
+      src={giphyunscreen}
+      className='fish2'
+     alt='img'
+    />
+       </Box>
       <Box className={classes.heroMain}>
-        <Box sx={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-          <ParticlesBackground />
-        </Box>
+      
         <Box className={classes.heroImgBox}>
+       
           <motion.img
             src={heroImg}
             alt="Hero"
@@ -39,7 +59,7 @@ const Hero = () => {
             transition={CULTURES_FISH_TRANSITION}
           />
         </Box>
-        <Box className={classes.heroTextBoxWrap}>
+        <Box className={classes.heroTextBoxWrap} >
           <Box className={classes.heroTextBox}>
             <Typography
               variant={isMobile ? "h4" : "h2"}
@@ -56,11 +76,7 @@ const Hero = () => {
           </Box>
         </Box>
       </Box>
-      {/* <Box className={classes.heroRightArrowBox}>
-        <IconButton className={classes.heroArrowBtnRight}>
-          <ArrowForwardIosIcon className={classes.heroArrowForwardIcon} />
-        </IconButton>
-      </Box> */}
+     <BubbleCanvas/>
     </Box>
   );
 };

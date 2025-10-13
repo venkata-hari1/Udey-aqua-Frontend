@@ -1,13 +1,13 @@
-import { useUserEndwebStyles } from "./AboutusStyles";
-import { Button, IconButton} from "@mui/material";
+import { useAboutusStyles } from "./AboutusStyles";
+import { Button, IconButton, Box, Checkbox, Typography} from "@mui/material";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import DeleteIcon from "../../../../assets/Delete.png";
 
 
 export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' className={classes.deleteButton} onClick={onClick}>
             delete
@@ -19,7 +19,7 @@ type Editprops={
     error?:boolean
 }
 export const EditButton=({onClick, error}:Editprops)=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
          <Button variant="contained" disabled={error}  className={classes.SaveButton} sx={{backgroundColor: error ? "grey" : "#0A4FA4",}} onClick={onClick}>
         
@@ -73,7 +73,7 @@ type SaveButtonProps={
     onClick ?: ()=> void;
 }
 export const SaveButton=({error, onClick}:SaveButtonProps)=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant="contained" disabled={error}  className={classes.SaveButton} sx={{backgroundColor: error ? "grey" : "#0A4FA4",}} onClick={onClick}>
             save
@@ -86,7 +86,7 @@ type UpdateHeaderProps={
     onClick ?: ()=> void;
 }
 export const UpdateHeader=({error,onClick}:UpdateHeaderProps)=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant="contained" disabled={error}  className={classes.updateHeaderbutton} sx={{backgroundColor: error ? "grey" : "#0A4FA4",}} onClick={onClick}>
             update header
@@ -94,7 +94,7 @@ export const UpdateHeader=({error,onClick}:UpdateHeaderProps)=>{
     )
 }
 export const UpdateHeaderCancelButton=()=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant="contained" disableElevation  className={classes.updateHeaderCancelButton}>
             cancel
@@ -102,7 +102,7 @@ export const UpdateHeaderCancelButton=()=>{
     )
 }
 export const CancelButton=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant="contained" disableElevation className={classes.CancelButton} onClick={onClick}>
             cancel
@@ -110,7 +110,7 @@ export const CancelButton=({onClick}:{onClick?:()=>void})=>{
     )
 }
 export const AddSection=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             Add section
@@ -118,7 +118,7 @@ export const AddSection=({onClick}:{onClick?:()=>void})=>{
     )
 }
 export const AddBanner=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             Add Banner
@@ -130,7 +130,7 @@ type AddSubpageProps={
     onClick?:()=>void
 }
 export const AddSubpage=({error,onClick}:AddSubpageProps)=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' disabled={error} disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick} sx={{backgroundColor: error ? "grey" : "#0A4FA4",}}>
             Add subpage
@@ -138,7 +138,7 @@ export const AddSubpage=({error,onClick}:AddSubpageProps)=>{
     )
 }
 export const ArrowBack=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <IconButton className={classes.ArrowBack} onClick={onClick}>
             <ArrowBackIcon/>
@@ -146,7 +146,7 @@ export const ArrowBack=({onClick}:{onClick?:()=>void})=>{
     )
 }
 export const AddTestimonials=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             Add Testimonials
@@ -154,10 +154,36 @@ export const AddTestimonials=({onClick}:{onClick?:()=>void})=>{
     )
 }
 export const AddHighlights=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useUserEndwebStyles();
+    const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             Add Highlights
         </Button>
+    )
+}
+export const AddButton=()=>{
+    const {classes} =useAboutusStyles();
+    return(
+        <Button variant='outlined' disableElevation className={classes.AddButton} startIcon={<AddOutlinedIcon/>} >
+            Add 
+        </Button>
+    )
+}
+
+export const FormData=({title}:{title:string})=>{
+    return(
+        <>
+            <Box sx={{flexDirection:'row',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <Box sx={{flexDirection:'row',display:'flex',gap:1,alignItems:'center'}}>
+                    <Checkbox sx={{color:'#0A4FA4'}}/>
+                    <Typography sx={{fontSize:'16px',fontWeight:600}}>{title}</Typography>
+                </Box>
+                <Box component="img"
+                    src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
+                />
+            </Box>
+            
+            
+        </>
     )
 }
