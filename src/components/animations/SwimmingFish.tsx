@@ -4,6 +4,7 @@ interface SwimmingFishProps {
   Position?: string;
   Count: number;
   Height?: number | string;
+
 }
 
 const SwimmingFish: React.FC<SwimmingFishProps> = ({ Position = 'absolute', Count, Height = '100%' }) => {

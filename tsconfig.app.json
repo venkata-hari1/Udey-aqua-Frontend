@@ -19,11 +19,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"],
+  "include": ["src", "src/components/animations/JumpingFish.tsx"],
   "exclude": [
     "src/**/*.test.ts",
     "src/**/*.test.tsx",

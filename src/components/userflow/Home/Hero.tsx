@@ -14,7 +14,7 @@ import {
   CULTURES_FISH_ANIMATE,
   CULTURES_FISH_TRANSITION,
 } from "../Shared/animations";
-import BubbleCanvas from "./BubbleCanvas";
+import BubbleCanvas from "../../animations/BubbleCanvas";
 
 
 const Hero = () => {

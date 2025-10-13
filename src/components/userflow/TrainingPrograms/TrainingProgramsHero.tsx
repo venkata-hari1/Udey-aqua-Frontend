@@ -2,6 +2,8 @@
 import { Box } from "@mui/material";
 import heroImage from "../../../assets/training/hero.png";
 import useTrainingProgramsStyles from "./trainingProgramsStyles";
+import SwimmingFish from "../../animations/SwimmingFish";
+import BubbleCanvas from "../../animations/BubbleCanvas";
 
 interface TrainingProgramsHeroProps {
   currentLabel?: string;
@@ -19,7 +21,10 @@ const TrainingProgramsHero = ({}: TrainingProgramsHeroProps) => {
         className={classes.trainingHeroImg}
       />
       <Box className={classes.trainingHeroOverlay} />
+     
       <Box className={classes.trainingHeroContent}>
+      <SwimmingFish  Position="relative" Count={4}  Height={500} />
+       <Box className={classes.Training}>
         <Box component="h1" className={classes.trainingHeroTitle}>
           Training Programs
         </Box>
@@ -27,7 +32,11 @@ const TrainingProgramsHero = ({}: TrainingProgramsHeroProps) => {
           Upskill with expert-led aquaculture training designed for real-world
           impact.
         </Box>
+       
+        </Box>
+        <BubbleCanvas/>
       </Box>
+      
     </div>
   );
 };

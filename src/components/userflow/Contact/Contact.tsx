@@ -9,7 +9,7 @@ import headOfficeSvg from "../../../assets/contact/head_office.svg";
 import regionalOfficeSvg from "../../../assets/contact/regional_office.svg";
 import rdSvg from "../../../assets/contact/r&d.svg";
 import fish123 from '../../../assets/home/fish123.gif'
-import SunFishAnimation from "../Home/SunFishAnimation";
+import SunFishAnimation from "../../animations/SunFishAnimation";
 
 // Opposite direction animation for contact fish
 

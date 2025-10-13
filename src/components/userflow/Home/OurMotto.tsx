@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import MottoCard from "./MottoCard";
 import useHomeStyles from "./homeStyles";
 import { useEffect, useRef } from "react";
-
+import {Zoom} from 'react-awesome-reveal'
 const mottoData = [
   {
     img: card1,
@@ -52,11 +52,14 @@ const OurMotto = () => {
           <SectionTitle title="Our Motto" />
         </Box>
       </Box>
+
       <Box ref={scrollRef} className={classes.ourMottoScrollWrap}>
         {mottoData.map((card, idx) => (
+          <Zoom>
           <Box key={idx} className={classes.mottoCardOuter}>
             <MottoCard {...card} />
           </Box>
+          </Zoom>
         ))}
       </Box>
     </Box>

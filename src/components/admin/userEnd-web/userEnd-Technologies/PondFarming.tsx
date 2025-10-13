@@ -142,7 +142,7 @@ const PondFarming=({id,accordianId,Accordiantitle,Section='PondFarming'}:RASProp
     }, []);
     return(
         <>
-           {file&&<Fragment></Fragment>}
+          
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
                     <AddBanner onClick={handleAddBanner}/>

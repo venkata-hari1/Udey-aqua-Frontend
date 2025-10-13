@@ -1,8 +1,8 @@
 // src/components/userflow/Home/Partners.tsx
 import { Box } from "@mui/material";
 import SectionTitle from "./SectionTitle";
-import fishBg from "../../../assets/home/partners_img.png";
 
+import { Fade } from "react-awesome-reveal";
 import ciba from "../../../assets/partners/ciba.png";
 import cmfri from "../../../assets/partners/cmfri.png";
 import nfdb from "../../../assets/partners/ngdb.png";
@@ -10,8 +10,6 @@ import nabard from "../../../assets/partners/nabard.png";
 import icar from "../../../assets/partners/icar.png";
 import { useRef, useState, useEffect } from "react";
 import useHomeStyles from "./homeStyles";
-
-
 const partners = [
   { src: ciba, alt: "CIBA" },
   { src: cmfri, alt: "CMFRI" },
@@ -53,11 +51,18 @@ const PartnersSection = () => {
   }, [carouselSlides.length]);
 
   return (
-    <Box className={classes.partnersRoot} >
+    
+    <Box className={classes.partnersRoot}>
      {/* <SunFishAnimation Fish={Fish} Zindex={100} Count={1}/> */}
       <SectionTitle title="Our Corporates" />
-      <Box className={classes.partnersInner}>
-        <Box className={classes.partnersDesktopLayout}>
+
+
+      <Box className={classes.partnersInner} >
+      <Fade cascade>
+      <Box
+          className={classes.partnersDesktopLayout}
+
+        >
           {partners.map((partner, index) => (
             <Box key={`desktop-${index}`} className={classes.partnersCard}>
               <Box
@@ -69,7 +74,7 @@ const PartnersSection = () => {
             </Box>
           ))}
         </Box>
-        
+        </Fade>
         {/* Mobile carousel layout */}
         <Box
           ref={scrollRef}
@@ -98,15 +103,7 @@ const PartnersSection = () => {
         </Box>
       </Box>
       
-      <Box className='herofish'>
-      <Box
-        src={fishBg}
-        component={'img'}
-        alt=""
-        className="fish1"
-       
-      />
-      </Box>
+
 
     </Box>
   );

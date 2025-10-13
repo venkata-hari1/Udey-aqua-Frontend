@@ -7,7 +7,7 @@ import ContactBox from "../Shared/ContactBox";
 import CulturesHero from "./CulturesHero";
 import PdfDownloadSection from "./PdfDownloadSection";
 import PlansSection from "../Shared/PlansSection";
-import SwimmingFish from "../Home/SwimmingFish";
+import SwimmingFish from "../../animations/SwimmingFish";
 
 const sidebarItems = [
   { label: "Sea Bass", path: "/cultures" },
@@ -63,7 +63,7 @@ const CulturesLayout: React.FC = () => {
 
   return (
     <Grid container className={classes.culturesLayoutRoot} direction="column">
-      <SwimmingFish  Position="absolute" Count={60} Height={3000}/>
+      <SwimmingFish  Position="absolute" Count={30} Height={3000}/>
       <Grid size={{ xs: 12 }}>
         <CulturesHero currentLabel={currentLabel} />
       </Grid>

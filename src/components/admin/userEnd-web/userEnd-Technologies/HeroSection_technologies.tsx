@@ -124,7 +124,7 @@ type HeroProps={
     }, []);
     return(
         <>
-           {file&&<Fragment></Fragment>}
+       
             <Box className={classes.myHeroContainer}>
                 <Box className={classes.deleteButtonBox}>
                      <EditButton error={ !prevData} onClick={()=>{ setCancel(true);

@@ -4,7 +4,7 @@ import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useNewsEventsStyles from "./newsEventsStyles";
 import ContactBox from "../Shared/ContactBox";
 import NewsEventsHero from "./NewsEventsHero";
-import SwimmingFish from "../Home/SwimmingFish";
+import SwimmingFish from "../../animations/SwimmingFish";
 
 const sidebarItems = [
   { label: "Success Stories", path: "/news-events" },
@@ -30,7 +30,7 @@ const NewsEventsLayout = () => {
 
   return (
     <Grid container className={classes.newsEventsLayoutRoot} direction="column">
-      <SwimmingFish  Position="absolute" Count={40} Height={isMobile?1000:2500}/>
+      <SwimmingFish  Position="absolute" Count={30} Height={isMobile?1000:2500}/>
       <Grid size={{ xs: 12 }}>
         <NewsEventsHero currentLabel={currentLabel} />
       </Grid>

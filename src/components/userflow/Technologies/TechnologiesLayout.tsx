@@ -8,7 +8,7 @@ import TechnologiesHero from "./TechnologiesHero";
 
 import PdfDownloadSection from "../Cultures/PdfDownloadSection";
 import PlansSection from "../Shared/PlansSection";
-import SwimmingFish from "../Home/SwimmingFish";
+import SwimmingFish from "../../animations/SwimmingFish";
 
 const sidebarItems = [
   { label: "Recirculating Aquaculture System (RAS)", path: "/technologies" },
@@ -62,7 +62,7 @@ const TechnologiesLayout: React.FC = () => {
       className={classes.technologiesLayoutRoot}
       direction="column"
     >
-       <SwimmingFish  Position="absolute" Count={60} Height={3000}/>
+       <SwimmingFish  Position="absolute" Count={30} Height={3000}/>
       <Grid size={{ xs: 12 }}>
         <TechnologiesHero currentLabel={currentLabel} />
       </Grid>

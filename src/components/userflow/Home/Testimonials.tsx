@@ -12,7 +12,8 @@ import img1 from "../../../assets/testimonials/person_1.jpg";
 import img2 from "../../../assets/testimonials/person_2.jpg";
 import img3 from "../../../assets/testimonials/person_3.jpg";
 
-import SwimmingFish from "./SwimmingFish";
+import SwimmingFish from "../../animations/SwimmingFish";
+import { Fade, JackInTheBox, Slide } from "react-awesome-reveal";
 const testimonials: Testimonial[] = [
   {
     name: "Ramesh",
@@ -65,7 +66,9 @@ const Testimonials: React.FC = () => {
                 : "")
             }
           >
+            <JackInTheBox cascade damping={0.2}>
             <TestimonialCard testimonial={t} />
+            </JackInTheBox>
           </Box>
         ))}
         {isOverflowing && <Box />}

@@ -9,6 +9,7 @@ import useHomeStyles from "./homeStyles";
 import newsImg1 from "../../../assets/news_and_blogs/news_1.jpg";
 import newsImg2 from "../../../assets/news_and_blogs/news_2.jpg";
 import newsImg3 from "../../../assets/news_and_blogs/news_3.jpg";
+import { Fade } from "react-awesome-reveal";
 
 
 const newsData = [
@@ -75,7 +76,10 @@ const NewsAndBlogs = () => {
             }
           >
             <Box className={classes.newsCardInner}>
+              <Fade>
               <NewsCard {...item} />
+              </Fade>
+         
             </Box>
           </Box>
         ))}

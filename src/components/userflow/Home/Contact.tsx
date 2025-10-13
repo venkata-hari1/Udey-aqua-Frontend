@@ -6,6 +6,7 @@ import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
 import { showToast } from "../../admin/utils/Toast";
 
+
 const Contact = ({ title = true }: { title?: boolean }) => {
   const [form, setForm] = useState({ name: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -135,6 +136,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
     <>
       {title && (
         <Grid size={12}>
+ 
           <SectionTitle title="Get In Touch" />
         </Grid>
       )}

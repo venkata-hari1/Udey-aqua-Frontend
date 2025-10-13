@@ -141,7 +141,7 @@ const CageCulture=({id,accordianId,Accordiantitle,Section='CageCulture'}:CageCul
         }
     }, []);
     return(
-        <> {file&&<Fragment></Fragment>}
+        <> 
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
                     <AddBanner onClick={handleAddBanner}/>

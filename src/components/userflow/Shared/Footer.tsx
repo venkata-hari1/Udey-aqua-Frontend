@@ -39,7 +39,8 @@ import {
 } from "./animations";
 /* import { getValue } from "@mui/system"; */
 import { validateEmail } from "../../admin/utils/Validations";
-import SunFishAnimation from "../Home/SunFishAnimation";
+import SunFishAnimation from "../../animations/SunFishAnimation";
+
 
 const navLinks1 = ["Home", "About Us", "News & Events", "Contact Us"];
 const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
@@ -94,13 +95,15 @@ const isEmailValid=error==="" &&email.length>0
   };
   return (
     <Box className={classes.footerRoot}>
-      <SunFishAnimation Fish={sunfish} Zindex={100} Count={5}/>
+ 
+
       <Box
         component="img"
         src={footerBg}
         alt="Footer Waves"
         className={classes.footerBg}
       />
+    
       <motion.img
         src={footerBg1}
         alt="Footer Waves"
@@ -108,8 +111,8 @@ const isEmailValid=error==="" &&email.length>0
         initial={FOOTER_BG1_INITIAL}
         animate={FOOTER_BG1_ANIMATE}
         transition={FOOTER_BG1_TRANSITION}
-      />
-      <motion.img
+      /> 
+       <motion.img
         src={footerBg2}
         alt="Footer Waves"
         className={classes.footerBg2}
@@ -124,7 +127,7 @@ const isEmailValid=error==="" &&email.length>0
         initial={FOOTER_BG3_INITIAL}
         animate={FOOTER_BG3_ANIMATE}
         transition={FOOTER_BG3_TRANSITION}
-      />
+      /> 
       <Box className={classes.footerContent}>
         {isMobile ? (
           <>

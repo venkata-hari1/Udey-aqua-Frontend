@@ -103,6 +103,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   footerRoot: {
     width: "100%",
     minHeight: 530,
+   
     position: "relative",
     paddingTop: 0,
     paddingBottom: 0,

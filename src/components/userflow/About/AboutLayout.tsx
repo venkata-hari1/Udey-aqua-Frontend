@@ -6,7 +6,7 @@ import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useAboutStyles from "./aboutStyles";
 import ContactBox from "../Shared/ContactBox";
 import AboutHero from "./AboutHero";
-import SwimmingFish from "../Home/SwimmingFish";
+import SwimmingFish from "../../animations/SwimmingFish";
 
 // import {
 //   ABOUT_FISH_INITIAL,
@@ -39,7 +39,7 @@ const AboutLayout = () => {
 
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
-         <SwimmingFish  Position="absolute" Count={60}  Height={isMobile?2000:3000} />
+         <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
       <Grid size={{ xs: 12 }}>
         <AboutHero currentLabel={currentLabel} />
       </Grid>

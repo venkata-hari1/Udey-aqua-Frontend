@@ -24,6 +24,14 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
       marginTop: 16,
     },
   },
+  Culture:{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    textAlign: "center",
+    width: "100%"
+  },
   culturesMainContent: {
     flex: 1,
     padding: theme.spacing(3),
@@ -116,7 +124,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 700,
     fontSize: 18,
     textAlign: "center",
-    maxWidth: 700,
+   
     letterSpacing: 0.5,
     [theme.breakpoints.down("md")]: {
       fontSize: 12,

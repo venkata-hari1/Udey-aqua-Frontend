@@ -142,7 +142,7 @@ const FishHatchery=({id,accordianId,Accordiantitle,Section='FishHatchery'}:FishH
     }, []);
     return(
         <>
-           {file&&<Fragment></Fragment>}
+         
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
                     <AddBanner onClick={handleAddBanner}/>

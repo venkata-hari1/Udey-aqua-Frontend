@@ -143,7 +143,7 @@ const RAS=({id,accordianId,Accordiantitle,Section='RAS'}:RASProps)=>{
     }, []);
     return(
         <>
-        {file&&<Fragment></Fragment>}
+     
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
                     <AddBanner onClick={handleAddBanner}/>
