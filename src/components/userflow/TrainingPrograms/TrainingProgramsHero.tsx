@@ -21,7 +21,6 @@ const TrainingProgramsHero = ({}: TrainingProgramsHeroProps) => {
         className={classes.trainingHeroImg}
       />
       <Box className={classes.trainingHeroOverlay} />
-     
       <Box className={classes.trainingHeroContent}>
       <SwimmingFish  Position="relative" Count={4}  Height={500} />
        <Box className={classes.Training}>
