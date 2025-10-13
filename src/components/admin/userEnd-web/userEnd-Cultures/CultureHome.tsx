@@ -19,7 +19,6 @@ import { useState, type ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Culturessubpage from "./Culturessubpage";
 
-
 interface CultureItem{
   id:string,
   menu:string,
@@ -47,8 +46,9 @@ const handleBackarrow=()=>{
 }
 
 const handleAddSubpage=()=>{
-  const newCulturedata={id:uuidv4(),menu:`Subpage ${culturesdata.length+1}`,content:<Culturessubpage />}; 
-  setCulturesdata((prev)=>[...prev,newCulturedata]);
+const newCulturedata={id:uuidv4(),menu:`Subpage ${culturesdata.length+1}`,content:<Culturessubpage />}; 
+  setCulturesdata((prev)=>[...prev,newCulturedata]); 
+  /* navigate('/admin/userend-web/userend-culture/subpage') */
 }
   return (
    
@@ -79,9 +79,8 @@ const handleAddSubpage=()=>{
     ))}
     </Box>
     </Box>
+)
 
-   
-  )
 }
 
 export default CultureHome

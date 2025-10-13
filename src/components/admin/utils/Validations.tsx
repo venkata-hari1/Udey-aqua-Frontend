@@ -246,13 +246,15 @@ export const addressContentValidation = (content: string): ValidationResult => {
 
 
 
+
+
 //descriptive content
-interface ValidationResult {
+interface decValidationResult {
   error: string;
   isError: boolean;
 }
 
-export const DescriptionContentValidation = (content: string): ValidationResult => {
+export const DescriptionContentValidation = (content: string): decValidationResult => {
   const maxChars = 2000;
   const minChars = 3; // or set your desired minimum
 
@@ -289,7 +291,7 @@ export const validateImageFile=(file:File)=>{
    if(!file.type.startsWith("image/")){
     return "Invalid format.Only images are allowed";
    }
-   return null; //no error
+   return null; 
 }
 
 export const validateImageDimensions=(file:File):Promise<string |null>=>{
@@ -347,4 +349,18 @@ export const HeadingContentValidation = (content: string) => {
 };
 
 
+//pdf validation
 
+export const validatePdfFile = (file: File): string | null => {
+  // Check file size <= 10MB
+  if (file.size > 15 * 1024 * 1024) {
+    return "PDF must be 15MB or less";
+  }
+
+  // Check MIME type
+  if (file.type !== "application/pdf") {
+    return "Invalid format. Only PDF files are allowed";
+  }
+
+  return null; // No error
+};
