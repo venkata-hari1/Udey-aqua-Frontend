@@ -4,7 +4,7 @@ import { Box, Button, Typography, TextField,Dialog, DialogContent, DialogActions
 import { DeleteButton } from "./PricingButtons";
 import { Checkbox } from "@mui/material";
 import { useState, useEffect } from "react";
-import { TitleValidate, PlanContentValidate, PriceValidate } from "../../utils/Validations";
+import { TitleValidate, PriceValidate } from "../../utils/Validations";
 import EditIcon from "../../../../assets/Edit.png";
 import { EditButton, CancelButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
 import ReactQuill from 'react-quill-new';

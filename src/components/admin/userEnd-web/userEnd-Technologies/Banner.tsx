@@ -4,8 +4,6 @@ import { DeleteButton, UploadButton, CancelButton, EditButton, UpdateHeader} fro
 import { useState, useEffect } from 'react';
 import { HelperTextValidate, PriceValidate } from '../userEnd-Aboutus/validations';
 
-
-
 interface Bannerprops {
   accordianId:string
   id: string;
@@ -152,7 +150,7 @@ const Banner=({ accordianId, id,title, onDelete }: Bannerprops)=>{
      
     return(
         <>
-         {file&&<span></span>}
+ 
             <Box className={classes.subSectionBox}>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>

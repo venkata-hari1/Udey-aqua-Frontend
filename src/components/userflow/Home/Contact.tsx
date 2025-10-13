@@ -5,6 +5,7 @@ import { useState } from "react";
 import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
 import { showToast } from "../../admin/utils/Toast";
+import { Slide } from "react-awesome-reveal";
 
 
 const Contact = ({ title = true }: { title?: boolean }) => {
@@ -140,7 +141,9 @@ const Contact = ({ title = true }: { title?: boolean }) => {
           <SectionTitle title="Get In Touch" />
         </Grid>
       )}
+       <Slide direction="left">
       <Grid container spacing={2} className={classes.contactRoot}>
+       
         <Grid container size={12} spacing={2} className={classes.contactMain}>
           <Grid size={{ xs: 12, md: 6 }} className={classes.contactImgWrap}>
             <Box
@@ -267,6 +270,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
           </Grid>
         </Grid>
       </Grid>
+      </Slide>
     </>
   );
 };
