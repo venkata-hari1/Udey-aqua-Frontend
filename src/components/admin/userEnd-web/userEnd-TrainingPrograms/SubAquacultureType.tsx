@@ -1,5 +1,4 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { TrainingStyles } from './PricingStyles';
 import { Box,  TextField, Typography, Dialog, DialogContent, DialogActions, Button, Stack} from '@mui/material';
 import {  EditButton,  UploadButton, SaveButton, CancelButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
@@ -14,8 +13,8 @@ type AquacultureTypeProps={
     onDelete?:()=>void
 }
 const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProps)=>{
-    const {classes:Aboutus} = useAboutusStyles();
-    const {classes} = TrainingStyles();
+    const {classes} = useAboutusStyles();
+    
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
@@ -118,12 +117,12 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                     {id != 'Image 1' && <DeleteButton onClick={handleDeleteClick}/>}
                 </Box>
                 <Box sx={{position:'relative', display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-                    <Box className={Aboutus.myuploadandheadingbox} sx={{minHeight:'200px'}}>
-                        <Stack className={Aboutus.myUploadStack}>
-                            <Typography className={Aboutus.mytext}>
+                    <Box className={classes.myuploadandheadingbox} sx={{minHeight:'200px'}}>
+                        <Stack className={classes.myUploadStack}>
+                            <Typography className={classes.mytext}>
                                 image
                             </Typography>
-                            <Box className={Aboutus.myImageUploadBox}>
+                            <Box className={classes.myImageUploadBox}>
                                 <input type='file'
                                         multiple
                                         accept="image/*" 
@@ -133,16 +132,16 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                                         />
                                 <UploadButton id={id} accordianId={accordianId} Section={Section}/> 
                                 {(file.length>0 ||prevData) && (
-                                    <Box className={Aboutus.ImagesBox} sx={{maxWidth:'200px'}}>
-                                        <Box className={Aboutus.ImagespicBox}>
+                                    <Box className={classes.ImagesBox} sx={{maxWidth:'200px'}}>
+                                        <Box className={classes.ImagespicBox}>
                                             {Images.map((prev,index)=>
                                                 <Box key={index} sx={{position:'relative'}} >
                                                     <img 
                                                         src={prev}
                                                         alt={`preview ${index+1}`}
-                                                        className={Aboutus.ImagePic}
+                                                        className={classes.ImagePic}
                                                     />
-                                                    <Button className={Aboutus.cancelImgIcon}
+                                                    <Button className={classes.cancelImgIcon}
                                                             onClick={()=>{removeImage(index)}}
                                                                     >
                                                         x
@@ -162,7 +161,7 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                                             </Box>
                                             <Box>
                                                 {(Images.length>0 ) &&(
-                                                    <Typography className={Aboutus.errorText}>
+                                                    <Typography className={classes.errorText}>
                                                     *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
                                                 </Typography> 
                                                 )} 
@@ -171,7 +170,7 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                                 )}
                                 <Box>
                                     { error && (
-                                        <Typography className={Aboutus.errorText}>
+                                        <Typography className={classes.errorText}>
                                             {error}
                                         </Typography>
                                         )
@@ -197,11 +196,11 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                 </Box>
 
             </Box>
-                            <Box className={Aboutus.SeveandCancelBox} >
+                            <Box className={classes.SeveandCancelBox} >
                     <SaveButton error={ file.length ===0  || isTextInvalid} onClick={SaveData}/>
                     {prevData &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                        <Dialog open={openDialog} fullWidth onClose={handleCancel} className={Aboutus.DialoagBox} PaperProps={{
+                        <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
                                     sx: {
                                     width: 500,       
                                     height: 250,      
@@ -209,14 +208,14 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                                     padding: 2,        
                                     },
                                 }}>
-                <DialogContent className={Aboutus.DialogContent}>
+                <DialogContent className={classes.DialogContent}>
                     <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
                 </DialogContent>
                 <DialogActions sx={{ 
                                 display: 'flex', 
                                 justifyContent: 'center'  
                             }}>
-                    <Button onClick={handleCancel} className={Aboutus.deleteButton}>
+                    <Button onClick={handleCancel} className={classes.deleteButton}>
                         Cancel
                     </Button>
                     <Button onClick={handleConfirmDelete} className={classes.CancelButton}>

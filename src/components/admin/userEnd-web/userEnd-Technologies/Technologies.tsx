@@ -5,24 +5,20 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useNavigate } from 'react-router-dom';
-import HeroSection from './HeroSection_technologies';
 import RAS from './RAS';
-import CAS from './CAS';
-import PondFarming from './PondFarming';
-import FishHatchery from './FishHatchery';
-import CageCulture from './CageCulture';
+import Hero from "../userEnd-Aboutus/Hero"
 
 
 const Technologies=()=>{
     const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
     const AccordianData = [
-        {id:'1',title:'Hero Section',component:HeroSection},
+        {id:'1',title:'Hero Section',component:Hero},
         {id:'2',title:'Recirculating Aquaculture Systems (RAS) ',component: RAS},
-        {id:'3',title:'Circulating Aquaculture Systems (CAS)  ', component: CAS},
-        {id:'4',title:'Pond Farming  ',component:PondFarming},
-        {id:'6',title:'fish hatchery',component:FishHatchery},
-        {id:'7',title:'cage culture',component:CageCulture}
+        {id:'3',title:'Circulating Aquaculture Systems (CAS)  ', component: RAS},
+        {id:'4',title:'Pond Farming  ',component:RAS},
+        {id:'6',title:'fish hatchery',component:RAS},
+        {id:'7',title:'cage culture',component:RAS}
     ]
     return(
         <>
@@ -46,7 +42,7 @@ const Technologies=()=>{
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Component id={item.id} accordianId={item.id} Accordiantitle={item.title} />
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
                        );

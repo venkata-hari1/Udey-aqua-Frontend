@@ -1,9 +1,9 @@
 import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
-import { useState, useEffect } from 'react';
+import { useState,  } from 'react';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import {HelperTextValidate, NameandRoleValidate} from './validations';
+import {HelperTextValidate, NameandRoleValidate} from '../../utils/Validations';
 
 type AdvisorProps={
     id:string;
@@ -20,7 +20,7 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
     const [role, setRole] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    const [prevData, setPrevData] = useState<boolean>(false);
+    const [prevData, setPrevData] = useState<{name: string;role:string;content:string; Images: string[] } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false) 
@@ -98,49 +98,36 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = (title:string,id:string)=>{
-                const Data={
-                    role:role,
-                    name:name,
-                    content:content,
-                    image:Images
-                }
-                console.log(Data);
-            localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
-             setIsSaved(true);
-             setPrevData(true)
-     setEdit(false)
-     if (cancel){
-        setCancel(false)
-     }
-            };
-            const CancelData = (title:string,id:string)=>{
-                const PrevData=localStorage.getItem(`${title}_${id}`);
-                if (PrevData) {
-                    const parsedData = JSON.parse(PrevData);
-                    setRole(parsedData.role || []);
-                    setName(parsedData.name || []);
-                    setImage(parsedData.image || []);
-                    setContent(parsedData.content || []);
-                    setFile([]); 
-                    setIsSaved(true); 
-                    setError(""); 
-                } else {
-                    alert("No previous data found!");
-                }
-                 if (cancel){
-        setCancel(false)
-     }
-        setEdit(false)
-        setPrevData(!!prevData)
-            }
-            useEffect(() => {
-                const saved = localStorage.getItem(`${Section}_${id}`);
-                if (saved) {
-                setPrevData(true);
-                setIsSaved(true); 
-                }
-            }, []);
+    const SaveData = ()=>{
+        setPrevData({
+        name,
+        role,
+        content,
+        Images,
+    });
+    setIsSaved(true);
+    setEdit(false);
+    console.log(`name:${name}, role:${role},content:${content},Images:${Images}`);
+    };
+    const CancelData = ()=>{
+        if (prevData) {
+        setRole(prevData.role);
+        setName(prevData.name);
+        setContent(prevData.content);
+        setImage(prevData.Images);
+        setFile([]); // reset current file uploads
+        setIsSaved(true);
+    } else {
+        setContent('');
+        setRole('');
+        setName('');
+        setImage([]);
+        setFile([]);
+        setIsSaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
     return(
         <>
       <Box className={classes.whoWeareHeaderbox}>
@@ -166,7 +153,7 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
           <EditButton error={ Edit} onClick={()=> {setCancel(true);
             setEdit(true)
           }}/>
-          <DeleteButton onClick={handleDeleteClick}/>
+          {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
         </Box>
       </Box>
       <Box className={classes.myuploadandheadingbox}>
@@ -202,34 +189,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                             </Button>
                                         </Box>
                                     )}
-                                    <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
-                                    <input
-                                            accept="image/*"
-                                            id={`upload-file-${Section}-${accordianId}-${id}`}
-                                            type="file"
-                                            multiple
-                                            style={{ display: "none" }}
-                                            onChange={HandleFileChange}
-                                    />
-                                        </label>
+                                    
                                     </Box>
-                                    <Box>
-                                        {(Images.length>0 ) &&(
-                                               <Typography   className={Edit ? classes.errorText : undefined}
-                                                                sx={
-                                                                    Edit
-                                                                    ? {}
-                                                                    : {
-                                                                        color: 'grey',
-                                                                        fontWeight: 400,
-                                                                        fontSize: '14px',
-                                                                        textTransform: 'none',
-                                                                        }
-                                                                } >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                                </Typography> 
-                                        )} 
-                                    </Box> 
+                                   
                             </Box>
                         )}
                         <Box>
@@ -252,7 +214,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                             setIsSaved(false)}}
                                     helperText={nameFlied.message}
                                     disabled={!Edit}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
+                                    FormHelperTextProps={{
+                                className: (name.length >= 3 && name.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                         <Typography className={classes.mytext}>
                             role
                         </Typography>
@@ -262,7 +226,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                             setIsSaved(false)}}
                                     helperText={roleFlied.message}
                                     disabled={!Edit}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
+                                    FormHelperTextProps={{
+                                className: (role.length >= 3 && role.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                         <Typography className={classes.mytext}>
                             content
                         </Typography>
@@ -276,7 +242,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                             setIsSaved(false)}}
                             helperText={contentFlied.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className:classes.helperText}}/>
+                            FormHelperTextProps={{
+                                className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                 </Box>
                 <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
                                     sx: {
@@ -303,8 +271,8 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
             </Dialog>
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={()=>SaveData(Section,id)}/>
-                                                                                    {cancel &&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
+                            <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                            {cancel &&(<CancelButton onClick={CancelData}/>)}
                         </Box>
         </>
     )

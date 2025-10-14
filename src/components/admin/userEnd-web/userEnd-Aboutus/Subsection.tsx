@@ -1,18 +1,19 @@
 import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
-import { useState, useEffect } from 'react';
-import { HelperTextValidate } from './validations';
+import { useState,  } from 'react';
+import { HelperTextValidate } from '../../utils/Validations';
+import { HandleFileChange } from '../../utils/Validations';
 
 
 interface SubsectionProps {
-  accordianId:string
+  accordianId?:string
   id: string;
   Section:string;
   onDelete?: () => void; // callback to delete this subpage
 }
 
-const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
+const Subsection=({ accordianId, id,Section, onDelete,  }: SubsectionProps)=>{
     const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -20,7 +21,7 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
-    const [prevData, setPrevData] = useState<boolean>(false); 
+    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[];content:string } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false)
@@ -29,52 +30,6 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
     file
     const SubtitleField=HelperTextValidate(subtitle)
     const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200 || content.length === 0 || content.length < 3 || content.length > 200;
-
-    const validate = (file:File):string | null=>{
-        const maxSize=5 *1024*1024;
-        const types=['image/jpg','image/png','image/jpeg'];
-        if (file.size > maxSize){
-            return ('File Must be Less Than 5MB');
-        };
-        if (!types.includes(file.type)){
-                    return ("File must be jpg,png,jpeg format");
-        };
-        return null;
-        };
-    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            const files = event.target.files;
-            setError('');
-            setIsSaved(false);
-        
-            if (files && files.length > 0) {
-                const selectedFiles: File[] = Array.from(files);
-        
-                selectedFiles.forEach(file => {
-                    const errorMsg = validate(file);
-                    if (errorMsg) {
-                        setError(errorMsg);
-                        return;
-                    }
-        
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const imgs = new Image();
-                        imgs.onload = () => {
-                            if (imgs.width <= 300 || imgs.height <= 100) {
-                                setError('File must be in landscape format (min 300x100)');
-                                return; 
-                            }
-                            setFile(prev => [...prev, file]);
-                            setImage(prev => [...prev, e.target?.result as string]);
-                        };
-                        imgs.src = e.target?.result as string;
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        
-            event.target.value = '';
-        };
     const removeImage=(IndexToRemove:number)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
@@ -93,47 +48,35 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = (title:string,id:string)=>{
-            const Data={
-                title:subtitle,
-                image:Images,
-                content:content
-            }
-            console.log(Data);
-        localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
-         setIsSaved(true);
-         setPrevData(true);
-     setEdit(false)
-     if (cancel){
-        setCancel(false)
-     }
-        };
-        const CancelData = (title:string,id:string)=>{
-            const PrevData=localStorage.getItem(`${title}_${id}`);
-            if (PrevData) {
-                const parsedData = JSON.parse(PrevData);
-                setSubtitle(parsedData.title || "");
-                setImage(parsedData.image || []);
-                setContent(parsedData.content)
-                setFile([]); 
-                setIsSaved(true);
-                setError(""); 
-            } else {
-                alert("No previous data found!");
-            }
-             if (cancel){
-        setCancel(false)
-     }
-        setEdit(false)
-        setPrevData(!!PrevData);
-        }
-        useEffect(() => {
-            const saved = localStorage.getItem(`${Section}_${id}`);
-            if (saved) {
-            setPrevData(true);
-            setIsSaved(true);
-            }
-        }, []);
+    const SaveData = ()=>{
+        setPrevData({
+        subtitle,
+        Images,
+        content
+    });
+    setIsSaved(true);
+    setEdit(false);
+    setCancel(false)
+    console.log(`subtitle:${subtitle}, Images:${Images},content:${content}`);
+};
+
+    const CancelData = ()=>{
+        if (prevData) {
+        setSubtitle(prevData.subtitle);
+        setImage(prevData.Images);
+        setContent(prevData.content)
+        setFile([]); // reset current file uploads
+        setIsSaved(true);
+    } else {
+        setSubtitle('');
+        setImage([]);
+        setContent('');
+        setFile([]);
+        setIsSaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
     return(
         <>
             <Box className={classes.subSectionBox}>
@@ -159,7 +102,7 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
                                     accept="image/*" 
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={HandleFileChange}
+                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
                                     disabled={!Edit}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
@@ -181,35 +124,7 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
-                                        <input
-                                                accept="image/*"
-                                                id={`upload-file-${Section}-${accordianId}-${id}`}
-                                                type="file"
-                                                multiple
-                                                style={{ display: "none" }}
-                                                onChange={HandleFileChange}
-                                        />
-                                            </label>
                                     </Box>
-                                    <Box>
- {(Images.length>0 ) &&(
-                                               
-                                                <Typography   className={Edit ? classes.errorText : undefined}
-                                                                sx={
-                                                                    Edit
-                                                                    ? {}
-                                                                    : {
-                                                                        color: 'grey',
-                                                                        fontWeight: 400,
-                                                                        fontSize: '14px',
-                                                                        textTransform: 'none',
-                                                                        }
-                                                                } >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                                </Typography>
-                                            )} 
-                                        </Box> 
                                 </Box>
                             )}
                             <Box>
@@ -232,8 +147,9 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
                                             setIsSaved(false)}}
                                    helperText={SubtitleField.message}
                                    disabled={!Edit}
-                                   FormHelperTextProps={{className:classes.helperText}}
-                        />
+                                   FormHelperTextProps={{
+                                className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                         <Typography className={classes.mytext}>
                             content
                         </Typography>
@@ -247,12 +163,14 @@ const Subsection=({ accordianId, id,Section, onDelete }: SubsectionProps)=>{
                                             setIsSaved(false)}}
                             disabled={!Edit}
                             helperText={TextFieldError.message}
-                            FormHelperTextProps={{className:classes.helperText}}/>
+                            FormHelperTextProps={{
+                                className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={()=>SaveData(Section,id)}/>
-                    {cancel &&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
+                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                    {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

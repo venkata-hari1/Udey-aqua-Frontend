@@ -1,3 +1,7 @@
+//import * as React from "react";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+
+
 export const validateEmail = (email: string): string => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
@@ -110,6 +114,19 @@ else{
 }
 };
 
+export const validatePdfFile = (file: File): string | null => {
+  // Check file size <= 10MB
+  if (file.size > 15 * 1024 * 1024) {
+    return "PDF must be 15MB or less";
+  }
+
+  // Check MIME type
+  if (file.type !== "application/pdf") {
+    return "Invalid format. Only PDF files are allowed";
+  }
+
+  return null; // No error
+};
 
 export const confirmValidatePassword = (
 cfmpwd: string,
@@ -246,15 +263,13 @@ export const addressContentValidation = (content: string): ValidationResult => {
 
 
 
-
-
 //descriptive content
-interface decValidationResult {
+interface ValidationResult {
   error: string;
   isError: boolean;
 }
 
-export const DescriptionContentValidation = (content: string): decValidationResult => {
+export const DescriptionContentValidation = (content: string): ValidationResult => {
   const maxChars = 2000;
   const minChars = 3; // or set your desired minimum
 
@@ -291,7 +306,7 @@ export const validateImageFile=(file:File)=>{
    if(!file.type.startsWith("image/")){
     return "Invalid format.Only images are allowed";
    }
-   return null; 
+   return null; //no error
 }
 
 export const validateImageDimensions=(file:File):Promise<string |null>=>{
@@ -349,18 +364,142 @@ export const HeadingContentValidation = (content: string) => {
 };
 
 
-//pdf validation
+//FileValidation
 
-export const validatePdfFile = (file: File): string | null => {
-  // Check file size <= 10MB
-  if (file.size > 15 * 1024 * 1024) {
-    return "PDF must be 15MB or less";
+const validate = (file:File):string | null=>{
+        const maxSize=5 *1024*1024;
+        const types=['image/jpeg', 'image/png'];;
+        if (file.size > maxSize){
+            return ('** File Must be Less Than 5MB');
+
+        };
+        if (!types.includes(file.type)){
+            return ("** File must be PNG, JPEG format");
+        };
+       return null;
+    };
+
+
+export const HandleFileChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  setFile:Dispatch<SetStateAction<File[]>>,
+  setError:Dispatch<SetStateAction<string>>,
+  setIsSaved:Dispatch<SetStateAction<boolean>>,
+  setImage:Dispatch<SetStateAction<string[]>>,
+
+) => {
+
+      const files = event.target.files;
+        setError('');
+        setIsSaved(false);
+    
+        if (files && files.length > 0) {
+            const selectedFiles: File[] = Array.from(files);
+          
+            selectedFiles.forEach(file => {
+                const errorMsg = validate(file);
+                
+                if (errorMsg) {
+                    setError(errorMsg);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imgs = new Image();
+                    imgs.onload = () => {
+                        if (imgs.width <= 300 || imgs.height <= 100) {
+                            setError('** File must be in landscape format (min 300x100)');
+                            return; 
+                        }
+                        setFile(prev => [...prev, file]);
+                        setImage(prev => [...prev, e.target?.result as string]);
+                    };
+                    imgs.src = e.target?.result as string;
+                };
+                reader.readAsDataURL(file);
+                
+            });
+        }
+    
+        event.target.value = '';
+}
+
+export const HandlePDFChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  setPdfFile: Dispatch<SetStateAction<File[]>>,
+  setPdfError: Dispatch<SetStateAction<string>>,
+  setIsPdfSaved: Dispatch<SetStateAction<boolean>>,
+  setPdf: Dispatch<SetStateAction<string[]>>
+) => {
+  const files = event.target.files;
+
+
+  setPdfError("");
+  setIsPdfSaved(false);
+
+  if (files && files.length > 0) {
+    const selectedFiles: File[] = Array.from(files);
+
+    selectedFiles.forEach((file) => {
+      const isPDF =file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+      if (! isPDF) {
+        setPdfError("Only PDF files are allowed.");
+        return;
+      }
+      const maxSizeMB = 5;
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        setPdfError(`File size must be less than ${maxSizeMB} MB.`);
+        return;
+      }
+      const fileURL = URL.createObjectURL(file);
+      setPdfFile((prev) => [...prev, file]);
+      setPdf((prev) => [...prev, fileURL]);
+    });
   }
-
-  // Check MIME type
-  if (file.type !== "application/pdf") {
-    return "Invalid format. Only PDF files are allowed";
-  }
-
-  return null; // No error
+  event.target.value = "";
 };
+export const HelperTextValidate = (text: string): {  message: string } => {
+  if (text.length === 0) {
+    return {  message: "" }; 
+  } else if (text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/200`,
+    };
+  } else if (text.length > 200) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${text.length}/200` }; 
+  }
+};
+
+export const NameandRoleValidate = (text: string): {  message: string } => {
+  if (text.length === 0) {
+    return {  message: "" }; 
+  } else if (text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/80`,
+    };
+  } else if (text.length > 80) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${text.length}/80` }; 
+  }
+};
+
+export const YearValidate = (text: string): {  message: string } => {
+  if (text.length === 0) {
+    return {  message: "" }; 
+  } if(!/[^0-9]/.test(text)){
+    return {message:'* Must be Numbers'};
+  }  if (text.length < 2) {
+    return {
+      message: `* Must contain at least 2 characters. Remaining Characters ${text.length}/4`,
+    };
+  }  if (text.length > 4) {
+    return {  message: "* Character Limit Exceeded" };
+  } 
+  else {
+    return {message: `* Remaining Characters ${text.length}/4` }; 
+  }
+};
+

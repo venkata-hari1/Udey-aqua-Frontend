@@ -1,87 +1,81 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
-import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from '../userEnd-Aboutus/AboutUsButtons';
-import { useState, useEffect } from 'react';
-import { HelperTextValidate } from '../userEnd-Aboutus/validations';
+import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
+import { useState, } from 'react';
+import { HelperTextValidate, HandleFileChange, HandlePDFChange } from '../../utils/Validations';
 
 
 interface SubSectionprops {
   accordianId:string
   id: string;
-  title:string;
+  Section:string;
   onDelete?: () => void; // callback to delete this subpage
 }
 
-const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
+const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
     const {classes} = useAboutusStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const [,setFile]= useState<File[]>([]);
+    const [pdffile,setPdfFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
-    
+    const [pdferror,setPdfError]= useState<string>('');
     const [pdf, setPdf] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
-    const [prevData, setPrevData] = useState<boolean>(false); 
+    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[];content:string;pdf:string[]; } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [, setIsPdfSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
-    const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200 || content.length === 0 || content.length < 3 || content.length > 200;
+    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 || content.length < 3 || content.length > 200;
 
-    const validate = (file:File):string | null=>{
-        const maxSize=5 *1024*1024;
-        const types=['image/jpg','image/png','image/jpeg'];
-        if (file.size > maxSize){
-            return ('File Must be Less Than 5MB');
-        };
-        if (!types.includes(file.type)){
-                    return ("File must be jpg,png,jpeg format");
-        };
-        return null;
-        };
-    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            const files = event.target.files;
-            setError('');
-            setPdf([""])
-            setIsSaved(false);
-        
-            if (files && files.length > 0) {
-                const selectedFiles: File[] = Array.from(files);
-        
-                selectedFiles.forEach(file => {
-                    const errorMsg = validate(file);
-                    if (errorMsg) {
-                        setError(errorMsg);
-                        return;
-                    }
-        
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const imgs = new Image();
-                        imgs.onload = () => {
-                            if (imgs.width <= 300 || imgs.height <= 100) {
-                                setError('File must be in landscape format (min 300x100)');
-                                return; 
-                            }
-                            setFile(prev => [...prev, file]);
-                            setImage(prev => [...prev, e.target?.result as string]);
-                        };
-                        imgs.src = e.target?.result as string;
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        
-            event.target.value = '';
-        };
+    const SaveData = ()=>{
+        setPrevData({
+        subtitle,
+        Images,
+        content,
+        pdf
+    });
+    setIsSaved(true);
+    setEdit(false);
+    setCancel(false)
+    console.log(`subtitle:${subtitle}, Images:${Images},content:${content},pdf:${pdf}`);
+};
+
+    const CancelData = ()=>{
+        if (prevData) {
+        setSubtitle(prevData.subtitle);
+        setImage(prevData.Images);
+        setContent(prevData.content)
+        setPdf(prevData.pdf)
+        setFile([]); 
+        setIsSaved(true);
+    } else {
+        setSubtitle('');
+        setImage([]);
+        setContent('');
+        setPdf([]);
+        setFile([]);
+        setIsSaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
     const removeImage=(IndexToRemove:number)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
             setError('');
             setIsSaved(false);
+    };
+    const removePdf=(IndexToRemove:number)=>{
+            setPdfFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
+            setPdf(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+            setPdfError('');
+            setIsPdfSaved(false);
     };
     const handleDeleteClick = () => {
         setOpenDialog(true);
@@ -95,49 +89,7 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = (title:string,id:string)=>{
-            const Data={
-                title:subtitle,
-                image:Images,
-                content:content
-            }
-            console.log(Data);
-        localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
-        setIsSaved(true);
-     setPrevData(true);
-     setEdit(false)
-     if (cancel){
-        setCancel(false)
-     }
-        };
-        const CancelData = (title:string,id:string)=>{
-            const PrevData=localStorage.getItem(`${title}_${id}`);
-            if (PrevData) {
-            const parsedData = JSON.parse(PrevData);
-            setSubtitle(parsedData.title || "");
-            setImage(parsedData.image || []);
-            setContent(parsedData.content || "");
-            setFile([]);
-            setIsSaved(true);
-            setError("");
-
-            
-        } else {
-            alert("No previous data found!");
-        }
-         if (cancel){
-        setCancel(false)
-     }
-        setEdit(false)
-        setPrevData(!!PrevData);
-        }
-        useEffect(() => {
-            const saved = localStorage.getItem(`${title}_${id}`);
-            if (saved) {
-            setPrevData(true);
-            setIsSaved(true);
-            }
-        }, []);
+   
     return(
         <>
             <Box className={classes.subSectionBox}>
@@ -161,12 +113,12 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                             <input type='file'
                                     multiple
                                     accept="image/*" 
-                                    id={`upload-file-${title}-${accordianId}-${id}`}
+                                    id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={HandleFileChange}
+                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
                                     disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={title} disable={!Edit}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
                             {(Images.length>0)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -185,34 +137,7 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${title}-${accordianId}-${id}`}>
-                                        <input
-                                                accept="image/*"
-                                                id={`upload-file-${title}-${accordianId}-${id}`}
-                                                type="file"
-                                                multiple
-                                                style={{ display: "none" }}
-                                                onChange={HandleFileChange}
-                                        />
-                                            </label>
                                     </Box>
-                                    <Box>
-                                            {(Images.length>0 ) &&(
-                                                 <Typography   className={Edit ? classes.errorText : undefined}
-                                                                sx={
-                                                                    Edit
-                                                                    ? {}
-                                                                    : {
-                                                                        color: 'grey',
-                                                                        fontWeight: 400,
-                                                                        fontSize: '14px',
-                                                                        textTransform: 'none',
-                                                                        }
-                                                                } >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                                </Typography> 
-                                            )} 
-                                        </Box> 
                                 </Box>
                             )}
                             <Box>
@@ -231,52 +156,47 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                             <input type='file'
                                     multiple
                                     accept="application/pdf" 
-                                    id={`upload-file-${accordianId}-${id}`}
+                                    id={`upload-pdf-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={HandleFileChange}
+                                    onChange={(e) =>HandlePDFChange(e, setPdfFile, setPdfError, setIsPdfSaved, setPdf)}
                                     />
-                            <UploadButton id={id} accordianId={accordianId}/> 
-                            {(file.length>0|| prevData)  && (
+                            <UploadPDFButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            {(pdf.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {pdf.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative'}} >
-                                                <img 
-                                                    src={prev}
-                                                    alt={`preview ${index+1}`}
-                                                    className={classes.ImagePic}
-                                                />
+                                        {pdf.map((_,index)=>
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                                <Box sx={{
+                                                        overflow: "hidden",   
+                                                        position: "relative",
+                                                    }}
+>
+                                                    <embed
+                                                        src={URL.createObjectURL(pdffile[index])} // string URL from createObjectURL
+                                                        type="application/pdf"
+                                                        className={classes.ImagePic} 
+                                                        style={{
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            display: "block",
+                                                            }} 
+                                                    />
+                                                </Box>
+
                                                 <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
+                                                        onClick={()=>{removePdf(index)}}
                                                                 >
                                                     x
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${accordianId}-${id}`}>
-                                        <input
-                                                accept="application/pdf"
-                                                id={`upload-file-${accordianId}-${id}`}
-                                                type="file"
-                                                multiple
-                                                style={{ display: "none" }}
-                                                onChange={HandleFileChange}
-                                        />
-                                            </label>
                                     </Box>
-                                    <Box>
-                                            {(pdf.length>0 ) &&(
-                                                <Typography className={classes.errorText}>
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                            </Typography> 
-                                            )} 
-                                        </Box> 
                                 </Box>
                             )}
                             <Box>
-                                {error && (
+                                {pdferror && (
                                         <Typography className={classes.errorText}>
-                                            {error}
+                                            {pdferror}
                                         </Typography>
                                     )       
                                 }
@@ -293,7 +213,7 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                             setIsSaved(false)}}
                                    helperText={SubtitleField.message}
                                    disabled={!Edit}
-                                   FormHelperTextProps={{className:classes.helperText}}
+                                   FormHelperTextProps={{className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText}}
                         />
                         <Typography className={classes.mytext}>
                             content
@@ -308,12 +228,12 @@ const SubSection=({ accordianId, id,title, onDelete }: SubSectionprops)=>{
                                             setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className:classes.helperText}}/>
+                            FormHelperTextProps={{className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText}}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={()=>SaveData(title,id)}/>
-                                                               {cancel &&(<CancelButton onClick={()=>CancelData(title,id)}/>)}
+                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                    {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>

@@ -2,7 +2,7 @@ import {useAboutusStyles} from './AboutusStyles';
 import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, EditButton, CancelButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
-import {HelperTextValidate, NameandRoleValidate, YearValidate} from './validations';
+import { HandleFileChange, HelperTextValidate, NameandRoleValidate, YearValidate } from '../../utils/Validations';
 
 type MilestoneSubpageProps={
     id:string;
@@ -12,7 +12,7 @@ type MilestoneSubpageProps={
 }
 const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpageProps)=>{
     const {classes} = useAboutusStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
@@ -28,57 +28,9 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
     const TitleFlied = NameandRoleValidate(Title);
     const YearFlied = YearValidate(year);
     const contentFlied = HelperTextValidate(content);
-    file
     const isTextInvalid = Title.length === 0 || Title.length < 3 || Title.length > 80 || year.length === 0 || year.length < 2 || year.length > 4 || content.length === 0 || content.length < 3 || content.length > 200;
     
 
-    const validate = (file:File):string | null=>{
-        const maxSize=5 *1024*1024;
-        const types=['image/jpg','image/png','image/jpeg'];
-        if (file.size > maxSize){
-            return ('File Must be Less Than 5MB');
-
-        };
-        if (!types.includes(file.type)){
-            return ("File must be jpg,png,jpeg format");
-        };
-       return null;
-    };
-    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        setError('');
-        setIsSaved(false);
-    
-        if (files && files.length > 0) {
-            const selectedFiles: File[] = Array.from(files);
-    
-            selectedFiles.forEach(file => {
-                const errorMsg = validate(file);
-                if (errorMsg) {
-                    setError(errorMsg);
-                    return; 
-                }
-    
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const imgs = new Image();
-                    imgs.onload = () => {
-                        
-                        if (imgs.width <= 300 || imgs.height <= 100) {
-                            setError('File must be in landscape format (min 300x100)');
-                            return; 
-                        }
-                        setFile(prev => [...prev, file]);
-                        setImage(prev => [...prev, e.target?.result as string]);
-                    };
-                    imgs.src = e.target?.result as string;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-    
-        event.target.value = ''; 
-    };
     const removeImage=(IndexToRemove:number)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
@@ -162,7 +114,7 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                 accept="image/*" 
                                 id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
-                                onChange={HandleFileChange}
+                                onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
                                 disabled={!Edit}
                                 />
                         <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
@@ -184,35 +136,7 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                             </Button>
                                         </Box>
                                     )}
-                                    <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
-                                    <input
-                                            accept="image/*"
-                                            id={`upload-file-${Section}-${accordianId}-${id}`}
-                                            type="file"
-                                            multiple
-                                            style={{ display: "none" }}
-                                            onChange={HandleFileChange}
-                                    />
-                                        </label>
-                                    </Box>
-                                    <Box>
-                                            {(Images.length>0 ) &&(
-                                               
-                                                <Typography   className={Edit ? classes.errorText : undefined}
-                                                                sx={
-                                                                    Edit
-                                                                    ? {}
-                                                                    : {
-                                                                        color: 'grey',
-                                                                        fontWeight: 400,
-                                                                        fontSize: '14px',
-                                                                        textTransform: 'none',
-                                                                        }
-                                                                } >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                                </Typography>
-                                            )} 
-                                        </Box>  
+                                    </Box> 
                             </Box>
                         )}
                         <Box>
@@ -235,7 +159,9 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                             setIsSaved(false)}}
                                     helperText={YearFlied.message}
                                     disabled={!Edit}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
+                                    FormHelperTextProps={{
+                                className: (year.length >= 3 && year.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                         <Typography className={classes.mytext}>
                             title
                         </Typography>
@@ -245,7 +171,9 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                             setIsSaved(false)}}
                                     helperText={TitleFlied.message}
                                     disabled={!Edit}
-                                    FormHelperTextProps={{className:classes.helperText}}/>
+                                    FormHelperTextProps={{
+                                className: (Title.length >= 3 && Title.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                         <Typography className={classes.mytext}>
                             content
                         </Typography>
@@ -259,7 +187,9 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                             setIsSaved(false)}}
                             helperText={contentFlied.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className:classes.helperText}}/>
+                            FormHelperTextProps={{
+                                className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                 </Box>
                 <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
                                     sx: {
@@ -286,7 +216,7 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
             </Dialog>
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                <SaveButton error={ isSaved||file.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
+                <SaveButton error={ isSaved||Images.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
                 {cancel&&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
             </Box>
         </>

@@ -329,6 +329,9 @@ OurDirectorsUploadStack:{
 helperText:{
   color:'red'
 },
+greyText:{
+  colour:'grey'
+},
 
 SubPageContainer:{
   display:'flex',
