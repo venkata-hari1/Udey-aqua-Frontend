@@ -25,16 +25,16 @@ type HeroProps={
     return(
         <>
          <Box className={classes.WhoWeAreContainer}>
-            <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1}}>
+            <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1,gap:2}}>
                 <AddHighlights/>
                 <AddSection onClick={handleAddSubpage}/>
             </Box>
             <Box>
-                <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>
+                <Hero id={id} accordianId={accordianId} Section={Section} title='News & Events'/>
             </Box>
-            <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section}  />
+            <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section} title='News & Events'  />
             {subpages.map((sub) => (
-                <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} title='News & Events' onDelete={() => handleDeleteSubpage(sub.id)} />
             ))}
          </Box>
         </>

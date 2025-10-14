@@ -466,4 +466,15 @@ PricingMainContainer:{
         justifyContent:'space-between',
         width:'100%',
     },
+    // Calender Styles
+    CalenderBox:{
+      border: "1px solid #0A4FA4",
+      width: "200px",
+      //height: "50px",
+      borderRadius: "4px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      px: 1,
+    },
 }))

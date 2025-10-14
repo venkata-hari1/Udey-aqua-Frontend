@@ -4,6 +4,8 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from "../../../../assets/Delete.png";
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 
 export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
@@ -201,5 +203,26 @@ export const FormData=({title}:{title:string})=>{
             
             
         </>
+    )
+}
+type CalenderProps={
+    text:string;
+    textColor:string;
+    
+}
+export const Calender=({text,textColor}:CalenderProps)=>{
+    const {classes} =useAboutusStyles();
+    return(
+        <Box className={classes.CalenderBox}>
+            <Box sx={{display:'flex',flexDirection:'row', gap:'5px',alignItems:'center'}}>
+                <IconButton  sx={{ color: "#0A4FA4" }}>
+                    <CalendarTodayIcon />
+                </IconButton>
+                <Typography sx={{ color: textColor }}>{text}</Typography>
+            </Box>
+        <IconButton  sx={{ color: "#0A4FA4" }}>
+            <ExpandMoreIcon />
+        </IconButton>
+    </Box>
     )
 }
