@@ -3,11 +3,9 @@ import { Box, Typography,} from '@mui/material';
 import {  ArrowBack } from './AboutUsButtons';
 import {  useNavigate } from "react-router-dom";
 import TitlePage from './TitlePage';
-
 type AddsubPageprops={
     Section:string
 }
-
 const Addsubpage=({Section}:AddsubPageprops)=>{
     const {classes}=useAboutusStyles();
     const navigate=useNavigate();
@@ -24,6 +22,5 @@ const Addsubpage=({Section}:AddsubPageprops)=>{
             </Box>
         </>
     )
-
 }
 export default Addsubpage;

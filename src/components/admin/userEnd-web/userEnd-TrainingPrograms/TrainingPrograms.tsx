@@ -5,18 +5,16 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useNavigate } from 'react-router-dom';
-import HeroSection from './HeroSection';
 import PricePlan from './PricePlan';
 import AquacultureType from './AcqacultureType';
 import FormDetails from './FormDetails';
-
-
+import Hero from '../userEnd-Aboutus/Hero';
 
 const TrainingPrograms=()=>{
     const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
     const AccordianData = [
-        {id:'1',title:'Hero Section',component:HeroSection},
+        {id:'1',title:'Hero Section',component:Hero},
         {id:'2',title:'Price Plans ',component:PricePlan},
         {id:'3',title:'Aquaculture Type  ',component:AquacultureType},
         {id:'4',title:'Form Details ', component:FormDetails},
@@ -43,7 +41,7 @@ const TrainingPrograms=()=>{
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Component id={item.id} accordianId={item.id} Accordiantitle={item.title} />
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
                        );

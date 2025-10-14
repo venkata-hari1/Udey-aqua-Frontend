@@ -48,6 +48,22 @@ export const UploadButton=({id,accordianId,Section,disable}:UploadProps)=>{
                     </label>
     )
 }
+
+export const UploadPDFButton=({id,accordianId,Section,disable}:UploadProps)=>{
+    return(
+        <label htmlFor={`upload-pdf-${Section}-${accordianId}-${id}`}>
+                        <Button
+                        variant="outlined"
+                        component="span"
+                        disabled={disable}
+                        endIcon={<FileUploadOutlinedIcon sx={{color: disable ? "grey" : "#0A4FA4",}}/>}
+                        >
+                        Upload
+                        </Button>
+                    </label>
+    )
+}
+
 type TestimonialProps={
     id?:string;
     accordianId?:string

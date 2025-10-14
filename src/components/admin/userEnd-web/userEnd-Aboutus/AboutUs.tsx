@@ -14,11 +14,6 @@ import Careers from './Careers';
 import MileStone from './MileStone';
 import Testimonials from './Testimonials';
 
-
-
-
-
-
 const AboutUs=()=>{
     const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
@@ -34,20 +29,19 @@ const AboutUs=()=>{
     ]
     return(
         <>
-            
-                <Box className={classes.AboutUscontainer} >
-                    <Box className={classes.AboutUsHeaderbox}>
-                        <Box className={classes.AboutUsArrowAndHeaderBox}>
-                            <ArrowBack onClick={()=>naviagte(-1)}/>
-                            <Typography className={classes.AboutUsHeader}>About Us</Typography>
-                        </Box>
-                        <Box className={classes.AboutUsHeaderButtonBox}>
-                            <AddSubpage onClick={()=>(naviagte('subpage'))}/>
-                        </Box>
+            <Box className={classes.AboutUscontainer} >
+                <Box className={classes.AboutUsHeaderbox}>
+                    <Box className={classes.AboutUsArrowAndHeaderBox}>
+                        <ArrowBack onClick={()=>naviagte(-1)}/>
+                        <Typography className={classes.AboutUsHeader}>About Us</Typography>
                     </Box>
-                    <Stack className={classes.AccordianBox}>
-                        {AccordianData.map((item)=>{
-                            const Component=item.component
+                    <Box className={classes.AboutUsHeaderButtonBox}>
+                        <AddSubpage onClick={()=>(naviagte('subpage'))}/>
+                    </Box>
+                </Box>
+                <Stack className={classes.AccordianBox}>
+                    {AccordianData.map((item)=>{
+                        const Component=item.component
                             return(
                                 <Accordion key={item.id} className={classes.AccordiaStack}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
@@ -57,12 +51,11 @@ const AboutUs=()=>{
                                         <Component id={item.id} accordianId={item.id} Section={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
-                       );
-                     
-                    })
-                }
-                   </Stack>
-                </Box>
+                            );
+                        })
+                    }
+                </Stack>
+            </Box>
         </>
     )
 }

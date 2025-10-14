@@ -2,8 +2,8 @@ import {useAboutusStyles} from './AboutusStyles';
 import { Box, TextField, Typography, Stack, Button} from '@mui/material';
 import { AddSection, UploadButton, SaveButton,CancelButton, EditButton } from './AboutUsButtons';
 import { useState, useEffect } from "react";
-import { HelperTextValidate, NameandRoleValidate } from './validations';
-import TitleSubpage from './TitleSubpage';
+import { HandleFileChange, HelperTextValidate, NameandRoleValidate } from '../../utils/Validations';
+import Subsection from './Subsection';
 
 type TitleProps={
     id:string;
@@ -14,7 +14,7 @@ type TitleProps={
 const TitlePage=({id,accordianId, Section}:TitleProps)=>{
     const {classes}=useAboutusStyles();
     const [Title, setTitle]=useState<string>('');
-    const [file,setFile]= useState<File[]>([]);
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
@@ -27,51 +27,8 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
 
     const TextFieldError=HelperTextValidate(subtitle)
     const TitleField=NameandRoleValidate(Title)
-    file
-    const isTextInvalid = subtitle.length === 0 || subtitle.length < 3 || subtitle.length > 200;
- 
-
-    const validate = (file:File):string | null=>{
-        const maxSize=5 *1024*1024;
-        const types=['image/jpg','image/png','image/jpeg'];
-        if (file.size > maxSize){
-            return ('File Must be Less Than 5MB');
-        };
-        if (!types.includes(file.type)){
-            return ("File must be jpg,png,jpeg format");
-        };
-        return null;
-    };
-    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        setError('');
-        setIsSaved(false);
-        if (files && files.length > 0) {
-            const selectedFiles: File[] = Array.from(files);
-            selectedFiles.forEach(file => {
-                const errorMsg = validate(file);
-                if (errorMsg) {
-                    setError(errorMsg);
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const imgs = new Image();
-                    imgs.onload = () => {
-                        if (imgs.width <= 300 || imgs.height <= 100) {
-                            setError('File must be in landscape format (min 300x100)');
-                            return; 
-                        }
-                        setFile(prev => [...prev, file]);
-                        setImage(prev => [...prev, e.target?.result as string]);
-                    };
-                    imgs.src = e.target?.result as string;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-        event.target.value = ''; 
-    };
+    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;
+  
     const removeImage=(IndexToRemove:number)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
@@ -134,7 +91,8 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                         <TextField value={Title}
                                         onChange={(e)=>{setTitle(e.target.value)}}
                                         helperText={TitleField.message || " "}
-                                        FormHelperTextProps={{className:classes.helperText}}
+                                        FormHelperTextProps={{
+                                className: (Title.length >= 3 && Title.length < 200) ? classes.greyText : classes.helperText }}
                                         sx={{
                                         width:'350px',
                                         borderRadius:'10px',
@@ -168,7 +126,7 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                                     accept="image/*" 
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={HandleFileChange}
+                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
                                     disabled={!Edit}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
@@ -190,35 +148,7 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                                                 </Button>
                                             </Box>
                                         )}
-                                        <label htmlFor={`upload-file-${Section}-${accordianId}-${id}`}>
-                                        <input
-                                                accept="image/*"
-                                                id={`upload-file-${Section}-${accordianId}-${id}`}
-                                                type="file"
-                                                multiple
-                                                style={{ display: "none" }}
-                                                onChange={HandleFileChange}
-                                        />
-                                            </label>
-                                        </Box>
-                                        <Box>
-                                             {(Images.length>0 ) &&(
-                                               
-                                                <Typography   className={Edit ? classes.errorText : undefined}
-                                                                sx={
-                                                                    Edit
-                                                                    ? {}
-                                                                    : {
-                                                                        color: 'grey',
-                                                                        fontWeight: 400,
-                                                                        fontSize: '14px',
-                                                                        textTransform: 'none',
-                                                                        }
-                                                                } >
-                                                *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                                </Typography>
-                                            )} 
-                                        </Box>  
+                                        </Box> 
                                 </Box>
                             )}
                             <Box>
@@ -245,7 +175,9 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                                             setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className:classes.helperText}}/>
+                            FormHelperTextProps={{
+                                className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
                     </Box>
                 </Box>
                  <Box className={classes.SeveandCancelBox} >
@@ -257,10 +189,10 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
                         <AddSection onClick={handleAddSubpage}/>
                     </Box>
-                    <TitleSubpage id='Sub Section-1' accordianId='custom' Section={Section}/>
+                    <Subsection id='Sub Section-1' accordianId='custom' Section={Section}/>
                 </Box>
                 {subpages.map((sub) => (
-                    <TitleSubpage key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Subsection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

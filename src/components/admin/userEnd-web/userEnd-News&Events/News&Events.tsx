@@ -8,8 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import Hero from "../userEnd-Aboutus/Hero";
 import SuccessStories from './Sucess&Stories';
 
-
-
 const NewsEvents=()=>{
     const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
@@ -29,7 +27,7 @@ const NewsEvents=()=>{
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
                             <ArrowBack onClick={()=>naviagte(-1)}/>
-                            <Typography className={classes.AboutUsHeader}> Technologies</Typography>
+                            <Typography className={classes.AboutUsHeader}> News & Events</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
                             <AddSubpage onClick={()=>(naviagte('subpage'))}/>
