@@ -34,7 +34,7 @@ const Banner=({ accordianId, id,Section, onDelete }: Bannerprops)=>{
     const SubtitleField=HelperTextValidate(subtitle)
     const PriceField= PriceValidate(pdfPrice);
     const PriceContent = HelperTextValidate(pdfContent)
-    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 ||  content.length < 3 || content.length > 200 ||pdfPrice.length < 3 || pdfPrice.length > 200 ||  pdfContent.length < 3 || pdfContent.length > 200
+    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 ||  content.length < 3 || content.length > 200 ||pdfPrice.length < 3 || pdfPrice.length > 200 || /[^0-9]/.test(pdfPrice)||  pdfContent.length < 3 || pdfContent.length > 200
     
     const SaveData = () => {
     setPrevData({
@@ -193,7 +193,7 @@ const CancelData = () => {
                                             setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText}}/>
+                            FormHelperTextProps={{className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText}}/>
                     </Box>
                 </Box>
             </Box>
@@ -269,7 +269,7 @@ const CancelData = () => {
                                             setIsSaved(false)}}
                                    helperText={PriceField.message}
                                    disabled={!Edit}
-                                   FormHelperTextProps={{className: (subtitle.length >= 3 && subtitle.length < 12) ? classes.greyText : classes.helperText}}
+                                   FormHelperTextProps={{className: (pdfPrice.length >= 3 && pdfPrice.length < 12 &&  /[^0-9]+$/.test(pdfPrice)) ? classes.greyText : classes.helperText}}
                         />
                         <Typography className={classes.mytext}>
                             content
@@ -284,7 +284,7 @@ const CancelData = () => {
                                             setIsSaved(false)}}
                             helperText={PriceContent.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText}}/>
+                            FormHelperTextProps={{className: (pdfContent.length >= 3 && pdfContent.length < 200) ? classes.greyText : classes.helperText}}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>

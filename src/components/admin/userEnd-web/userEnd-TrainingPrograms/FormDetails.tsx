@@ -1,8 +1,7 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box,  Checkbox, TextField, Typography,IconButton, Popper, Paper, ClickAwayListener, } from '@mui/material';
-import { AddButton, CancelButton, EditButton, FormData, SaveButton, } from '../userEnd-Aboutus/AboutUsButtons';
+import { AddButton, CancelButton, EditButton, FormData, SaveButton, Calender } from '../userEnd-Aboutus/AboutUsButtons';
 import { useState,  } from 'react';
-
 import DeleteIcon from "../../../../assets/Delete.png";
 import EditIcon from "../../../../assets/Edit.png";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -161,41 +160,17 @@ const FormDetails= ()=>{
                     <Box sx={{maxWidth:'815px',display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginLeft:2}}>
                     <Typography sx={{fontWeight:600,fontSize:'20px'}}>Available Slot</Typography>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',gap:8,marginRight:4}}>
-                    <Box sx={{border:'1px solid #0A4FA4',width:'200px',height:'50px',borderRadius:'4px',display:'flex',flexDirection:'row',alignItems:'center'}}>
+                    <Box sx={{width:'200px',height:'50px',borderRadius:'4px',display:'flex',flexDirection:'row',alignItems:'center'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Box
-                                sx={{
-                                border: "1px solid #0A4FA4",
-                                width: "250px",
-                                height: "50px",
-                                borderRadius: "4px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                px: 1,
-                                }}
                             >
-                                {/* Left side: Calendar icon + text */}
-                                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                <IconButton onClick={handleClick} sx={{ color: "#0A4FA4" }}>
-                                    <CalendarTodayIcon />
-                                </IconButton>
-                                <Typography sx={{ color: "grey" }}>From</Typography>
-                                </Box>
-
-                                {/* Right side: ExpandMore icon */}
-                                <IconButton onClick={handleClick} sx={{ color: "#0A4FA4" }}>
-                                <ExpandMoreIcon />
-                                </IconButton>
-
+                                < Calender text='From' textColor='grey'/>
                                 {/* Popper: Calendar dropdown */}
                                 <ClickAwayListener onClickAway={handleClose}>
-
                                 <Popper
                                 open={open}
                                 anchorEl={anchorEl}
                                 placement="bottom-start"
-                               
                                 >
                                 <Paper sx={{ p: 1 }}>
                                     <StaticDatePicker
@@ -210,33 +185,11 @@ const FormDetails= ()=>{
                         
 
                     </Box>
-                    <Box sx={{border:'1px solid #0A4FA4',width:'200px',height:'50px',borderRadius:'4px',display:'flex',flexDirection:'row',alignItems:'center'}}>
+                    <Box sx={{width:'200px',height:'50px',borderRadius:'4px',display:'flex',flexDirection:'row',alignItems:'center'}}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Box
-                                sx={{
-                                border: "1px solid #0A4FA4",
-                                width: "250px",
-                                height: "50px",
-                                borderRadius: "4px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                px: 1,
-                                }}
                             >
-                                {/* Left side: Calendar icon + text */}
-                                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                <IconButton onClick={handleClick} sx={{ color: "#0A4FA4" }}>
-                                    <CalendarTodayIcon />
-                                </IconButton>
-                                <Typography sx={{ color: "grey" }}>To</Typography>
-                                </Box>
-
-                                {/* Right side: ExpandMore icon */}
-                                <IconButton onClick={handleClick} sx={{ color: "#0A4FA4" }}>
-                                <ExpandMoreIcon />
-                                </IconButton>
-
+                                < Calender text='To' textColor='grey'/>
                                 {/* Popper: Calendar dropdown */}
                                 <ClickAwayListener onClickAway={handleClose}>
 

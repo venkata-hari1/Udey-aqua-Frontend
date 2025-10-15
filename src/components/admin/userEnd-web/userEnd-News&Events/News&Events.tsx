@@ -13,12 +13,12 @@ const NewsEvents=()=>{
     const naviagte = useNavigate();
     const AccordianData = [
         {id:'1',title:'Hero Section',component:Hero},
-        {id:'2',title:'Success & Stories  ',component:SuccessStories },
-        {id:'3',title:'News  ',component:Hero},
-        {id:'4',title:'Videos ',component:Hero},
-        {id:'6',title:'Gallery',component:Hero},
-        {id:'7',title:'Awards',component:Hero},
-        {id:'8',title:'Blog',component:Hero}
+        {id:'2',title:'Success & Stories',component:SuccessStories },
+        {id:'3',title:'News',component:Hero},
+        {id:'4',title:'Videos',component:SuccessStories},
+        {id:'5',title:'Gallery',component:SuccessStories},
+        {id:'6',title:'Awards',component:SuccessStories},
+        {id:'7',title:'Blog',component:SuccessStories}
     ]
     return(
         <>

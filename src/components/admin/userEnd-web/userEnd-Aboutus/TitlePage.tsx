@@ -189,10 +189,10 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
                         <AddSection onClick={handleAddSubpage}/>
                     </Box>
-                    <Subsection id='Sub Section-1' accordianId='custom' Section={Section}/>
+                    <Subsection id='Sub Section-1' accordianId='custom' Section={Section} title={Section}/>
                 </Box>
                 {subpages.map((sub) => (
-                    <Subsection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Subsection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} title={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
 
             </Box>

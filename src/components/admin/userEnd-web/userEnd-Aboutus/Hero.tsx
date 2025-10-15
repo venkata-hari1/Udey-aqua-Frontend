@@ -1,6 +1,7 @@
 import {useAboutusStyles} from './AboutusStyles';
 import { Box, Button, Stack, TextField, Typography} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader} from './AboutUsButtons';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
 import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
 type HeroProps={
@@ -99,19 +100,14 @@ type HeroProps={
                                                     alt={`preview ${index+1}`}
                                                     className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
+                                                <Button className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                    <CancelIcon   />
                                                 </Button>
                                             </Box>
                                         )}
 
                                         </Box>
-                                        <Box> 
-                                            
-                                        </Box> 
+                                        
                                 </Box>
                             )}
                             <Box>

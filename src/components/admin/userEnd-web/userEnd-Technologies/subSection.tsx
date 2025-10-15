@@ -93,6 +93,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
     return(
         <>
             <Box className={classes.subSectionBox}>
+                {id != 'Sub Section-1'&& (<Box className={classes.heroDivider}></Box>)}
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>
                         {id}
@@ -228,14 +229,14 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                             setIsSaved(false)}}
                             helperText={TextFieldError.message}
                             disabled={!Edit}
-                            FormHelperTextProps={{className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText}}/>
+                            FormHelperTextProps={{className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText}}/>
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
                     <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
                     {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <Box className={classes.heroDivider}></Box>
+                
             </Box>
             <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
                                     sx: {

@@ -33,9 +33,9 @@ type OurHistoryProps={
             <Box>
                 <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>
             </Box>
-            <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section}/>
+            <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section} title='About us'/>
              {subpages.map((sub) => (
-                <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} title='About us' onDelete={() => handleDeleteSubpage(sub.id)} />
             ))}
          </Box>
         </>
