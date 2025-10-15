@@ -1598,7 +1598,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(3),
   },
   teamCardAvatar: {
     width: "100%",
