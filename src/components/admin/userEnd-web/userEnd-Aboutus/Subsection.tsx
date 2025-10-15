@@ -8,6 +8,7 @@ import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
 
 
+
 interface SubsectionProps {
   accordianId:string
   id: string;
@@ -32,7 +33,22 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     const TextFieldError=HelperTextValidate(content)
     file
     const SubtitleField=HelperTextValidate(subtitle)
-    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 || content?.length < 3 || content?.length > 200;
+
+    {/* for enabling save button */}
+    const isSubtitleValid = subtitle.length >= 3 && subtitle.length <= 200;
+    const isContentValid = content.length >= 3 && content.length <= 200;
+    const hasImages = Images.length > 0;
+
+    let canSave= false;
+    if (title === 'News & Events' && accordianId === '4') {
+        canSave = isSubtitleValid && isContentValid && !isSaved;
+    } else if (title === 'News & Events' && accordianId === '5') {
+        canSave = isSubtitleValid && hasImages && !isSaved;
+    } else {
+        canSave = isSubtitleValid && isContentValid && hasImages && !isSaved;
+    }
+
+
     const removeImage=(IndexToRemove:number)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
             setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
@@ -83,6 +99,7 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     return(
         <>
             <Box className={classes.subSectionBox}>
+                {id != 'Sub Section-1'&& (<Box className={classes.heroDivider}></Box>)}
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>
                         {id}
@@ -242,10 +259,9 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                     }
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={isSaved || Images?.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                    <SaveButton error={!canSave}  onClick={SaveData}/>
                     {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-                <Box className={classes.heroDivider}></Box>
             </Box>
             <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
                                     sx: {

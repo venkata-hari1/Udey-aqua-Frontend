@@ -86,11 +86,12 @@ const SubPriceplan=({id,onDelete,Section}:SubPriceplan)=>{
                             <Checkbox sx={{color:'#0A4FA4'}}/>
                             <Typography className={classes.PlanText}>{id}</Typography>
                         </Box>
-                        <IconButton>
+                        {id != 'Plan 1' &&
+                        (<IconButton>
                             <Box component="img"
                              src={EditIcon} alt="Editicon" width='19px' height='19px'
                         />
-                        </IconButton>
+                        </IconButton>)}
                     </Box>
                     <Box sx={{display:'flex',flexDirection:'row',paddingLeft:'48px',}}>
                         <Box sx={{display:'flex',flexDirection:'column', gap:10, marginTop:'10px'}}>

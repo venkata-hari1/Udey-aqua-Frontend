@@ -469,7 +469,7 @@ PricingMainContainer:{
     // Calender Styles
     CalenderBox:{
       border: "1px solid #0A4FA4",
-      width: "200px",
+      maxWidth: "200px",
       //height: "50px",
       borderRadius: "4px",
       display: "flex",
@@ -477,4 +477,5 @@ PricingMainContainer:{
       justifyContent: "space-between",
       px: 1,
     },
+    
 }))

@@ -109,6 +109,7 @@ const CancelData = () => {
         <>
  
             <Box className={classes.subSectionBox}>
+                {id != 'Sub Section-1'&& (<Box className={classes.heroDivider}></Box>)}
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>
                         {id}
@@ -294,7 +295,6 @@ const CancelData = () => {
                     />)}
                     
                 </Box>
-                <Box className={classes.heroDivider}></Box>
             </Box>
             <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
                                     sx: {

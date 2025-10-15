@@ -1,12 +1,16 @@
 import { useAboutusStyles } from "./AboutusStyles";
-import { Button, IconButton, Box, Checkbox, Typography} from "@mui/material";
+import { Button, IconButton, Box, Checkbox, Typography, TextField, Popper, Paper, ClickAwayListener} from "@mui/material";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from "../../../../assets/Delete.png";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import EditIcon from "../../../../assets/Edit.png";
+import { useState, useRef } from "react";
+import { DatePicker, LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
     const {classes} =useAboutusStyles();
@@ -179,32 +183,113 @@ export const AddHighlights=({onClick}:{onClick?:()=>void})=>{
         </Button>
     )
 }
-export const AddButton=()=>{
+export const AddButton=({onClick,}:{onClick?:()=>void,})=>{
     const {classes} =useAboutusStyles();
     return(
-        <Button variant='outlined' disableElevation className={classes.AddButton} startIcon={<AddOutlinedIcon/>} >
+        <Button variant='outlined' disableElevation className={classes.AddButton} startIcon={<AddOutlinedIcon/>} onClick={onClick} >
             Add 
         </Button>
     )
 }
-
-export const FormData=({title}:{title:string})=>{
+type FormDataProps={
+    id: number;
+    text: string;
+    checked: boolean;
+    onTextChange: (id: number, value: string) => void;
+    onCheckChange: (id: number) => void;
+    onDelete: (id: number) => void;
+}
+export const FormData=({id,text,checked,onTextChange,onCheckChange,onDelete,}:FormDataProps)=>{
     return(
         <>
             <Box sx={{flexDirection:'row',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <Box sx={{flexDirection:'row',display:'flex',gap:1,alignItems:'center'}}>
-                    <Checkbox sx={{color:'#0A4FA4'}}/>
-                    <Typography sx={{fontSize:'16px',fontWeight:600}}>{title}</Typography>
+                    <Checkbox sx={{color:'#0A4FA4'}} checked={checked} onChange={() => onCheckChange(id)}/>
+                        <TextField
+                            variant="standard"
+                            size="small"
+                            value={text}
+                            onChange={(e) => onTextChange(id, e.target.value)}
+                            InputProps={{
+                                disableUnderline:  text.trim() !== "",
+                                sx: {
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                "&::placeholder": { color: "#999" },
+                                border: "none", // no border or underline
+                                outline: "none",
+                                backgroundColor: "transparent",
+                                },
+                            }}
+                            sx={{
+                                width:'200px',
+                                "& .MuiInputBase-input": { fontSize: "16px", fontWeight: 600, textTransform:'capitalize' },
+                            }}
+                        />
                 </Box>
-                <Box component="img"
-                    src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
-                />
+                <IconButton onClick={() => onDelete(id)}>
+                    <Box component="img"
+                        src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
+                    />
+                </IconButton>
             </Box>
             
             
         </>
     )
 }
+// R & D Inputs
+
+type RDProps={
+    id: number;
+    text: string;
+    checked: boolean;
+    onTextChange: (id: number, value: string) => void;
+    onCheckChange: (id: number) => void;
+    onDelete: (id: number) => void;
+}
+export const RDdata=({id,text,checked,onTextChange,onCheckChange,}:RDProps)=>{
+    return(
+        <>
+            
+                <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',padding:'5px 200px 5px 5px',alignItems:'center'}}>
+                    <Box sx={{display:'flex',flexDirection:'row',gap:2,alignItems:'center'}} >
+                        <Checkbox sx={{color:'#0A4FA4'}} checked={checked} onChange={() => onCheckChange(id)}/>
+                        <TextField
+                            variant="standard"
+                            size="small"
+                            value={text}
+                            onChange={(e) => onTextChange(id, e.target.value)}
+                            InputProps={{
+                                disableUnderline:  text.trim() !== "",
+                                sx: {
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                "&::placeholder": { color: "#999" },
+                                border: "none", // no border or underline
+                                outline: "none",
+                                backgroundColor: "transparent",
+                                },
+                            }}
+                            sx={{
+                                flex:1,
+                                width:'300px',
+                                "& .MuiInputBase-input": { fontSize: "16px", fontWeight: 600, textTransform:'capitalize' },
+                            }}
+                        />
+                    </Box>
+                    <IconButton >
+                        <Box component="img"
+                            src={EditIcon} alt="Editicon" width='19px' height='19px'
+                        />
+                    </IconButton>
+                </Box>   
+        </>
+    )
+}
+
 type CalenderProps={
     text:string;
     textColor:string;
@@ -212,17 +297,46 @@ type CalenderProps={
 }
 export const Calender=({text,textColor}:CalenderProps)=>{
     const {classes} =useAboutusStyles();
+    const [selectedDate, setSelectedDate] = useState<Dayjs | null>();
+    const [open, setOpen] = useState(false);
+    const anchorRef = useRef<HTMLDivElement | null>(null);
+
+    const handleToggle = () => {
+        setOpen((prev) => !prev);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return(
-        <Box className={classes.CalenderBox}>
-            <Box sx={{display:'flex',flexDirection:'row', gap:'5px',alignItems:'center'}}>
-                <IconButton  sx={{ color: "#0A4FA4" }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Box className={classes.CalenderBox} ref={anchorRef} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box sx={{display:'flex',flexDirection:'row',alignItems:'center',}}>
+                <Box sx={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                    <IconButton sx={{ color: "#0A4FA4" }}>
                     <CalendarTodayIcon />
+                    </IconButton>
+                    <Typography sx={{ color: textColor }}>{selectedDate ? selectedDate.format("DD/MM/YYYY") : text}</Typography>
+                </Box>
+                <IconButton sx={{ color: "#0A4FA4" ,}} onClick={handleToggle} >
+                    <ExpandMoreIcon />
                 </IconButton>
-                <Typography sx={{ color: textColor }}>{text}</Typography>
             </Box>
-        <IconButton  sx={{ color: "#0A4FA4" }}>
-            <ExpandMoreIcon />
-        </IconButton>
-    </Box>
+            <Popper open={open} anchorEl={anchorRef.current} placement="bottom-start">
+            <ClickAwayListener onClickAway={handleClose}>
+                <Paper sx={{ p: 1 }} >
+                <StaticDatePicker
+                    displayStaticWrapperAs="desktop"
+                    value={selectedDate}
+                    onChange={(newValue) => setSelectedDate(newValue)}
+                    minDate={dayjs()} 
+                />
+                </Paper>
+            </ClickAwayListener>
+            </Popper>
+        </Box>
+    </LocalizationProvider>
+    
     )
 }
