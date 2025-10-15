@@ -209,7 +209,7 @@ updateHeaderCancelButton:{
   boxShadow:'none'
 },
 heroDivider:{
- border:'0.5px solid rgba(10, 79, 164, 1)',
+ border:'0.5px solid rgba(210, 223, 238, 1)',
  marginTop:20,
 },
 subSectionBox:{
@@ -469,7 +469,7 @@ PricingMainContainer:{
     // Calender Styles
     CalenderBox:{
       border: "1px solid #0A4FA4",
-      maxWidth: "200px",
+      minWidth: "200px",
       //height: "50px",
       borderRadius: "4px",
       display: "flex",
@@ -477,5 +477,17 @@ PricingMainContainer:{
       justifyContent: "space-between",
       px: 1,
     },
+    newsTextfield:{
+      "& .MuiOutlinedInput-root":{
+            "& fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&:hover fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&.Mui-focused fieldset":{
+                borderColor:'#0A4FA4',
+            }},
+    }
     
 }))

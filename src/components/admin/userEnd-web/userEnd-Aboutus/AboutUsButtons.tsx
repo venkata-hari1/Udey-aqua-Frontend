@@ -8,7 +8,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "../../../../assets/Edit.png";
 import { useState, useRef } from "react";
-import { DatePicker, LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import {LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 
@@ -311,18 +311,18 @@ export const Calender=({text,textColor}:CalenderProps)=>{
 
     return(
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box className={classes.CalenderBox} ref={anchorRef} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Box sx={{display:'flex',flexDirection:'row',alignItems:'center',}}>
+        <Box className={classes.CalenderBox} ref={anchorRef} sx={{ display: "flex", alignItems: "center", }}>
                 <Box sx={{display:'flex',flexDirection:'row',alignItems:'center'}}>
                     <IconButton sx={{ color: "#0A4FA4" }}>
                     <CalendarTodayIcon />
                     </IconButton>
                     <Typography sx={{ color: textColor }}>{selectedDate ? selectedDate.format("DD/MM/YYYY") : text}</Typography>
+                
                 </Box>
                 <IconButton sx={{ color: "#0A4FA4" ,}} onClick={handleToggle} >
                     <ExpandMoreIcon />
                 </IconButton>
-            </Box>
+            
             <Popper open={open} anchorEl={anchorRef.current} placement="bottom-start">
             <ClickAwayListener onClickAway={handleClose}>
                 <Paper sx={{ p: 1 }} >
@@ -338,5 +338,21 @@ export const Calender=({text,textColor}:CalenderProps)=>{
         </Box>
     </LocalizationProvider>
     
+    )
+}
+export const Addlatestnews=({onClick}:{onClick?:()=>void})=>{
+    const {classes} =useAboutusStyles();
+    return(
+        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
+            Add latest news
+        </Button>
+    )
+}
+export const Addlatestpdf=({onClick}:{onClick?:()=>void})=>{
+    const {classes} =useAboutusStyles();
+    return(
+        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
+            Add Latest pdf
+        </Button>
     )
 }

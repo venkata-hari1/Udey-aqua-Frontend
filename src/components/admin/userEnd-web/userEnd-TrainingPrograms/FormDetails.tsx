@@ -1,10 +1,8 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box,  TextField, Typography, Popper, Paper, ClickAwayListener, Stack, Divider } from '@mui/material';
+import { Box,  TextField, Typography, Stack, Divider } from '@mui/material';
 import { AddButton, CancelButton, EditButton, FormData, SaveButton, Calender, RDdata } from '../userEnd-Aboutus/AboutUsButtons';
 import { useState,  } from 'react';
 import DeleteIcon from "../../../../assets/Delete.png";
-import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 interface Item {
   id: number;
@@ -15,17 +13,6 @@ interface Item {
 
 const FormDetails= ()=>{
     const {classes} =useAboutusStyles();
-
-    const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleClick = (event:any) => {
-    setAnchorEl(event.currentTarget);
-    setOpen((prev) => !prev);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   {/* Userdetails Fucntions */}
   const [items, setItems] = useState<{ id: number; text: string; checked: boolean }[]>

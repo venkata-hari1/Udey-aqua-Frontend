@@ -5,6 +5,7 @@ import SubSection from './subSection';
 import { useState,  } from 'react';
 import Banner from './Banner';
 import Hero from '../userEnd-Aboutus/Hero';
+import  Badge  from "@mui/material/Badge";
 
 type RASProps={
     id:string;
@@ -40,8 +41,40 @@ const RAS=({id,accordianId,Section}:RASProps)=>{
      
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
-                    <AddBanner onClick={handleAddBanner}/>
-                    <AddSection onClick={handleAddSubpage}/>
+                    <Badge
+                                                        badgeContent={bannercount}
+                                                            sx={{
+                                                                "& .MuiBadge-badge": {
+                                                                backgroundColor: "#0A4FA4",
+                                                                color: "#fff", 
+                                                                },
+                                                            }}
+                                    
+                                                            anchorOrigin={{
+                                                                vertical: "top",
+                                                                horizontal: "right",
+                                                            }}
+                                                    >
+                                                    <AddBanner onClick={handleAddBanner}/>
+                                                    </Badge>
+                                    <Badge
+                                                        badgeContent={counter}
+                                                            sx={{
+                                                                "& .MuiBadge-badge": {
+                                                                backgroundColor: "#0A4FA4",
+                                                                color: "#fff", 
+                                                                },
+                                                            }}
+                                    
+                                                            anchorOrigin={{
+                                                                vertical: "top",
+                                                                horizontal: "right",
+                                                            }}
+                                                    >
+                                                    <AddSection onClick={handleAddSubpage}/>
+                                                    </Badge>
+                    
+                    
                 </Box>
                 <Hero id={id} accordianId={id} Section={Section}/>
                 <SubSection id='Sub Section-1' accordianId='2' Section={Section}/>

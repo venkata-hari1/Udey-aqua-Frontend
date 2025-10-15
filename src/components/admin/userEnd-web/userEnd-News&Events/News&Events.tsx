@@ -7,6 +7,7 @@ import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useNavigate } from 'react-router-dom';
 import Hero from "../userEnd-Aboutus/Hero";
 import SuccessStories from './Sucess&Stories';
+import News from './News';
 
 const NewsEvents=()=>{
     const {classes}= useAboutusStyles();
@@ -14,7 +15,7 @@ const NewsEvents=()=>{
     const AccordianData = [
         {id:'1',title:'Hero Section',component:Hero},
         {id:'2',title:'Success & Stories',component:SuccessStories },
-        {id:'3',title:'News',component:Hero},
+        {id:'3',title:'News',component:News},
         {id:'4',title:'Videos',component:SuccessStories},
         {id:'5',title:'Gallery',component:SuccessStories},
         {id:'6',title:'Awards',component:SuccessStories},

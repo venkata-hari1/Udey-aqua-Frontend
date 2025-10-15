@@ -4,6 +4,7 @@ import { AddSection, } from './AboutUsButtons';
 import { useState, } from 'react';
 import Subsection from './Subsection';
 import Hero from './Hero';
+import  Badge  from "@mui/material/Badge";
 type CareerProps={
     id:string;
     accordianId:string;
@@ -12,11 +13,11 @@ type CareerProps={
 const Careers=({id,accordianId,Section}:CareerProps)=>{
     const {classes} = useAboutusStyles();
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
-    const [counter, setCounter] = useState<any>([1]);
+    const [counter, setCounter] = useState<number>(1);
     const handleAddSubpage = () => {
-        const newId = `Sub Section-${counter.length+1}`; // unique id
+        const newId = `Sub Section-${counter+1}`; // unique id
         setSubpages((prev) => [...prev, { id: newId }]);
-        setCounter((prev:any) => [...prev, newId])
+        setCounter(counter +1)
     };
     const handleDeleteSubpage = (subId: string) => {
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
@@ -25,7 +26,22 @@ const Careers=({id,accordianId,Section}:CareerProps)=>{
         <>
          <Box className={classes.WhoWeAreContainer}>
             <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1}}>
-                <AddSection onClick={handleAddSubpage}/>
+                <Badge
+                    badgeContent={counter}
+                        sx={{
+                            "& .MuiBadge-badge": {
+                            backgroundColor: "#0A4FA4",
+                            color: "#fff", 
+                            },
+                        }}
+
+                        anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                        }}
+                >
+                    <AddSection onClick={handleAddSubpage}/>
+                </Badge>
             </Box>
             <Box>
                 <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>

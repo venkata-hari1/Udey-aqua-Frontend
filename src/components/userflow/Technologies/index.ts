@@ -1,6 +1,6 @@
 // src/components/userflow/Technologies/index.ts
 export { default as TechnologiesLayout } from "./TechnologiesLayout";
-export { default as TechnologiesHero } from "./TechnologiesHero";
+export { default as Hero } from "../Home/Hero";
 export { default as TechnologiesHeader } from "./TechnologiesHeader";
 export { default as TechnologiesCardsSection } from "./TechnologiesCardsSection";
 export { default as TechnologiesCard } from "./TechnologiesCard";

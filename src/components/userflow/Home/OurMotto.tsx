@@ -55,8 +55,8 @@ const OurMotto = () => {
 
       <Box ref={scrollRef} className={classes.ourMottoScrollWrap}>
         {mottoData.map((card, idx) => (
-          <Zoom>
-          <Box key={idx} className={classes.mottoCardOuter}>
+          <Zoom key={idx}>
+          <Box  className={classes.mottoCardOuter}>
             <MottoCard {...card} />
           </Box>
           </Zoom>

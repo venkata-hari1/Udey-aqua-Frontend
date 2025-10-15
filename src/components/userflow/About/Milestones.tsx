@@ -1,7 +1,8 @@
 // src/components/userflow/About/Milestones.tsx
 import { Box, Grid, Typography,useMediaQuery,
   useTheme, } from "@mui/material";
-import AboutHero from "./AboutHero";
+// import AboutHero from "./AboutHero";
+import Hero  from "../common/Hero/Hero";
 import useAboutStyles from "./aboutStyles";
 import fishSvg from "../../../assets/icons/fish.svg";
 import img from "../../../assets/about_us/milestones.png";
@@ -67,7 +68,13 @@ const Milestones = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
-      {!isMobile&&<AboutHero currentLabel="Milestones" />}
+      {!isMobile&&<Hero
+  page="about"
+  align="center"
+  overlayColor="#00000050"
+  fishCount={20}
+  fishHeight={2000}
+/>}
       <Typography className={classes.mileStoneHeader}>Milestones</Typography>
       <Typography className={classes.mileStoneSubtitle}>
         Our Journey in Aquaculture Innovation

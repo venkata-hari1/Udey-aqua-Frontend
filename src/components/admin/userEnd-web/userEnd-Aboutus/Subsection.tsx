@@ -6,11 +6,8 @@ import { HelperTextValidate } from '../../utils/Validations';
 import { HandleFileChange } from '../../utils/Validations';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 
-
-
-
 interface SubsectionProps {
-  accordianId:string
+  accordianId?:string
   id: string;
   Section:string;
   title:string;
@@ -19,7 +16,7 @@ interface SubsectionProps {
 
 const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps)=>{
     const {classes} = useAboutusStyles();
-    const [file,setFile]= useState<File[]>([]);
+    const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
@@ -31,7 +28,6 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     const [cancel, setCancel] = useState<boolean>(false)
 
     const TextFieldError=HelperTextValidate(content)
-    file
     const SubtitleField=HelperTextValidate(subtitle)
 
     {/* for enabling save button */}
