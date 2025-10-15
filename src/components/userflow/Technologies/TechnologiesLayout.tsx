@@ -4,11 +4,12 @@ import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useTechnologiesStyles from "./technologiesStyles";
 import ContactBox from "../Shared/ContactBox";
-import TechnologiesHero from "./TechnologiesHero";
+import Hero from "../../../../src/components/userflow/common/Hero/Hero";
 
 import PdfDownloadSection from "../Cultures/PdfDownloadSection";
 import PlansSection from "../Shared/PlansSection";
 import SwimmingFish from "../../animations/SwimmingFish";
+
 
 const sidebarItems = [
   { label: "Recirculating Aquaculture System (RAS)", path: "/technologies" },
@@ -64,8 +65,15 @@ const TechnologiesLayout: React.FC = () => {
     >
        <SwimmingFish  Position="absolute" Count={30} Height={3000}/>
       <Grid size={{ xs: 12 }}>
-        <TechnologiesHero currentLabel={currentLabel} />
-      </Grid>
+  <Hero
+    page ="technologies"
+    overlayColor="rgba(10,79,164,0.41)"
+    fishCount={4}
+    fishHeight={isMobile ? 500 : 500}
+    
+  />
+</Grid>
+
       <Grid size={{ xs: 12 }}>
         <Grid container className={classes.technologiesMainRow} wrap="nowrap">
           {!isMobile && (

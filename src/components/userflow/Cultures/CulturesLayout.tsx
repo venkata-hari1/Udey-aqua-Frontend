@@ -4,10 +4,11 @@ import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useCulturesStyles from "./culturesStyles";
 import ContactBox from "../Shared/ContactBox";
-import CulturesHero from "./CulturesHero";
 import PdfDownloadSection from "./PdfDownloadSection";
 import PlansSection from "../Shared/PlansSection";
 import SwimmingFish from "../../animations/SwimmingFish";
+import Hero from "../../userflow/common/Hero/Hero";
+
 
 const sidebarItems = [
   { label: "Sea Bass", path: "/cultures" },
@@ -38,7 +39,7 @@ const CulturesLayout: React.FC = () => {
     setCurrentStep(step);
   };
 
-  // Reset plan flow when switching between culture routes
+
   useEffect(() => {
     setCurrentStep(1);
     setFromPdf(false);
@@ -64,9 +65,14 @@ const CulturesLayout: React.FC = () => {
   return (
     <Grid container className={classes.culturesLayoutRoot} direction="column">
       <SwimmingFish  Position="absolute" Count={30} Height={3000}/>
-      <Grid size={{ xs: 12 }}>
-        <CulturesHero currentLabel={currentLabel} />
+      <Grid  size={{ xs: 12 }}>
+        <Hero
+          page="cultures" 
+          overlayColor="rgba(10,79,164,0.41)" 
+          fishHeight={isMobile ? 500 : 500}
+        />
       </Grid>
+
       <Grid size={{ xs: 12 }}>
         <Grid container className={classes.culturesMainRow} wrap="nowrap">
           {!isMobile && (

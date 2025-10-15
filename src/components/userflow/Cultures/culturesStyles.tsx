@@ -90,47 +90,6 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     opacity: 0.45,
     zIndex: 3,
   },
-  culturesHeroContent: {
-    position: "relative",
-    zIndex: 3,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    marginTop: theme.spacing(3),
-    [theme.breakpoints.down("md")]: {
-      marginTop: theme.spacing(6),
-    },
-  },
-  culturesHeroTitle: {
-    color: COLORS.WHITE,
-    fontWeight: 400,
-    fontSize: 64,
-    fontFamily: FONTS.DM_SERIF_DISPLAY,
-    margin: theme.spacing(5, 0, 2, 0),
-    textAlign: "center",
-    letterSpacing: 1,
-    [theme.breakpoints.down("md")]: {
-      fontSize: 28,
-      margin: theme.spacing(1, 0),
-    },
-  },
-  culturesHeroSubtitle: {
-    color: COLORS.WHITE,
-    fontFamily: FONTS.INTER,
-    fontWeight: 700,
-    fontSize: 18,
-    textAlign: "center",
-   
-    letterSpacing: 0.5,
-    [theme.breakpoints.down("md")]: {
-      fontSize: 12,
-      maxWidth: 400,
-    },
-  },
   culturesHeroBreadcrumb: {
     color: COLORS.WHITE,
     fontWeight: 500,

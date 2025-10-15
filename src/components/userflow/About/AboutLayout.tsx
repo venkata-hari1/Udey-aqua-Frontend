@@ -5,8 +5,9 @@ import { Outlet, NavLink, useLocation } from "react-router-dom";
 // import aboutSideFish from "../../../assets/about_us/about_sidefish.png";
 import useAboutStyles from "./aboutStyles";
 import ContactBox from "../Shared/ContactBox";
-import AboutHero from "./AboutHero";
 import SwimmingFish from "../../animations/SwimmingFish";
+import Hero from "../../userflow/common/Hero/Hero";
+
 
 // import {
 //   ABOUT_FISH_INITIAL,
@@ -30,19 +31,24 @@ const AboutLayout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { classes, cx } = useAboutStyles();
 
-  const currentLabel =
-    sidebarItems.find((item) =>
-      item.path === "/about"
-        ? location.pathname === "/about"
-        : location.pathname.startsWith(item.path)
-    )?.label || "";
+  
 
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
          <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
-      <Grid size={{ xs: 12 }}>
-        <AboutHero currentLabel={currentLabel} />
-      </Grid>
+  
+      <Grid size={{ xs: 12}}>
+  
+<Hero
+  page="about"
+  align="center"
+  overlayColor="#00000050"
+  fishCount={20}
+  fishHeight={isMobile ? 2000 : 3000}
+/>
+</Grid>
+
+     
       <Grid size={{ xs: 12 }}>
     
         <Grid container className={classes.aboutMainRow} wrap="nowrap">
