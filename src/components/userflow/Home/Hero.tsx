@@ -4,21 +4,13 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 // import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 // import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTheme } from "@mui/material/styles";
-import heroImg from "../../../assets/home/hero_img.png";
 import useHomeStyles from "./homeStyles";
 // import sunfish from '../../../assets/home/sunfish.gif'
 // import giphyunscreen from '../../../assets/home/giphy-unscreen.gif'
-
-import {
-  CULTURES_FISH_INITIAL,
-  CULTURES_FISH_ANIMATE,
-  CULTURES_FISH_TRANSITION,
-} from "../Shared/animations";
 import BubbleCanvas from "../../animations/BubbleCanvas";
-import KoiFishScene from "../../animations/KoiFishScene";
 import Fish3DModel from "../../animations/Fish3DModel";
 import SwimmingFish from "../../animations/SwimmingFish";
-import { motion } from "framer-motion";
+
 
 
 const Hero = () => {
