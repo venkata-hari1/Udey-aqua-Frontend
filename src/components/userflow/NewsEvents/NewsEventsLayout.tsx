@@ -3,7 +3,7 @@ import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import useNewsEventsStyles from "./newsEventsStyles";
 import ContactBox from "../Shared/ContactBox";
-import NewsEventsHero from "./NewsEventsHero";
+import Hero from "../../../components/userflow/common/Hero/Hero";
 import SwimmingFish from "../../animations/SwimmingFish";
 
 const sidebarItems = [
@@ -21,18 +21,19 @@ const NewsEventsLayout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes, cx } = useNewsEventsStyles();
 
-  const currentLabel =
-    sidebarItems.find((item) =>
-      item.path === "/news-events"
-        ? location.pathname === "/news-events"
-        : location.pathname.startsWith(item.path)
-    )?.label || "";
+  
 
   return (
     <Grid container className={classes.newsEventsLayoutRoot} direction="column">
       <SwimmingFish  Position="absolute" Count={30} Height={isMobile?1000:2500}/>
       <Grid size={{ xs: 12 }}>
-        <NewsEventsHero currentLabel={currentLabel} />
+         <Hero
+            page ="news"
+            overlayColor="rgba(10,79,164,0.41)"
+            fishCount={4}
+            fishHeight={isMobile ? 500 : 500}
+            
+          />
       </Grid>
       <Grid size={{ xs: 12 }}>
         <Grid container className={classes.newsEventsMainRow} wrap="nowrap">

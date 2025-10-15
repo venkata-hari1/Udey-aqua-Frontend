@@ -1,7 +1,7 @@
 // src/components/userflow/Contact/Contact.tsx
 import { Box, Container, Grid, Card, Typography } from "@mui/material";
 import { Phone, Email, Language } from "@mui/icons-material";
-import ContactHero from "./ContactHero";
+import Hero from "../../../components/userflow/common/Hero/Hero";
 import ContactLayout from "./ContactLayout";
 import useContactStyles from "./contactStyles";
 import ContactForm from "../Home/Contact";
@@ -69,7 +69,14 @@ const Contact = () => {
 
   return (
     <ContactLayout>
-      <ContactHero />
+      <Grid  size={{ xs: 12 }}>
+              <Hero
+                page="cultures" 
+                // breadcrumb={`Cultures${currentLabel ? ` > ${currentLabel}` : ""}`}
+                overlayColor="rgba(10,79,164,0.41)" 
+                fishHeight={500}
+              />
+            </Grid>
       <Box className={classes.contactInfoSection}>
         <Container className={classes.contactInfoContainer}>
           <Grid container spacing={4}>
