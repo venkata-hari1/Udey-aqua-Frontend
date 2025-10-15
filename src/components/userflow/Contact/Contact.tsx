@@ -71,11 +71,10 @@ const Contact = () => {
     <ContactLayout>
       <Grid  size={{ xs: 12 }}>
               <Hero
-                page="cultures" 
-                // breadcrumb={`Cultures${currentLabel ? ` > ${currentLabel}` : ""}`}
-                overlayColor="rgba(10,79,164,0.41)" 
-                fishHeight={500}
-              />
+                              page="contact" 
+                              overlayColor="rgba(10,79,164,0.41)" 
+                              fishHeight={500}
+                            />
             </Grid>
       <Box className={classes.contactInfoSection}>
         <Container className={classes.contactInfoContainer}>
