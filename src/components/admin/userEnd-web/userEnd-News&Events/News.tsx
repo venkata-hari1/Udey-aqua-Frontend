@@ -1,6 +1,6 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Button, Stack, TextField, Typography} from '@mui/material';
-import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader, Calender, Addlatestnews, Addlatestpdf, AddSection} from '../userEnd-Aboutus/AboutUsButtons';
+import { CancelButton, EditButton, SaveButton, UploadButton, Calender, Addlatestnews, Addlatestpdf, AddSection} from '../userEnd-Aboutus/AboutUsButtons';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
 import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
@@ -13,7 +13,7 @@ type HeroProps={
     Section:string;
     title?:string;
 }
- const News=({id,accordianId,Section,title}:HeroProps)=>{
+ const News=({id,accordianId,Section,}:HeroProps)=>{
     const {classes} =useAboutusStyles();
     const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
