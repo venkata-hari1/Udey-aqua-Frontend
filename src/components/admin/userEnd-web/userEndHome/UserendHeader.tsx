@@ -1,8 +1,9 @@
 import { Box,Grid, TextField, Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
-import {UserEndSaveCancelButtons} from "./UserEndCommonButtons"
-import { addressContentValidation, phoneNumberValidation, validateEmail } from "../../utils/Validations"
+import { addressContentValidation, phoneNumberValidation, validateEmail,validateEmail1 } from "../../utils/Validations"
 import { useState } from "react"
+import { CancelButton,  SaveButton, EditButton } from '../userEnd-Aboutus/AboutUsButtons';
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 
 const UserendHeader = () => {
 
@@ -12,11 +13,16 @@ const UserendHeader = () => {
   const[emailError,setEmailError]=useState('')
   const[phoneError,setPhoneError]=useState('')
   const[addressError,setAddressError]=useState('')
+
+  const [prevData, setPrevData] = useState<{ email: string; address: string; phone:string} | null>(null);
+  const [Edit, setEdit] = useState<boolean>(true);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [cancel, setCancel] = useState<boolean>(false)
   
-  const isDisable=
-   !email || !phone || !address || !!emailError || !!phoneError || !!addressError;
+  const isTextInvalid =   validateEmail1(email).isError || phoneNumberValidation(phone).isError ||   address.length < 3 || address.length > 200 ; 
   
 const{classes}=useUserEndwebStyles()  
+const{classes:aboutus}=useAboutusStyles() 
   
   const emailChangeHandler=(event:any)=>{
     const value=event.target.value;
@@ -38,25 +44,43 @@ const{classes}=useUserEndwebStyles()
     setAddressError(addressresult.error)
  }
 
- const handleSave=()=>{
-   const payload={email,phone,address}
-   console.log(payload)
-   setEmail('')
-   setPhone('')
-   setAddress('')
-}
-const handleCancel=()=>{
-   setEmail('')
-   setPhone('')
-   setAddress('')
-   setEmailError('')
-   setPhoneError('')
-   setAddressError('')
-}
+ const SaveData = ()=>{
+        setPrevData({
+        
+        phone,
+        email,
+        address
+    });
+    setIsSaved(true);
+    setEdit(false);
+    setCancel(false)
+    console.log(`titel:${email}, phone:${phone},website:${address}`);
+};
+
+    const CancelData = ()=>{
+        if (prevData) {
+        setEmail(prevData.email);
+        setPhone(prevData.phone);
+        setAddress(prevData.address)
+        setIsSaved(true);
+    } else {
+        setEmail('');
+        setPhone('');
+        setAddress('');
+        setIsSaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
  
   return (
     <Box>
     <Box>
+      <Box sx={{display:'flex',justifyContent:'flex-end'}}>
+        <EditButton error={!prevData} onClick={()=> {setCancel(true);
+                            setEdit(true)
+                        }} />
+      </Box>
     <Grid container spacing={2} alignItems="center" mx="10px">
        {/* email */}
        <Grid size={{xs:12, md:2}}>
@@ -68,9 +92,15 @@ const handleCancel=()=>{
           value={email}
           variant="outlined"
           size="small"
-          error={!!emailError}
+          //error={!!emailError}
+          disabled={!Edit}
           helperText={emailError}
-          onChange={emailChangeHandler}
+          onChange={(e)=>{setEmail(e.target.value);
+                          setIsSaved(false);
+                          emailChangeHandler(e)}}
+          FormHelperTextProps={{
+                                className: aboutus.helperText
+                            }}
           className={classes.useHeaderTextfiled}/>
         </Grid>
 
@@ -83,10 +113,16 @@ const handleCancel=()=>{
           fullWidth
           variant="outlined"
           size="small"
+          disabled={!Edit}
           value={phone}
-          error={!!phoneError}
+          //error={!!phoneError}
           helperText={phoneError}
-          onChange={phoneChangeHandler}
+          FormHelperTextProps={{
+            className: (phone.length == 12 || phone.length == 13 ) ? aboutus.greyText : aboutus.helperText
+           }}
+          onChange={(e)=>{setPhone(e.target.value);
+                          setIsSaved(false);
+                          phoneChangeHandler(e)}}
           />
         </Grid>
         {/* Address */}
@@ -99,14 +135,22 @@ const handleCancel=()=>{
           variant="outlined"
           size="small"
           value={address}
-          error={!!addressError}
+          disabled={!Edit}
+          //error={!!addressError}
           helperText={addressError}
-          onChange={addressChangeHandler}
+          FormHelperTextProps={{
+            className: (address.length >=3 && address.length < 200 ) ? aboutus.greyText : aboutus.helperText
+          }}
+          onChange={(e)=>{setAddress(e.target.value);
+                          setIsSaved(false);
+                          addressChangeHandler(e)}}
           />
         </Grid>
     </Grid>
-    <UserEndSaveCancelButtons onSave={handleSave}
-     onCancel={handleCancel}disabled={isDisable} />
+    <Box className={aboutus.SeveandCancelBox} >
+     <SaveButton error={isTextInvalid || isSaved} onClick={SaveData} />
+      {cancel &&(<CancelButton onClick={CancelData} />)}
+    </Box>
     </Box>
     </Box>
   )

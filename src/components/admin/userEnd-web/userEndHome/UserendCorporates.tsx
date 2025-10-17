@@ -1,14 +1,15 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import useUserEndwebStyles from "../UserendwebStyles";
 import CancelIcon from "@mui/icons-material/Cancel";
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import {
-  EditButton,
   ErrorMessages,
   Uploadbutton,
   UserEndSaveCancelButtons,
 } from "./UserEndCommonButtons";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { EditButton } from "../userEnd-Aboutus/AboutUsButtons";
 
 interface CorporateLogo {
   id: string;
@@ -19,6 +20,7 @@ interface CorporateLogo {
 
 const UserendCorporates = () => {
   const { classes } = useUserEndwebStyles();
+  const { classes:aboutus } = useAboutusStyles();
   const [corporates, setCorporates] = useState<CorporateLogo[]>([]);
 
  
@@ -56,7 +58,7 @@ const UserendCorporates = () => {
     <Box>
       <Stack className={classes.corporateStack1}>
         <Typography className={classes.titleText}>Logos</Typography>
-        <EditButton sliceEdit={sliceEdit}/>
+        <EditButton onClick={sliceEdit}/>
       </Stack>
 
       <Box className={classes.corporateImageBox}>
@@ -73,12 +75,12 @@ const UserendCorporates = () => {
         >
           {corporates.map((corp, index) => (
              
-             <Box key={corp.id} sx={{ display: "flex", alignItems: "center" }}>
+             <Box key={corp.id} sx={{ display: "flex", alignItems: "center" , gap:2}}>
                <Box>
                 <Typography className={classes.titleText}>{index + 1}</Typography>
-                <Box className={classes.herouploadImageBox}>
+                <Box className={aboutus.ImagespicBox} sx={{position:'relative'}}>
                   <img src={corp.image} className={classes.herouploadImage} />
-                  <CancelIcon
+                  <CancelIcon sx={{color:'#F7FAFC'}}
                     className={classes.corporateImgCancelIcon}
                     onClick={() => handleRemoveImage(corp.id)}
                   />

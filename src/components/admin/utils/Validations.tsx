@@ -201,22 +201,22 @@ interface ValidationResult {
 }
 
 export const phoneNumberValidation = (phone: string): ValidationResult => {
-  const requiredLength = 10;
+  const requiredLength = 13;
 
   if (phone.length === 0) {
     return {
-      error: "* Phone number cannot be empty",
+      error: "",
       isError: true,
     };
-  } else if (/[^0-9]/.test(phone)) {
+  } else if (!/^(?:\+91|91)[-\s]?[6-9]\d{4}[-\s]?\d{5}$/.test(phone)) {
     return {
-      error: "* Only numbers are allowed",
+      error: "* Enter a valid Indian phone number (e.g. +91  or 91 )",
       isError: true,
     };
-  } else if (phone.length !== requiredLength) {
+  } else if (phone.length <= requiredLength) {
     return {
-      error: `* Phone number must be exactly ${requiredLength} digits. Entered: ${phone.length}/${requiredLength}`,
-      isError: true,
+      error: `* Phone number must be 12 or 13 digits. Entered: ${phone.length}/${requiredLength}`,
+      isError: false,
     };
   } else {
     return {
@@ -237,8 +237,9 @@ export const addressContentValidation = (content: string): ValidationResult => {
   const minChars = 3; // or set your desired minimum
 
   const addressRegexp = /^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{0,200}$/;
-
-  if (content.length === 0 || content.length < minChars) {
+   if (content.length === 0) {
+    return {  error: "", isError: false }; }
+  if ( content.length <= minChars) {
     return {
       error: `* Must contain at least ${minChars} character(s). Remaining Characters ${content.length}/${maxChars}`,
       isError: true,
@@ -248,12 +249,19 @@ export const addressContentValidation = (content: string): ValidationResult => {
       error: `* Maximum ${maxChars} characters allowed and valid characters only`,
       isError: true,
     };
-  } else if (content.length > maxChars) {
+  }else if (content.length > 3) {
+    return {
+      error: `*  Remaining Characters ${content.length}/100`,
+      isError: false
+    };
+  }
+   else if (content.length > maxChars) {
     return {
       error: `* Character limit exceeded. Remaining Characters ${content.length}/${maxChars}`,
       isError: true,
     };
-  } else {
+  }
+   else {
     return {
       error: "",
       isError: false,
@@ -500,6 +508,22 @@ export const YearValidate = (text: string): {  message: string } => {
   } 
   else {
     return {message: `* Remaining Characters ${text.length}/4` }; 
+  }
+};
+
+interface WebsiteResult {
+  error: string;
+  isError: boolean;
+}
+export const websiteValidation = (url: string): WebsiteResult => {
+  const regex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+)\.([a-zA-Z]{2,})(\/\S*)?$/;
+  if (url.length ==0){
+    return {error:'',isError:true}
+  }if (! regex.test(url)){
+    return {error:'* Website must be in ( http: or https: or www. )', isError:true};
+  }
+  else{
+    return {error:'',isError:false};
   }
 };
 

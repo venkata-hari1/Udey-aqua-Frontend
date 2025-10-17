@@ -64,6 +64,12 @@ switch(path){
   case "userend-news&events":
     title="User End Website"
     break;
+    case "userend-news&events":
+    title="User End Website"
+    break;
+   case "userend-contactus":
+    title="User End Website"
+    break;
   case "subpage":
     title="User End Website"
     break;
@@ -100,6 +106,9 @@ const backarrowHandle=()=>{
     navigate('/admin/userend-web')
     break;
    case "userend-trainingprograms":
+    navigate('/admin/userend-web')
+    break;
+    case "userend-contactus":
     navigate('/admin/userend-web')
     break;
    case "userend-news&events":
