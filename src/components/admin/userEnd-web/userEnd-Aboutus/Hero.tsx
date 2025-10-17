@@ -22,6 +22,7 @@ type HeroProps={
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState(false);
+    
     const TextFieldError=HelperTextValidate(subtitle).message;
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;  
     
@@ -157,8 +158,8 @@ type HeroProps={
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox} >
-                    
-                    {(id ==='1')?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>}
+                   {
+                    (id ==='1')?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:(title ==='Home')?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>}
                     {cancel &&(<CancelButton onClick={CancelData}/>)} 
                 </Box>
             </Box>

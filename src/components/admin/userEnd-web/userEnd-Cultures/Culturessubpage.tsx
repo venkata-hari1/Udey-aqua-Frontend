@@ -7,18 +7,24 @@ import fishImg from './../../../../assets/admin/fishImg.jpg';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from "react-router-dom";
 
-const Culturessubpage=()=>{
+interface CulturessubpageProps {
+  title: string;
+  setTitle: (value: string) => void;
+}
+const Culturessubpage=({  setTitle }: CulturessubpageProps)=>{
 
 const{classes}=useUserEndwebStyles()
+{/*const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value); // update the title in parent state
+  };
+*/}
 
 
 const handleEdit=()=>{
 }
 
-const[subpage,setSubpage]=useState(
+const[subpage,]=useState(
   { 
     id:uuidv4(),
     title:'',
@@ -61,10 +67,10 @@ const handleSave=()=>{
 const handleCancel=()=>{
 }
 
-const navigate=useNavigate()
+{/*const navigate=useNavigate()
 const subPagetitlechange=(value:string,error:string)=>{
    setSubpage({ ...subpage, title: value, titleerror: error });
-}
+}*/}
 
 const subpageSave=()=>{
   const cullturetitle={
@@ -74,17 +80,12 @@ console.log(cullturetitle)
 }
 return(
         <Box p={3}>
-        
-          <Box display="flex" justifyContent="start" alignItems="center" gap={2}>
-          <ArrowBackIcon onClick={()=>navigate(-1)} sx={{color:'#0a4fa4'}}/>
-          <Typography sx={{fontSize:"20px",fontWeight:700,color:'#0a4fa4'}} >Cultures/Add Subpage</Typography>
-          </Box>
          <Box className={classes.Subpagetitlecontainer} mt={3}>
          <Typography>
            Title
           </Typography>
          <Box>
-         <TextFieldSingleRow onChange={(value, error)=>subPagetitlechange(value,error)} validationFn={nameValidation}/>  
+         <TextFieldSingleRow onChange={(value) => setTitle(value)} validationFn={nameValidation}/>  
          <ErrorMessages message={subpage.titleerror}/>
          </Box>
          </Box>

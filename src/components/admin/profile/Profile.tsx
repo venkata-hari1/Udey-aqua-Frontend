@@ -9,7 +9,7 @@ import {useAboutusStyles} from '../../admin/userEnd-web/userEnd-Aboutus/AboutusS
 const Profile = () => {
   
 const profildata=[
-    {id:1,key:'Phone Number',value:'+91-99394933'},
+    {id:1,key:'Phone Number',value:'+919791199909'},
     {id:2,key:'Email',value:'info@Uday.com'},
     {id:3,key:'Password',value:'*******'},
 ]  

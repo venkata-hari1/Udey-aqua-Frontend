@@ -14,7 +14,7 @@ const navigation=[
 {id:4,menu:"Training Programs",path:'/admin/userend-web/userend-trainingprograms'},
 {id:5,menu:"Technologies",path:'/admin/userend-web/userend-technologies'},
 {id:6,menu:"News & Events",path:'/admin/userend-web/userend-news&events'},
-{id:7,menu:"Contact Us",path:'/userend-contact-us'}
+{id:7,menu:"Contact Us",path:'/admin/userend-web/userend-contactus'}
 ]
   const{classes,cx}=useUserEndwebStyles();
   const[activeIndex,setActiveIndex]=useState<number | null>(1)

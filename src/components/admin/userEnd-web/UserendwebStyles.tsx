@@ -297,9 +297,14 @@ corporateCountImgBox:{
 },
 corporateImgCancelIcon:{
    position:'absolute',
-   top:-12,
+   //top:-10,
    color:'red',
-   right:10
+   top:'-10px',
+  right:'-5px',
+  
+  
+  opacity: 1,
+   
 },
 corporatePlusbutton:{
   background:"#F7FAFC",

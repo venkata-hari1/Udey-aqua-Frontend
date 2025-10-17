@@ -1,10 +1,7 @@
-import { Box, Button, Typography } from "@mui/material"
+import { Box,  Typography } from "@mui/material"
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import useUserEndwebStyles from "../UserendwebStyles";
-import AddIcon from '@mui/icons-material/Add';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from "react-router-dom";
 import CultureHero from "./CultureHero";
@@ -18,6 +15,8 @@ import CultureSeaweeds from "./CultureSeaweeds";
 import { useState, type ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Culturessubpage from "./Culturessubpage";
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 
 interface CultureItem{
   id:string,
@@ -27,7 +26,8 @@ interface CultureItem{
 
 const CultureHome = () => {
 
-  const{classes}=useUserEndwebStyles()
+  //const{classes}=useUserEndwebStyles();
+  const{classes:aboutus}=useAboutusStyles();
   const navigate=useNavigate()
   const[culturesdata,setCulturesdata]=useState<CultureItem[]>([
     
@@ -40,37 +40,58 @@ const CultureHome = () => {
    {id:uuidv4(),menu:"Tilapia",content:<CultureTelipia />} ,
    {id:uuidv4(),menu:"Sea Weed",content:<CultureSeaweeds />} , 
   ])
-  
+  const [subpageTitle, setSubpageTitle] = useState("");
+ 
+const handleTitleChange = (id: string, value: string) => {
+  setCulturesdata((prev) =>
+    prev.map((item) => (item.id === id ? { ...item, menu: value } : item))
+  );
+};
 const handleBackarrow=()=>{
  navigate('/admin/userend-web')
 }
 
-const handleAddSubpage=()=>{
+{/*const handleAddSubpage=()=>{
 const newCulturedata={id:uuidv4(),menu:`Subpage ${culturesdata.length+1}`,content:<Culturessubpage />}; 
   setCulturesdata((prev)=>[...prev,newCulturedata]); 
-  /* navigate('/admin/userend-web/userend-culture/subpage') */
-}
+  /* navigate('/admin/userend-web/userend-culture/subpage') 
+}*/}
+const handleAddSubpage = () => {
+  const newSubpageId = uuidv4();
+  const newCulturedata: CultureItem = {
+    id: newSubpageId,
+    menu: `Subpage ${culturesdata.length + 1}`,
+    content: (
+      <Culturessubpage
+        title={subpageTitle}
+        setTitle={(value) => {
+          setSubpageTitle(value);
+          handleTitleChange(newSubpageId, value); 
+        }}/>
+    ),
+  };
+  setCulturesdata((prev) => [...prev, newCulturedata]);
+};
   return (
    
-     <Box>
-      <Box className={classes.cultureHomebox}>
-           <Box className={classes.culturebackarrowbox}>       
-           <ArrowBackIcon className={classes.culturebackbutton}
-           onClick={handleBackarrow}/>
-          <Typography className={classes.cultureHomeTitle}>Cultures</Typography>
+     <Box className={aboutus.AboutUscontainer}>
+      <Box className={aboutus.AboutUsHeaderbox}>
+           <Box className={aboutus.AboutUsArrowAndHeaderBox}>
+            <ArrowBack onClick={handleBackarrow}/>
+            <Typography className={aboutus.AboutUsHeader}>Culture</Typography>
+            </Box>
+          <Box className={aboutus.AboutUsHeaderButtonBox}>
+            <AddSubpage onClick={handleAddSubpage}/>
           </Box>
-          <Button variant="contained" className={classes.addSubpagebutton}
-          startIcon={<AddIcon />}
-          onClick={handleAddSubpage}>Add Subpage</Button>
       </Box>
-      <Box className={classes.CulturehomeMaincontainer}>
+      <Box className={aboutus.AccordianBox}>
     {culturesdata.map((menu,index)=>(
-       <Accordion key={index} className={classes.userEndHeaderContainer}>
+       <Accordion key={index}  className={aboutus.AccordiaStack}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header">
-         <Typography component="span" className={classes.accardianTypoMenu}>{menu.menu}</Typography>
+         <Typography component="span" className={aboutus.AccordianText}>{menu.menu}</Typography>
          </AccordionSummary>
          <AccordionDetails>
            {menu.content}
