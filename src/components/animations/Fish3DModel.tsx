@@ -14,7 +14,6 @@ const Fish: React.FC = () => {
   const fishRef = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF("/models/tillapia_buttikoferi_fish.glb") as GLTFResult;
   const { actions } = useAnimations(animations, fishRef);
-
   // Play baked animation from GLB
   useEffect(() => {
     if (actions) {
