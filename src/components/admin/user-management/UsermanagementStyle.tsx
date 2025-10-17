@@ -19,17 +19,45 @@ const useUsermanagementStyles = makeStyles()((theme: Theme) => ({
       flexWrap:'nowrap'
     }
   },
-  Freshwaterbutton:{
-    backgroundColor:theme.palette.primary.dark,
-    fontFamily:theme.typography.fontFamily,
-    color:theme.palette.primary.contrastText,
-    textTransform:'capitalize',
-  },
-  BrackMarinebutton:{
-    textTransform:'capitalize',
-    color:theme.palette.primary.dark,
-    borderColor:theme.palette.primary.dark
-  },
+  // Freshwaterbutton:{
+  //   backgroundColor:theme.palette.primary.dark,
+  //   fontFamily:theme.typography.fontFamily,
+  //   color:theme.palette.primary.contrastText,
+  //   textTransform:'capitalize',
+  // },
+  // BrackMarinebutton:{
+  //   textTransform:'capitalize',
+  //   color:theme.palette.primary.dark,
+  //   borderColor:theme.palette.primary.dark
+  // },
+
+  Freshwaterbutton: {
+    fontFamily: theme.typography.fontFamily,
+    textTransform: 'capitalize',
+    '&.active': {  // When selected
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.primary.contrastText,
+    },
+    '&.inactive': {  // Default state
+      color: theme.palette.primary.dark,
+      borderColor: theme.palette.primary.dark,
+     
+    }
+},
+
+BrackMarinebutton: {
+    fontFamily: theme.typography.fontFamily,
+    textTransform: 'capitalize',
+    '&.active': {  // When selected
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.primary.contrastText,
+    },
+    '&.inactive': {  // Default state
+      color: theme.palette.primary.dark,
+      borderColor: theme.palette.primary.dark,
+      
+    }
+},
 
  rightbuttonscontainer:{
     display:'flex',
