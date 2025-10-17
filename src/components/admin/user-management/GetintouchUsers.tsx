@@ -4,6 +4,9 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Delete_Img from '../../../assets/admin/delete_icon.png'
 import MyPagination from "../utils/MyPagination";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 
 const GetintouchUsers = () => {
 
@@ -29,10 +32,39 @@ const getinuserdata=[
 ]
 const {classes}=useUsermanagementStyles()
 
+const exportPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Get in Touch Users", 14, 22);
+
+    
+
+    const tableData = getinuserdata.map(user => [
+      user.id,
+      user.name,
+      user.phone,
+      user.message,
+      user.date,
+       
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [getinUserheading.map(h => h.label)],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      styles: { fontSize: 10 },
+    });
+
+    doc.save("GetinTouchUsers.pdf");
+  };
+
   return (
   <Box>
   <Box className={classes.rightbuttonsGetinUser}>
-       <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} >Export</Button>
+       <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />}  onClick={exportPDF} >Export</Button>
        <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
   </Box>
    <TableContainer component={Paper}>

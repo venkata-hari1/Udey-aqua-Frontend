@@ -4,6 +4,8 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Delete_Img from '../../../assets/admin/delete_icon.png'
 import MyPagination from "../utils/MyPagination";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const Subscriber = () => {
 
@@ -20,10 +22,35 @@ const Subscriber = () => {
     {sno:3,email:'SuryaPrathap@gmail.com',subscriptiontype:'Blog Update',date:'12/07/2025'},
   ]
 const {classes}=useUsermanagementStyles()
+
+ const exportPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text("Subscribers List", 14, 22);
+
+
+    const tableData = subscriptiondata.map(item => [
+      item.sno,
+      item.email,
+      item.subscriptiontype,
+      item.date,
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [subscribeheading.slice(0, 4).map(h => h.label)], 
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      styles: { fontSize: 10 },
+    });
+
+    doc.save("Subscribers.pdf");
+  };
   return (
    <Box>
        <Box className={classes.rightbuttonsGetinUser}>
-            <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} >Export</Button>
+            <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} onClick={exportPDF} >Export</Button>
             <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
        </Box>
     <TableContainer component={Paper}>

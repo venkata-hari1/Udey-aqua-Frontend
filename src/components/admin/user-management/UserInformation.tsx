@@ -1,6 +1,8 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material"
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import useUsermanagementStyles from "./UsermanagementStyle";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 
 const UserInformation = () => {
@@ -20,14 +22,31 @@ const UserInformation = () => {
   {id:10,key:'Payment',value:'Rs/- 10,000'},
  ]
 
-  
+  const downloadPDF = () => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("User Information", 14, 22);
+
+  autoTable(doc, {
+    startY: 30,
+    head: [['Key', 'Value']],
+    body: userinfodata.map(item => [item.key, item.value]),
+    theme: 'grid',
+    styles: { fontSize: 12 },
+    headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+  });
+
+  doc.save("UserInformation.pdf");
+};
+
   
   
   return (
     <Box>
     <Box display="flex" justifyContent="flex-end">
     <Button className={classes.downLoadreport} 
-     variant="outlined" endIcon={<FileDownloadOutlinedIcon />}>Download Report</Button>
+     variant="outlined" endIcon={<FileDownloadOutlinedIcon /> } onClick={downloadPDF}>Download Report</Button>
     </Box>
     <Card className={classes.userInfoCardcontainer}>
       <CardContent>
