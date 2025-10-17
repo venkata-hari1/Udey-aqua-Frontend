@@ -90,6 +90,12 @@ const backarrowHandle=()=>{
    case "userend-aboutus":
    navigate('/admin/userend-web') 
    break;
+   case "userend-home":
+   navigate('/admin/userend-web') 
+   break;
+   case "userend-culture":
+   navigate('/admin/userend-web') 
+   break;
    case "userend-technologies":
     navigate('/admin/userend-web')
     break;

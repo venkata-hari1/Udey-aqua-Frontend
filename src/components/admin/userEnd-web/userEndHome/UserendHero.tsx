@@ -16,9 +16,14 @@ import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { HeadingContentValidation } from "../../utils/Validations";
+import Badge from "@mui/material/Badge";
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import Hero from "../userEnd-Aboutus/Hero";
 
 const UserendHero = () => {
   const { classes } = useUserEndwebStyles();
+  const { classes:aboutus } = useAboutusStyles();
+  {/*
  const[editSlideId,setEditSlideId]=useState<string |null>(null)
   const [heroslide, setHeroslide] = useState([
     {
@@ -222,7 +227,49 @@ const onCancel=(id:string)=>{
         
       </Box>
     </Box>
-  );
+  );*/}
+  const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+  const [counter, setCounter] = useState<number>(1);
+  const handleAddSubpage = () => {
+        const newId = `Slide-${counter+1}`; // unique id
+        setSubpages((prev) => [...prev, { id: newId }]);
+        setCounter(counter +1)
+    };
+    const handleDeleteSubpage = (subId: string) => {
+        setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter -1)
+    };
+  return(
+        <>
+         <Box className={aboutus.WhoWeAreContainer}>
+            <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1}}>
+                <Badge
+                        badgeContent={counter}
+                        sx={{
+                            "& .MuiBadge-badge": {
+                            backgroundColor: "#0A4FA4",
+                            color: "#fff", 
+                            },
+                        }}
+
+                        anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                        }}
+                >
+                    <AddingButton onClick={handleAddSubpage}/>
+                </Badge>            
+            </Box>
+            <Box>
+                <Hero id='Slide 1' accordianId='2' Section='Hero' title='Home'/>
+            </Box>
+            {subpages.map((sub) => (
+                <Hero key={sub.id} id={sub.id} accordianId="2" Section='Hero' title='Home' ondelete={() => handleDeleteSubpage(sub.id)} 
+                />
+            ))}
+         </Box>
+        </>
+    )
 };
 
 export default UserendHero;
