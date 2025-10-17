@@ -1,16 +1,17 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Button, Stack, TextField, Typography} from '@mui/material';
-import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader} from './AboutUsButtons';
+import { Box, Button, Stack, TextField, Typography, DialogContent, DialogActions,Dialog} from '@mui/material';
+import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader, DeleteButton} from './AboutUsButtons';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
 import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
 type HeroProps={
     id?:string;
     accordianId?:string;
-    Section:string;
+    Section?:string;
     title?:string;
+    ondelete?:()=> void
 }
- const Hero=({id,accordianId,Section,title}:HeroProps)=>{
+ const Hero=({id,accordianId,Section,title,ondelete}:HeroProps)=>{
     const {classes} =useAboutusStyles();
     const [,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -19,9 +20,24 @@ type HeroProps={
     const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[] } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
-    const [cancel, setCancel] = useState<boolean>(false)
+    const [cancel, setCancel] = useState<boolean>(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const TextFieldError=HelperTextValidate(subtitle).message;
-    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;   
+    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;  
+    
+    const handleDeleteClick = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCancel = () => {
+        setOpenDialog(false);
+    };
+
+    const handleConfirmDelete = () => {
+        setOpenDialog(false);
+        if (ondelete) ondelete(); 
+    };
+
     const removeImage=(IndexToRemove:number)=>{
         setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
         setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
@@ -59,12 +75,13 @@ type HeroProps={
                 {(accordianId !='1'  )&& (                
                         <Box className={classes.whoWeareHeaderbox}>
                             <Typography className={classes.HeaderText}>
-                               { title=='news&events'? 'Highlight Section 1' : 'Header Section'}
+                               { title=='news&events'? 'Highlight Section 1' : title ==='Home'?id: 'Header Section'}
                             </Typography>
-                            <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',}}>
+                            <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:2}}>
                                  <EditButton error={!prevData} onClick={()=>{ setCancel(true);
                                     setEdit(true)
                                 }}/>
+                                {(title ==="Home" && id != 'Slide 1') && <DeleteButton  onClick={handleDeleteClick}/>}
                             </Box>
                         </Box>
                     )}
@@ -122,7 +139,7 @@ type HeroProps={
                     </Stack>
                     <Box sx={{gap:10}}>
                         <Typography className={classes.mytext}>
-                            subtitle
+                            {title ==='Home'?'Heading Content' : 'subtitle'}
                         </Typography>
                         <TextField 
                             fullWidth
@@ -140,10 +157,36 @@ type HeroProps={
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox} >
-                    {id ==='1'?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>}
-                    {cancel &&(<CancelButton onClick={CancelData}/>)}
+                    
+                    {(id ==='1')?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>}
+                    {cancel &&(<CancelButton onClick={CancelData}/>)} 
                 </Box>
             </Box>
+
+            {/* Dialog Box*/}
+            <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
+                                                sx: {
+                                                width: 500,       
+                                                height: 250,      
+                                                borderRadius: 3,   
+                                                padding: 2,        
+                                                },
+                                            }}>
+                            <DialogContent className={classes.DialogContent}>
+                                <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
+                            </DialogContent>
+                            <DialogActions sx={{ 
+                                            display: 'flex', 
+                                            justifyContent: 'center'  
+                                        }}>
+                                <Button onClick={handleCancel} className={classes.deleteButton}>
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
+                                    Delete
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
         </>
     )
 }

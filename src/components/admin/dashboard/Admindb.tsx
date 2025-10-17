@@ -34,8 +34,8 @@ const chartdata=[
   {month:'Dec',value:'34'},
 ]
 const carddata=[
-  {id:1,icon:<GroupsIcon sx={{color:"#0A4FA4",fontSize:"30px"}}/>,count:`2,500`,label:'Total Subscribers'},
-  {id:2,icon:<PersonAddIcon sx={{color:"#0A4FA4",fontSize:"30px"}}/>,count:`530`,label:'Training Program Registered'}
+  {id:1,icon:<GroupsIcon sx={{color:"#0A4FA4",fontSize:"40px"}}/>,count:`2,500`,label:'Total Subscribers'},
+  {id:2,icon:<PersonAddIcon sx={{color:"#0A4FA4",fontSize:"40px"}}/>,count:`530`,label:'Training Program Registered'}
 ]
 
 const trainingprogram=[
@@ -44,7 +44,7 @@ const trainingprogram=[
   {id:1,day:'10/07/2025',members:'Total Members Joined',membercount:10},
 ]
 return (
-    <Box>
+    <Box sx={{paddingLeft:'24px',paddingRight:'20px'}}>
     <Box>
      <img src={bannerImage} width="100%"/>   
      {/* cards */}
@@ -56,7 +56,7 @@ return (
         <Box className={classes.topCardcontentBox}>
          {card.icon}
         <Box>
-        <Typography className={classes.topCardcount} variant='h4'>{card.count}</Typography>
+        <Typography className={classes.topCardcount} variant='h3'>{card.count}</Typography>
         <Typography className={classes.topCardlabel}>{card.label}</Typography>  
         </Box>
         </Box>
@@ -75,7 +75,7 @@ return (
         </Typography>
         <Box sx={{ marginLeft: isMobile ? "-35px": 0 }}>
        <ResponsiveContainer width="100%" height={200}>
-           <BarChart data={chartdata} barSize={isMobile?15:20} >
+           <BarChart data={chartdata} barSize={isMobile?15:20} margin={{ left: -20, right: 0, top: 10, bottom: 0 }} >
             <XAxis dataKey="month" axisLine={false} tickLine={false} fontFamily='Inter' fontSize={12}/>
             <YAxis axisLine={false} tickLine={false} fontFamily='Inter' fontSize={12}/>
             <Tooltip />

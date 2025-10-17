@@ -4,7 +4,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import useUserEndwebStyles from "../UserendwebStyles";
 import UserendHeader from "./UserendHeader";
 import UserendHero from "./UserendHero";
 import UserendCorporates from "./UserendCorporates";
@@ -13,7 +12,6 @@ import UserEndabout from "./UserEndabout";
 import UserendWhychoose from "./UserendWhychoose";
 import UserEndAddvideo from "./UserEndAddvideo";
 import UserEndProjects from "./UserEndProjects";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import UserendTestimonials from "./UserendTestimonials";
 import UserendNewsEvents from "./UserendNewsEvents";
@@ -21,11 +19,11 @@ import UserendPricing from "./UserendPricing";
 import UserendDirectors from "./UserendDirectors";
 import UserendGetintouch from "./UserendGetintouch";
 import UserendFooter from "./UserendFooter";
-
-
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import {  ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 const UserEndHome = () => {
 
-const{classes}=useUserEndwebStyles()
+const{classes:aboutus}=useAboutusStyles()
 const navigate=useNavigate()
 
 const homemenudata=[
@@ -49,21 +47,20 @@ const handleBackarrow=()=>{
  navigate('/admin/userend-web')
 }
  return (
-    <Box>
-      <Box className={classes.homeBackarrowbox}>
-      <ArrowBackIcon className={classes.UserendbackArrow}
-       onClick={handleBackarrow}/>
-      <Typography className={classes.userEndHomeTitle}>Home</Typography>
-      </Box>
-      <Box className={classes.UserEndMaincontainerbox}>
+    <Box className={aboutus.AboutUscontainer}>
+      <Box className={aboutus.AboutUsArrowAndHeaderBox}>
+                        <ArrowBack onClick={handleBackarrow}/>
+                        <Typography className={aboutus.AboutUsHeader}>Home</Typography>
+                    </Box>
+      <Box className={aboutus.AccordianBox}>
       {homemenudata.map((menu,index)=>(
-        <Accordion key={index} className={classes.userEndHeaderContainer}>
+        <Accordion key={index} className={aboutus.AccordiaStack}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
           >
-         <Typography component="span" className={classes.accardianTypoMenu}>{menu.menu}</Typography>
+         <Typography component="span" className={aboutus.AccordianText}>{menu.menu}</Typography>
          </AccordionSummary>
          <AccordionDetails>
            {menu.content}
