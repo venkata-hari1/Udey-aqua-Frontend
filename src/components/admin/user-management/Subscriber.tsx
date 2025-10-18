@@ -6,8 +6,8 @@ import Delete_Img from '../../../assets/admin/delete_icon.png'
 import MyPagination from "../utils/MyPagination";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { sortByKey } from '../utils/filter';
-import  SortOrder  from '../utils/filter';
+import { sortByKey } from "../utils/filter";
+import type { SortOrder } from "../utils/filter";
 import { useState } from "react";
 
 const Subscriber = () => {
