@@ -1,7 +1,7 @@
 import { Box, Button, Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material"
 import useUsermanagementStyles from "./UsermanagementStyle"
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import FilterListIcon from '@mui/icons-material/FilterList';
+// import FilterListIcon from '@mui/icons-material/FilterList';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Delete_Img from '../../../assets/admin/delete_icon.png'
 import { useNavigate } from "react-router-dom";
@@ -71,9 +71,9 @@ const toggleSort = () => {
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-    {id:6,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
-     plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
-     payment:'Rs/ 10,000'
+    {id:6,name:'Ravi kumar Vemuri',email:'Ravi676@gmail.com',phone:'91+ 7702256789',address:'21B, Rash Behari, Ballygunge, vizyavada , krisha 700019',
+     plan:'7 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
+     payment:'Rs/ 6,000'
     },
   ]
 
@@ -132,6 +132,8 @@ autoTable(doc, {
 };
 
 
+
+
 return (
     <Box>{/* main container */}
       <Box className={classes.waterButtonsContainer}>{/* buttons container  */}
@@ -148,7 +150,7 @@ return (
      </Box>
      <Box className={classes.rightbuttonscontainer}>
        <Button variant="contained" className={classes.Freshwaterbutton} endIcon={<FileDownloadOutlinedIcon />}  onClick={exportPDF}>Export</Button>
-       <Button variant="outlined" className={classes.BrackMarinebutton} endIcon={<FilterListIcon />}>Filters</Button>
+       <Button variant="outlined" className={classes.BrackMarinebutton}   onClick={toggleSort} >  Filters {sortOrder === 'asc' ? '▲' : '▼'} </Button>
      </Box>
      </Box>{/* buttons container end */}
      <TableContainer component={Paper}>
@@ -156,12 +158,14 @@ return (
           <TableHead >
           <TableRow sx={{border: "1px solid #0A4FA4",
           }}>
-             {tableheading.map((heading)=>(
+              {tableheading.map((heading)=>(
                 <TableCell key={heading.id}align="left"
                 className={classes.tabelHeadingCell}
                 >{heading.label}</TableCell>
              ))}
-            </TableRow>
+             
+
+                    </TableRow>
           </TableHead>
             <TableBody>
             {tableData.map(tdata=>(

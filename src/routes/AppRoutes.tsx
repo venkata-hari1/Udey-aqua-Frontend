@@ -146,7 +146,11 @@ const AppRoutes = () => {
         <Route path='userend-web/userend-technologies/subpage' element={<Addsubpage Section='Technologies'/>}/>   
         <Route path="userend-web/userend-news&events" element={<NewsEvents/>}/>  
         <Route path='userend-web/userend-news&events/subpage' element={<Addsubpage Section='News & Events'/>}/>   
-        <Route path='userend-web/userend-culture/subpage' element={<Culturessubpage />}/>
+        <Route 
+  path='userend-web/userend-culture/subpage' 
+  element={<Culturessubpage title="" setTitle={() => {}} />} 
+/>
+
         <Route path="userend-web/userend-contactus" element={<Contactus/>}/>
         
         <Route path="logout" element={<Logout />} />  
