@@ -8,6 +8,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from 'react-router-dom';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { hasGrayBackground, shouldShowbackArrow, showSearchbox } from '../utils/RouteUtils';
+import ReusableSearch from '../utils/ReusableSearch';
+import React, { useState } from "react";
+
+
+
+
 
 type Iprops={
   open:boolean;
@@ -23,6 +29,8 @@ const path=location.pathname.split('/').pop() ||""
 console.log(path)
 
 const navigate=useNavigate()
+
+  const [searchTerm, setSearchTerm] = useState("");
 //header title
 
 let title="";
@@ -118,6 +126,20 @@ const backarrowHandle=()=>{
  }
 }
 
+const searchPages = [
+  { label: "Home", path: "/admin/userend-web/userend-home" },
+  { label: "About Us", path: "userend-web/userend-aboutus" },
+  { label: "Culture Home", path: "userend-web/userend-culture" },
+  { label: "Training Programs", path: "userend-web/userend-trainingprograms" },
+  { label: "Technologies", path: "userend-web/userend-technologies" },
+  { label: "News & Events", path: "userend-web/userend-news&events" },
+  { label: "Contact Us", path: "userend-web/userend-contactus" },
+];
+
+const handleSearchSelect = (item: { label: string; path: string }) => {
+    setSearchTerm("");
+    navigate(item.path);
+  }
 
 const{classes}=useHeaderStyles()
   return (
@@ -146,23 +168,33 @@ const{classes}=useHeaderStyles()
         
         <Box className={classes.searchBox}>
           {showSearchbox(path)&&
-           <TextField
-            className={classes.headerSearch}
-            size="small"
-            type="search"
-            
-            placeholder="Search"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: '#0A4FA4',fontSize:15 }} />
-                </InputAdornment>
-              ),
-            }}
+           (
+    <ReusableSearch
+      data={searchPages}
+      keys={["label"]}
+      width="100%"
+      onSelect={(item) => navigate(item.path)}
+      renderInput={({ value, onChange }) => (
+        <TextField
+          className={classes.headerSearch} // keep your styles
+          size="small"
+          type="search"
+          placeholder="Search"
+          value={value}
+          onChange={onChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
+              </InputAdornment>
+             ),
+          }}
         />
-          }
-          
-        </Box>
+      )}
+    />
+  )}
+</Box>
+
         </Box>
       </Toolbar>
     </AppBar>

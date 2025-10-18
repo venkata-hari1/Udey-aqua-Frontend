@@ -11,6 +11,9 @@ import Deletepopup from "../utils/Deletepopup";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
+import { sortByKey } from '../utils/filter';
+import type { SortOrder } from '../utils/filter';
+
 
 
 
@@ -22,6 +25,16 @@ const Trainingprograms = () => {
   const [activePage, setActivePage] = useState("Fresh Water");
   const [open, setOpen] = useState(false);
   
+
+
+const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+
+const toggleSort = () => {
+  const newOrder: SortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+  const sortedData = sortByKey(tableData, 'id', newOrder);
+  setTableData(sortedData);
+  setSortOrder(newOrder);
+};
 
   const tableheading=[
     {id:1,label:'S.No'},
@@ -64,7 +77,7 @@ const Trainingprograms = () => {
     },
   ]
 
-
+const [tableData, setTableData] = useState(tablebodydata);
 
 const handleClickOpen = () => {
    setOpen((prev)=>!prev)
@@ -151,7 +164,7 @@ return (
             </TableRow>
           </TableHead>
             <TableBody>
-            {tablebodydata.map(tdata=>(
+            {tableData.map(tdata=>(
               <TableRow key={tdata.id} 
               className={classes.tablebodyRow}
               >

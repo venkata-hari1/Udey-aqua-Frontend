@@ -44,6 +44,8 @@ import {
   StyledRegisterStatDate,
 } from '../styles/dashboard';
 
+
+
 const Dashboard = () => {
   const chartData = [
     { month: 'Jan', value: 40 },
@@ -61,6 +63,8 @@ const Dashboard = () => {
   ];
 
   const maxValue = Math.max(...chartData.map(d => d.value));
+
+
 
   return (
     <StyledDashboardContainer>
