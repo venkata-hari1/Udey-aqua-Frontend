@@ -6,6 +6,9 @@ import Delete_Img from '../../../assets/admin/delete_icon.png'
 import MyPagination from "../utils/MyPagination";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { sortByKey } from '../utils/filter';
+import type { SortOrder } from '../utils/filter';
+import { useState } from "react";
 
 const Subscriber = () => {
 
@@ -17,9 +20,9 @@ const Subscriber = () => {
     {id:1,label:'Action'},
   ]
   const subscriptiondata=[
-    {sno:1,email:'SuryaPrathap@gmail.com',subscriptiontype:'Blog Update',date:'12/07/2025'},
-    {sno:2,email:'SuryaPrathap@gmail.com',subscriptiontype:'Blog Update',date:'12/07/2025'},
-    {sno:3,email:'SuryaPrathap@gmail.com',subscriptiontype:'Blog Update',date:'12/07/2025'},
+    {id:1,email:'Praveen@gmail.com',subscriptiontype:'Blog Update',date:'12/07/2025'},
+    {id:2,email:'SuryaPrathap@gmail.com',subscriptiontype:'Blog Update',date:'03/09/2025'},
+    {id:3,email:'Arjunsai11@gmail.com',subscriptiontype:'Pdf Update',date:'09/01/2025'},
   ]
 const {classes}=useUsermanagementStyles()
 
@@ -30,7 +33,7 @@ const {classes}=useUsermanagementStyles()
 
 
     const tableData = subscriptiondata.map(item => [
-      item.sno,
+      item.id,
       item.email,
       item.subscriptiontype,
       item.date,
@@ -47,11 +50,23 @@ const {classes}=useUsermanagementStyles()
 
     doc.save("Subscribers.pdf");
   };
+
+
+  const [tableData, setTableData] = useState(subscriptiondata);
+    const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+    
+    const toggleSort = () => {
+      const newOrder: SortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+      const sortedData = sortByKey(tableData, 'id', newOrder);
+      setTableData(sortedData);
+      setSortOrder(newOrder);
+    };
+
   return (
    <Box>
        <Box className={classes.rightbuttonsGetinUser}>
             <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} onClick={exportPDF} >Export</Button>
-            <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
+            <Button variant="outlined" className={classes.GetinuserFilter}   onClick={toggleSort} >  Filters {sortOrder === 'asc' ? '▲' : '▼'}</Button>    
        </Box>
     <TableContainer component={Paper}>
            <Table sx={{width:'100%'}} size="medium">
@@ -67,8 +82,8 @@ const {classes}=useUsermanagementStyles()
                 </TableRow>
               </TableHead>
                 <TableBody>
-                {subscriptiondata.map(tdata=>(
-                  <TableRow key={tdata.sno} sx={{
+                {tableData.map(tdata=>(
+                  <TableRow key={tdata.id} sx={{
                     
                     borderTop:'1px solid #0A4FA4',
                    border: "1px solid #0463EE29",   
@@ -79,7 +94,7 @@ const {classes}=useUsermanagementStyles()
                   }}>
                   <TableCell padding="checkbox" >
                    <Checkbox className={classes.trainingCheckbox}/>
-                   {tdata.sno}
+                   {tdata.id}
                     </TableCell >
                     <TableCell>{tdata.email}</TableCell>
                     <TableCell align="left">{tdata.subscriptiontype}</TableCell>

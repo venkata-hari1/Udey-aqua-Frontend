@@ -7,6 +7,10 @@ import MyPagination from "../utils/MyPagination";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
+import { sortByKey } from '../utils/filter';
+import type { SortOrder } from '../utils/filter';
+import { useState } from "react";
+
 
 const GetintouchUsers = () => {
 
@@ -23,10 +27,10 @@ const getinuserdata=[
  {id:1,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
- {id:2,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+ {id:2,name:'Nalamothu Ramya',phone:'91-8123203040',message:'Hi,i want to know about fish farming  programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
- {id:3,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+ {id:3,name:'Vijay nayar',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
 ]
@@ -61,11 +65,21 @@ const exportPDF = () => {
     doc.save("GetinTouchUsers.pdf");
   };
 
+   const [tableData, setTableData] = useState(getinuserdata);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  
+  const toggleSort = () => {
+    const newOrder: SortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    const sortedData = sortByKey(tableData, 'id', newOrder);
+    setTableData(sortedData);
+    setSortOrder(newOrder);
+  };
+
   return (
   <Box>
   <Box className={classes.rightbuttonsGetinUser}>
        <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />}  onClick={exportPDF} >Export</Button>
-       <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
+       <Button variant="outlined" className={classes.GetinuserFilter} onClick={toggleSort} >  Filters {sortOrder === 'asc' ? '▲' : '▼'} </Button>
   </Box>
    <TableContainer component={Paper}>
        <Table sx={{width:'100%'}} size="medium">
@@ -81,7 +95,7 @@ const exportPDF = () => {
           </TableRow>
           </TableHead>
             <TableBody>
-            {getinuserdata.map(tdata=>(
+            {tableData.map(tdata=>(
               <TableRow key={tdata.id} className={classes.tablebodyRow}>
               <TableCell padding="checkbox" align="left" >
                <Checkbox className={classes.trainingCheckbox}/>
