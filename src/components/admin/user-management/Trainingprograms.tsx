@@ -12,7 +12,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
 import { sortByKey } from '../utils/filter';
-import type { SortOrder } from '../utils/filter';
+import  SortOrder  from '../utils/filter';
 
 
 
