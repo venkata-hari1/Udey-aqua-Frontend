@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/material";
+{/*import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/material";
 import useUserEndwebStyles from "../UserendwebStyles";
 import AddIcon from "@mui/icons-material/Add";
 import {
@@ -256,7 +256,7 @@ const handleSectionCancel = (id: string) => {
           </Stack>
         
             <Box className={classes.sectionSeabassBox} key={index}>
-          {/* for lefside box */}
+          {/* for lefside box 
           <Box className={classes.leftsideSectionbox}>
             <Stack className={classes.leftsideSectionbox}>
               <Typography className={classes.titleText}>Image</Typography>
@@ -293,7 +293,7 @@ const handleSectionCancel = (id: string) => {
             </Stack>
           </Box>
 
-          {/* for  rightside box */}
+          {/* for  rightside box *
           <Box>
             <Stack gap={1}>
               <Box>
@@ -336,7 +336,7 @@ const handleSectionCancel = (id: string) => {
        </Box> 
       
       
-      {/* FOR BANNER PART */}
+      {/* FOR BANNER PART 
       {
         bassbanner.map((banner,index)=>{
           return(
@@ -350,10 +350,10 @@ const handleSectionCancel = (id: string) => {
       </Stack>
       <Box>
       
-      {/* for Banner image */}
+      {/* for Banner image *
       <Box className={classes.bannerImagebox}>
         
-        {/* banner left side */}
+        {/* banner left side *
         <Box className={classes.bannerImgboxleft}>
           <Stack className={classes.bannerImageStack}>
             <Typography className={classes.titleText}>Image</Typography>
@@ -376,7 +376,7 @@ const handleSectionCancel = (id: string) => {
          
         </Box>
 
-      {/* banner rightside start */}
+      {/* banner rightside start *
         <Box>
           <Stack direction="column" gap={1}>
            <Box>
@@ -401,9 +401,9 @@ const handleSectionCancel = (id: string) => {
         </Box>
       </Box>
 
-      {/* for Banner upload */}
+      {/* for Banner upload *
       <Box className={classes.bannerUploadbox}>
-        {/* for banner lefside box */}
+        {/* for banner lefside box *
         <Box className={classes.bannerLeftsidebox}>
           <Stack className={classes.banerLeftsideStack}>
             <Typography className={classes.MottoBoxText}>
@@ -427,7 +427,7 @@ const handleSectionCancel = (id: string) => {
           </Stack>
         </Box>
         
-        {/* for  banner rightside box */}
+        {/* for  banner rightside box *
         <Box>
           <Stack className={classes.bannerRightsidestack}>
             <Box>
@@ -466,4 +466,93 @@ const handleSectionCancel = (id: string) => {
   );
 };
 
+export default CultureSeabass;*/}
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { Box, } from '@mui/material';
+import { AddBanner, AddSection, } from '../userEnd-Aboutus/AboutUsButtons';
+import SubSection from '../userEnd-Technologies/subSection';
+import { useState,  } from 'react';
+import Banner from '../userEnd-Technologies/Banner';
+import Hero from '../userEnd-Aboutus/Hero';
+import  Badge  from "@mui/material/Badge";
+
+
+const CultureSeabass=()=>{
+    const {classes} = useAboutusStyles();
+    const [counter, setCounter] = useState<number>(1);
+    const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+    const [banner, setBanner] = useState<{id:string}[]>([]);
+    const [bannercount, setBannerCount] = useState<number>(0);
+    const handleAddSubpage = () => {
+        const newId = `Sub Section-${counter+1}`; // unique id
+        setSubpages((prev) => [...prev, { id: newId }]);
+        setCounter(counter+1)
+    };
+
+    const handleDeleteSubpage = (subId: string) => {
+        setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter-1)
+    }; 
+    const handleAddBanner = () => {
+        const newId = ` Banner-${bannercount+1}`; // unique id
+        setBanner((prev) => [...prev, { id: newId }]);
+        setBannerCount(bannercount+1)
+    };
+
+    const handleDeleteBanner = (subId: string) => {
+        setBanner((prev) => prev.filter((sub) => sub.id !== subId));
+        setBannerCount(counter-1)
+    }; 
+    return(
+        <>
+     
+            <Box className={classes.WhoWeAreContainer}>
+                <Box className={classes.AddSectionBox} sx={{gap:3}}>
+                    <Badge
+                                                        badgeContent={bannercount}
+                                                            sx={{
+                                                                "& .MuiBadge-badge": {
+                                                                backgroundColor: "#0A4FA4",
+                                                                color: "#fff", 
+                                                                },
+                                                            }}
+                                    
+                                                            anchorOrigin={{
+                                                                vertical: "top",
+                                                                horizontal: "right",
+                                                            }}
+                                                    >
+                                                    <AddBanner onClick={handleAddBanner}/>
+                                                    </Badge>
+                                    <Badge
+                                                        badgeContent={counter}
+                                                            sx={{
+                                                                "& .MuiBadge-badge": {
+                                                                backgroundColor: "#0A4FA4",
+                                                                color: "#fff", 
+                                                                },
+                                                            }}
+                                    
+                                                            anchorOrigin={{
+                                                                vertical: "top",
+                                                                horizontal: "right",
+                                                            }}
+                                                    >
+                                                    <AddSection onClick={handleAddSubpage}/>
+                                                    </Badge>
+                    
+                    
+                </Box>
+                
+                <SubSection id='Sub Section-1' accordianId='2' Section='CultureSeabass'/>
+                {subpages.map((sub) => (
+                    <SubSection key={sub.id} id={sub.id} accordianId='3' Section='CultureSeabass' onDelete={() => handleDeleteSubpage(sub.id)} />
+                ))}
+                {banner.map((sub)=>(
+                    <Banner key={sub.id} id={sub.id} accordianId='3' Section='CultureSeabass' onDelete={() => handleDeleteBanner(sub.id)}/>
+                ))}
+            </Box>
+        </>
+    )
+}
 export default CultureSeabass;

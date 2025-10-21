@@ -31,6 +31,7 @@ export const StyledLoginRight = styled(Box)(({ theme }) => ({
   maxWidth: '50%',
   height: '100vh',
   display: 'flex',
+  marginTop:'-50px',
   justifyContent: 'center',
   alignItems: 'center',
   background: 'transparent',
@@ -54,6 +55,7 @@ export const StyledLoginForm = styled(Box)(({ theme }) => ({
   justifyContent: 'flex-start', // allow content to grow from top
   alignItems: 'center',
   borderRadius: '10px',
+  marginTop:'0px',
   gap: theme.spacing(1), // reduced gap for OTP page
   padding: theme.spacing(3),
   boxSizing: 'border-box',
@@ -66,10 +68,10 @@ export const StyledLoginForm = styled(Box)(({ theme }) => ({
 
 // Logo
 export const StyledLoginLogo = styled('img')(() => ({
-  marginTop: '40px',
+  marginTop: '10px',
   height: '150px',
   objectFit: 'contain',
-  marginBottom: '20px',
+  marginBottom: '40px',
   alignSelf: 'center',
 }));
 

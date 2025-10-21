@@ -4,9 +4,9 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 // import FilterListIcon from '@mui/icons-material/FilterList';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Delete_Img from '../../../assets/admin/delete_icon.png'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import MyPagination from "../utils/MyPagination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Deletepopup from "../utils/Deletepopup";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -22,8 +22,12 @@ const Trainingprograms = () => {
   
   const {classes}=useUsermanagementStyles()
   const navigate=useNavigate()
+  const [searchparams] = useSearchParams();
+  const searchQuery = searchparams.get("search")
   const [activePage, setActivePage] = useState("Fresh Water");
   const [open, setOpen] = useState(false);
+  
+  
   
 
 
@@ -50,7 +54,7 @@ const toggleSort = () => {
     {id:10,label:'Action'},
   ]
 
- const tablebodydata=[
+ const tablebodydata1=[
     {id:1,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
@@ -77,7 +81,7 @@ const toggleSort = () => {
     },
   ]
 
-const [tableData, setTableData] = useState(tablebodydata);
+const [tableData, setTableData] = useState(tablebodydata1);
 
 const handleClickOpen = () => {
    setOpen((prev)=>!prev)
@@ -90,7 +94,7 @@ const handleClickOpen = () => {
 
   const headers = tableheading .filter(h => h.label !== 'Action') 
     .map(h => h.label);
-  const rows = tablebodydata.map(row => [
+  const rows = tablebodydata1.map(row => [
     row.id,
     row.name,
     row.email,

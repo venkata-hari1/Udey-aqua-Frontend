@@ -1,10 +1,12 @@
-import { Box, Button, Card, CardContent, Typography } from "@mui/material"
+import { Box, Button, Card, CardContent, Typography,CircularProgress } from "@mui/material"
 import useProfileStyles from "./ProfileStyles"
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileEmailpopup from "../utils/ProfileEmailpopup";
 import Changepasswordpopup from "../utils/Changepasswordpopup";
 import { CancelButton, SaveButton} from '../../admin/userEnd-web/userEnd-Aboutus/AboutUsButtons';
 import {useAboutusStyles} from '../../admin/userEnd-web/userEnd-Aboutus/AboutusStyles';
+import { showToast } from "../../admin/utils/Toast";
+
 
 const Profile = () => {
   
@@ -17,6 +19,7 @@ const{classes}=useProfileStyles();
 const{classes:aboutus}=useAboutusStyles();  
 //profile email open
 const [open,setOpen]=useState(false)
+const [loading, setLoading] = useState(false)
 
 const handleClickOpen=()=>{
    setOpen(prev=>!prev)
@@ -26,6 +29,17 @@ const handleClickOpen=()=>{
 const [pwdOpen,setpwdOpen]=useState(false)
 const handlePsswordOpen=()=>{
   setpwdOpen(prev=>!prev)
+}
+const handleSave = () => {
+    setLoading(true);
+    // simulate API save delay
+    setTimeout(() => {
+      setLoading(false);
+      showToast(true, "Updated successfully!");
+    }, 2000);
+  };
+const handleCancel=()=>{
+  showToast(true, "Canceled Successfully");
 }
 return (
     <Box sx={{paddingLeft:'24px', paddingRight:'24px'}}>
@@ -47,10 +61,19 @@ return (
           {pwdOpen&&<Changepasswordpopup pwdopen={pwdOpen} handlepsswordopen={handlePsswordOpen} />}
         </Box>
       ))}
-      <Box className={aboutus.SeveandCancelBox} >
-        <SaveButton />
-        <CancelButton />
-      </Box>
+      
+        {loading ? 
+        <Box className={aboutus.SeveandCancelBox} >
+          <CircularProgress/>
+        </Box>:
+        <Box className={aboutus.SeveandCancelBox} >
+          <SaveButton onClick={handleSave} />
+        <CancelButton onClick={handleCancel}/>
+        </Box>}
+       
+                 
+                  
+      
     </CardContent>
     
     </Card>    

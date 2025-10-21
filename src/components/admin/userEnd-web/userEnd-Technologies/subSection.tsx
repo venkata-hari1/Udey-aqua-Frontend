@@ -173,7 +173,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                                     }}
 >
                                                     <embed
-                                                        src={URL.createObjectURL(pdffile[index])} // string URL from createObjectURL
+                                                        src={pdf[index]} // string URL from createObjectURL
                                                         type="application/pdf"
                                                         className={classes.ImagePic} 
                                                         style={{

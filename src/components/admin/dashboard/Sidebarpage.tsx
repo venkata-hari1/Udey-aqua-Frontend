@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material"
-import Logo from '../../../assets/admin/logo.png';
+import Logo from '../../../assets/Logo (2).png';
 import useSidebarStyles from "../styles/SidebarStyles";
 import {useState } from "react";
 import { useNavigate } from "react-router-dom";
