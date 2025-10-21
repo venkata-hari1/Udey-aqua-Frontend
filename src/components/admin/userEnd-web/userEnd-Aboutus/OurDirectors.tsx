@@ -45,9 +45,9 @@ const OurDirectors=({id,accordianId,Section}:HeroProps)=>{
             <Box>
                 
             </Box>
-            <Advisors id='Sub Section-1' accordianId={accordianId} Section={Section}  />
+            <Advisors id='Sub Section-1' accordianId={accordianId} Section={Section} title='About us' />
             {subpages.map((sub) => (
-                    <Advisors key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Advisors key={sub.id} id={sub.id} accordianId={id} Section={Section} title='About us'  onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))} 
          </Box>
         </>

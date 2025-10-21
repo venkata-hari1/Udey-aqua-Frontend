@@ -1,4 +1,6 @@
-import { Box,Stack,Typography } from "@mui/material"
+
+
+{/*import { Box,Stack,Typography } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import CancelIcon from '@mui/icons-material/Cancel';
 import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages, TextFieldManyRows, ErrormsgContent, ErrorName, TextFieldSingleRow, EditButton, UserEndSaveButton } from "./UserEndCommonButtons";
@@ -136,4 +138,12 @@ return (
   )
 }
 
-export default UserendFooter
+export default UserendFooter */}
+import Advisors from "../userEnd-Aboutus/Advisors"
+const UserendFooter = () => {
+  return(
+    <Advisors id="Sub Section-1" accordianId="14" Section="Footer" title='Home' />
+  )
+}
+
+export default UserendFooter;

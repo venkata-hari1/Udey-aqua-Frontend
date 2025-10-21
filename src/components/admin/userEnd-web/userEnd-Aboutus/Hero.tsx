@@ -73,10 +73,10 @@ type HeroProps={
     return(
         <>
             <Box className={(accordianId == '1')? classes.WhoWeAreContainer : undefined}>
-                {(accordianId !='1'  )&& (                
+                {(accordianId !='1' && Section !="Why chhoose us" && Section !="About us" && id !== '1' )&& (                
                         <Box className={classes.whoWeareHeaderbox}>
                             <Typography className={classes.HeaderText}>
-                               { title=='news&events'? 'Highlight Section 1' : title ==='Home'?id: 'Header Section'}
+                               { title=='news&events'? 'Highlight Section 1' : title ==='Home'? id: 'Header Section'}
                             </Typography>
                             <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:2}}>
                                  <EditButton error={!prevData} onClick={()=>{ setCancel(true);
@@ -86,7 +86,7 @@ type HeroProps={
                             </Box>
                         </Box>
                     )}
-                {(id === '1') && (
+                {(id === '1' || (Section =="Why chhoose us" || Section =="About us") ) && (
                     <Box className={classes.deleteButtonBox}>
                         <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
                             setEdit(true)
@@ -140,7 +140,7 @@ type HeroProps={
                     </Stack>
                     <Box sx={{gap:10}}>
                         <Typography className={classes.mytext}>
-                            {title ==='Home'?'Heading Content' : 'subtitle'}
+                            {title ==='Home' && Number(accordianId)<5 ?'Heading Content' : title =='Home'  && Number(accordianId)>=5? 'Content': 'subtitle'}
                         </Typography>
                         <TextField 
                             fullWidth

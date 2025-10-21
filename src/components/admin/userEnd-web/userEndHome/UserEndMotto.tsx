@@ -1,219 +1,45 @@
+import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import useUserEndwebStyles from "../UserendwebStyles";
-import AddIcon from "@mui/icons-material/Add";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { v4 as uuidv4 } from "uuid";
-import {
-  EditButton,
-  ErrorMessages,
-  ErrormsgContent,
-  TextFieldManyRows,
-  Uploadbutton,
-  UserendEditandDeletebuttons,
-  UserEndSaveButton,
-  UserEndSaveCancelButtons,
-  } from "./UserEndCommonButtons";
-  import { HeadingContentValidation } from "../../utils/Validations";
-import { useState } from "react";
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import Hero from "../userEnd-Aboutus/Hero";
+import { useState,} from 'react';
+import Badge from "@mui/material/Badge";
 const UserEndMotto = () => {
   const { classes } = useUserEndwebStyles();
-  
-  const[editmotoId,setMotoId]=useState<string |null>(null)
-  const [mottobox, setMottobox] = useState([
-    {
-      id: uuidv4(),
-      boxname: "Box1",
-      image: "",
-      content: "",
-      imgerror: "",
-      contenterror: "",
-      isSaved:false,
-    },
-    {
-      id: uuidv4(),
-      boxname: "Box2",
-      image: "",
-      content: "",
-      imgerror: "",
-      contenterror: "",
-      isSaved:false,
-    },
-  ]);
-
-  const handleAddMottobox = () => {
-    const newmottobox = {
-      id: uuidv4(),
-      boxname: `Box${mottobox.length + 1}`,
-      image: "",
-      content: "",
-      imgerror: "",
-      contenterror: "",
-      isSaved:false,
-    };
-    setMottobox([...mottobox, newmottobox]);
+  const { classes:aboutus } =useAboutusStyles ();
+  const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+  const [counter, setCounter] = useState<number>(1);
+  const handleAddSubpage = () => {
+  const newId = `Box-${counter+1}`; // unique id
+    setSubpages((prev) => [...prev, { id: newId }]);
+    setCounter(counter +1)
   };
-
-  const onDelete = (id: string) => {
-    const updateBoxes = mottobox.filter((box) => box.id !== id);
-    setMottobox(updateBoxes);
-    console.log("after deletion", updateBoxes);
+  const handleDeleteSubpage = (subId: string) => {
+    setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+    setCounter(counter -1)
   };
-
-  const handleUpload = (id: string, file: File) => {
-    const imageUrl = URL.createObjectURL(file);
-    const updateBoxes = mottobox.map((box) =>
-      box.id === id ? { ...box, image: imageUrl,imgerror:"",isSaved:false } : box
-    );
-    setMottobox(updateBoxes);
-  };
-
-  const handleRemoveImage = (id: string) => {
-    const updateBoxes = mottobox.map((box) =>
-      box.id === id ? { ...box, image: "" } : box
-    );
-    setMottobox(updateBoxes);
-  };
-
-  const handleContentchange = (id: string, value: string, error: string) => {
-    const updateBoxes = mottobox.map((box) =>
-      box.id === id
-        ? { ...box, content: value, contenterror: error,isSaved:false }
-        : box
-    );
-    setMottobox(updateBoxes);
-    console.log("updated slide", value);
-  };
-
-  //validation
-  const handleImageError = (id: string, msg: string) => {
-    setMottobox((prev) =>
-      prev.map((box) =>
-        box.id === id ? { ...box, imgerror: msg, isSaved:false } : box
-      )
-    );
-  };
-
- const sliceEdit=(id:string)=>{
-   const savedBox=localStorage.getItem(`motobox${id}`) 
-    if(savedBox){
-      const parsedBox=JSON.parse(savedBox);
-      setMottobox((prev)=>
-        prev.map((box)=>
-        box.id===id ?{...box,...parsedBox,isSaved:false}:box)
-       )
-   }
-   setMotoId(id);
-}
-const handleSave = (id:string) => {
-   const boxTosave= mottobox.find((box)=>box.id===id)  
-   if(boxTosave){
-    localStorage.setItem(`motobox${id}`,JSON.stringify(boxTosave))
-   }
-  setMottobox((prev)=>
-  prev.map((box)=>
-  box.id===id ? {...box,isSaved:true}:box
-  )
-);
-setMotoId(null);
-};
-
-const onCancel=(id:string)=>{
-  const savedBox = localStorage.getItem(`motobox${id}`);
-  if(savedBox){
-    const parsedBox = JSON.parse(savedBox);
-    setMottobox((prev) =>
-      prev.map((box) =>
-        box.id === id ? { ...box, ...parsedBox, isSaved: true } : box
-      )
-    );
-  }
-  setMotoId(null)
-}
   return (
-    <Box>
-      <Box className={classes.useHerocontainer}>
-        <Box className={classes.addingButtonBox}>
+    <>
+    <Box className={aboutus.WhoWeAreContainer}>
+      <Box className={classes.addingButtonBox}>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             className={classes.AddingButton}
-            onClick={handleAddMottobox}
+            onClick={handleAddSubpage}
           >
             Add Motto
           </Button>
         </Box>
-
-        {mottobox.map((box, index) => {
-          const motoboxSaveDisabled =
-            !box.content || !box.image || !!box.contenterror || !!box.imgerror ||box.isSaved;
-            return(
-            <Box mt={2} key={index}> 
-            <Stack className={classes.slideAndButtons}>
-              <Typography className={classes.MottoBoxText}>
-                {box.boxname}
-              </Typography>
-              {index===0 ?<EditButton sliceEdit={()=>sliceEdit(box.id)}
-                disabled={!box.isSaved}/>: 
-               <UserendEditandDeletebuttons 
-                message={`Are you sure want to delete ${box.boxname} ?`} 
-                onDelete={() => onDelete(box.id)}
-                sliceEdit={()=>sliceEdit(box.id)}
-                disabled={!box.isSaved}/>
-               }
-              
-              
-            </Stack>
-
-            <Stack className={classes.Uploadandheadingbox}>
-              <Stack className={classes.UploadImageStack}>
-                <Typography className={classes.titleText}>Image</Typography>
-
-                <Uploadbutton type="image"
-                  onUpload={(file) => handleUpload(box.id, file)}
-                  onError={(msg) => handleImageError(box.id, msg)}
-                />
-                {box.image && (
-                  <Box className={classes.herouploadImageBox}>
-                    <img src={box.image} className={classes.herouploadImage} />
-                    <CancelIcon
-                      className={classes.cancelImgIcon}
-                      onClick={() => handleRemoveImage(box.id)}
-                    />
-                  </Box>
-                )}
-                {box.imgerror&&  <ErrorMessages message={box.imgerror}/>}
-               </Stack>
-              <Stack gap={1}>
-                <Typography className={classes.titleText}>
-                  Heading Content
-                </Typography>
-                <TextFieldManyRows 
-                value={box.content}  
-                onChange={(value, error) =>
-                handleContentchange(box.id, value, error)
-                    }
-                   validationFn={HeadingContentValidation} 
-                   disabled={box.isSaved} />
-                <ErrormsgContent message={box.contenterror}/>
-                </Stack>
-              </Stack>
-          {editmotoId===box.id ? <UserEndSaveCancelButtons onSave={()=>handleSave(box.id)} 
-          onCancel={()=>onCancel(box.id)}
-          disabled={motoboxSaveDisabled}/> : 
-          <UserEndSaveButton onSave={()=>handleSave(box.id)}
-          disabled={motoboxSaveDisabled}/>}
-         
-            {index !== mottobox.length - 1 && (
-              <Divider className={classes.heroDivider} />
-            )}
-          </Box>
-           ) 
-          }
-        )}
-
+        <Box>
+          <Hero id='1' accordianId='4' Section='Out motto' title='Home'/>
+        </Box>
+        {subpages.map((sub) => (
+          <Hero key={sub.id} id={sub.id}  accordianId='4' Section='Out motto' title='Home' ondelete={() => handleDeleteSubpage(sub.id)} />
+        ))}
       </Box>
-    </Box>
-  );
+    </>
+  )
 };
-
 export default UserEndMotto;

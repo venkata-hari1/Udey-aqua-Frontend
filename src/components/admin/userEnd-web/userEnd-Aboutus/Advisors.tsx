@@ -9,9 +9,10 @@ type AdvisorProps={
     id:string;
     accordianId:string;
     Section:string;
+    title:string;
     onDelete?: () => void;
 }
-const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
+const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -130,8 +131,14 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
     }
     return(
         <>
-      <Box className={classes.whoWeareHeaderbox}>
-        <Select
+        {title =='Home' &&
+        <Box sx={{display:"flex", flexDirection:'row', justifyContent:"flex-end",gap:2}} >
+          <EditButton error={ Edit} onClick={()=> {setCancel(true);
+            setEdit(true)
+          }}/>
+        </Box>}
+      { title=='About us' &&<Box className={classes.whoWeareHeaderbox}>
+         <Select
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
           IconComponent={KeyboardArrowDownRoundedIcon}
@@ -149,13 +156,13 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                 </MenuItem>
             ))}
         </Select>
-        <Box display="flex" justifyContent="flex-end" gap={2}>
+        <Box sx={{display:"flex", flexDirection:'row', justifyContent:"flex-end",gap:2}} >
           <EditButton error={ Edit} onClick={()=> {setCancel(true);
             setEdit(true)
           }}/>
           {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
         </Box>
-      </Box>
+      </Box>}
       <Box className={classes.myuploadandheadingbox}>
         <Stack className={classes.OurDirectorsUploadStack}>
                     <Typography className={classes.mytext}>
@@ -217,9 +224,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                     FormHelperTextProps={{
                                 className: (name.length >= 3 && name.length < 200) ? classes.greyText : classes.helperText
                             }}/>
-                        <Typography className={classes.mytext}>
-                            role
-                        </Typography>
+                        { title ==='About us ' && <Typography className={classes.mytext}>role</Typography>}
+                        { accordianId ==='14' && <Typography className={classes.mytext}>Email</Typography>}
+                        {  ( accordianId ==='13') && <Typography className={classes.mytext}>Phone</Typography>}
                         <TextField className={classes.myTextFleid}
                                     value={role}
                                     onChange={(e)=>{setRole(e.target.value);
@@ -229,9 +236,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                     FormHelperTextProps={{
                                 className: (role.length >= 3 && role.length < 200) ? classes.greyText : classes.helperText
                             }}/>
-                        <Typography className={classes.mytext}>
-                            content
-                        </Typography>
+                        { title ==='About us ' && <Typography className={classes.mytext}>Content</Typography>}
+                        { (accordianId ==='13') && <Typography className={classes.mytext}>Message</Typography>}
+                        { ( accordianId ==='14') && <Typography className={classes.mytext}>Address</Typography>}
                         <TextField 
                             fullWidth
                             multiline

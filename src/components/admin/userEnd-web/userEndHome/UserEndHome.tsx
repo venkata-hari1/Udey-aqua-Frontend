@@ -26,21 +26,21 @@ const UserEndHome = () => {
 const{classes:aboutus}=useAboutusStyles()
 const navigate=useNavigate()
 
-const homemenudata=[
-   {id:1,menu:"Header",content:<UserendHeader />} ,
-   {id:2,menu:"Hero Section",content:<UserendHero />} ,
-   {id:3,menu:"Our Corporates",content:<UserendCorporates />} ,
-   {id:4,menu:"Our Motto",content:<UserEndMotto />} ,
-   {id:5,menu: "About Us",content:<UserEndabout />} ,
-   {id:6,menu:"Why Choose Us",content:<UserendWhychoose />} ,
-   {id:7,menu:"Add Video",content:<UserEndAddvideo />} ,
-   {id:8,menu:"Our Projects",content:<UserEndProjects />} ,
-   {id:9,menu:"Testimonials",content:<UserendTestimonials />} , 
-   {id:10,menu:"News & Events",content:<UserendNewsEvents />} , 
-   {id:11,menu:"Pricing",content:<UserendPricing />} , 
-   {id:12,menu:"Our Directors & Advisors",content:<UserendDirectors />} ,
-   {id:13,menu:"Get In Touch",content:<UserendGetintouch />} ,  
-   {id:14,menu:"Footer",content:<UserendFooter />}, 
+const AccordianData=[
+   {id:1,menu:"Header",content:UserendHeader} ,
+   {id:2,menu:"Hero Section",content:UserendHero } ,
+   {id:3,menu:"Our Corporates",content:UserendCorporates} ,
+   {id:4,menu:"Our Motto",content:UserEndMotto } ,
+   {id:5,menu: "About Us",content:UserEndabout } ,
+   {id:6,menu:"Why Choose Us",content:UserendWhychoose } ,
+   {id:7,menu:"Add Video",content:UserEndAddvideo} ,
+   {id:8,menu:"Our Projects",content:UserEndProjects } ,
+   {id:9,menu:"Testimonials",content:UserendTestimonials } , 
+   {id:10,menu:"News & Events",content:UserendNewsEvents } , 
+   {id:11,menu:"Pricing",content:UserendPricing } , 
+   {id:12,menu:"Our Directors & Advisors",content:UserendDirectors } ,
+   {id:13,menu:"Get In Touch",content:UserendGetintouch } ,  
+   {id:14,menu:"Footer",content:UserendFooter }, 
 ]
 
 const handleBackarrow=()=>{
@@ -49,24 +49,24 @@ const handleBackarrow=()=>{
  return (
     <Box className={aboutus.AboutUscontainer}>
       <Box className={aboutus.AboutUsArrowAndHeaderBox}>
-                        <ArrowBack onClick={handleBackarrow}/>
-                        <Typography className={aboutus.AboutUsHeader}>Home</Typography>
-                    </Box>
+        <ArrowBack onClick={handleBackarrow}/>
+        <Typography className={aboutus.AboutUsHeader}>Home</Typography>
+      </Box>
       <Box className={aboutus.AccordianBox}>
-      {homemenudata.map((menu,index)=>(
-        <Accordion key={index} className={aboutus.AccordiaStack}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-          >
-         <Typography component="span" className={aboutus.AccordianText}>{menu.menu}</Typography>
-         </AccordionSummary>
-         <AccordionDetails>
-           {menu.content}
-         </AccordionDetails>
-         </Accordion>
-        ))}
+      {AccordianData.map((item)=>{
+        const Component=item.content
+        return(
+        <Accordion key={item.id} className={aboutus.AccordiaStack}>
+           <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+              <Typography className={aboutus.AccordianText}>{item.menu}</Typography>
+           </AccordionSummary>
+                <AccordionDetails>
+                  <Component  />
+                </AccordionDetails>
+        </Accordion>
+        );
+        })
+        }
         </Box>
      </Box>
   )

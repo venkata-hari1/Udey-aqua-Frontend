@@ -21,6 +21,7 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
     };
     const handleDeleteSubpage = (subId: string) => {
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter -1)
     };
     return(
         <>
