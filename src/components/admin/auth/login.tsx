@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import bgimg from '../../../assets/admin/Group 39739.png';
-import logo from '../../../assets/admin/logo.png';
+import logo from '../../../assets/Logo (2).png';
 import emailIconPng from '../../../assets/admin/mail.png';
 import lockIconPng from '../../../assets/admin/lock.png';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';

@@ -1,6 +1,6 @@
 import { ListItemIcon, ListItemText, Grid} from '@mui/material';
 // Import image paths
-import Logo from '../../../assets/admin/logo.png';
+import Logo from '../../../assets/Logo (2).png';
 import LogoutIcon from '../../../assets/admin/ri_logout-circle-r-line.png';
 import DashboardImg from '../../../assets/admin/mage_dashboard.png'; // Renamed to avoid conflict with component naming convention
 import WebImg from '../../../assets/admin/icon-park-outline_editor (1).png'; // Renamed

@@ -1,12 +1,13 @@
 import { Box,Button,Divider, Stack, TextField, Typography,} from "@mui/material"
 import {EditButton, ErrorMessages, ErrormsgContent, ErrormsgTitle, TextFieldManyRows, TextFieldSingleRow, Uploadbutton, UserendEditandDeletebuttons, UserEndSaveButton, UserEndSaveCancelButtons } from "../userEndHome/UserEndCommonButtons"
 import { nameValidation } from "../../utils/Validations"
-import useUserEndwebStyles from "../UserendwebStyles"
-import CancelIcon from '@mui/icons-material/Cancel';
-import fishImg from './../../../../assets/admin/fishImg.jpg';
-import AddIcon from '@mui/icons-material/Add';
+import useUserEndwebStyles from "../UserendwebStyles";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Hero from "../userEnd-Aboutus/Hero";
+import { AddSection } from "../userEnd-Aboutus/AboutUsButtons";
+import Subsection from '../userEnd-Aboutus/Subsection';
+import Badge from "@mui/material/Badge";
 
 interface CulturessubpageProps {
   title: string;
@@ -31,36 +32,21 @@ const[subpage,]=useState(
     titleerror:''
   }
 )
-const [subsection,setSubsection]=useState([{
-  id:uuidv4(),
-  sectionname:`Subsection1`,
-  name:'Image',
-  image: "",
-  sectiontitle:'',
-  content: "",
-  imgerror: "",
-  contenterror: "",
-}])
+const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+const [counter, setCounter] = useState<number>(1);
 
-const handleAddsection=()=>{
-  const newsection={id:uuidv4(),
-  sectionname:`Subsection${subsection.length+1}`,
-  name:'Image',
-  image: "",
-  sectiontitle:'',
-  content: "",
-  imgerror: "",
-  contenterror: "", }
-
-  setSubsection([...subsection,newsection])
- }
+const handleAddSubpage = () => {
+        const newId = `Sub Section-${counter+1}`; 
+        setSubpages((prev) => [...prev, { id: newId }]);
+        setCounter(counter+1)
+};
 
 
 
-const onDelete=(id:string)=>{
- const updatedsection=subsection.filter((sub)=>sub.id!==id)
- setSubsection(updatedsection) 
-}
+const handleDeleteSubpage = (subId: string) => {
+        setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter-1)
+    }; 
 
 const handleSave=()=>{
 }
@@ -92,7 +78,7 @@ return(
          
         <Divider className={classes.heroDivider}/>
          {/* 2nd section */}
-          <Box sx={{display:'flex', justifyContent:'space-between',mt:2}}>
+          {/*<Box sx={{display:'flex', justifyContent:'space-between',mt:2}}>
             <Typography className={classes.MottoBoxText}>Hero Section</Typography>
             <EditButton sliceEdit={()=>handleEdit()}/>
          </Box>
@@ -114,80 +100,34 @@ return(
               </Box>
          </Box>
          <UserEndSaveCancelButtons onSave={handleSave} 
-                onCancel={handleCancel} />
+                onCancel={handleCancel} />*/}
+        <Hero/>
          <Divider className={classes.heroDivider}/>
          <Box>
         <Box display="flex" justifyContent="end" mt={2} mb={2}>    
-        <Button  variant="contained" className={classes.addSubpagebutton} startIcon={<AddIcon />}
+        {/*<Button  variant="contained" className={classes.addSubpagebutton} startIcon={<AddIcon />}
         onClick={handleAddsection}>
           Add Section
-        </Button>
+        </Button>*/}
+        <Badge
+          badgeContent={counter}
+          sx={{
+              "& .MuiBadge-badge": {
+              backgroundColor: "#0A4FA4",
+              color: "#fff", 
+              },
+          }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}>
+            <AddSection onClick={handleAddSubpage}/>
+          </Badge> 
         </Box>
-        {subsection.map((sub,index)=>{
-          return (
-            <>
-            <Box mt={2}>
-            <Stack className={classes.newsectionStack} key={index}>
-            <Typography className={classes.MottoBoxText}>{sub.sectionname}</Typography>
-            {index===0 ? <EditButton sliceEdit={()=>console.log("edit")}/>:
-             <UserendEditandDeletebuttons 
-             sliceEdit={()=>console.log("edit")}
-             message={`Are you sure want to delete ${sub.name} ?`} 
-             onDelete={() => onDelete(sub.id)}/> 
-             }
-            </Stack>
-            <Box className={classes.sectionSeabassBox} >
-                   {/* for lefside box */}
-                   <Box className={classes.leftsideSectionbox}>
-                     <Stack className={classes.leftsideSectionbox}>
-                       <Typography className={classes.titleText}>{sub.name}</Typography>
-                       <Uploadbutton onUpload={() =>console.log("")}/>
-                       <Box className={classes.herouploadImageBox1}>
-                         <img src={fishImg} className={classes.herouploadImage} alt="fish image"/>
-                         <CancelIcon className={classes.cancelImgIcon} />
-                       </Box>
-                       <Typography className={classes.errorUpload}>
-                         *Please upload the sponsor logo in landscape format (Preferred
-                         size: 300px width × 100px height)
-                         <Typography className={classes.errorUpload}>
-                           Image Must be 5 MB
-                         </Typography>
-                       </Typography>
-                     </Stack>
-                    </Box>
-         
-                   {/* for  rightside box */}
-                   <Box>
-                     <Stack gap={1}>
-                       <Box>
-                       <Typography className={classes.titleText}>Title</Typography>
-                       <TextField
-                         size="small"
-                         className={classes.textfiledTestimonialblog}
-                       />
-                       <ErrormsgTitle />
-                       </Box>
-                       <Box>
-                       <Typography className={classes.titleText}>Content</Typography>
-                       <TextField
-                         className={classes.heroTextfiled}
-                         fullWidth
-                         multiline
-                         minRows={4}
-                       />
-                       <ErrormsgContent />
-                      </Box> 
-                     </Stack>
-                   </Box>
-            </Box>
-              <UserEndSaveCancelButtons onSave={handleSave} 
-                onCancel={handleCancel} />
-          <Divider className={classes.heroDivider}/>
-          <UserEndSaveButton onSave={subpageSave}/>
-          </Box>
-            </>
-          )
-        })}
+        <Subsection id='Sub Section-1' accordianId='custom' Section='Cultures' title='Cultures'/>
+       {subpages.map((sub) => (
+          <Subsection key={sub.id} id={sub.id} accordianId='custom' Section='Cultures' title='Cultures' onDelete={() => handleDeleteSubpage(sub.id)} />
+        ))}
     
            </Box>
            </Box>

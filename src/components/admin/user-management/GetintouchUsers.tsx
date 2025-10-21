@@ -11,6 +11,7 @@ import { sortByKey } from '../utils/filter';
 import type { SortOrder } from '../utils/filter';
 
 import { useState } from "react";
+import { getinuserdata } from "../utils/data";
 
 
 const GetintouchUsers = () => {
@@ -24,7 +25,7 @@ const getinUserheading=[
  {id:6,label:'Action'} 
 ]
 
-const getinuserdata=[
+const getinuserdata1=[
  {id:1,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },

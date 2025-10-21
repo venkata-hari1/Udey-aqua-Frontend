@@ -13,6 +13,8 @@ export const showToast = (isSuccess: boolean, message: string) => {
         pauseOnHover: true,
         theme:'colored',
         style: {
+          backgroundColor: "#0A4FA4", 
+          color: "#fff", 
           fontSize: "14px",
           fontWeight: 600,
         },

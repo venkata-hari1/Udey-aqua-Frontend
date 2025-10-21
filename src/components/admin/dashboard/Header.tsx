@@ -10,6 +10,7 @@ import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { hasGrayBackground, shouldShowbackArrow, showSearchbox } from '../utils/RouteUtils';
 import ReusableSearch from '../utils/ReusableSearch';
 import React, { useState } from "react";
+import { tablebodydata } from '../utils/data';
 
 
 
@@ -127,9 +128,10 @@ const backarrowHandle=()=>{
 }
 
 const searchPages = [
-  { label: "Home", path: "/admin/userend-web/userend-home" },
+  
   { label: "About Us", path: "userend-web/userend-aboutus" },
   { label: "Culture Home", path: "userend-web/userend-culture" },
+  { label: "Home", path: "/admin/userend-web/userend-home" },
   { label: "Training Programs", path: "userend-web/userend-trainingprograms" },
   { label: "Technologies", path: "userend-web/userend-technologies" },
   { label: "News & Events", path: "userend-web/userend-news&events" },
@@ -142,6 +144,7 @@ const handleSearchSelect = (item: { label: string; path: string }) => {
   }
 
 const{classes}=useHeaderStyles()
+
   return (
     <AppBar position="static" className={classes.headerAppbar} style={{background:hasGrayBackground(path)}}>
       <Toolbar className={classes.headerToolbar}>
@@ -167,32 +170,60 @@ const{classes}=useHeaderStyles()
         </Box>    
         
         <Box className={classes.searchBox}>
-          {showSearchbox(path)&&
-           (
-    <ReusableSearch
-      data={searchPages}
-      keys={["label"]}
-      width="100%"
-      onSelect={(item) => navigate(item.path)}
-      renderInput={({ value, onChange }) => (
-        <TextField
-          className={classes.headerSearch} // keep your styles
-          size="small"
-          type="search"
-          placeholder="Search"
-          value={value}
-          onChange={onChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
-              </InputAdornment>
-             ),
-          }}
-        />
-      )}
-    />
-  )}
+          {showSearchbox(path)&& path == 'dashboard' &&
+                (<ReusableSearch
+                  data={searchPages}
+                  keys={["label"]}
+                  width="100%"
+                  onSelect={(item) => navigate(item.path)}
+                  renderInput={({ value, onChange }) => (
+                    <TextField
+                      className={classes.headerSearch} // keep your styles
+                      size="small"
+                      type="search"
+                      placeholder="Search"
+                      value={value}
+                      onChange={onChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                />)
+            }
+          
+          {/* user management */}
+          {showSearchbox(path)&& path == 'user-management' &&
+                (<ReusableSearch
+                  data={tablebodydata}
+                  keys={['name','availability','address']}
+                  width="100%"
+                  onSelect={(item) => navigate('/user-management',{state:{user:item}})}
+                  renderInput={({ value, onChange }) => (
+                    <TextField
+                      className={classes.headerSearch} // keep your styles
+                      size="small"
+                      type="search"
+                      placeholder="Search"
+                      value={value}
+                      onChange={onChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                 
+                />)
+            }
+  
 </Box>
 
         </Box>
