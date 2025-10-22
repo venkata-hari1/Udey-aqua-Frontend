@@ -11,8 +11,9 @@ import Deletepopup from "../utils/Deletepopup";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
-import { sortByKey } from "../utils/filter";
-import type { SortOrder } from "../utils/filter";
+import  { sortByKey } from "../utils/Filter"
+import type { SortOrder } from "../utils/Filter";
+
 
 
 
@@ -26,6 +27,8 @@ const Trainingprograms = () => {
   const searchQuery = searchparams.get("search")
   const [activePage, setActivePage] = useState("Fresh Water");
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const searchValue = location.state?.searchValue || "";
   
   
   
@@ -39,6 +42,8 @@ const toggleSort = () => {
   setTableData(sortedData);
   setSortOrder(newOrder);
 };
+
+
 
   const tableheading=[
     {id:1,label:'S.No'},

@@ -24,6 +24,8 @@ type Iprops={
 const Header = ({toggleDrawer}:Iprops) => {
 const theme = useTheme();
 const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const [searchTerm, setSearchTerm] = useState("");
+
 
 const location=useLocation()
 const path=location.pathname.split('/').pop() ||""
@@ -31,7 +33,7 @@ console.log(path)
 
 const navigate=useNavigate()
 
-  const [searchTerm, setSearchTerm] = useState("");
+ 
 //header title
 
 let title="";
@@ -202,10 +204,10 @@ const{classes}=useHeaderStyles()
                   data={tablebodydata}
                   keys={['name','availability','address']}
                   width="100%"
-                  onSelect={(item) => navigate('/user-management',{state:{user:item}})}
+                  onSelect={(item) => navigate('/user-management/',{state:{user:item}})}
                   renderInput={({ value, onChange }) => (
                     <TextField
-                      className={classes.headerSearch} // keep your styles
+                      className={classes.headerSearch} 
                       size="small"
                       type="search"
                       placeholder="Search"
