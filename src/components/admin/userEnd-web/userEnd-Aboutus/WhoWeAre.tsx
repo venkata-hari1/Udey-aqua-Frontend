@@ -55,4 +55,6 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
         </>
     )
 }
+
+
 export default WhoWeAre;

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, FormControl, MenuItem, Select, Stack,  TextField,  Typography  } from "@mui/material"
+{/*import { Box, Button, Divider, FormControl, MenuItem, Select, Stack,  TextField,  Typography  } from "@mui/material"
 import useUserEndwebStyles from "../UserendwebStyles"
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -144,7 +144,7 @@ return (
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={news.blog}
-          /* label="Curage Culture" */
+          /* label="Curage Culture" *
           className={classes.dropDownSelectBlog}
           onChange={(e)=>handleChange(news.id,'blog',e.target.value)}>
         <MenuItem value="Blog1">Blog1</MenuItem>
@@ -218,4 +218,59 @@ return (
   )
 }
 
-export default UserendNewsEvents
+export default UserendNewsEvents*/}
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { Box} from '@mui/material';
+import Subsection from '../userEnd-Aboutus/Subsection';
+import { AddSection } from '../userEnd-Aboutus/AboutUsButtons';
+import { useState } from 'react';
+import  Badge  from "@mui/material/Badge";
+
+type HeroProps={
+    id?:string;
+    accordianId?:string;
+    Section:string
+}
+ const UserendNewsEvents=({id,accordianId,Section}:HeroProps)=>{
+    const [subpages, setSubpages] = useState<{ id:string}[]>([]);
+        const [counter, setCounter] = useState<number>(1);
+        const {classes} = useAboutusStyles();
+        const handleAddSubpage = () => {
+            const newId = `Sub Section-${counter+1}`; // unique id
+            setSubpages((prev) => [...prev, { id: newId }]);
+            setCounter(counter+1)
+        };
+        const handleDeleteSubpage = (subId: string) => {
+            setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+            setCounter(counter-1)
+        };
+    return(
+        <>
+         <Box className={classes.WhoWeAreContainer}>
+            <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1,gap:2}}>
+                <Badge
+                                    badgeContent={counter}
+                                        sx={{
+                                            "& .MuiBadge-badge": {
+                                            backgroundColor: "#0A4FA4",
+                                            color: "#fff", 
+                                            },
+                                        }}
+                
+                                        anchorOrigin={{
+                                            vertical: "top",
+                                            horizontal: "right",
+                                        }}
+                                >
+                                <AddSection onClick={handleAddSubpage}/>
+                                </Badge>
+            </Box>
+            <Subsection id='Blog-1' accordianId='10' Section={Section} title='Home'  />
+            {subpages.map((sub) => (
+                <Subsection key={sub.id} id='' accordianId='10' Section={Section} title='Home' onDelete={() => handleDeleteSubpage(sub.id)} />
+            ))}
+         </Box>
+        </>
+    )
+ }
+ export default UserendNewsEvents

@@ -28,7 +28,7 @@ export const validateEmail1 = (email: string): ValidationResult => {
   let error = "";
 
   if (email.length === 0) {
-    error = "Email cannot be empty";
+    error = "";
   } else if (email.startsWith(".") || email.endsWith(".")) {
     error = "Email cannot start or end with '.'";
   } else if (!emailRegex.test(email)) {

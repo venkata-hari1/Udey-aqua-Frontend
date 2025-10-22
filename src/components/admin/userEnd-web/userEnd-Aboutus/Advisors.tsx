@@ -3,7 +3,7 @@ import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,Dial
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
 import { useState,  } from 'react';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import {HelperTextValidate, NameandRoleValidate} from '../../utils/Validations';
+import {HelperTextValidate, NameandRoleValidate,validateEmail1,phoneNumberValidation} from '../../utils/Validations';
 
 type AdvisorProps={
     id:string;
@@ -31,6 +31,8 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const roleFlied = NameandRoleValidate(role);
     const nameFlied = NameandRoleValidate(name);
     const contentFlied = HelperTextValidate(content);
+    const emailerror= validateEmail1(role);
+    const phoneerror= phoneNumberValidation(role);
     const isTextInvalid = role.length === 0 || role.length < 3 || role.length > 80 || name.length === 0 || name.length < 3 || name.length > 80 || content.length === 0 || content.length < 3 || content.length > 200;
     file
 
@@ -224,10 +226,8 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
                                     FormHelperTextProps={{
                                 className: (name.length >= 3 && name.length < 200) ? classes.greyText : classes.helperText
                             }}/>
-                        { title ==='About us ' && <Typography className={classes.mytext}>role</Typography>}
-                        { accordianId ==='14' && <Typography className={classes.mytext}>Email</Typography>}
-                        {  ( accordianId ==='13') && <Typography className={classes.mytext}>Phone</Typography>}
-                        <TextField className={classes.myTextFleid}
+                        { title ==='About us' && (<><Typography className={classes.mytext}>role</Typography>
+                    <TextField className={classes.myTextFleid}
                                     value={role}
                                     onChange={(e)=>{setRole(e.target.value);
                                             setIsSaved(false)}}
@@ -235,8 +235,29 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
                                     disabled={!Edit}
                                     FormHelperTextProps={{
                                 className: (role.length >= 3 && role.length < 200) ? classes.greyText : classes.helperText
-                            }}/>
-                        { title ==='About us ' && <Typography className={classes.mytext}>Content</Typography>}
+                            }}/></>)}
+                        { accordianId ==='14' && <> <Typography className={classes.mytext}>Email</Typography>
+                                            <TextField className={classes.myTextFleid}
+                                    value={role}
+                                    onChange={(e)=>{setRole(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={emailerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className: !emailerror.isError ? classes.greyText : classes.helperText
+                            }}/></>}
+                        {  ( accordianId ==='13') && <><Typography className={classes.mytext}>Phone</Typography>
+                                            <TextField className={classes.myTextFleid}
+                                    value={role}
+                                    onChange={(e)=>{setRole(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={phoneerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className:! phoneerror.isError ? classes.greyText : classes.helperText
+                            }}/></>}
+                        
+                        { title ==='About us' && <Typography className={classes.mytext}>Content</Typography>}
                         { (accordianId ==='13') && <Typography className={classes.mytext}>Message</Typography>}
                         { ( accordianId ==='14') && <Typography className={classes.mytext}>Address</Typography>}
                         <TextField 
