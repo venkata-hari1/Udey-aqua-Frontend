@@ -74,8 +74,8 @@ const SubPriceplan=({id,onDelete,Section}:SubPriceplan)=>{
                         {id != 'Plan 1' &&
                         (<IconButton>
                             <Box component="img"
-                             src={EditIcon} alt="Editicon" width='19px' height='19px'
-                        />
+                             src={EditIcon} alt="Editicon" width='19px' height='19px'/>
+                             
                         </IconButton>)}
                     </Box>
                     <Box sx={{display:'flex',flexDirection:'row',paddingLeft:'48px',}}>

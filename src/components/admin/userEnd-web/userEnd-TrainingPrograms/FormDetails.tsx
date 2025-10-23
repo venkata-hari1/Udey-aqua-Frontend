@@ -9,8 +9,6 @@ interface Item {
   text: string;
   checked: boolean;
 }
-
-
 const FormDetails= ()=>{
     const {classes} =useAboutusStyles();
 
@@ -72,7 +70,7 @@ const FormDetails= ()=>{
                                 text={item.text}
                                 checked={item.checked}
                                 onTextChange={(id,text)=>handleTextChange(id,text,setItems)}
-                                onCheckChange={(id)=>handleCheckChange(id,setItems)}
+                                //onCheckChange={(id)=>handleCheckChange(id,setItems)}
                                 onDelete={(id)=>handleDelete(id,setItems)}
                                 />
                                 {index < items.length - 1 && <Divider sx={{ my: 1 }} />}
@@ -102,7 +100,7 @@ const FormDetails= ()=>{
                                     text={item.text}
                                     checked={item.checked}
                                     onTextChange={(id,text)=>handleTextChange(id,text,setRDItems)}
-                                    onCheckChange={(id)=>handleCheckChange(id,setRDItems)}
+                                    //onCheckChange={(id)=>handleCheckChange(id,setRDItems)}
                                     onDelete={(id)=>handleDelete(id,setRDItems)}
                                     />
                                 </Box>
