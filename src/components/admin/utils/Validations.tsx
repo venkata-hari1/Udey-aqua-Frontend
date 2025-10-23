@@ -54,29 +54,31 @@ export const TitleValidate = (text: string): {  message: string } => {
     return {message: `* Remaining Characters ${text.length}/100` }; 
   }
 };
-export const PriceValidate = (text: string): { message: string } => {
+export const PriceValidate = (text: string): { message: string; isError:boolean } => {
   const trimmedText = text.trim();
 
   if (trimmedText.length === 0) {
-    return { message: "" };
+    return { message: "", isError:false };
   }
 
   if (!/^\d+$/.test(trimmedText)) {
-    return { message: "* Must be Numbers" };
+    return { message: "* Must be Numbers, Remove Alphabets", isError:true };
   }
 
   if (trimmedText.length < 2) {
     return {
       message: `* Must contain at least 2 characters. Remaining Characters ${trimmedText.length}/12`,
+      isError:true
     };
   }
 
   if (trimmedText.length > 12) {
-    return { message: "* Character Limit Exceeded" };
+    return { message: "* Character Limit Exceeded",isError:true };
   }
 
   return {
     message: `* Remaining Characters ${trimmedText.length}/12`,
+    isError:false
   };
 };
 export const PlanContentValidate = (text: string): {  message: string } => {
@@ -527,3 +529,17 @@ export const websiteValidation = (url: string): WebsiteResult => {
   }
 };
 
+export const PlanContentValidation =(text: string) =>{
+  const Text = text.replace(/<[^>]*>/g, '');
+  if (Text.length === 0) {
+    return {  message: "" }; 
+  } else if (Text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${Text.length}/200`,
+    };
+  } else if (Text.length > 200) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${Text.length}/200` }; 
+  }
+}

@@ -6,12 +6,13 @@ import { HandleFileChange, HelperTextValidate, NameandRoleValidate } from '../..
 import Subsection from './Subsection';
 
 type TitleProps={
-    id:string;
-    accordianId:string,
+    id:string ;
+    accordianId:string ,
     Section:string;
+    setTitlehandle:(value:string)=>void;
 }
 
-const TitlePage=({id,accordianId, Section}:TitleProps)=>{
+const TitlePage=({id,accordianId, Section, setTitlehandle}:TitleProps)=>{
     const {classes}=useAboutusStyles();
     const [Title, setTitle]=useState<string>('');
     const [,setFile]= useState<File[]>([]);
@@ -84,12 +85,14 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
         }, []);
     return(
         <>
-            <Box className={classes.SubPageContainer}>
+            <Box className={classes.WhoWeAreContainer}>
                 <Box sx={{display:'flex',flexDirection:'row',gap:20, alignItems:'baseline'}}>
                     <Typography>Title</Typography>
                     <Box sx={{display:'flex',gap:2,alignItems:'flex-start'}}>
                         <TextField value={Title}
-                                        onChange={(e)=>{setTitle(e.target.value)}}
+                                        onChange={(e)=>{setTitle(e.target.value);
+                                                        setTitlehandle(e.target.value)
+                                        }}
                                         helperText={TitleField.message || " "}
                                         FormHelperTextProps={{
                                 className: (Title.length >= 3 && Title.length < 200) ? classes.greyText : classes.helperText }}

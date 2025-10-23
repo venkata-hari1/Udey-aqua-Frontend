@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import Hero from "../userEnd-Aboutus/Hero";
 import SuccessStories from './Sucess&Stories';
 import News from './News';
+import { useState, type ComponentType } from 'react';
+import TitlePage from '../userEnd-Aboutus/TitlePage';
+import { getValue } from '@mui/system';
 
 const NewsEvents=()=>{
     const {classes}= useAboutusStyles();
@@ -21,6 +24,17 @@ const NewsEvents=()=>{
         {id:'6',title:'Awards',component:SuccessStories},
         {id:'7',title:'Blog',component:SuccessStories}
     ]
+    const [Customdata, setCoustomdata] = useState<{id:string; title:string; component: ComponentType<{id:string,accordianId:string, Section:string ,setTitlehandle:(value:string)=>void;}>}[]>([]);
+    const [Id, setId] = useState<string>('0')
+    const  handleSubpage = ()=>{
+        setCoustomdata((prev)=>[...prev,{id:Id,title:'custom',component: TitlePage}])
+        setId(String(Id+1))
+    }
+    const handleTitleChange =(id:string, value :string)=>{
+        setCoustomdata((prev) =>
+    prev.map((item) => (item.id === id ? { ...item, title: value? value:'custom' } : item))
+  );
+    }
     return(
         <>
             
@@ -31,7 +45,7 @@ const NewsEvents=()=>{
                             <Typography className={classes.AboutUsHeader}> News & Events</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
-                            <AddSubpage onClick={()=>(naviagte('subpage'))}/>
+                            <AddSubpage onClick={handleSubpage}/>
                         </Box>
                     </Box>
                     <Stack className={classes.AccordianBox}>
@@ -46,10 +60,26 @@ const NewsEvents=()=>{
                                         <Component key={item.id} id={item.id} accordianId={item.id} Section={item.title}/>
                                     </AccordionDetails>
                                 </Accordion>
-                       );
-                     
-                    })
-                }
+                            );
+                            
+                            })
+                        }
+                        {/* Custom Accordians */}
+                        {Customdata.map((item)=>{
+                            const Component = item.component
+                            return(
+                                <Accordion key={item.id} className={classes.AccordiaStack}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                                        <Typography className={classes.AccordianText}>{item.title}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Component key={item.id} id={item.id} accordianId={item.id} Section={item.title} setTitlehandle={(value)=>handleTitleChange(item.id,value)}/>
+                                    </AccordionDetails>
+                                </Accordion>
+                            );
+                            
+                            })
+                        }
                    </Stack>
                 </Box>
         </>
