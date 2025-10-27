@@ -12,7 +12,6 @@ interface MottoCardProps {
   buttonText?: string;
   aboutCard?: string;
 }
-
 const MottoCard = ({ img, fishText, title, button, buttonText, aboutCard }: MottoCardProps) => {
   const { classes } = useHomeStyles();
   const navigate = useNavigate();

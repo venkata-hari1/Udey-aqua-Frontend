@@ -57,30 +57,25 @@ switch(path){
   title="Profile"
   break;
   case "userend-web":
+    title="User End Website"
+    break
   case "userend-home":
   case 'userend-aboutus':
-    title="User End Website"
+    
     break;
-  case "userend-culture":    
-  title="User End Website"
-  break;
+  
   case "userend-technologies":
-    title="User End Website"
+    
     break;
   case "userend-trainingprograms":
-    title="User End Website"
+    
     break;
   case "userend-news&events":
-    title="User End Website"
+   
     break;
-    case "userend-news&events":
-    title="User End Website"
-    break;
+    
    case "userend-contactus":
-    title="User End Website"
-    break;
-  case "subpage":
-    title="User End Website"
+   
     break;
   case "logout":
     title="Logout"
@@ -100,28 +95,8 @@ const backarrowHandle=()=>{
    case "subscriber":
     navigate('/admin/user-management')
     break; 
-   navigate('/admin/userend-web')
-   break;
-   case "userend-aboutus":
-   navigate('/admin/userend-web') 
-   break;
-   case "userend-home":
-   navigate('/admin/userend-web') 
-   break;
-   case "userend-culture":
-   navigate('/admin/userend-web') 
-   break;
-   case "userend-technologies":
-    navigate('/admin/userend-web')
-    break;
-   case "userend-trainingprograms":
-    navigate('/admin/userend-web')
-    break;
-    case "userend-contactus":
-    navigate('/admin/userend-web')
-    break;
-   case "userend-news&events":
-    navigate('/admin/userend-web')
+   
+   
    
 
  }
@@ -193,34 +168,6 @@ const{classes}=useHeaderStyles()
                       }}
                     />
                   )}
-                />)
-            }
-          
-          {/* user management */}
-          {showSearchbox(path)&& path == 'user-management' &&
-                (<ReusableSearch
-                  data={tablebodydata}
-                  keys={['name','availability','address']}
-                  width="100%"
-                  onSelect={(item) => navigate('/user-management',{state:{user:item}})}
-                  renderInput={({ value, onChange }) => (
-                    <TextField
-                      className={classes.headerSearch} // keep your styles
-                      size="small"
-                      type="search"
-                      placeholder="Search"
-                      value={value}
-                      onChange={onChange}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  )}
-                 
                 />)
             }
   

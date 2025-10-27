@@ -106,5 +106,4 @@ const OurProjects = () => {
     </Box>
   );
 };
-
 export default OurProjects;

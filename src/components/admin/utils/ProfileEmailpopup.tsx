@@ -25,7 +25,7 @@ const ProfileEmailpopup = ({ open, handleclickopen }: Iprops) => {
   const [otpEmail, setOtpemail] = useState(false);
   const [otp, setOtp] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(600);
+  const [timeLeft, setTimeLeft] = useState<number>(90);
 
 
   // Reset when closed
@@ -163,10 +163,8 @@ const handleEmailSubmit=()=>{
                       {...props}
                       style={{
                         ...props.style,
-                        border: `1px solid ${
-                          error ? "#d32f2f" : "#0A4FA4"
-                        }`,
-                        background: "#d8d8d83d"
+                        border: `1px solid ${error ? "#d32f2f" : "#0A4FA4"}`,
+                        background: "#d8d8d83d", 
                       }}
                     />
                   )}

@@ -370,6 +370,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     gap: 16,
     marginTop: 16,
     justifyContent: "center",
+    alignItems:'center'
   },
   mapBox: {
     minWidth: 120,
@@ -432,6 +433,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   navLinksBoxMobile2: {
     alignItems: "flex-end",
+    paddingRight: 8,
   },
   navLinksBoxDesktop: {
     gap: 12,
@@ -454,12 +456,16 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     display: "flex",
     flexWrap: "wrap",
+    paddingLeft:5,
+    paddingRight:5
     
   },
   flexSide: {
     display: "flex",
     width: "100%",
     gap: "20px",
+    paddingLeft:2,
+    paddingRight:2
   },
   mapBoxMobile: {
     width: "50%",
@@ -469,6 +475,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     alignItems: "flex-start",
     minWidth: 0,
     marginTop: 16,
+    paddingRight: 8,
   },
   mapBoxDesktop: {
     minWidth: 120,
@@ -1082,9 +1089,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   twitterIconWhite: {
     color: COLORS.WHITE,
-    width: 14,
-    height: 14,
+    width: 16,
+    height: 16,
     objectFit: "contain",
+    paddingTop:4
   },
   headerSearchIcon: {
     ...TYPOGRAPHY.subtitle1(theme),

@@ -151,7 +151,7 @@ else if (!/\d/.test(cfmpwd)) {
   return "* Must contain at least one number";
 } 
 else if (cfmpwd !== pword) {
-  return "Password and Confirm password are not matching";
+  return "Passwords do not match";
 } 
 else {
   return "";
@@ -203,21 +203,27 @@ interface ValidationResult {
 }
 
 export const phoneNumberValidation = (phone: string): ValidationResult => {
-  const requiredLength = 13;
+  const requiredLength = 10;
 
   if (phone.length === 0) {
     return {
       error: "",
       isError: true,
     };
-  } else if (!/^(?:\+91|91)[-\s]?[6-9]\d{4}[-\s]?\d{5}$/.test(phone)) {
+  } if (phone === '+91'){
     return {
-      error: "* Enter a valid Indian phone number (e.g. +91  or 91 )",
+      error: "",
+      isError: true,
+    };
+  }
+   else if (!/^(\+91)[6-9]\d{4}\d{5}$/.test(phone)) {
+    return {
+      error: "* Enter a valid Indian phone number",
       isError: true,
     };
   } else if (phone.length <= requiredLength) {
     return {
-      error: `* Phone number must be 12 or 13 digits. Entered: ${phone.length}/${requiredLength}`,
+      error: `* Phone number must be 10 digits. Entered: ${phone.length}/${requiredLength}`,
       isError: false,
     };
   } else {

@@ -61,7 +61,7 @@ const handleBackarrow=()=>{
               <Typography className={aboutus.AccordianText}>{item.menu}</Typography>
            </AccordionSummary>
                 <AccordionDetails>
-                  <Component  />
+                  <Component id={""} accordianId={""} Section={""}  />
                 </AccordionDetails>
         </Accordion>
         );

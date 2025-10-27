@@ -21,7 +21,13 @@ export const shouldShowbackArrow=(path:string)=>{
     case "subscriber":
     case "getin-touch":  
     case "profile":
-    case "logout":  
+    case "logout": 
+    case "userend-contactus":
+    case "userend-news&events": 
+    case "userend-trainingprograms":
+    case "userend-technologies":
+    case "userend-home":
+    case 'userend-aboutus':
      return false
     default:
       return true   
