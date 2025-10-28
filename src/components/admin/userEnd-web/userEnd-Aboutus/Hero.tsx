@@ -1,9 +1,10 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Button, Stack, TextField, Typography, DialogContent, DialogActions,Dialog} from '@mui/material';
+import { Box, Button, Stack, TextField, Typography, DialogContent, DialogActions,Dialog,MenuItem,Select} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader, DeleteButton} from './AboutUsButtons';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
 import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 type HeroProps={
     id?:string;
     accordianId?:string;
@@ -22,6 +23,8 @@ type HeroProps={
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState(false);
+    const [selected, setSelected] = useState("Cage Culture");
+        const options = ["Aqua Culture","Cage Culture"]; 
     
     const TextFieldError=HelperTextValidate(subtitle).message;
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;  
@@ -76,7 +79,29 @@ type HeroProps={
                 {(accordianId !='1' && Section !="Why chhoose us" && Section !="About us" && id !== '1' )&& (                
                         <Box className={classes.whoWeareHeaderbox}>
                             <Typography className={classes.HeaderText}>
-                               { title=='news&events'? 'Highlight Section 1' : title ==='Home'? id: 'Header Section'}
+                               { title=='news&events'? 'Highlight Section 1' : title ==='Home'? 
+                               Section ==='Our projects' ? <>
+                <Select
+                                  value={selected}
+                                  onChange={(e) => setSelected(e.target.value)}
+                                  IconComponent={KeyboardArrowDownRoundedIcon}
+                                  sx={{
+                                    width:'147px',
+                                    height:'37px',
+                                    color: "blue",
+                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                  }}>
+                                    {options.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                        {option}
+                                        </MenuItem>
+                                    ))}
+                        </Select>
+                </>
+                               
+                               : id : 'Header Section'}
                             </Typography>
                             <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:2}}>
                                  <EditButton error={!prevData} onClick={()=>{ setCancel(true);
@@ -86,8 +111,29 @@ type HeroProps={
                             </Box>
                         </Box>
                     )}
+                {(Section ==='Our projects' && id ==='1') && <>
+                <Select
+                                  value={selected}
+                                  onChange={(e) => setSelected(e.target.value)}
+                                  IconComponent={KeyboardArrowDownRoundedIcon}
+                                  sx={{
+                                    width:'147px',
+                                    height:'37px',
+                                    color: "blue",
+                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                  }}>
+                                    {options.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                        {option}
+                                        </MenuItem>
+                                    ))}
+                        </Select>
+                </>}
                 {(id === '1' || (Section =="Why chhoose us" || Section =="About us") ) && (
                     <Box className={classes.deleteButtonBox}>
+                        
                         <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
                             setEdit(true)
                         }}/>
@@ -139,8 +185,12 @@ type HeroProps={
                         </Box>
                     </Stack>
                     <Box sx={{gap:10}}>
+                        {Section=='Our projects' && <>
+                        <Typography> Heading</Typography>
+                        <TextField className={classes.myTextFleid}/>
+                        </>}
                         <Typography className={classes.mytext}>
-                            {title ==='Home' && Number(accordianId)<5 ?'Heading Content' : title =='Home'  && Number(accordianId)>=5? 'Content': 'subtitle'}
+                            {title ==='Home' && Number(accordianId)<5 && Section!='Our projects'  ?'Heading Content' : title =='Home'  && Number(accordianId)>=5? 'Content': Section=='Our projects'?'Description':'subtitle'}
                         </Typography>
                         <TextField 
                             fullWidth

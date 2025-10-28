@@ -1,6 +1,6 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, } from '@mui/material';
-import { AddBanner, AddSection, } from '../userEnd-Aboutus/AboutUsButtons';
+import {  AddSection, } from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
 import { useState,  } from 'react';
 import Banner from './Banner';
@@ -58,7 +58,7 @@ const RAS=({id,accordianId,Section,title}:RASProps)=>{
                                                                 horizontal: "right",
                                                             }}
                                                     >
-                                                    <AddBanner onClick={handleAddBanner}/>
+                                                    <AddSection label='Add Banner' onClick={handleAddBanner}/>
                                                     </Badge>
                                     <Badge
                                                         badgeContent={counter}
@@ -74,7 +74,7 @@ const RAS=({id,accordianId,Section,title}:RASProps)=>{
                                                                 horizontal: "right",
                                                             }}
                                                     >
-                                                    <AddSection onClick={handleAddSubpage}/>
+                                                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
                                                     </Badge>
                     
                     

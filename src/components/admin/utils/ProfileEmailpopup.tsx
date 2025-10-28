@@ -203,7 +203,20 @@ const handleEmailSubmit=()=>{
                     {error}
                   </Typography>
                 )}
-
+                {otpEmail && (
+                  <DialogActions sx={{ justifyContent: "center",marginBottom:'20px' }}>
+                    <Typography fontSize="14px" textAlign="center">
+                      If you didn&apos;t receive a code,{" "}
+                      <Typography
+                        component="a"
+                        color="#0A4FA4"
+                        sx={{ cursor: "pointer",textDecoration:'underline' }}
+                      >
+                        Resend
+                      </Typography>
+                    </Typography>
+                  </DialogActions>
+                )}
                 <Button
                   type="submit"
                   variant="contained"
@@ -219,21 +232,6 @@ const handleEmailSubmit=()=>{
           )}
         </Box>
       </DialogContent>
-
-       {otpEmail && (
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <Typography fontSize="14px" textAlign="center">
-            If you didn&apos;t receive a code,{" "}
-            <Typography
-              component="a"
-              color="#0A4FA4"
-              sx={{ cursor: "pointer",textDecoration:'underline' }}
-            >
-              Resend
-            </Typography>
-          </Typography>
-        </DialogActions>
-      )}
     </Dialog>
   );
 };

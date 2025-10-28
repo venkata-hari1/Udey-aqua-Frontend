@@ -1,11 +1,10 @@
 import  {useAboutusStyles}  from "../userEnd-Aboutus/AboutusStyles";
-import { Box, Typography, TextField,Dialog, DialogContent, DialogActions, IconButton } from "@mui/material";
-import { DeleteButton } from "./PricingButtons";
+import { Box, Typography, TextField, IconButton } from "@mui/material";
 import { Checkbox } from "@mui/material";
 import { useState, useEffect } from "react";
 import { TitleValidate, PriceValidate,PlanContentValidation } from "../../utils/Validations";
 import EditIcon from "../../../../assets/Edit.png";
-import { EditButton, CancelButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
+import { EditButton, CancelButton, SaveButton, DeleteButton } from "../userEnd-Aboutus/AboutUsButtons";
 import ReactQuill from 'react-quill-new';
 import UserendDeletepopup from "../../utils/UserendDeletepop";
 

@@ -131,22 +131,19 @@ export const CancelButton=({onClick}:{onClick?:()=>void})=>{
         </Button>
     )
 }
-export const AddSection=({onClick}:{onClick?:()=>void})=>{
+type addsectionpros={
+    label:string
+    onClick ?: ()=> void;
+}
+export const AddSection=({onClick,label}:addsectionpros)=>{
     const {classes} =useAboutusStyles();
     return(
         <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add section
+            {label}
         </Button>
     )
 }
-export const AddBanner=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Banner
-        </Button>
-    )
-}
+
 type AddSubpageProps={
     error?:boolean;
     onClick?:()=>void
@@ -167,22 +164,8 @@ export const ArrowBack=({onClick}:{onClick?:()=>void})=>{
         </IconButton>
     )
 }
-export const AddTestimonials=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Testimonials
-        </Button>
-    )
-}
-export const AddHighlights=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Highlights
-        </Button>
-    )
-}
+
+
 export const AddButton=({onClick,}:{onClick?:()=>void,})=>{
     const {classes} =useAboutusStyles();
     return(
@@ -353,19 +336,4 @@ export const Calender=({text,textColor}:CalenderProps)=>{
     
     )
 }
-export const Addlatestnews=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add latest news
-        </Button>
-    )
-}
-export const Addlatestpdf=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Latest pdf
-        </Button>
-    )
-}
+

@@ -25,7 +25,7 @@ const Sustainable=({id,accordianId,Section}:SustainableProps)=>{
         <>
          <Box className={classes.WhoWeAreContainer}>
             <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1}}>
-                <AddSection onClick={handleAddSubpage}/>
+                <AddSection label='Add Section' onClick={handleAddSubpage}/>
             </Box>
             <Box>
                 <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>

@@ -1,149 +1,168 @@
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { Box, TextField, Typography, Button, Dialog, DialogContent, DialogActions, IconButton} from '@mui/material';
+import { SaveButton,  CancelButton, EditButton, AddSection} from '../userEnd-Aboutus/AboutUsButtons';
+import { useState,  } from 'react';
+import DeleteIcon from "../../../../assets/Delete.png"
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import {HelperTextValidate, NameandRoleValidate,validateEmail1,phoneNumberValidation,websiteValidation} from '../../utils/Validations';
 
-
-{/*import { Box,Stack,Typography } from "@mui/material"
-import useUserEndwebStyles from "../UserendwebStyles"
-import CancelIcon from '@mui/icons-material/Cancel';
-import {UserEndSaveCancelButtons,Uploadbutton, ErrorMessages, TextFieldManyRows, ErrormsgContent, ErrorName, TextFieldSingleRow, EditButton, UserEndSaveButton } from "./UserEndCommonButtons";
-import { useState } from "react";
-import { addressContentValidation, nameValidation, validateEmail1 } from "../../utils/Validations";
-
-
-const UserendFooter = () => {
-
-const{classes}=useUserEndwebStyles() 
-
-const[footerslide,setFooterslide]=useState({
-        title: "Image",
-        image: "",
-        name: '',
-        email:'',
-        address:'',
-        imgError:'',
-        nameError:'',
-        emailError:'',
-        addressError:'',
-})
-
-const[isEdit,setIsEdit]=useState(false)
-const isDisabled= !footerslide.image || !footerslide.email ||!footerslide.address
-||!!footerslide.nameError || !!footerslide.imgError || !!footerslide.emailError || !!footerslide.addressError
- 
-const handleUpload=(file:File)=>{
-  const imageUrl = URL.createObjectURL(file);
-  const updatedFooterslide={...footerslide,image:imageUrl,imgError:''}
-  setFooterslide(updatedFooterslide) 
+type AdvisorProps={
+    id:string;
+    accordianId:string;
+    Section:string;
+    title:string;
+    onDelete?: () => void;
 }
-
-const handleImageError=(msg:string)=>{
-  setFooterslide((prev)=>({...prev,imgError:msg,}))
-}
-
-const handleRemoveImage=()=>{
-  const updatedImages={...footerslide,image:""}
-  setFooterslide(updatedImages)
-}
-
-const handleContentchange=(value:string,error:string)=>{
-    const updatedContent={...footerslide,address:value,addressError:error}
-    setFooterslide(updatedContent)
-    console.log(updatedContent)
-}
-
-const handleNameChange=(value:string,error:string)=>{
-    const updateName=({...footerslide, name:value,nameError:error})
-    setFooterslide(updateName)
-}
-
-const handleEmailChange=(value:string,error:string)=>{
-  const updatedEmail=({...footerslide, email:value,emailError:error})
-    setFooterslide(updatedEmail)
-}
-
- const handleCancel=()=>{
-  const updatedvalues={...footerslide,name:"",email:"",address:"",image:"",nameError:"",
-    emailError:"",addressError:"",imgError:""}
-  console.log(setFooterslide(updatedvalues))
-  setIsEdit(false)
-}
-
-const sliceEdit=()=>{
-   setIsEdit(true)
-   const savedData=localStorage.getItem("footerValues");
-   if(savedData){
-     const parsed=JSON.parse(savedData);
-     setFooterslide({
-      ...footerslide,
-      name:parsed.name,
-      email:parsed.email,
-      address:parsed.address,
-      image:parsed.image
-     });
-   }
-}
-
-const handleSave=()=>{
-  setFooterslide({...footerslide,name:'',email:'',address:'',image:''})
-  localStorage.setItem("footerValues",JSON.stringify(footerslide)) 
-  setIsEdit(false)
-}
-
-return (
-    <Box>
-       <Box className={classes.useHerocontainer}>
-       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <EditButton sliceEdit={sliceEdit}/>
-       </Box>
-       <Stack className={classes.projectsUploadContentbox}>
-        <Stack className={classes.UploadImageStack}>
-        <Typography className={classes.titleText} mt={2}>Image</Typography>
-        <Uploadbutton onUpload={(file) => handleUpload(file)}
-          onError={(msg) => handleImageError(msg)}/>   
-        <Box className={classes.herouploadImageBox1}>
-        {footerslide.image &&
-        <Box>
-        <img src={footerslide.image} className={classes.herouploadImage}/>
-        <CancelIcon className={classes.cancelImgIcon}
-        onClick={handleRemoveImage}/>
+const UserendFooter=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
+    const {classes} = useAboutusStyles();
+    const [role, setRole] = useState<string>('+91');
+    const [name, setName] = useState<string>('');
+    const [content, setContent] = useState<string>('');
+    const [Title, setTitle] = useState<string>('');
+    const [links, setLinks] = useState<string>('');
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false) 
+    const [socialLinks, setSocialLinks] = useState<{id:number}[]>([{ id: 1, }]);
+    const [prevData, setPrevData] = useState<{Title:string,links:string,content:string,name:string,role:string } | null>(null);
+    
+  
+    const titleFlied = NameandRoleValidate(Title);
+    const contentFlied = HelperTextValidate(content);
+    const emailerror= validateEmail1(name);
+    const phoneerror= phoneNumberValidation(role);
+    const linkerror= websiteValidation(links);
+    const isTextInvalid =  role.length < 3 || role.length > 80 || phoneerror.isError || linkerror.isError || emailerror.isError ||  content.length < 3 || content.length > 200 || Title.length < 3 || Title.length > 80 ;
+    const handleAddLink = () => {
+      const lastId = socialLinks[socialLinks.length - 1]?.id || 0;
+      const newId=lastId+1
+      setSocialLinks((prev) => [...prev, { id:newId }]);
+    };
+    const handleDeleteLink = (id: number) => {
+      setSocialLinks((prev) => prev.filter(link => link.id !== id));
+    };
+    const SaveData = ()=>{
+        setPrevData({
+        Title,
+        name,
+        content,links,role
+    });
+    setIsSaved(true);
+    setEdit(false);
+    console.log();
+    };
+    const CancelData = ()=>{
+        if (prevData) {
+        setTitle(prevData.Title);
+        setRole(prevData.role);
+        setContent(prevData.content);
+        setLinks(prevData.links)
+        setName(prevData.name);
+        setIsSaved(true);
+    } else {
+        setTitle('');
+        setRole('');
+        setContent('');
+        setLinks('')
+        setName('');
+        setIsSaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
+    
+    
+    return(
+        <>
+        <Box sx={{display:"flex", flexDirection:'row', justifyContent:"flex-end",gap:2}} >
+          <EditButton error={ Edit} onClick={()=> {setCancel(true);
+            setEdit(true)
+          }}/>
         </Box>
-        }
-        </Box>
-        <ErrorMessages message={footerslide.imgError}/>
-        </Stack>
-       <Box className={classes.headingDescbox}> 
-        <Stack>
-        <Typography className={classes.titleText} >Name</Typography>
-        <TextFieldSingleRow onChange={handleNameChange} validationFn={nameValidation}
-         value={footerslide.name}/>  
-         <ErrorName message={footerslide.nameError}/> 
-        </Stack>
-        <Stack>
-         <Typography className={classes.titleText} >Email</Typography>
-        <TextFieldSingleRow onChange={handleEmailChange} validationFn={validateEmail1}
-         value={footerslide.email}/>
-         <ErrorMessages message={footerslide.emailError}/>
-        </Stack>
-        <Stack>
-         <Typography className={classes.titleText} >Address</Typography>
-        <TextFieldManyRows value={footerslide.address} onChange={(value, error) => handleContentchange(value, error)}
-          validationFn={addressContentValidation}/>
-        <ErrormsgContent message={footerslide.addressError}/>
-        </Stack> 
-      </Box>
-      </Stack> 
-      {isEdit ?<UserEndSaveCancelButtons onSave={handleSave} onCancel={handleCancel} disabled={isDisabled}/> :
-      <UserEndSaveButton onSave={handleSave} disabled={isDisabled}/> }
-      
-       </Box> 
-       </Box>
-  )
+      <Box className={classes.myuploadandheadingbox} sx={{gap:10}}>
+                <Box>
+                  <Box sx={{display:'flex',flexDirection:'row',gap:3, marginBottom:2}}>
+                    <Typography>Insert Social Media Link</Typography>
+                    <AddSection label='Add Social media link' onClick={handleAddLink}/>
+                  </Box>
+                  {socialLinks.map((link)=>(
+                    <Box key={link.id}className={classes.TextFiledBox}>
+                    <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                      <Typography className={classes.mytext}>Title</Typography>
+                    <IconButton onClick={() => handleDeleteLink(link.id)} >
+                      <Box component="img"
+                        src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
+                      />
+                    </IconButton>
+                    </Box>
+                    <TextField className={classes.Linkfield}
+                    value={title}
+                                    onChange={(e)=>{setTitle(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={titleFlied.message}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className: (Title.length >= 3 && Title.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
+                    <Box sx={{display:'flex',flexDirection:'row',gap:2}}>
+                      <InsertLinkIcon sx={{color:'#0A4FA4'}}/>
+                      <Typography className={classes.mytext}>Insert link</Typography>
+                    </Box>
+                    <TextField className={classes.Linkfield}
+                    value={links}
+                                    onChange={(e)=>{setLinks(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={linkerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className: !linkerror.isError ? classes.greyText : classes.helperText
+                            }}/>
+                  </Box>))
+                }
+                </Box>
+                <Box className={classes.TextFiledBox}>
+                        <Typography className={classes.mytext}>
+                            Email
+                        </Typography>
+                        <TextField className={classes.myTextFleid}
+                                    value={name}
+                                    onChange={(e)=>{setName(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={emailerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className: !emailerror.isError ? classes.greyText : classes.helperText
+                            }}/>
+                         <Typography className={classes.mytext}>Phone number</Typography>
+                                            <TextField className={classes.myTextFleid}
+                                    value={role}
+                                    onChange={(e)=>{setRole(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={phoneerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className: !phoneerror.isError ? classes.greyText : classes.helperText
+                            }}/>
+                      <Typography className={classes.mytext}>Location</Typography>
+                        <TextField 
+                            fullWidth
+                            className={classes.myTextFleid}
+                            value={content}
+                            onChange={(e)=>{setContent(e.target.value);
+                                            setIsSaved(false)}}
+                            helperText={contentFlied.message}
+                            disabled={!Edit}
+                            FormHelperTextProps={{
+                                className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
+                </Box>
+                
+            </Box>    
+            <Box className={classes.SeveandCancelBox}>
+                            <SaveButton error={isSaved || isTextInvalid} onClick={SaveData} />
+                            {cancel &&(<CancelButton onClick={CancelData} />)}
+                        </Box>
+        </>
+    )
 }
-
-export default UserendFooter */}
-import Advisors from "../userEnd-Aboutus/Advisors"
-const UserendFooter = () => {
-  return(
-    <Advisors id="Sub Section-1" accordianId="14" Section="Footer" title='Home' />
-  )
-}
-
 export default UserendFooter;

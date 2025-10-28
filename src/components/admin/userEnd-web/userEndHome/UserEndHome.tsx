@@ -25,22 +25,21 @@ const UserEndHome = () => {
 
 const{classes:aboutus}=useAboutusStyles()
 const navigate=useNavigate()
-
 const AccordianData=[
-   {id:1,menu:"Header",content:UserendHeader} ,
-   {id:2,menu:"Hero Section",content:UserendHero } ,
-   {id:3,menu:"Our Corporates",content:UserendCorporates} ,
-   {id:4,menu:"Our Motto",content:UserEndMotto } ,
-   {id:5,menu: "About Us",content:UserEndabout } ,
-   {id:6,menu:"Why Choose Us",content:UserendWhychoose } ,
-   {id:7,menu:"Add Video",content:UserEndAddvideo} ,
-   {id:8,menu:"Our Projects",content:UserEndProjects } ,
-   {id:9,menu:"Testimonials",content:UserendTestimonials } , 
-   {id:10,menu:"News & Events",content:UserendNewsEvents } , 
-   {id:11,menu:"Pricing",content:UserendPricing } , 
-   {id:12,menu:"Our Directors & Advisors",content:UserendDirectors } ,
-   {id:13,menu:"Get In Touch",content:UserendGetintouch } ,  
-   {id:14,menu:"Footer",content:UserendFooter }, 
+   {id:1,menu:"Header",type: "component",content:UserendHeader} ,
+   {id:2,menu:"Hero Section",type: "component",content:UserendHero } ,
+   {id:3,menu:"Our Corporates",type: "component",content:UserendCorporates} ,
+   {id:4,menu:"Our Motto",type: "link",link:'userend-web/userend-aboutus' } ,
+   {id:5,menu: "About Us",type: "component",content:UserEndabout } ,
+   {id:6,menu:"Why Choose Us",type: "component",content:UserendWhychoose } ,
+   {id:7,menu:"Add Video",type: "component",content:UserEndAddvideo} ,
+   {id:8,menu:"Our Projects",type: "component",content:UserEndProjects } ,
+   {id:9,menu:"Testimonials",type: "link",content:UserendTestimonials } , 
+   {id:10,menu:"News & Events",type: "link",content:UserendNewsEvents } , 
+   {id:11,menu:"Pricing",type: "component",content:UserendPricing } , 
+   {id:12,menu:"Our Directors & Advisors",type: "link",content:UserendDirectors } ,
+   {id:13,menu:"Get In Touch",type: "component",content:UserendGetintouch } ,  
+   {id:14,menu:"Footer",type: "component",content:UserendFooter }, 
 ]
 
 const handleBackarrow=()=>{
@@ -53,21 +52,42 @@ const handleBackarrow=()=>{
         <Typography className={aboutus.AboutUsHeader}>Home</Typography>
       </Box>
       <Box className={aboutus.AccordianBox}>
-      {AccordianData.map((item)=>{
-        const Component=item.content
-        return(
-        <Accordion key={item.id} className={aboutus.AccordiaStack}>
-           <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-              <Typography className={aboutus.AccordianText}>{item.menu}</Typography>
-           </AccordionSummary>
-                <AccordionDetails>
-                  <Component id={""} accordianId={""} Section={""}  />
-                </AccordionDetails>
-        </Accordion>
-        );
-        })
-        }
-        </Box>
+         {AccordianData.map((item) => {
+            return (
+               <Accordion key={item.id} className={aboutus.AccordiaStack}>
+  <AccordionSummary
+    expandIcon={item.type === "component" ? <ExpandMoreIcon /> : null}
+    onClick={item.type === "link" ? () => navigate(item.link!) : undefined}
+    sx={{
+      cursor: "pointer",
+      "&:hover .MuiTypography-root": { color: "#0A4FA4" },
+    }}
+  >
+    <Typography
+      sx={{
+        color:'#0A4FA4',
+        textDecoration: item.type === "link" ? "underline" : "none",
+      }}
+    >
+      
+      {item.menu}
+    </Typography>
+  </AccordionSummary>
+
+  {item.type === "component" && (
+    <AccordionDetails>
+      {(() => {
+        const Component = item.content;
+        return <Component id="" accordianId="" Section="" />;
+      })()}
+    </AccordionDetails>
+  )}
+</Accordion>
+
+            );
+         })}
+         </Box>
+
      </Box>
   )
 }

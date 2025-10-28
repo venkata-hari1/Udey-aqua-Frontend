@@ -41,7 +41,7 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                             horizontal: "right",
                         }}
                 >
-                    <AddSection onClick={handleAddSubpage}/>
+                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
                 </Badge>            
             </Box>
             <Box>

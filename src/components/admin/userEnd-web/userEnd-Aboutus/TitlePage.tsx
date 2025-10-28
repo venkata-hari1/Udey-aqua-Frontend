@@ -190,7 +190,7 @@ const TitlePage=({id,accordianId, Section, setTitlehandle}:TitleProps)=>{
                 <Box className={classes.heroDivider}/>
                 <Box sx={{marginTop:'20px'}}>
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
-                        <AddSection onClick={handleAddSubpage}/>
+                        <AddSection label='Add Section'onClick={handleAddSubpage}/>
                     </Box>
                     <Subsection id='Sub Section-1' accordianId='custom' Section={Section} title={Section}/>
                 </Box>

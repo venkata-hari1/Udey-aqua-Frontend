@@ -1,6 +1,6 @@
 import {useAboutusStyles} from './AboutusStyles';
 import { Box, } from '@mui/material';
-import { AddHighlights, AddTestimonials, } from './AboutUsButtons';
+import { AddSection,  } from './AboutUsButtons';
 import { useState,  } from 'react';
 import SubHighlights from './SubHighlights';
 import  Badge  from "@mui/material/Badge";
@@ -50,7 +50,7 @@ const Testimonials=({  id,  }: TestimonialsProps)=>{
                             horizontal: "right",
                         }}
                 >
-                    <AddHighlights onClick={()=>handleAddSubHighlights('Highlights')}/>
+                    <AddSection label='Add Highlights' onClick={()=>handleAddSubHighlights('Highlights')}/>
                 </Badge>
                 <Badge
                     badgeContent={Testimonials}
@@ -66,7 +66,7 @@ const Testimonials=({  id,  }: TestimonialsProps)=>{
                             horizontal: "right",
                         }}
                 >
-                    <AddTestimonials onClick={()=>handleAddSubHighlights('Testimonials')}/>
+                    <AddSection label='Add Testimonials' onClick={()=>handleAddSubHighlights('Testimonials')}/>
                 </Badge>
             </Box>
             <SubHighlights id='Highlights-1' accordianId={id} subSection='Highlights'/>

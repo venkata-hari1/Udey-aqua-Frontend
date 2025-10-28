@@ -1,9 +1,9 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box,  TextField, Typography, Dialog, DialogContent, DialogActions, Button, Stack} from '@mui/material';
-import {  EditButton,  UploadButton, SaveButton, CancelButton} from '../userEnd-Aboutus/AboutUsButtons';
+import {  EditButton,  UploadButton, SaveButton, CancelButton, DeleteButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
 import {TitleValidate} from '../../utils/Validations';
-import {  DeleteButton } from './PricingButtons';
+
 
 
 type AquacultureTypeProps={

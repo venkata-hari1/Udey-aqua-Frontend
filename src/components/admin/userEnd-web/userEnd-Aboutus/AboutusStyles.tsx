@@ -82,6 +82,20 @@ myTextFleid:{
             }},
   width:'600px'
 },
+Linkfield:{
+  //maxWidth:'600px',
+  "& .MuiOutlinedInput-root":{
+            "& fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&:hover fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&.Mui-focused fieldset":{
+                borderColor:'#0A4FA4',
+            }},
+  width:'410px'
+},
 SeveandCancelBox:{
   display:'flex',
   justifyContent:'center',
