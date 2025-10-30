@@ -3,7 +3,6 @@ import { Box, Typography, Button, Grid } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/home/about_image.png";
-import ReactPlayer from "react-player";
 import useHomeStyles from "./homeStyles";
 import { Slide } from "react-awesome-reveal";
 

@@ -1,5 +1,3 @@
-import "@fontsource/inter/400.css";
-import "@fontsource/dm-serif-display/400.css";
 
 import './index.css';
 
