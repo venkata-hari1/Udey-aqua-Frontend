@@ -137,7 +137,7 @@ const confirmPwdChangeHandler=(event:any)=>{
                       setShowConfirmPassword(!showConfirmPassword)
                     }>
                     {showConfirmPassword ? (
-                      <VisibilityOutlinedIcon sx={{ fontSize: '18px' }} />
+                      <VisibilityOutlinedIcon sx={{ fontSize: '18px', }} />
                     ) : (
                       <VisibilityOffOutlinedIcon sx={{ fontSize: '18px' }} />
                     )}

@@ -131,11 +131,13 @@ const confirmChangeHandler=(event:any)=>{
                         <VisibilityOutlinedIcon
                           onClick={toggleCreatePassword}
                           className={classes.textboxIcons}
+                          sx={{cursor:'pointer'}}
                         />
                       ) : (
                         <VisibilityOffOutlinedIcon
                           onClick={toggleCreatePassword}
                           className={classes.textboxIcons}
+                          sx={{cursor:'pointer'}}
                         />
                       )}
                     </InputAdornment>
@@ -178,11 +180,13 @@ const confirmChangeHandler=(event:any)=>{
                         <VisibilityOutlinedIcon
                           onClick={toggleConfirmPassword}
                           className={classes.textboxIcons}
+                          sx={{cursor:'pointer'}}
                         />
                       ) : (
                         <VisibilityOffOutlinedIcon
                           onClick={toggleConfirmPassword}
                           className={classes.textboxIcons}
+                          sx={{cursor:'pointer'}}
                         />
                       )}
                     </InputAdornment>

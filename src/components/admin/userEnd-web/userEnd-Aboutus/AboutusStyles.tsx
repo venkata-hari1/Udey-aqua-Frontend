@@ -148,23 +148,21 @@ ImagePic:{
 
 },
 cancelImgIcon:{
-  position:'absolute',
-  top:'-5px',
-  right:'-5px',
-  minWidth:'20px',
-  width:'20px',
-  height:'20px',
-  borderRadius:'50%',
-  backgroundColor:'rgba(255, 51, 38, 1)',
-  color:'white',
-  fontSize:'12px',
-  padding:0,
-                                              
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    width: '25px',
+    height: '25px',
+    padding: 0,
+    position: 'absolute',
+    top: '-8px',
+    right: '-10px',
+    cursor: 'pointer',
+     "&:hover": {
+      backgroundColor:'red', 
+    },
+                                             
 },
-
-
 //WhoWeAre
-
 WhoWeAreContainer:{
   display:'flex',
   paddingRight:'30px',

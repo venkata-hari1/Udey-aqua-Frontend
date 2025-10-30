@@ -1,7 +1,8 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
 import { useState,  } from 'react';
+import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import {HelperTextValidate, NameandRoleValidate,validateEmail1,phoneNumberValidation} from '../../utils/Validations';
 
@@ -190,12 +191,9 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
                                                 alt={`preview ${index+1}`}
                                                 className={classes.ImagePic}
                                             />
-                                            <Button className={classes.cancelImgIcon}
-                                                     onClick={()=>{removeImage(index)}}
-                                                     disabled={!Edit}
-                                                            >
-                                                x
-                                            </Button>
+                                            <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                            </IconButton>
                                         </Box>
                                     )}
                                     

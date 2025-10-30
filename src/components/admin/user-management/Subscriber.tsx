@@ -9,6 +9,7 @@ import autoTable from "jspdf-autotable";
 import { sortByKey } from '../utils/Filter';
 import type { SortOrder } from '../utils/Filter';
 import { useState } from "react";
+import {SortAscIcon, SortDesIcon}from "../utils/SortIcon";
 
 const Subscriber = () => {
 
@@ -66,7 +67,7 @@ const {classes}=useUsermanagementStyles()
    <Box>
        <Box className={classes.rightbuttonsGetinUser}>
             <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} onClick={exportPDF} >Export</Button>
-            <Button variant="outlined" className={classes.GetinuserFilter}   onClick={toggleSort} >  Filters {sortOrder === 'asc' ? '▲' : '▼'}</Button>    
+            <Button variant="outlined" className={classes.GetinuserFilter}   onClick={toggleSort} > {sortOrder === 'asc' ? <SortAscIcon sx={{marginRight:1}}/> : <SortDesIcon sx={{marginRight:1}}/>}Filters</Button>    
        </Box>
     <TableContainer component={Paper}>
            <Table sx={{width:'100%'}} size="medium">

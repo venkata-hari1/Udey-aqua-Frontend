@@ -10,19 +10,27 @@ import SuccessStories from './Sucess&Stories';
 import News from './News';
 import { useState, type ComponentType } from 'react';
 import TitlePage from '../userEnd-Aboutus/TitlePage';
-
+import { useSelector, useDispatch } from 'react-redux';
+import type { Rootstate } from '../../../../redux/store';
+import { setExpandAccordian } from '../../../../redux/reducers/auth';
 
 const NewsEvents=()=>{
     const {classes}= useAboutusStyles();
     const naviagte = useNavigate();
+    const dispatch = useDispatch();
+    const ExpandAccordian = useSelector((state:Rootstate)=>state.accordian.ExpandAccordian);
+    const handleChange =
+        (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
+          dispatch(setExpandAccordian(isExpanded ? panel : null));
+        };
     const AccordianData = [
-        {id:'1',title:'Hero Section',component:Hero},
-        {id:'2',title:'Success & Stories',component:SuccessStories },
-        {id:'3',title:'News',component:News},
-        {id:'4',title:'Videos',component:SuccessStories},
-        {id:'5',title:'Gallery',component:SuccessStories},
-        {id:'6',title:'Awards',component:SuccessStories},
-        {id:'7',title:'Blog',component:SuccessStories}
+        {id:'1',title:'Hero Section',component:Hero,refid:'Hero'},
+        {id:'2',title:'Success & Stories',component:SuccessStories,refid:'Sucessstories' },
+        {id:'3',title:'News',component:News,refid:'News & Events'},
+        {id:'4',title:'Videos',component:SuccessStories,refid:'videos'},
+        {id:'5',title:'Gallery',component:SuccessStories,refid:'gallery'},
+        {id:'6',title:'Awards',component:SuccessStories,refid:'awards'},
+        {id:'7',title:'Blog',component:SuccessStories,refid:'blog'}
     ]
     const [Customdata, setCoustomdata] = useState<{id:string; title:string; component: ComponentType<{id:string,accordianId:string, Section:string ,setTitlehandle:(value:string)=>void;}>}[]>([]);
     const [Id, setId] = useState<string>('0')
@@ -52,7 +60,9 @@ const NewsEvents=()=>{
                         {AccordianData.map((item)=>{
                             const Component = item.component
                             return(
-                                <Accordion key={item.id} className={classes.AccordiaStack}>
+                                <Accordion key={item.id} className={classes.AccordiaStack}
+                                    expanded={ExpandAccordian === item.refid}
+                                            onChange={handleChange(item.refid)}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>

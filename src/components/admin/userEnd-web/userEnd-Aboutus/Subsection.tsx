@@ -1,7 +1,8 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions, MenuItem,Select} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions, MenuItem,Select, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, Calender} from './AboutUsButtons';
 import { useState,  } from 'react';
+import CloseIcon from "@mui/icons-material/Close";
 import { HelperTextValidate } from '../../utils/Validations';
 import { HandleFileChange } from '../../utils/Validations';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
@@ -202,12 +203,9 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                                                             alt={`preview ${index+1}`}
                                                             className={classes.ImagePic}
                                                         />
-                                                        <Button className={classes.cancelImgIcon}
-                                                                onClick={()=>{removeImage(index)}}
-                                                                disabled={!Edit}
-                                                                        >
-                                                            x
-                                                        </Button>
+                                                        <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                            <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                        </IconButton>
                                                     </Box>
                                                 )}
                                             </Box>

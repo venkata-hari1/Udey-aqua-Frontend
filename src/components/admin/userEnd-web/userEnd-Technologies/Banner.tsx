@@ -1,9 +1,9 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions,IconButton} from '@mui/material';
 import { DeleteButton, UploadButton, CancelButton, EditButton, UpdateHeader,  UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState,  } from 'react';
 import { HelperTextValidate, PriceValidate, HandlePDFChange, HandleFileChange } from '../../utils/Validations';
-
+import CloseIcon from "@mui/icons-material/Close";
 interface Bannerprops {
   accordianId:string
   id: string;
@@ -146,12 +146,9 @@ const CancelData = () => {
                                                     alt={`preview ${index+1}`}
                                                     className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
-                                                </Button>
+                                                 <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
                                         )}
                                        
@@ -228,7 +225,7 @@ const CancelData = () => {
                                                     }}
 >
                                                     <embed
-                                                        src={pdf[index]} // string URL from createObjectURL
+                                                        src={pdf[index]} 
                                                         type="application/pdf"
                                                         className={classes.ImagePic} 
                                                         style={{
@@ -238,12 +235,9 @@ const CancelData = () => {
                                                             }} 
                                                     />
                                                 </Box>
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removePdf(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
-                                                </Button>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removePdf(index)}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
                                         )}
                                        

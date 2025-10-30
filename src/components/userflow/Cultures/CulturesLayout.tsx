@@ -69,7 +69,8 @@ const CulturesLayout: React.FC = () => {
         <Hero
           page="cultures" 
           overlayColor="rgba(10,79,164,0.41)" 
-          fishHeight={isMobile ? 500 : 500}
+          fishCount={4}
+          fishHeight={500}
         />
       </Grid>
 

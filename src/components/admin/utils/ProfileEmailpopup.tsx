@@ -166,6 +166,14 @@ const handleEmailSubmit=()=>{
                         border: `1px solid ${error ? "#d32f2f" : "#0A4FA4"}`,
                         background: "#d8d8d83d", 
                       }}
+                      onFocus={(e) => {
+                        e.target.style.outline = "none";
+                        e.target.style.border = "2px solid #0A4FA4";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.border = `1px solid ${error ? "#d32f2f" : "#0A4FA4"}`;
+                      }}
+
                     />
                   )}
                   inputStyle={{

@@ -262,7 +262,7 @@ type HeroProps={
                                             horizontal: "right",
                                         }}
                                 >
-                                <AddSection onClick={handleAddSubpage}/>
+                                <AddSection label="Add section" onClick={handleAddSubpage}/>
                                 </Badge>
             </Box>
             <Subsection id='Blog-1' accordianId='10' Section={Section} title='Home'  />

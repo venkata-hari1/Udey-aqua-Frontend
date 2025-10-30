@@ -73,6 +73,7 @@ const Contact = () => {
               <Hero
                               page="contact" 
                               overlayColor="rgba(10,79,164,0.41)" 
+                              fishCount={4}
                               fishHeight={500}
                             />
             </Grid>

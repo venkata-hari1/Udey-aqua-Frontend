@@ -81,5 +81,4 @@ const Hero: React.FC<HeroProps> = ({
     </Box>
   );
 };
-
 export default Hero;

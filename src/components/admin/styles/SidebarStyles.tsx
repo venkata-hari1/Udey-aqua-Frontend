@@ -78,10 +78,10 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
        padding:'4px 10px',
        gap:3,
        '&:hover': {
-     backgroundColor: '#0A4FA4', 
-     color: 'white',
-     borderTopLeftRadius:'30px',
-    borderBottomRightRadius:'30px',
+     //backgroundColor: '#0A4FA4', 
+     //color: 'white',
+     //borderTopLeftRadius:'30px',
+    //borderBottomRightRadius:'30px',
   },
   },
   menuItemActive: {
@@ -90,7 +90,12 @@ const useSidebarStyles = makeStyles()((theme: Theme) => ({
     borderTopLeftRadius: '30px',
     borderBottomRightRadius:'30px',
   },
-
+  submenuItemActivate:{
+    color:'#0A4FA4',
+    textDecoration:'underline',
+    textDecorationThickness:'1px',
+    textUnderlineOffset:'3px'
+  }
   }));
 
 export default useSidebarStyles;

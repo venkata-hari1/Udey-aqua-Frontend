@@ -11,6 +11,7 @@ import { sortByKey } from '../utils/Filter';
 import type { SortOrder } from '../utils/Filter';
 import { useState } from "react";
 import { getinuserdata } from "../utils/data";
+import {SortAscIcon, SortDesIcon}from "../utils/SortIcon";
 
 
 const GetintouchUsers = () => {
@@ -25,13 +26,13 @@ const getinUserheading=[
 ]
 
 const getinuserdata1=[
- {id:1,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+ {id:1,name:'Surya Pratap',phone:'+91 8123456789',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
- {id:2,name:'Nalamothu Ramya',phone:'91-8123203040',message:'Hi,i want to know about fish farming  programs. Please share the upcoming schedule and enrollment process',
+ {id:2,name:'Nalamothu Ramya',phone:'+91 8123456789',message:'Hi,i want to know about fish farming  programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
- {id:3,name:'Vijay nayar',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+ {id:3,name:'Vijay nayar',phone:'+91 8123456789',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
 ]
@@ -45,7 +46,7 @@ const exportPDF = () => {
 
     
 
-    const tableData = getinuserdata.map(user => [
+    const tableData = getinuserdata1.map(user => [
       user.id,
       user.name,
       user.phone,
@@ -66,7 +67,7 @@ const exportPDF = () => {
     doc.save("GetinTouchUsers.pdf");
   };
 
-   const [tableData, setTableData] = useState(getinuserdata);
+   const [tableData, setTableData] = useState(getinuserdata1);
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   
   const toggleSort = () => {
@@ -80,7 +81,7 @@ const exportPDF = () => {
   <Box>
   <Box className={classes.rightbuttonsGetinUser}>
        <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />}  onClick={exportPDF} >Export</Button>
-       <Button variant="outlined" className={classes.GetinuserFilter} onClick={toggleSort} >  Filters {sortOrder === 'asc' ? '▲' : '▼'} </Button>
+       <Button variant="outlined" className={classes.GetinuserFilter} onClick={toggleSort} >  {sortOrder === 'asc' ? <SortAscIcon sx={{marginRight:1}}/> : <SortDesIcon sx={{marginRight:1}}/>}  Filters </Button>
   </Box>
    <TableContainer component={Paper}>
        <Table sx={{width:'100%'}} size="medium">

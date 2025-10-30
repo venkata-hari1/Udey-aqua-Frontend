@@ -60,22 +60,27 @@ switch(path){
     title="User End Website"
     break
   case "userend-home":
+    title="User End Website"
+    break
+  case "userend-culture":
+    title="User End Website"
+    break
   case 'userend-aboutus':
-    
+    title="User End Website"
     break;
   
   case "userend-technologies":
-    
+    title="User End Website"
     break;
   case "userend-trainingprograms":
-    
+    title="User End Website"
     break;
   case "userend-news&events":
-   
+   title="User End Website"
     break;
     
    case "userend-contactus":
-   
+   title="User End Website"
     break;
   case "logout":
     title="Logout"
@@ -95,6 +100,26 @@ const backarrowHandle=()=>{
    case "subscriber":
     navigate('/admin/user-management')
     break; 
+   case "userend-aboutus":
+   navigate('/admin/userend-web') 
+   break;
+   case "userend-home":
+   navigate('/admin/userend-web') 
+   break;
+   case "userend-culture":
+   navigate('/admin/userend-web') 
+   break;
+   case "userend-technologies":
+    navigate('/admin/userend-web')
+    break;
+   case "userend-trainingprograms":
+    navigate('/admin/userend-web')
+    break;
+    case "userend-contactus":
+    navigate('/admin/userend-web')
+    break;
+   case "userend-news&events":
+    navigate('/admin/userend-web')
    
    
    
@@ -145,7 +170,7 @@ const{classes}=useHeaderStyles()
         </Box>    
         
         <Box className={classes.searchBox}>
-          {showSearchbox(path)&& path == 'dashboard' &&
+          {showSearchbox(path) &&
                 (<ReusableSearch
                   data={searchPages}
                   keys={["label"]}

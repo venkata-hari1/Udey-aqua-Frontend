@@ -272,10 +272,21 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: 70,
     marginBottom: -46,
     zIndex: 2,
+    [theme.breakpoints.down("md")]:{
+       position: "relative",
+        width: 240,
+        height: 70,
+        marginBottom: -56,
+        zIndex: 2,
+    }
   },
   mottoCardHeadImg: {
     width: "100%",
     height: "100%",
+    [theme.breakpoints.down('md')]:{
+       width: "80%",
+       height: "80%",
+    }
   },
   mottoCardFishText: {
     position: "absolute",
@@ -286,6 +297,16 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.PRIMARY_BLUE,
     fontSize: 20,
     whiteSpace: "nowrap",
+    [theme.breakpoints.down('md')]:{
+       position: "absolute",
+        top: "40%",
+        left: "55%",
+        transform: "translate(-50%, -50%)",
+        fontWeight: 600,
+        color: COLORS.PRIMARY_BLUE,
+        fontSize: 20,
+        whiteSpace: "nowrap",
+    }
   },
   mottoCardBox: {
     width: 320,
@@ -304,9 +325,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       marginLeft: "auto",
       marginRight: "auto",
-      width: "100%",
+      //width: "100%",
       maxWidth: 320,
-    },
+      width: 270,
+    height: 250,
+    }
   },
   mottoCardImgWrap: {
     width: "100%",
@@ -320,6 +343,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    [theme.breakpoints.down('md')]:{
+     width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    }
   },
   mottoCardButtonWrap: {
     position: "absolute",
@@ -357,6 +385,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     lineHeight: 1.2,
     marginLeft: "auto",
     marginRight: "auto",
+    [theme.breakpoints.down('md')]:{
+      fontSize: 20,
+    }
   },
   // Wrapper used in OurMotto.tsx; ensures single-card centering on mobile
   mottoCardOuter: {
@@ -804,10 +835,13 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutUsVideoWrap: {
-    width: "100%",
-    height: "100%",
+    width: "100vw",
+    height: "100vh",
     position: "relative",
     overflow: "visible",
+    
+                    
+                                   
     [theme.breakpoints.down('md')]:{
       paddingTop:'10px',
       paddingLeft:"10px",

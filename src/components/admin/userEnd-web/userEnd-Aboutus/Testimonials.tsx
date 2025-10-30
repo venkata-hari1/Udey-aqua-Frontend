@@ -28,8 +28,10 @@ const Testimonials=({  id,  }: TestimonialsProps)=>{
     const handleDeleteSubHighlights = (type: 'Highlights' | 'Testimonials',subId: string) => {
         if (type === 'Highlights') {
             setSubHighlights((prev) => prev.filter((sub) => sub.id !== subId));
+            setHighlights(Highlights-1);
         } else {
             setSubTestimonials((prev) => prev.filter((sub) => sub.id !== subId));
+            setTestimonials(Testimonials-1);
         }
     }; 
     return(

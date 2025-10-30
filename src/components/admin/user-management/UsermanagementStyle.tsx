@@ -70,16 +70,8 @@ BrackMarinebutton: {
   }, 
 
   trainingCheckbox:{
-         
-  "& .MuiSvgIcon-root": {
-      fill: "#b3c2d6ff",          
-      strokeWidth: 0.1,
-      
-    },
-      "&.Mui-checked": {
-      color: "#0463EE",
-      fill:"#0A4FA4"
-    },
+  color: "#4184e9ff",
+  
 },
 
 //training program page
@@ -110,6 +102,7 @@ downLoadreport:{
   border:"1px solid #0A4FA4",
   marginRight:'10px',
   marginBottom:"10px",
+  fontWeight:600
 },
 userInfoCardcontainer:{
   display:'flex',

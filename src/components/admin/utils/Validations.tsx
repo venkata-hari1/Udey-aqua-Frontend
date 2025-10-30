@@ -104,9 +104,11 @@ export const validatePassword = (pword: any):string => {
   }
   else if (!/[A-Z]/.test(pword)) {
   return "* Password must contain at least one uppercase letter";
+}else if (!/[a-z]/.test(pword)) {
+  return "* Password must contain at least one lowercase letter";
 }
-  else if (!/[!@#$%^&*(),.?":{}|<>]/.test(pword)) {
-     return "* Must Contain atleast one Special Character ";
+   else if (!/[!@#$%^&*(),.?":{}|<>]/.test(pword) ||  /\s/.test(pword)) {
+     return "* Must Contain atleast one Special Character and No Spaces ";
 }
 else if (!/\d/.test(pword)) {
 return "* Must contain at least one number";

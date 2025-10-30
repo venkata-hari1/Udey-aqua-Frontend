@@ -1,7 +1,8 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Button, Stack, TextField, Typography, DialogContent, DialogActions,Dialog,MenuItem,Select} from '@mui/material';
+import { Box, Button, Stack, TextField, Typography, DialogContent, DialogActions,Dialog,MenuItem,Select, IconButton} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader, DeleteButton} from './AboutUsButtons';
-import CancelIcon from '@mui/icons-material/Cancel';
+import CloseIcon from "@mui/icons-material/Close";
+
 import { useState,  } from 'react';
 import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
@@ -164,9 +165,9 @@ type HeroProps={
                                                     alt={`preview ${index+1}`}
                                                     className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
-                                                    <CancelIcon   />
-                                                </Button>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
                                         )}
 
