@@ -18,7 +18,6 @@ import type { SortOrder } from "../utils/Filter";
 
 
 
-
 const Trainingprograms = () => {
   
   const {classes}=useUsermanagementStyles()
