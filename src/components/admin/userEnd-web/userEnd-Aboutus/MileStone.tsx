@@ -40,7 +40,7 @@ const MileStone=({id,accordianId,Section}:MileStoneProps)=>{
                             horizontal: "right",
                         }}
                 >
-                    <AddSection onClick={handleAddSubpage}/>
+                    <AddSection label='AddSection' onClick={handleAddSubpage}/>
                 </Badge>
                 </Box>
                 <Box>

@@ -3,7 +3,7 @@ import { Box, Typography, Button, Grid } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/home/about_image.png";
-
+import ReactPlayer from "react-player";
 import useHomeStyles from "./homeStyles";
 import { Slide } from "react-awesome-reveal";
 
@@ -74,17 +74,19 @@ const AboutUs = () => {
       
       </Grid>
      
-      <Grid container spacing={2} className={classes.aboutUsVideoWrap}>
-        <Grid size={{ xs: 12 }}>
+      <Grid container spacing={2} className={classes.aboutUsVideoWrap} sx={{pointerEvents:'none',}}>
+       <Grid size={{xs:12}}>
         <iframe
         width="100%"
         height="600px"
-        src="https://www.youtube.com/embed/xoCA3o4zyJM?autoplay=1&mute=1"
+        //src="https://www.youtube.com/embed/xoCA3o4zyJM?autoplay=1&mute=1"
+        src="https://www.youtube.com/embed/BAc1tQpchPY?autoplay=1&loop=1&mute=1&playlist=BAc1tQpchPY&controls=0&rel=0&modestbranding=1&showinfo=0"
         title="YouTube video player"
         frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
+      
         </Grid>
       </Grid>
     </>

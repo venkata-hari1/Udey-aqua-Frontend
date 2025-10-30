@@ -21,6 +21,10 @@ export const StyledLoginLeft = styled(Box)(({ theme }) => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
+  
+
+
+
   [theme.breakpoints.down('md')]: {
     display: 'none',     // hide left image on tablet/mobile
   },
@@ -35,6 +39,9 @@ export const StyledLoginRight = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   background: 'transparent',
+
+  
+
   [theme.breakpoints.down('md')]: {
     flex: '1 0 100%',         // full width
     maxWidth: '100%',

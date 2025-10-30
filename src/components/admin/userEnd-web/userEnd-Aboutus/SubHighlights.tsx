@@ -100,7 +100,7 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
                        <EditButton error={ Edit} onClick={()=>{ setCancel(true);
                         setEdit(true)
                        }}/>
-                        <DeleteButton onClick={handleDeleteClick}/>
+                        {id!='Highlights-1' && <DeleteButton onClick={handleDeleteClick}/>}
                     </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>

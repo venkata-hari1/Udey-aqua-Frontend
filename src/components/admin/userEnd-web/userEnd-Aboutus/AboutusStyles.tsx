@@ -82,6 +82,20 @@ myTextFleid:{
             }},
   width:'600px'
 },
+Linkfield:{
+  //maxWidth:'600px',
+  "& .MuiOutlinedInput-root":{
+            "& fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&:hover fieldset":{
+             borderColor:'#0A4FA4',
+            },
+            "&.Mui-focused fieldset":{
+                borderColor:'#0A4FA4',
+            }},
+  width:'410px'
+},
 SeveandCancelBox:{
   display:'flex',
   justifyContent:'center',
@@ -134,23 +148,21 @@ ImagePic:{
 
 },
 cancelImgIcon:{
-  position:'absolute',
-  top:'-5px',
-  right:'-5px',
-  minWidth:'20px',
-  width:'20px',
-  height:'20px',
-  borderRadius:'50%',
-  backgroundColor:'rgba(255, 51, 38, 1)',
-  color:'white',
-  fontSize:'12px',
-  padding:0,
-                                              
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    width: '25px',
+    height: '25px',
+    padding: 0,
+    position: 'absolute',
+    top: '-8px',
+    right: '-10px',
+    cursor: 'pointer',
+     "&:hover": {
+      backgroundColor:'red', 
+    },
+                                             
 },
-
-
 //WhoWeAre
-
 WhoWeAreContainer:{
   display:'flex',
   paddingRight:'30px',

@@ -1,13 +1,18 @@
 //show searchbox
 export const showSearchbox=(path:string)=>{
    switch(path){
-    case "profile":
-    case "user-info":
-    case "userend-web":
-    case "logout":
-     return false
+    case "dashboard":
+    //case "userend-web":
+    case "userend-home":
+    case "userend-aboutus":
+    case "userend-culture":
+    case "userend-trainingprograms":
+    case "userend-technologies":
+    case "userend-news&events":
+    case "userend-contactus":
+     return true
     default:
-      return true    
+      return false    
    }
 }
 //backarrow 
@@ -21,7 +26,8 @@ export const shouldShowbackArrow=(path:string)=>{
     case "subscriber":
     case "getin-touch":  
     case "profile":
-    case "logout":  
+    case "logout": 
+    
      return false
     default:
       return true   

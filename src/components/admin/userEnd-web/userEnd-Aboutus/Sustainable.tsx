@@ -4,6 +4,7 @@ import { AddSection} from './AboutUsButtons';
 import Subsection from './Subsection';
 import { useState } from 'react';
 import Hero from './Hero';
+import Badge from "@mui/material/Badge";
 type SustainableProps={
     id:string;
     accordianId:string;
@@ -12,20 +13,36 @@ type SustainableProps={
 const Sustainable=({id,accordianId,Section}:SustainableProps)=>{
     const {classes} = useAboutusStyles();
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
-    const [counter, setCounter] = useState<any>([1]);
+    const [counter, setCounter] = useState<number>(1);
     const handleAddSubpage = () => {
-        const newId = `Sub Section-${counter.length+1}`; 
+        const newId = `Sub Section-${counter+1}`; 
         setSubpages((prev) => [...prev, { id: newId }]);
-        setCounter((prev:any) => [...prev, newId])
+        setCounter(counter+1)
     };
     const handleDeleteSubpage = (subId: string) => {
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter-1)
     };
     return(
         <>
          <Box className={classes.WhoWeAreContainer}>
             <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1}}>
-                <AddSection onClick={handleAddSubpage}/>
+                <Badge
+                    badgeContent={counter}
+                        sx={{
+                            "& .MuiBadge-badge": {
+                            backgroundColor: "#0A4FA4",
+                            color: "#fff", 
+                            },
+                        }}
+
+                        anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                        }}
+                >
+                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
+                </Badge>  
             </Box>
             <Box>
                 <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>

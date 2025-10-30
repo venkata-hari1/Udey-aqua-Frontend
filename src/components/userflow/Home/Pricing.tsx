@@ -15,7 +15,6 @@ import useIsOverflowing from "./useIsOverflowing";
 import useHomeStyles from "./homeStyles";
 import useAutoHorizontalScroll from "./useAutoHorizontalScroll";
 
-
 const pricingData = [
   {
     image: pricingImg1,

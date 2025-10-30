@@ -1,9 +1,9 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, EditButton, CancelButton} from './AboutUsButtons';
 import { useState, useEffect } from 'react';
 import { HandleFileChange, HelperTextValidate, NameandRoleValidate, YearValidate } from '../../utils/Validations';
-
+import CloseIcon from "@mui/icons-material/Close";
 type MilestoneSubpageProps={
     id:string;
     accordianId:string;
@@ -128,12 +128,9 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                                 alt={`preview ${index+1}`}
                                                 className={classes.ImagePic}
                                             />
-                                            <Button className={classes.cancelImgIcon}
-                                                     onClick={()=>{removeImage(index)}}
-                                                     disabled={!Edit}
-                                                            >
-                                                x
-                                            </Button>
+                                           <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                            </IconButton>
                                         </Box>
                                     )}
                                     </Box> 

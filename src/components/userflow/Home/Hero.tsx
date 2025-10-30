@@ -11,8 +11,6 @@ import BubbleCanvas from "../../animations/BubbleCanvas";
 import Fish3DModel from "../../animations/Fish3DModel";
 import SwimmingFish from "../../animations/SwimmingFish";
 
-
-
 const Hero = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));

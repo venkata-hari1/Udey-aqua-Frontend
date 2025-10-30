@@ -4,14 +4,16 @@ import { AddSection, UploadButton, SaveButton,CancelButton, EditButton } from '.
 import { useState, useEffect } from "react";
 import { HandleFileChange, HelperTextValidate, NameandRoleValidate } from '../../utils/Validations';
 import Subsection from './Subsection';
+import Hero from './Hero';
 
 type TitleProps={
-    id:string;
-    accordianId:string,
+    id:string ;
+    accordianId:string ,
     Section:string;
+    setTitlehandle:(value:string)=>void;
 }
 
-const TitlePage=({id,accordianId, Section}:TitleProps)=>{
+const TitlePage=({id,accordianId, Section, setTitlehandle}:TitleProps)=>{
     const {classes}=useAboutusStyles();
     const [Title, setTitle]=useState<string>('');
     const [,setFile]= useState<File[]>([]);
@@ -84,12 +86,14 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
         }, []);
     return(
         <>
-            <Box className={classes.SubPageContainer}>
+            <Box className={classes.WhoWeAreContainer}>
                 <Box sx={{display:'flex',flexDirection:'row',gap:20, alignItems:'baseline'}}>
                     <Typography>Title</Typography>
                     <Box sx={{display:'flex',gap:2,alignItems:'flex-start'}}>
                         <TextField value={Title}
-                                        onChange={(e)=>{setTitle(e.target.value)}}
+                                        onChange={(e)=>{setTitle(e.target.value);
+                                                        setTitlehandle(e.target.value)
+                                        }}
                                         helperText={TitleField.message || " "}
                                         FormHelperTextProps={{
                                 className: (Title.length >= 3 && Title.length < 200) ? classes.greyText : classes.helperText }}
@@ -107,87 +111,11 @@ const TitlePage=({id,accordianId, Section}:TitleProps)=>{
                     </Box>
                 </Box>
                 <Box className={classes.heroDivider}/>
-                <Box className={classes.whoWeareHeaderbox}>
-                    <Typography className={classes.HeaderText}>Header Section</Typography>
-                    <Box className={classes.SeveandCancelBox}>
-                        <EditButton error={!prevData} onClick={()=> {setCancel(true);
-                            setEdit(true)
-                        }}/>
-                    </Box>
-                </Box>
-                <Box className={classes.myuploadandheadingbox}>
-                    <Stack className={classes.myUploadStack}>
-                        <Typography className={classes.mytext}>
-                            image
-                        </Typography>
-                        <Box className={classes.myImageUploadBox}>
-                            <input type='file'
-                                    multiple
-                                    accept="image/*" 
-                                    id={`upload-file-${Section}-${accordianId}-${id}`}
-                                    style={{display:'none'}}
-                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
-                                    disabled={!Edit}
-                                    />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                            {(Images.length>0 || prevData) && (
-                                <Box className={classes.ImagesBox}>
-                                    <Box className={classes.ImagespicBox}>
-                                        {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
-                                                <img 
-                                                    src={prev}
-                                                    alt={`preview ${index+1}`}
-                                                    className={classes.ImagePic}
-                                                />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
-                                                </Button>
-                                            </Box>
-                                        )}
-                                        </Box> 
-                                </Box>
-                            )}
-                            <Box>
-                                {  error && (
-                                    <Typography className={classes.errorText}>
-                                        {error}
-                                    </Typography>
-                                    )
-                                }
-                            </Box>
-                        </Box>
-                    </Stack>
-                    <Box sx={{gap:10}}>
-                        <Typography className={classes.mytext}>
-                            subtitle
-                        </Typography>
-                        <TextField 
-                            fullWidth
-                            multiline
-                            minRows={5}
-                            className={classes.myTextFleid}
-                            value={subtitle}
-                             onChange={(e)=>{setSubtitle(e.target.value);
-                                            setIsSaved(false)}}
-                            helperText={TextFieldError.message}
-                            disabled={!Edit}
-                            FormHelperTextProps={{
-                                className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText
-                            }}/>
-                    </Box>
-                </Box>
-                 <Box className={classes.SeveandCancelBox} >
-                                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
-                    {cancel &&(<CancelButton onClick={CancelData}/>)}
-                                </Box>
+                <Hero/>
                 <Box className={classes.heroDivider}/>
                 <Box sx={{marginTop:'20px'}}>
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>
-                        <AddSection onClick={handleAddSubpage}/>
+                        <AddSection label='Add Section'onClick={handleAddSubpage}/>
                     </Box>
                     <Subsection id='Sub Section-1' accordianId='custom' Section={Section} title={Section}/>
                 </Box>

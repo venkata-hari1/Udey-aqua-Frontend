@@ -15,7 +15,7 @@ const Address = ({ id, onDelete, }: ContactInfoProps) => {
     const { classes } = useAboutusStyles();
 
     const [title,settitle]=useState<string>('');
-    const [phone,setphone]=useState<string>('');
+    const [phone,setphone]=useState<string>('+91');
     const [address,setAdress]=useState<string>('');
     const [website,setWebsite]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
@@ -138,12 +138,13 @@ const Address = ({ id, onDelete, }: ContactInfoProps) => {
                         <Typography className={classes.mytext} sx={{ width: '120px', flexShrink: 0 }}>Phone</Typography>
                         <TextField
                             value={phone}
+                            defaultValue={+91}
                             onChange={(e)=>{setphone(e.target.value);
                                             setIsSaved(false)}}
                             helperText={phoneerror.error}
                             className={classes.myTextFleid}
                             FormHelperTextProps={{
-                                className: (phone.length == 12 || phone.length == 13 ) ? classes.greyText : classes.helperText
+                                className: (!phoneerror.isError) ? classes.greyText : classes.helperText
                             }}
                             disabled={!Edit}
                             sx={{ width: '100%' }}

@@ -6,8 +6,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AddSubpage, ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useNavigate } from 'react-router-dom';
 import RAS from './RAS';
-import Hero from "../userEnd-Aboutus/Hero"
-
+import { useState, type ComponentType, } from 'react';
+import Hero from "../userEnd-Aboutus/Hero";
+import TitlePage from '../userEnd-Aboutus/TitlePage';
 
 const Technologies=()=>{
     const {classes}= useAboutusStyles();
@@ -20,6 +21,17 @@ const Technologies=()=>{
         {id:'6',title:'fish hatchery',component:RAS},
         {id:'7',title:'cage culture',component:RAS}
     ]
+    const [CustomAccordians,setCustomAccordians] = useState<{id:string; title:string; component: ComponentType<{id:string,accordianId:string, Section:string ,setTitlehandle:(value:string)=>void;}>}[]>([]);
+    const [Id, setId] = useState<string>('0')
+    const handleSubpage=() =>{
+        setCustomAccordians((prev)=>[...prev,{id:Id,title:'custom',component: TitlePage}]);
+        setId(String(Id+1))
+    }
+    const handleTitleChange = (id: string, value: string) => {
+    setCustomAccordians((prev) =>
+        prev.map((item) => (item.id === id ? { ...item, title: value? value:'custom' } : item))
+        );
+    }
     return(
         <>
             
@@ -30,7 +42,7 @@ const Technologies=()=>{
                             <Typography className={classes.AboutUsHeader}> Technologies</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
-                            <AddSubpage onClick={()=>(naviagte('subpage'))}/>
+                            <AddSubpage onClick={handleSubpage}/>
                         </Box>
                     </Box>
                     <Stack className={classes.AccordianBox}>
@@ -42,13 +54,28 @@ const Technologies=()=>{
                                         <Typography className={classes.AccordianText}>{item.title}</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Component id={item.id} accordianId={item.id} Section={item.title} />
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} title="Technologies"/>
+                                    </AccordionDetails>
+                                        </Accordion>
+                            );
+                            
+                            })
+                        }
+                        {/* Custom Accordians */}
+                        {CustomAccordians.map((item)=>{
+                            const Component=item.component
+                            return(
+                                <Accordion key={item.id} className={classes.AccordiaStack}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                                        <Typography className={classes.AccordianText}>{item.title}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} setTitlehandle={(value)=>{handleTitleChange(item.id,value)}}/>
                                     </AccordionDetails>
                                 </Accordion>
-                       );
-                     
-                    })
-                }
+                             );
+                            })
+                         }
                    </Stack>
                 </Box>
         </>

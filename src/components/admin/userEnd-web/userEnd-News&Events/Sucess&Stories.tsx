@@ -2,7 +2,7 @@ import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box} from '@mui/material';
 import Hero from '../userEnd-Aboutus/Hero';
 import Subsection from '../userEnd-Aboutus/Subsection';
-import { AddHighlights, AddSection } from '../userEnd-Aboutus/AboutUsButtons';
+import {  AddSection } from '../userEnd-Aboutus/AboutUsButtons';
 import { useState } from 'react';
 import  Badge  from "@mui/material/Badge";
 
@@ -41,7 +41,7 @@ type HeroProps={
                                             horizontal: "right",
                                         }}
                                 >
-                                <AddHighlights/>
+                                <AddSection label='Add Highlights'/>
                                 </Badge>
                 <Badge
                                     badgeContent={counter}
@@ -57,7 +57,7 @@ type HeroProps={
                                             horizontal: "right",
                                         }}
                                 >
-                                <AddSection onClick={handleAddSubpage}/>
+                                <AddSection label='Add Section' onClick={handleAddSubpage}/>
                                 </Badge>
             </Box>
             <Box>

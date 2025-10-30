@@ -1,6 +1,6 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, } from '@mui/material';
-import { AddBanner, AddSection, } from '../userEnd-Aboutus/AboutUsButtons';
+import {  AddSection, } from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
 import { useState,  } from 'react';
 import Banner from './Banner';
@@ -11,30 +11,33 @@ type RASProps={
     id:string;
     accordianId:string
     Section:string;
+    title:string
 }
-const RAS=({id,accordianId,Section}:RASProps)=>{
+const RAS=({id,accordianId,Section,title}:RASProps)=>{
     const {classes} = useAboutusStyles();
-    const [counter, setCounter] = useState<any>([1]);
+    const [counter, setCounter] = useState<number>(1);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
     const [banner, setBanner] = useState<{id:string}[]>([]);
-    const [bannercount, setBannerCount] = useState<any>([]);
+    const [bannercount, setBannerCount] = useState<number>(0);
     const handleAddSubpage = () => {
-        const newId = `Sub Section-${counter.length+1}`; // unique id
+        const newId = `Sub Section-${counter+1}`; // unique id
         setSubpages((prev) => [...prev, { id: newId }]);
-        setCounter((prev:any) => [...prev, newId])
+        setCounter(counter+1)
     };
 
     const handleDeleteSubpage = (subId: string) => {
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter-1)
     }; 
     const handleAddBanner = () => {
-        const newId = ` Banner-${bannercount.length+1}`; // unique id
+        const newId = ` Banner-${bannercount+1}`; // unique id
         setBanner((prev) => [...prev, { id: newId }]);
-        setBannerCount((prev:any) => [...prev, newId])
+        setBannerCount(bannercount+1)
     };
 
     const handleDeleteBanner = (subId: string) => {
         setBanner((prev) => prev.filter((sub) => sub.id !== subId));
+        setBannerCount(bannercount-1)
     }; 
     return(
         <>
@@ -55,7 +58,7 @@ const RAS=({id,accordianId,Section}:RASProps)=>{
                                                                 horizontal: "right",
                                                             }}
                                                     >
-                                                    <AddBanner onClick={handleAddBanner}/>
+                                                    <AddSection label='Add Banner' onClick={handleAddBanner}/>
                                                     </Badge>
                                     <Badge
                                                         badgeContent={counter}
@@ -71,12 +74,12 @@ const RAS=({id,accordianId,Section}:RASProps)=>{
                                                                 horizontal: "right",
                                                             }}
                                                     >
-                                                    <AddSection onClick={handleAddSubpage}/>
+                                                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
                                                     </Badge>
                     
                     
                 </Box>
-                <Hero id={id} accordianId={id} Section={Section}/>
+                {title ==='Technologies' &&<Hero id={id} accordianId={id} Section={Section}/>}
                 <SubSection id='Sub Section-1' accordianId='2' Section={Section}/>
                 {subpages.map((sub) => (
                     <SubSection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
