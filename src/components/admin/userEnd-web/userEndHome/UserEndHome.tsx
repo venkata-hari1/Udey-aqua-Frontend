@@ -21,7 +21,7 @@ import UserendFooter from "./UserendFooter";
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import {  ArrowBack} from '../userEnd-Aboutus/AboutUsButtons';
 import { useDispatch } from "react-redux";
-import { setExpandAccordian } from "../../../../redux/reducers/auth";
+import { setExpandAccordian } from "../../../../redux/reducers/Nav";
 const UserEndHome = () => {
 
 const{classes:aboutus}=useAboutusStyles()
