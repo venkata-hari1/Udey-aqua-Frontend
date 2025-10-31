@@ -25,7 +25,7 @@ const ProfileEmailpopup = ({ open, handleclickopen }: Iprops) => {
   const [otpEmail, setOtpemail] = useState(false);
   const [otp, setOtp] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(600);
+  const [timeLeft, setTimeLeft] = useState<number>(90);
 
 
   // Reset when closed
@@ -163,11 +163,17 @@ const handleEmailSubmit=()=>{
                       {...props}
                       style={{
                         ...props.style,
-                        border: `1px solid ${
-                          error ? "#d32f2f" : "#0A4FA4"
-                        }`,
-                        background: "#d8d8d83d"
+                        border: `1px solid ${error ? "#d32f2f" : "#0A4FA4"}`,
+                        background: "#d8d8d83d", 
                       }}
+                      onFocus={(e) => {
+                        e.target.style.outline = "none";
+                        e.target.style.border = "2px solid #0A4FA4";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.border = `1px solid ${error ? "#d32f2f" : "#0A4FA4"}`;
+                      }}
+
                     />
                   )}
                   inputStyle={{
@@ -205,7 +211,20 @@ const handleEmailSubmit=()=>{
                     {error}
                   </Typography>
                 )}
-
+                {otpEmail && (
+                  <DialogActions sx={{ justifyContent: "center",marginBottom:'20px' }}>
+                    <Typography fontSize="14px" textAlign="center">
+                      If you didn&apos;t receive a code,{" "}
+                      <Typography
+                        component="a"
+                        color="#0A4FA4"
+                        sx={{ cursor: "pointer",textDecoration:'underline' }}
+                      >
+                        Resend
+                      </Typography>
+                    </Typography>
+                  </DialogActions>
+                )}
                 <Button
                   type="submit"
                   variant="contained"
@@ -221,21 +240,6 @@ const handleEmailSubmit=()=>{
           )}
         </Box>
       </DialogContent>
-
-       {otpEmail && (
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <Typography fontSize="14px" textAlign="center">
-            If you didn&apos;t receive a code,{" "}
-            <Typography
-              component="a"
-              color="#0A4FA4"
-              sx={{ cursor: "pointer",textDecoration:'underline' }}
-            >
-              Resend
-            </Typography>
-          </Typography>
-        </DialogActions>
-      )}
     </Dialog>
   );
 };

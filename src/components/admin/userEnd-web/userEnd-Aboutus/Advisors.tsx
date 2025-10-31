@@ -1,17 +1,19 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,DialogContent, DialogActions, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
 import { useState,  } from 'react';
+import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import {HelperTextValidate, NameandRoleValidate} from '../../utils/Validations';
+import {HelperTextValidate, NameandRoleValidate,validateEmail1,phoneNumberValidation} from '../../utils/Validations';
 
 type AdvisorProps={
     id:string;
     accordianId:string;
     Section:string;
+    title:string;
     onDelete?: () => void;
 }
-const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
+const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const {classes} = useAboutusStyles();
     const [file,setFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -30,6 +32,8 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
     const roleFlied = NameandRoleValidate(role);
     const nameFlied = NameandRoleValidate(name);
     const contentFlied = HelperTextValidate(content);
+    const emailerror= validateEmail1(role);
+    const phoneerror= phoneNumberValidation(role);
     const isTextInvalid = role.length === 0 || role.length < 3 || role.length > 80 || name.length === 0 || name.length < 3 || name.length > 80 || content.length === 0 || content.length < 3 || content.length > 200;
     file
 
@@ -130,8 +134,14 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
     }
     return(
         <>
-      <Box className={classes.whoWeareHeaderbox}>
-        <Select
+        {title =='Home' &&
+        <Box sx={{display:"flex", flexDirection:'row', justifyContent:"flex-end",gap:2}} >
+          <EditButton error={ Edit} onClick={()=> {setCancel(true);
+            setEdit(true)
+          }}/>
+        </Box>}
+      { title=='About us' &&<Box className={classes.whoWeareHeaderbox}>
+         <Select
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
           IconComponent={KeyboardArrowDownRoundedIcon}
@@ -149,13 +159,13 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                 </MenuItem>
             ))}
         </Select>
-        <Box display="flex" justifyContent="flex-end" gap={2}>
+        <Box sx={{display:"flex", flexDirection:'row', justifyContent:"flex-end",gap:2}} >
           <EditButton error={ Edit} onClick={()=> {setCancel(true);
             setEdit(true)
           }}/>
           {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
         </Box>
-      </Box>
+      </Box>}
       <Box className={classes.myuploadandheadingbox}>
         <Stack className={classes.OurDirectorsUploadStack}>
                     <Typography className={classes.mytext}>
@@ -181,12 +191,9 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                                 alt={`preview ${index+1}`}
                                                 className={classes.ImagePic}
                                             />
-                                            <Button className={classes.cancelImgIcon}
-                                                     onClick={()=>{removeImage(index)}}
-                                                     disabled={!Edit}
-                                                            >
-                                                x
-                                            </Button>
+                                            <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                            </IconButton>
                                         </Box>
                                     )}
                                     
@@ -217,10 +224,8 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                     FormHelperTextProps={{
                                 className: (name.length >= 3 && name.length < 200) ? classes.greyText : classes.helperText
                             }}/>
-                        <Typography className={classes.mytext}>
-                            role
-                        </Typography>
-                        <TextField className={classes.myTextFleid}
+                        { title ==='About us' && (<><Typography className={classes.mytext}>role</Typography>
+                    <TextField className={classes.myTextFleid}
                                     value={role}
                                     onChange={(e)=>{setRole(e.target.value);
                                             setIsSaved(false)}}
@@ -228,10 +233,31 @@ const Advisors=({id,accordianId, Section, onDelete}:AdvisorProps)=>{
                                     disabled={!Edit}
                                     FormHelperTextProps={{
                                 className: (role.length >= 3 && role.length < 200) ? classes.greyText : classes.helperText
-                            }}/>
-                        <Typography className={classes.mytext}>
-                            content
-                        </Typography>
+                            }}/></>)}
+                        { accordianId ==='14' && <> <Typography className={classes.mytext}>Email</Typography>
+                                            <TextField className={classes.myTextFleid}
+                                    value={role}
+                                    onChange={(e)=>{setRole(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={emailerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className: !emailerror.isError ? classes.greyText : classes.helperText
+                            }}/></>}
+                        {  ( accordianId ==='13') && <><Typography className={classes.mytext}>Phone</Typography>
+                                            <TextField className={classes.myTextFleid}
+                                    value={role}
+                                    onChange={(e)=>{setRole(e.target.value);
+                                            setIsSaved(false)}}
+                                    helperText={phoneerror.error}
+                                    disabled={!Edit}
+                                    FormHelperTextProps={{
+                                className:! phoneerror.isError ? classes.greyText : classes.helperText
+                            }}/></>}
+                        
+                        { title ==='About us' && <Typography className={classes.mytext}>Content</Typography>}
+                        { (accordianId ==='13') && <Typography className={classes.mytext}>Message</Typography>}
+                        { ( accordianId ==='14') && <Typography className={classes.mytext}>Address</Typography>}
                         <TextField 
                             fullWidth
                             multiline

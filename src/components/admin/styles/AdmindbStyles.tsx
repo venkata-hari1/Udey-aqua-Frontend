@@ -48,7 +48,7 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
     },
     topCardlabel:{
       fontSize:'14px',
-      fontWeight:700,
+      fontWeight:800,
     },
   graphCardContainer:{
     flex:3,

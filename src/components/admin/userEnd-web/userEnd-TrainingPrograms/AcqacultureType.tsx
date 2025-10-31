@@ -3,8 +3,8 @@ import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box} from '@mui/material';
 import { useState } from 'react';
 //import {planTitle} from '../../utils/Validations';
-import { AddType, } from './PricingButtons';
 import SubAquacultureType from './SubAquacultureType';
+import { AddSection } from '../userEnd-Aboutus/AboutUsButtons';
 
 
 type AquacultureTypeProps={
@@ -32,7 +32,7 @@ const AquacultureType=({accordianId}:AquacultureTypeProps)=>{
         <>
             <Box className={Aboutus.WhoWeAreContainer}>
                 <Box className={Aboutus.AddSectionBox}>
-                    <AddType onClick={handleAddSubpage}/>
+                    <AddSection label='Add Type' onClick={handleAddSubpage}/>
                 </Box>
                 <SubAquacultureType id='Image 1' accordianId={accordianId} Section="AquaCultureType"/>
                 {subpages.map((sub)=>(

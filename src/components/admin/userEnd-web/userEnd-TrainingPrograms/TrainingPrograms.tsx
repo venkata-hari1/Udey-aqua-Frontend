@@ -9,6 +9,8 @@ import PricePlan from './PricePlan';
 import AquacultureType from './AcqacultureType';
 import FormDetails from './FormDetails';
 import Hero from '../userEnd-Aboutus/Hero';
+import { useState, type ComponentType, } from 'react';
+import TitlePage from '../userEnd-Aboutus/TitlePage';
 
 const TrainingPrograms=()=>{
     const {classes}= useAboutusStyles();
@@ -19,6 +21,17 @@ const TrainingPrograms=()=>{
         {id:'3',title:'Aquaculture Type  ',component:AquacultureType},
         {id:'4',title:'Form Details ', component:FormDetails},
     ]
+    const [CustomAccordians,setCustomAccordians] = useState<{id:string; title:string; component: ComponentType<{id:string,accordianId:string, Section:string ,setTitlehandle:(value:string)=>void;}>}[]>([]);
+        const [Id, setId] = useState<string>('0')
+        const handleSubpage=() =>{
+            setCustomAccordians((prev)=>[...prev,{id:Id,title:'custom',component: TitlePage}]);
+            setId(String(Id+1))
+        }
+        const handleTitleChange = (id: string, value: string) => {
+            setCustomAccordians((prev) =>
+            prev.map((item) => (item.id === id ? { ...item, title: value? value:'custom' } : item))
+        );
+        };
     return(
         <>
             
@@ -29,10 +42,10 @@ const TrainingPrograms=()=>{
                             <Typography className={classes.AboutUsHeader}> Training Programs</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>
-                            <AddSubpage onClick={()=>(naviagte('subpage'))}/>
+                            <AddSubpage onClick={handleSubpage}/>
                         </Box>
                     </Box>
-                                        <Stack className={classes.AccordianBox}>
+                    <Stack className={classes.AccordianBox}>
                         {AccordianData.map((item)=>{
                             const Component = item.component
                             return(
@@ -44,10 +57,25 @@ const TrainingPrograms=()=>{
                                         <Component id={item.id} accordianId={item.id} Section={item.title} />
                                     </AccordionDetails>
                                 </Accordion>
-                       );
-                     
-                    })
-                }
+                            );
+                            
+                            })
+                        }
+                        {/* Custom Accordians */}
+                        {CustomAccordians.map((item)=>{
+                            const Component=item.component
+                            return(
+                                <Accordion key={item.id} className={classes.AccordiaStack}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                                        <Typography className={classes.AccordianText}>{item.title}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Component id={item.id} accordianId={item.id} Section={item.title} setTitlehandle={(value)=>{handleTitleChange(item.id,value)}}/>
+                                    </AccordionDetails>
+                                    </Accordion>
+                                );
+                                })
+                        }
                    </Stack>
 
                 </Box>

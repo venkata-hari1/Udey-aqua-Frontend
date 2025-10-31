@@ -1,9 +1,9 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, } from 'react';
 import { HelperTextValidate, HandleFileChange, HandlePDFChange } from '../../utils/Validations';
-
+import CloseIcon from "@mui/icons-material/Close";
 
 interface SubSectionprops {
   accordianId:string
@@ -130,12 +130,9 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                                     alt={`preview ${index+1}`}
                                                     className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
-                                                </Button>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
                                         )}
                                     </Box>
@@ -173,7 +170,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                                     }}
 >
                                                     <embed
-                                                        src={pdf[index]} // string URL from createObjectURL
+                                                        src={pdf[index]} 
                                                         type="application/pdf"
                                                         className={classes.ImagePic} 
                                                         style={{
@@ -183,12 +180,9 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                                             }} 
                                                     />
                                                 </Box>
-
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removePdf(index)}}
-                                                                >
-                                                    x
-                                                </Button>
+                                                 <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removePdf(index)}}>
+                                                    <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
                                         )}
                                     </Box>

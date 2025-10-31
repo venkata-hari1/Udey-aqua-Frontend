@@ -28,7 +28,7 @@ const OTP = () => {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [otpError, setOtpError] = useState(false);
   const [isOtpExpired, setIsOtpExpired] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(60);
 
   // Timer
   useEffect(() => {
@@ -98,7 +98,7 @@ const OTP = () => {
     setOtpValues(["", "", "", ""]);
     setOtpError(false);
     setIsOtpExpired(false);
-    setTimeLeft(30);
+    setTimeLeft(60);
     inputs[0].current?.focus();
   };
 
@@ -168,10 +168,10 @@ const OTP = () => {
               alignItems: "center",
               borderBottom: "1px solid #0A4FA4",
               mt: 1,
-              pb: 0.5,
+              pb: -2,
             }}
           >
-            <Typography variant="body2" color="error" sx={{ mr: 1 }}>
+            <Typography variant="body2" color="error" sx={{ mr: 1, }}>
               {formatTime(timeLeft)}
             </Typography>
 
@@ -190,6 +190,8 @@ const OTP = () => {
               Resend
             </StyledResendLink>
           </StyledResendLinkContainer>
+          
+
 
           {/* Push Verify button to bottom */}
           <Box sx={{ flexGrow: 1 }} />

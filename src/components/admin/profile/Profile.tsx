@@ -11,7 +11,7 @@ import { showToast } from "../../admin/utils/Toast";
 const Profile = () => {
   
 const profildata=[
-    {id:1,key:'Phone Number',value:'+919791199909'},
+    {id:1,key:'Phone Number',value:'+91 9791199909'},
     {id:2,key:'Email',value:'info@Uday.com'},
     {id:3,key:'Password',value:'*******'},
 ]  

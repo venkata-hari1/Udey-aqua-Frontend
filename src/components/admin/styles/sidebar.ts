@@ -39,6 +39,8 @@ export const StyledSidebarNavList = styled(List)({
   flexDirection: 'column',
   gap: '4px',
   padding: '0 16px',
+  alignItems:'center',
+  justifyContent:'center'
 });
 
 interface StyledSidebarNavItemProps {

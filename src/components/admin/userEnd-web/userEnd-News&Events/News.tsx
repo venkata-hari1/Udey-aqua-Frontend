@@ -1,6 +1,6 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Button, Stack, TextField, Typography} from '@mui/material';
-import { CancelButton, EditButton, SaveButton, UploadButton, Calender, Addlatestnews, Addlatestpdf, AddSection} from '../userEnd-Aboutus/AboutUsButtons';
+import { CancelButton, EditButton, SaveButton, UploadButton, Calender,  AddSection} from '../userEnd-Aboutus/AboutUsButtons';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
 import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
@@ -79,8 +79,8 @@ type HeroProps={
         <>
             <Box className={(accordianId == '1')? classes.WhoWeAreContainer : undefined}>
                 <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-end',gap:2}}>
-                    <Addlatestnews/>
-                    <Addlatestpdf/>
+                    <AddSection label='Add Latest News'/>
+                    <AddSection label='Add Latest Pdf'/>
                     <Badge
                                                         badgeContent={counter}
                                                             sx={{
@@ -95,7 +95,7 @@ type HeroProps={
                                                                 horizontal: "right",
                                                             }}
                                                     >
-                                                    <AddSection onClick={handleAddSubpage}/>
+                                                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
                                                     </Badge>
                      
                 </Box>

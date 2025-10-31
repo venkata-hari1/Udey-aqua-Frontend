@@ -11,9 +11,9 @@ import Deletepopup from "../utils/Deletepopup";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
-import  { sortByKey } from "../utils/Filter"
-import type { SortOrder } from "../utils/Filter";
-
+import { sortByKey } from '../utils/Filter';
+import type { SortOrder } from '../utils/Filter';
+import {SortAscIcon, SortDesIcon}from "../utils/SortIcon";
 
 
 
@@ -63,23 +63,23 @@ const toggleSort = () => {
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-    {id:2,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
+    {id:2,name:'Surya pratap',email:'surya5@gmail.com',phone:'+91 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-    {id:3,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
+    {id:3,name:'Surya pratap',email:'surya5@gmail.com',phone:'+91 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-    {id:4,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
+    {id:4,name:'Surya pratap',email:'surya5@gmail.com',phone:'+91 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-       {id:5,name:'Surya pratap',email:'surya5@gmail.com',phone:'91+ 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
+    {id:5,name:'Surya pratap',email:'surya5@gmail.com',phone:'+91 8123456789',address:'21B, Rash Behari, Ballygunge, Kolkata, West Bengal 700019',
      plan:'3 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 10,000'
     },
-    {id:6,name:'Ravi kumar Vemuri',email:'Ravi676@gmail.com',phone:'91+ 7702256789',address:'21B, Rash Behari, Ballygunge, vizyavada , krisha 700019',
+    {id:6,name:'Ravi kumar Vemuri',email:'Ravi676@gmail.com',phone:'+91 8123456789',address:'21B, Rash Behari, Ballygunge, vizyavada , krisha 700019',
      plan:'7 Days',culture:'Nizamabad,Sea Bass,RAS',program:'Fresh Water',availability:'From 12-07-2025 To 12-07-2025',
      payment:'Rs/ 6,000'
     },
@@ -133,9 +133,6 @@ autoTable(doc, {
   },
   tableWidth: 'auto', 
 });
-
-
-
   doc.save("TrainingPrograms.pdf");
 };
 
@@ -158,16 +155,16 @@ return (
      </Box>
      <Box className={classes.rightbuttonscontainer}>
        <Button variant="contained" className={classes.Freshwaterbutton} endIcon={<FileDownloadOutlinedIcon />}  onClick={exportPDF}>Export</Button>
-       <Button variant="outlined" className={classes.BrackMarinebutton}   onClick={toggleSort} >  Filters {sortOrder === 'asc' ? '▲' : '▼'} </Button>
+       <Button variant="outlined" className={classes.BrackMarinebutton}   onClick={toggleSort} >   {sortOrder === 'asc' ? <SortAscIcon sx={{marginRight:1}}/> : <SortDesIcon sx={{marginRight:1}}/>}  Filters </Button>
      </Box>
      </Box>{/* buttons container end */}
      <TableContainer component={Paper}>
        <Table sx={{width:'100%'}} size="medium">
           <TableHead >
-          <TableRow sx={{border: "1px solid #0A4FA4",
+          <TableRow sx={{border: "1px solid #0A4FA4", marginLeft:5
           }}>
               {tableheading.map((heading)=>(
-                <TableCell key={heading.id}align="left"
+                <TableCell key={heading.id}align="left" 
                 className={classes.tabelHeadingCell}
                 >{heading.label}</TableCell>
              ))}
@@ -180,7 +177,7 @@ return (
               <TableRow key={tdata.id} 
               className={classes.tablebodyRow}
               >
-              <TableCell padding="checkbox" >
+              <TableCell padding="checkbox"  >
                <Checkbox className={classes.trainingCheckbox} />
                {tdata.id}
                 </TableCell>

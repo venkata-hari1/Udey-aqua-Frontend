@@ -21,6 +21,7 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
     };
     const handleDeleteSubpage = (subId: string) => {
         setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setCounter(counter -1)
     };
     return(
         <>
@@ -40,7 +41,7 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                             horizontal: "right",
                         }}
                 >
-                    <AddSection onClick={handleAddSubpage}/>
+                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
                 </Badge>            
             </Box>
             <Box>
@@ -54,4 +55,6 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
         </>
     )
 }
+
+
 export default WhoWeAre;

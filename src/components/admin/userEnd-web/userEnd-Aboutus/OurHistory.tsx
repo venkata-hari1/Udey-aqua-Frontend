@@ -43,7 +43,7 @@ type OurHistoryProps={
                             horizontal: "right",
                         }}
                 >
-                    <AddSection onClick={handleAddSubpage}/>
+                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
                 </Badge>  
             </Box>
             <Box>

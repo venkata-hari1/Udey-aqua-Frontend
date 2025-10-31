@@ -1,10 +1,12 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions,} from '@mui/material';
+import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions, MenuItem,Select, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, Calender} from './AboutUsButtons';
 import { useState,  } from 'react';
+import CloseIcon from "@mui/icons-material/Close";
 import { HelperTextValidate } from '../../utils/Validations';
 import { HandleFileChange } from '../../utils/Validations';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 interface SubsectionProps {
   accordianId?:string
@@ -25,7 +27,9 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[];content:string } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
-    const [cancel, setCancel] = useState<boolean>(false)
+    const [cancel, setCancel] = useState<boolean>(false);
+    const [selected, setSelected] = useState("Blog");
+    const options = ["Blog","News"]; 
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -95,8 +99,43 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     return(
         <>
             <Box className={classes.subSectionBox}>
-                {id != 'Sub Section-1'&& (<Box className={classes.heroDivider}></Box>)}
+                {(id != 'Sub Section-1'&& id !='1' && id !='Blog-1') && (<Box className={classes.heroDivider}></Box>)}
                 <Box className={classes.whoWeareHeaderbox}>
+                    {/* Home section News */}
+                    { title ==='Home' && accordianId ==='10' ?(
+                        <>
+                        <Select
+                                  value={selected}
+                                  onChange={(e) => setSelected(e.target.value)}
+                                  IconComponent={KeyboardArrowDownRoundedIcon}
+                                  sx={{
+                                    width:'147px',
+                                    height:'37px',
+                                    color: "blue",
+                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                  }}>
+                                    {options.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                        {option}
+                                        </MenuItem>
+                                    ))}
+                        </Select>
+                        <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
+                        { 
+                                <Calender text='MM/DD/YY' textColor='#0A4FA4'/>
+                            
+                        }
+                        <EditButton error={!prevData} onClick={()=> {setCancel(true);
+                            setEdit(true)
+                        }}/>
+                        {(id != 'Blog-1')&& <DeleteButton onClick={handleDeleteClick}/>}
+                    </Box>
+                    </>
+                    )
+                    :(
+                    <>
                     <Typography className={classes.HeaderText}>
                         {id}
                     </Typography>
@@ -108,8 +147,10 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                         <EditButton error={!prevData} onClick={()=> {setCancel(true);
                             setEdit(true)
                         }}/>
-                        {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
+                        {(id != 'Sub Section-1'&& id !='1')&& <DeleteButton onClick={handleDeleteClick}/>}
                     </Box>
+                    </>)
+                    }
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     {/* for Videos Section */}
@@ -139,7 +180,8 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                                     {title != 'News & Events' && 'image' }
                                 </Typography>
                                 <Typography className={classes.mytext}>
-                                    {(title === 'News & Events' && accordianId === '5')? 'image': 'Upload Image or Pdf'}
+                                    {(title === 'News & Events' && accordianId === '5') && 'image'}
+                                    {(title === 'News & Events' && accordianId != '5') && 'Upload Image or Pdf'}
                                 </Typography>
                                 <Box className={classes.myImageUploadBox}>
                                     <input type='file'
@@ -161,12 +203,9 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                                                             alt={`preview ${index+1}`}
                                                             className={classes.ImagePic}
                                                         />
-                                                        <Button className={classes.cancelImgIcon}
-                                                                onClick={()=>{removeImage(index)}}
-                                                                disabled={!Edit}
-                                                                        >
-                                                            x
-                                                        </Button>
+                                                        <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                            <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                        </IconButton>
                                                     </Box>
                                                 )}
                                             </Box>
@@ -222,7 +261,7 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                     ):(
                         <Box className={classes.TextFiledBox}>
                             <Typography  className={classes.mytext}>
-                                {title != 'News & Events'? 'subtitle': 'title'}
+                                {title != 'News & Events'? title =='Home' ? 'Heading':'subtitle' : 'title'}
                             </Typography>
                             <TextField value={subtitle} 
                                     className={classes.myTextFleid}
@@ -234,7 +273,7 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                                     className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText
                                 }}/>
                             <Typography className={classes.mytext}>
-                                content
+                                {title ==='Home' ? 'Description': 'Content'}
                             </Typography>
                             <TextField 
                                 fullWidth

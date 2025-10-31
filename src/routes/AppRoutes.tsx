@@ -55,12 +55,10 @@ import Technologies from "../components/admin/userEnd-web/userEnd-Technologies/T
 //user
 import Layout from "../components/userflow/Shared/Layout";
 import Home from "../components/userflow/Home/Home";
-import Addsubpage from "../components/admin/userEnd-web/userEnd-Aboutus/AddsubPage";
 
 import AboutUs from "../components/admin/userEnd-web/userEnd-Aboutus/AboutUs";
 import MAP from "../components/userflow/Shared/OpenStreetMap";
 import NewsEvents from "../components/admin/userEnd-web/userEnd-News&Events/News&Events";
-import Culturessubpage from "../components/admin/userEnd-web/userEnd-Cultures/Culturessubpage";
 import Contactus from "../components/admin/userEnd-web/userEnd-contactUs/Contactus";
 const AppRoutes = () => {
   const location = useLocation();
@@ -138,24 +136,18 @@ const AppRoutes = () => {
         <Route path="userend-web" element={<UserEndweb />}/>
         <Route path="userend-web/userend-home" element={<UserEndHome />} />
         <Route path="userend-web/userend-aboutus" element={<AboutUs />}/>
-        <Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage Section='About us'/>}/>
+        {/*<Route path='userend-web/userend-aboutus/subpage' element={<Addsubpage Section='About us'/>}/>*/}
         <Route path="userend-web/userend-culture" element={<CultureHome />} />
         <Route path="userend-web/userend-trainingprograms" element={<TrainingPrograms/>}/>
-        <Route path='userend-web/userend-trainingprograms/subpage' element={<Addsubpage Section='Training Programs'/>}/>
+        {/*<Route path='userend-web/userend-trainingprograms/subpage' element={<Addsubpage Section='Training Programs'/>}/>*/}
         <Route path="userend-web/userend-technologies" element={<Technologies/>}/>
-        <Route path='userend-web/userend-technologies/subpage' element={<Addsubpage Section='Technologies'/>}/>   
+        {/*<Route path='userend-web/userend-technologies/subpage' element={<Addsubpage Section='Technologies'/>}/>*/}   
         <Route path="userend-web/userend-news&events" element={<NewsEvents/>}/>  
-        <Route path='userend-web/userend-news&events/subpage' element={<Addsubpage Section='News & Events'/>}/>   
-        <Route 
-  path='userend-web/userend-culture/subpage' 
-  element={<Culturessubpage title="" setTitle={() => {}} />} 
-/>
-
+        {/*<Route path='userend-web/userend-news&events/subpage' element={<Addsubpage Section='News & Events'/>}/>  */} 
+        {/*<Route path='userend-web/userend-culture/subpage'  element={<Culturessubpage title="" setTitle={() => {}} />} />*/}
         <Route path="userend-web/userend-contactus" element={<Contactus/>}/>
-        
         <Route path="logout" element={<Logout />} />  
       </Route>
-
       <Route path="*" element={<div>404 - Page Not Found</div>} />
     </Routes>
   );

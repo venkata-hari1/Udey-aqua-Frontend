@@ -1,10 +1,9 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box,  TextField, Typography, Dialog, DialogContent, DialogActions, Button, Stack} from '@mui/material';
-import {  EditButton,  UploadButton, SaveButton, CancelButton} from '../userEnd-Aboutus/AboutUsButtons';
+import { Box,  TextField, Typography, Dialog, DialogContent, DialogActions, Button, Stack, IconButton} from '@mui/material';
+import {  EditButton,  UploadButton, SaveButton, CancelButton, DeleteButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, useEffect } from 'react';
 import {TitleValidate} from '../../utils/Validations';
-import {  DeleteButton } from './PricingButtons';
-
+import CloseIcon from "@mui/icons-material/Close";
 
 type AquacultureTypeProps={
     id?:string;
@@ -141,11 +140,9 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                                                         alt={`preview ${index+1}`}
                                                         className={classes.ImagePic}
                                                     />
-                                                    <Button className={classes.cancelImgIcon}
-                                                            onClick={()=>{removeImage(index)}}
-                                                                    >
-                                                        x
-                                                    </Button>
+                                                    <IconButton className={classes.cancelImgIcon}  onClick={()=>{removeImage(index)}}>
+                                                        <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                    </IconButton>
                                                 </Box>
                                             )}
                                             <label htmlFor={`upload-${Section}-file-${accordianId}-${id}`}>
@@ -159,13 +156,6 @@ const SubAquacultureType=({id,accordianId,onDelete, Section}:AquacultureTypeProp
                                             />
                                                 </label>
                                             </Box>
-                                            <Box>
-                                                {(Images.length>0 ) &&(
-                                                    <Typography className={classes.errorText}>
-                                                    *Please upload the sponsor logo in landscape format (Preferred size: 300px width × 100px height) Image Must be 5 MB
-                                                </Typography> 
-                                                )} 
-                                            </Box> 
                                     </Box>
                                 )}
                                 <Box>

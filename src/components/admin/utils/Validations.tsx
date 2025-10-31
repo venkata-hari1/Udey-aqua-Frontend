@@ -28,7 +28,7 @@ export const validateEmail1 = (email: string): ValidationResult => {
   let error = "";
 
   if (email.length === 0) {
-    error = "Email cannot be empty";
+    error = "";
   } else if (email.startsWith(".") || email.endsWith(".")) {
     error = "Email cannot start or end with '.'";
   } else if (!emailRegex.test(email)) {
@@ -54,29 +54,31 @@ export const TitleValidate = (text: string): {  message: string } => {
     return {message: `* Remaining Characters ${text.length}/100` }; 
   }
 };
-export const PriceValidate = (text: string): { message: string } => {
+export const PriceValidate = (text: string): { message: string; isError:boolean } => {
   const trimmedText = text.trim();
 
   if (trimmedText.length === 0) {
-    return { message: "" };
+    return { message: "", isError:false };
   }
 
   if (!/^\d+$/.test(trimmedText)) {
-    return { message: "* Must be Numbers" };
+    return { message: "* Must be Numbers, Remove Alphabets", isError:true };
   }
 
   if (trimmedText.length < 2) {
     return {
       message: `* Must contain at least 2 characters. Remaining Characters ${trimmedText.length}/12`,
+      isError:true
     };
   }
 
   if (trimmedText.length > 12) {
-    return { message: "* Character Limit Exceeded" };
+    return { message: "* Character Limit Exceeded",isError:true };
   }
 
   return {
     message: `* Remaining Characters ${trimmedText.length}/12`,
+    isError:false
   };
 };
 export const PlanContentValidate = (text: string): {  message: string } => {
@@ -102,9 +104,11 @@ export const validatePassword = (pword: any):string => {
   }
   else if (!/[A-Z]/.test(pword)) {
   return "* Password must contain at least one uppercase letter";
+}else if (!/[a-z]/.test(pword)) {
+  return "* Password must contain at least one lowercase letter";
 }
-  else if (!/[!@#$%^&*(),.?":{}|<>]/.test(pword)) {
-     return "* Must Contain atleast one Special Character ";
+   else if (!/[!@#$%^&*(),.?":{}|<>]/.test(pword) ||  /\s/.test(pword)) {
+     return "* Must Contain atleast one Special Character and No Spaces ";
 }
 else if (!/\d/.test(pword)) {
 return "* Must contain at least one number";
@@ -149,7 +153,7 @@ else if (!/\d/.test(cfmpwd)) {
   return "* Must contain at least one number";
 } 
 else if (cfmpwd !== pword) {
-  return "Password and Confirm password are not matching";
+  return "Passwords do not match";
 } 
 else {
   return "";
@@ -201,21 +205,27 @@ interface ValidationResult {
 }
 
 export const phoneNumberValidation = (phone: string): ValidationResult => {
-  const requiredLength = 13;
+  const requiredLength = 10;
 
   if (phone.length === 0) {
     return {
       error: "",
       isError: true,
     };
-  } else if (!/^(?:\+91|91)[-\s]?[6-9]\d{4}[-\s]?\d{5}$/.test(phone)) {
+  } if (phone === '+91'){
     return {
-      error: "* Enter a valid Indian phone number (e.g. +91  or 91 )",
+      error: "",
+      isError: true,
+    };
+  }
+   else if (!/^(\+91)[6-9]\d{4}\d{5}$/.test(phone)) {
+    return {
+      error: "* Enter a valid Indian phone number",
       isError: true,
     };
   } else if (phone.length <= requiredLength) {
     return {
-      error: `* Phone number must be 12 or 13 digits. Entered: ${phone.length}/${requiredLength}`,
+      error: `* Phone number must be 10 digits. Entered: ${phone.length}/${requiredLength}`,
       isError: false,
     };
   } else {
@@ -527,3 +537,17 @@ export const websiteValidation = (url: string): WebsiteResult => {
   }
 };
 
+export const PlanContentValidation =(text: string) =>{
+  const Text = text.replace(/<[^>]*>/g, '');
+  if (Text.length === 0) {
+    return {  message: "" }; 
+  } else if (Text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${Text.length}/200`,
+    };
+  } else if (Text.length > 200) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${Text.length}/200` }; 
+  }
+}

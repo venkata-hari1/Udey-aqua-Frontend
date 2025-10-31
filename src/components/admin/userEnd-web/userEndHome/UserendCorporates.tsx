@@ -9,7 +9,7 @@ import {
 } from "./UserEndCommonButtons";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { EditButton } from "../userEnd-Aboutus/AboutUsButtons";
+import { CancelButton, EditButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
 
 interface CorporateLogo {
   id: string;
@@ -55,6 +55,9 @@ const UserendCorporates = () => {
   }
 
   return (
+
+    
+
     <Box>
       <Stack className={classes.corporateStack1}>
         <Typography className={classes.titleText}>Logos</Typography>
@@ -94,8 +97,9 @@ const UserendCorporates = () => {
             </Box>
           ))}
         </Stack>
-
-        <UserEndSaveCancelButtons onSave={handleSave}/>
+        <Box className={aboutus.SeveandCancelBox} >
+           <SaveButton/>
+       <CancelButton/></Box> 
       </Box>
     </Box>
   );

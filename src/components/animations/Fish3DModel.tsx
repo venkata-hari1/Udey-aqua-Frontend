@@ -3,6 +3,9 @@ import React, { Suspense, useRef, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
 
 type GLTFResult = {
   scene: THREE.Group;
@@ -11,6 +14,8 @@ type GLTFResult = {
 
 // Fish component
 const Fish: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const fishRef = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF("/models/tillapia_buttikoferi_fish.glb") as GLTFResult;
   const { actions } = useAnimations(animations, fishRef);
@@ -40,7 +45,7 @@ const Fish: React.FC = () => {
     <primitive
       ref={fishRef}
       object={scene}
-      scale={23} // Big fish
+      scale={isMobile?12:23} // Big fish
       rotation={[0, Math.PI / 2, 0]} // Face left
        // Slight shift left
     />
@@ -58,11 +63,13 @@ const CameraController: React.FC = () => {
 
 // Main FishHero component
 const Fish3DModel: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
-    <div style={{ position: "relative", width: "100%", height: "500px", overflow: "hidden" }}>
+    <div style={isMobile?{ position: "relative", width: "100%", height: "250px", overflow: "hidden" }:{position: "relative", width: "100%", height: "500px", overflow: "hidden"}}>
       <Canvas
         camera={{ position: [4, 1, 8], fov: 50 }}
-        style={{ width: "90%", height: "100%", position: "absolute", top: 0, left: 0 }}
+        style={isMobile?{ width: "90%", height: "100%", position: "absolute", top: -12, left: 0 }:{ width: "90%", height: "100%", position: "absolute", top: 0, left: 0 }}
       >
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
