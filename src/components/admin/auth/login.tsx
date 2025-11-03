@@ -23,6 +23,9 @@ import {
   StyledLoginButton,
 } from '../styles/logins.styles';
 import { validateEmail, validatePassword } from '../utils/Validations';
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../../../redux/store";
+import { loginAdmin } from "../../../redux/reducers/auth";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -46,20 +49,47 @@ const Login: React.FC = () => {
     setPasswordError(validatePassword(value));
   };
 
-  const validateAndLogin = () => {
-    const emailResult = validateEmail(email);
-    const passwordResult = validatePassword(password);
+  // const validateAndLogin = () => {
+  //   const emailResult = validateEmail(email);
+  //   const passwordResult = validatePassword(password);
 
-    setEmailError(emailResult);
-    setPasswordError(passwordResult);
+  //   setEmailError(emailResult);
+  //   setPasswordError(passwordResult);
 
-    if (emailResult === '' && passwordResult === '') {
-      console.log('login success :', { email, password });
-      navigate('/admin/dashboard');
-    } else {
-      console.log('validation failed');
+  //   if (emailResult === '' && passwordResult === '') {
+  //     console.log('login success :', { email, password });
+  //     navigate('/admin/dashboard');
+  //   } else {
+  //     console.log('validation failed');
+  //   }
+  // };
+
+const dispatch = useDispatch<AppDispatch>();
+
+const Loginadm = async () => {
+  const emailResult = validateEmail(email);
+  const passwordResult = validatePassword(password);
+
+  setEmailError(emailResult);
+  setPasswordError(passwordResult);
+
+  if (emailResult === '' && passwordResult === '') {
+    try {
+      const resultAction = await dispatch(loginAdmin({ email, password }));
+
+      if (loginAdmin.fulfilled.match(resultAction)) {
+        console.log('Login successful:', resultAction.payload);
+        navigate('/admin/dashboard');
+      } else {
+        console.log('Login failed:', resultAction.payload);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
-  };
+  } else {
+    console.log('Validation failed');
+  }
+};
 
   return (
     <StyledLoginRoot>
@@ -138,7 +168,7 @@ const Login: React.FC = () => {
            <StyledLoginButton
             variant="contained"
             fullWidth
-            onClick={validateAndLogin}
+            onClick={Loginadm}
             disabled={isDisabled}
           >
             Login

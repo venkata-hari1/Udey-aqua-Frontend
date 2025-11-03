@@ -8,7 +8,7 @@ import Hero from '../userEnd-Aboutus/Hero';
 import  Badge  from "@mui/material/Badge";
 import { useSelector, useDispatch } from 'react-redux';
 import type { Rootstate } from '../../../../redux/store';
-import { SetEdit } from '../../../../redux/reducers/auth';
+import { SetEdit } from '../../../../redux/reducers/Nav';
 
 type RASProps={
     id:string;
@@ -43,7 +43,7 @@ const RAS=({id,accordianId,Section,title}:RASProps)=>{
         <>   
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
-                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetEdit(true))}} disable={!BannerEdit.Edit}/>
+                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetEdit(true))}} disable={!BannerEdit}/>
                     <Badge
                         badgeContent={counter}
                         sx={{

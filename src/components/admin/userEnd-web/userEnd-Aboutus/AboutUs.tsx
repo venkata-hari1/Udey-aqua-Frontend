@@ -14,7 +14,7 @@ import { useState, type ComponentType, } from 'react';
 import TitlePage from './TitlePage';
 import { useSelector, useDispatch } from 'react-redux';
 import type { Rootstate } from '../../../../redux/store';
-import { setExpandAccordian } from '../../../../redux/reducers/auth';
+import { setExpandAccordian } from '../../../../redux/reducers/Nav';
 
 const AboutUs=()=>{
     const {classes}= useAboutusStyles();

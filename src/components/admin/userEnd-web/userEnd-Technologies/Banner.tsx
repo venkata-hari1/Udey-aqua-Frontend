@@ -6,7 +6,7 @@ import { HelperTextValidate, PriceValidate, HandlePDFChange, HandleFileChange } 
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from 'react-redux';
 import type { Rootstate } from '../../../../redux/store';
-import { SetEdit } from "../../../../redux/reducers/auth";
+import { SetEdit } from "../../../../redux/reducers/Nav";
 interface Bannerprops {
   accordianId:string
   id: string;
@@ -31,7 +31,7 @@ const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [Ispdf, setIsPdfSaved] = useState<boolean>(false);
-    const [cancel, setCancel] = useState<boolean>(BannerEdit.Cancel);
+    const [cancel, setCancel] = useState<boolean>(false);
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -39,7 +39,7 @@ const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     const PriceContent = HelperTextValidate(pdfContent)
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 ||  content.length < 3 || content.length > 200 ||pdfPrice.length < 3 || pdfPrice.length > 200 || /[^0-9]/.test(pdfPrice)||  pdfContent.length < 3 || pdfContent.length > 200
     
-    var Enable= isSaved && !BannerEdit.Edit
+    var Enable= isSaved && !BannerEdit
 
     const SaveData = () => {
     setPrevData({

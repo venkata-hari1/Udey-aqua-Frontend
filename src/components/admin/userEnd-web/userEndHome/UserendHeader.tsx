@@ -4,8 +4,16 @@ import { addressContentValidation, phoneNumberValidation, validateEmail,validate
 import { useState } from "react"
 import { CancelButton,  SaveButton, EditButton } from '../userEnd-Aboutus/AboutUsButtons';
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../../../../redux/store";
+import {
+  createHeader,
+  getSectionData,
+} from "../../../../redux/reducers/home";
 const UserendHeader = () => {
+
+  const dispatch = useDispatch<AppDispatch>();
+
 
   const[email,setEmail]=useState('')
   const [address,setAddress]=useState('')
@@ -13,6 +21,7 @@ const UserendHeader = () => {
   const[emailError,setEmailError]=useState('')
   const[phoneError,setPhoneError]=useState('')
   const[addressError,setAddressError]=useState('')
+  
 
   const [prevData, setPrevData] = useState<{ email: string; address: string; phone:string} | null>(null);
   const [Edit, setEdit] = useState<boolean>(true);
@@ -45,8 +54,7 @@ const{classes:aboutus}=useAboutusStyles()
  }
 
  const SaveData = ()=>{
-        setPrevData({
-        
+        setPrevData({ 
         phone,
         email,
         address
@@ -56,6 +64,7 @@ const{classes:aboutus}=useAboutusStyles()
     setCancel(false)
     console.log(`titel:${email}, phone:${phone},website:${address}`);
 };
+
 
     const CancelData = ()=>{
         if (prevData) {
@@ -148,7 +157,9 @@ const{classes:aboutus}=useAboutusStyles()
         </Grid>
     </Grid>
     <Box className={aboutus.SeveandCancelBox} >
+     {/* <SaveButton error={isTextInvalid || isSaved} onClick={SaveData} /> */}
      <SaveButton error={!isTextInvalid || isSaved} onClick={SaveData} />
+
       {cancel &&(<CancelButton onClick={CancelData} />)}
     </Box>
     </Box>

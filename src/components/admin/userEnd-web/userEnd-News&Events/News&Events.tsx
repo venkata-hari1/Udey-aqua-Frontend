@@ -12,7 +12,7 @@ import { useState, type ComponentType } from 'react';
 import TitlePage from '../userEnd-Aboutus/TitlePage';
 import { useSelector, useDispatch } from 'react-redux';
 import type { Rootstate } from '../../../../redux/store';
-import { setExpandAccordian } from '../../../../redux/reducers/auth';
+import { setExpandAccordian } from '../../../../redux/reducers/Nav';
 
 const NewsEvents=()=>{
     const {classes}= useAboutusStyles();

@@ -16,10 +16,14 @@ import {
   StyledSubtitle,
   StyledTextField,
   StyledLoginButton,
-  StyledCustomIcon,       // <-- IMPORT THIS
-  StyledInputAdornmentIcon, // <-- IMPORT THIS
-} from '../styles/logins.styles'; // Ensure this path is correct
+  StyledCustomIcon,       
+  StyledInputAdornmentIcon, 
+} from '../styles/logins.styles'; 
 import { validateEmail } from '../utils/Validations';
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../../../redux/store";
+import { forgetPassword } from '../../../redux/reducers/auth';
+
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -35,14 +39,30 @@ const ForgotPassword = () => {
  
 }  
 
-const validateAndContinue = () => {
-   const emailOk=validateEmail(email)
+// const validateAndContinue = () => {
+//    const emailOk=validateEmail(email)
    
-   if(emailOk===''){
-    console.log("email",email);
-     navigate('/admin/otp')
-   }
+//    if(emailOk===''){
+//     console.log("email",email);
+//      navigate('/admin/otp')
+//    }
+const dispatch = useDispatch<AppDispatch>();
 
+const validateAndContinue = async () => {
+  const emailOk = validateEmail(email);
+  if (emailOk === '') {
+    try {
+      const resultAction = await dispatch(forgetPassword({ email }));
+      if (forgetPassword.fulfilled.match(resultAction)) {
+      
+        navigate('/admin/otp');
+      }
+    } catch (error) {
+      console.error('Error during forgot password:', error);
+    }
+  } else {
+    setEmailError(emailOk);
+  }
 };
 
   return (
