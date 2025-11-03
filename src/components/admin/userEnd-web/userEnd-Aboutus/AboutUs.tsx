@@ -6,11 +6,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AddSubpage, ArrowBack} from './AboutUsButtons';
 import Hero from './Hero';
 import WhoWeAre from './WhoWeAre';
-import OurHistory from './OurHistory';
 import { useNavigate } from 'react-router-dom';
 import OurDirectors from './OurDirectors';
-import Sustainable from './Sustainable';
-import Careers from './Careers';
 import MileStone from './MileStone';
 import Testimonials from './Testimonials';
 import { useState, type ComponentType, } from 'react';
@@ -32,10 +29,10 @@ const AboutUs=()=>{
     const AccordianData = [
         {id:'1',title:'Hero Section',component:Hero, refid:'Hero'},
         {id:'2',title:'Who We Are',component: WhoWeAre, refid:'Our Motto'},
-        {id:'3',title:'Our History',component: OurHistory , refid:'our history'},
+        {id:'3',title:'Our History',component: WhoWeAre , refid:'our history'},
         {id:'4',title:'Our Directors & Advisors',component:OurDirectors,refid:'Our Directors & Advisors'},
-        {id:'5',title:'Sustainable Development',component:Sustainable,refid:'sustainable'},
-        {id:'6',title:'Careers',component:Careers,refid:'careers'},
+        {id:'5',title:'Sustainable Development',component:WhoWeAre,refid:'sustainable'},
+        {id:'6',title:'Careers',component:WhoWeAre,refid:'careers'},
         {id:'7',title:'Milestones',component:MileStone,refid:'milestones'},
         {id:'8',title:'Testimonials',component:Testimonials,refid:'Testimonials'}
     ]

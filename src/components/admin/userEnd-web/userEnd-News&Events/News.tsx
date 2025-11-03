@@ -1,11 +1,12 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box, Button, Stack, TextField, Typography} from '@mui/material';
+import { Box, Button, Stack, TextField, Typography, IconButton} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton, Calender,  AddSection} from '../userEnd-Aboutus/AboutUsButtons';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
-import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
+import { HandleFileChange, HelperTextValidate, HandlePDFChange } from '../../utils/Validations';
 import Subsection from '../userEnd-Aboutus/Subsection';
 import  Badge  from "@mui/material/Badge";
+import CloseIcon from "@mui/icons-material/Close";
 
 type HeroProps={
     id?:string;
@@ -169,16 +170,16 @@ type HeroProps={
                                             }}/>
                                         </Box>
                                         <Typography className={classes.mytext}>
-                                            Upload Image or Pdf
+                                            Upload Pdf
                                         </Typography>
                                         <Box className={classes.myImageUploadBox}>
                                             <input type='file'
                                                     multiple
-                                                    accept="image/*" 
+                                                    accept="application/pdf"  
                                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                                     style={{display:'none'}}
                                                     disabled={!Edit}
-                                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
+                                                    onChange={(e) =>HandlePDFChange(e, setFile, setError, setIsSaved, setImage)}
                                                     />
                                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
                                             {(Images.length>0) && (
@@ -186,14 +187,25 @@ type HeroProps={
                                                     <Box className={classes.ImagespicBox}>
                                                         {Images.map((prev,index)=>
                                                             <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
-                                                                <img 
-                                                                    src={prev}
-                                                                    alt={`preview ${index+1}`}
-                                                                    className={classes.ImagePic}
-                                                                />
-                                                                <Button className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
-                                                                    <CancelIcon   />
-                                                                </Button>
+                                                                <Box sx={{
+                                                                        overflow: "hidden",   
+                                                                        position: "relative",
+                                                                    }}
+                >
+                                                                    <embed
+                                                                        src={Images[index]} 
+                                                                        type="application/pdf"
+                                                                        className={classes.ImagePic} 
+                                                                        style={{
+                                                                            width: "100%",
+                                                                            height: "100%",
+                                                                            display: "block",
+                                                                            }} 
+                                                                    />
+                                                                </Box>
+                                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                                     <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                                </IconButton>
                                                             </Box>
                                                         )}
                 

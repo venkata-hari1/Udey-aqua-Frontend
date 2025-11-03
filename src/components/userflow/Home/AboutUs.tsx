@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/home/about_image.png";
 import ReactPlayer from "react-player";
 import useHomeStyles from "./homeStyles";
+import AboutUsVideo from "./video";
 import { Slide } from "react-awesome-reveal";
 
 const AboutUs = () => {
@@ -74,7 +75,7 @@ const AboutUs = () => {
       
       </Grid>
      
-      <Grid container spacing={2} className={classes.aboutUsVideoWrap} sx={{pointerEvents:'none',}}>
+      {/*<Grid container spacing={2} className={classes.aboutUsVideoWrap} sx={{pointerEvents:'none',}}>
        <Grid size={{xs:12}}>
         <iframe
         width="100%"
@@ -87,7 +88,8 @@ const AboutUs = () => {
       />
       
         </Grid>
-      </Grid>
+      </Grid>*/}
+      <AboutUsVideo/>
     </>
   );
 };

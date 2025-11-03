@@ -134,11 +134,12 @@ export const CancelButton=({onClick}:{onClick?:()=>void})=>{
 type addsectionpros={
     label:string
     onClick ?: ()=> void;
+    disable?:boolean
 }
-export const AddSection=({onClick,label}:addsectionpros)=>{
+export const AddSection=({onClick,label,disable}:addsectionpros)=>{
     const {classes} =useAboutusStyles();
     return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
+        <Button variant='contained' disableElevation disabled={disable} className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
             {label}
         </Button>
     )

@@ -24,6 +24,8 @@ type Iprops={
 const Header = ({toggleDrawer}:Iprops) => {
 const theme = useTheme();
 const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const [searchTerm, setSearchTerm] = useState("");
+
 
 const location=useLocation()
 const path=location.pathname.split('/').pop() ||""
@@ -31,7 +33,7 @@ console.log(path)
 
 const navigate=useNavigate()
 
-  const [searchTerm, setSearchTerm] = useState("");
+ 
 //header title
 
 let title="";
@@ -86,7 +88,7 @@ switch(path){
     title="Logout"
 }
 //backarrow handle
-const backarrowHandle=()=>{
+{/*const backarrowHandle=()=>{
   switch(path){
    case "training-registrations":
    navigate('/admin/user-management')  
@@ -125,7 +127,7 @@ const backarrowHandle=()=>{
    
 
  }
-}
+}*/}
 
 const searchPages = [
   
@@ -160,9 +162,9 @@ const{classes}=useHeaderStyles()
           )}
          <Box className={classes.headerandSearchContainer}> 
         <Box className={classes.AdmintitleBox}>
-        {shouldShowbackArrow(path)&&
+        {/*{shouldShowbackArrow(path)&&
         <ArrowBackIosOutlinedIcon className={classes.backArrow}
-        onClick={backarrowHandle}/>}
+        onClick={backarrowHandle}/>}*/}
         
         <Typography variant="h6" component="div" className={classes.AdminheaderTitle}>
           {title}
@@ -193,6 +195,34 @@ const{classes}=useHeaderStyles()
                       }}
                     />
                   )}
+                />)
+            }
+          
+          {/* user management */}
+          {showSearchbox(path)&& path == 'user-management' &&
+                (<ReusableSearch
+                  data={tablebodydata}
+                  keys={['name','availability','address']}
+                  width="100%"
+                  onSelect={(item) => navigate('/user-management',{state:{user:item}})}
+                  renderInput={({ value, onChange }) => (
+                    <TextField
+                      className={classes.headerSearch} // keep your styles
+                      size="small"
+                      type="search"
+                      placeholder="Search"
+                      value={value}
+                      onChange={onChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                 
                 />)
             }
   

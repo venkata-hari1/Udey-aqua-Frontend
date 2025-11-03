@@ -1,18 +1,22 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions,IconButton} from '@mui/material';
-import { DeleteButton, UploadButton, CancelButton, EditButton, UpdateHeader,  UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
-import { useState,  } from 'react';
+import { Box, Stack, TextField, Typography,IconButton} from '@mui/material';
+import { UploadButton, CancelButton, UpdateHeader,  UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
+import { useEffect, useState,  } from 'react';
 import { HelperTextValidate, PriceValidate, HandlePDFChange, HandleFileChange } from '../../utils/Validations';
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from 'react-redux';
+import type { Rootstate } from '../../../../redux/store';
+import { SetEdit } from "../../../../redux/reducers/auth";
 interface Bannerprops {
   accordianId:string
   id: string;
   Section:string;
-  onDelete?: () => void; // callback to delete this subpage
 }
 
-const Banner=({ accordianId, id,Section, onDelete }: Bannerprops)=>{
+const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     const {classes} = useAboutusStyles();
+    const dispatch = useDispatch();
+    const BannerEdit = useSelector((state:Rootstate)=>state.accordian.EditBanner);
     const [,setFile]= useState<File[]>([]);
     const [pdffile,setPdfFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -21,14 +25,13 @@ const Banner=({ accordianId, id,Section, onDelete }: Bannerprops)=>{
     const [pdferror,setPdfError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
-    const [openDialog, setOpenDialog] = useState(false);
     const [prevData, setPrevData] = useState<{ subtitle: string;Images: string[];content: string;pdf: string[];pdfPrice: string;pdfContent: string;} | null>(null);
     const [pdfPrice, setPdfPrice] = useState<string>("");
     const [pdfContent, setPdfcontent] = useState<string>("");
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [Ispdf, setIsPdfSaved] = useState<boolean>(false);
-    const [cancel, setCancel] = useState<boolean>(false)
+    const [cancel, setCancel] = useState<boolean>(BannerEdit.Cancel);
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -36,13 +39,14 @@ const Banner=({ accordianId, id,Section, onDelete }: Bannerprops)=>{
     const PriceContent = HelperTextValidate(pdfContent)
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 ||  content.length < 3 || content.length > 200 ||pdfPrice.length < 3 || pdfPrice.length > 200 || /[^0-9]/.test(pdfPrice)||  pdfContent.length < 3 || pdfContent.length > 200
     
+    var Enable= isSaved && !BannerEdit.Edit
+
     const SaveData = () => {
     setPrevData({
         subtitle,
         Images,
         content,
         pdf,
-        //pdfFiles: pdffile,
         pdfPrice,
         pdfContent,
     });
@@ -50,6 +54,7 @@ const Banner=({ accordianId, id,Section, onDelete }: Bannerprops)=>{
     setIsPdfSaved(true);
     setEdit(false);
     setCancel(false);
+    dispatch(SetEdit(true))
     console.log(`subtitle:${subtitle}, Images:${Images}, content:${content}, price:${pdfPrice}, pdfcontent:${pdfContent}, pdf:${pdf}`);
 };
 
@@ -59,7 +64,6 @@ const CancelData = () => {
         setImage(prevData.Images);
         setContent(prevData.content);
         setPdf(prevData.pdf);
-        //setPdfFile(prevData.pdfFiles);
         setPdfPrice(prevData.pdfPrice);
         setPdfcontent(prevData.pdfContent);
         setIsSaved(true);
@@ -77,6 +81,7 @@ const CancelData = () => {
     }
     setEdit(false);
     setCancel(false);
+    dispatch(SetEdit(false))
 };
     const removeImage=(IndexToRemove:number)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
@@ -90,18 +95,7 @@ const CancelData = () => {
             setPdfError('');
             setIsPdfSaved(false);
     };
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCancel = () => {
-        setOpenDialog(false);
-    };
-
-    const handleConfirmDelete = () => {
-        setOpenDialog(false);
-        if (onDelete) onDelete(); 
-    };
+    
     
 
      
@@ -109,17 +103,11 @@ const CancelData = () => {
         <>
  
             <Box className={classes.subSectionBox}>
-                {id != 'Sub Section-1'&& (<Box className={classes.heroDivider}></Box>)}
+                <Box className={classes.heroDivider}></Box>
                 <Box className={classes.whoWeareHeaderbox}>
                     <Typography className={classes.HeaderText}>
-                        {id}
+                        Banner
                     </Typography>
-                    <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:3}}>
-                        <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
-                        setEdit(true)
-                    }}/>
-                        {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
-                    </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -135,7 +123,7 @@ const CancelData = () => {
                                     onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
                                     disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={Enable}/> 
                             {(Images.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
@@ -285,34 +273,10 @@ const CancelData = () => {
                 <Box className={classes.SeveandCancelBox}>
                     <UpdateHeader error={isSaved || Ispdf || Images.length === 0 || isTextInvalid}  onClick={SaveData}
                     />
-                    {cancel &&(<CancelButton onClick={CancelData}
-                    />)}
+                    {cancel &&(<CancelButton onClick={CancelData}/>)}
                     
                 </Box>
             </Box>
-            <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
-                                    sx: {
-                                    width: 500,       
-                                    height: 250,      
-                                    borderRadius: 3,   
-                                    padding: 2,        
-                                    },
-                                }}>
-                <DialogContent className={classes.DialogContent}>
-                    <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
-                </DialogContent>
-                <DialogActions sx={{ 
-                                display: 'flex', 
-                                justifyContent: 'center'  
-                            }}>
-                    <Button onClick={handleCancel} className={classes.deleteButton}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </>
     )
 }

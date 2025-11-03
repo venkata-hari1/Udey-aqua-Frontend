@@ -441,6 +441,52 @@ export const HandleFileChange = (
     
         event.target.value = '';
 }
+//new handle file
+export const newHandleFileChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  setFile:Dispatch<SetStateAction<File|null>>,
+  setError:Dispatch<SetStateAction<string>>,
+  setIsSaved:Dispatch<SetStateAction<boolean>>,
+
+) => {
+
+      const files = event.target.files;
+        setError('');
+        setIsSaved(false);
+    
+        if (files && files.length > 0) {
+            const selectedFiles: File[] = Array.from(files);
+          
+            selectedFiles.forEach(file => {
+                const errorMsg = validate(file);
+                
+                if (errorMsg) {
+                    setError(errorMsg);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imgs = new Image();
+                    imgs.onload = () => {
+                        if (imgs.width <= 300 || imgs.height <= 100) {
+                            setError('** File must be in landscape format (min 300x100)');
+                            setFile(null)
+                            return; 
+                        }
+                        else{
+                          setFile(file);
+                        }
+                    };
+                    imgs.src = e.target?.result as string;
+                };
+                reader.readAsDataURL(file);
+                
+            });
+        }
+    
+        event.target.value = '';
+}
+
 
 export const HandlePDFChange = (
   event: ChangeEvent<HTMLInputElement>,
@@ -527,10 +573,27 @@ interface WebsiteResult {
 }
 export const websiteValidation = (url: string): WebsiteResult => {
   const regex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+)\.([a-zA-Z]{2,})(\/\S*)?$/;
+  const yotutbe=/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})(?:[&\S]*)?$/
   if (url.length ==0){
     return {error:'',isError:true}
   }if (! regex.test(url)){
     return {error:'* Website must be in ( http: or https: or www. )', isError:true};
+  }
+  else{
+    return {error:'',isError:false};
+  }
+};
+interface WebsiteResult {
+  error: string;
+  isError: boolean;
+}
+export const YoutubeValidation = (url: string): WebsiteResult => {
+  const regex = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})(?:[&\S]*)?$/;
+  
+  if (url.length ==0){
+    return {error:'',isError:true}
+  }if (! regex.test(url)){
+    return {error:'* Must be an Youttube link', isError:true};
   }
   else{
     return {error:'',isError:false};

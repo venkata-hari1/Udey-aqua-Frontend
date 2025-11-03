@@ -9,7 +9,6 @@ import RAS from '../userEnd-Technologies/RAS';
 import { useState, type ComponentType, } from 'react';
 import Hero from "../userEnd-Aboutus/Hero";
 import TitlePage from '../userEnd-Aboutus/TitlePage';
-
 const Technologies=()=>{
     const {classes}= useAboutusStyles();
     const naviagte = useNavigate();

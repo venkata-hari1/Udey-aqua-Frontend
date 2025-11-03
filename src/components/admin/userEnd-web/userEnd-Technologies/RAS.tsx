@@ -6,6 +6,9 @@ import { useState,  } from 'react';
 import Banner from './Banner';
 import Hero from '../userEnd-Aboutus/Hero';
 import  Badge  from "@mui/material/Badge";
+import { useSelector, useDispatch } from 'react-redux';
+import type { Rootstate } from '../../../../redux/store';
+import { SetEdit } from '../../../../redux/reducers/auth';
 
 type RASProps={
     id:string;
@@ -15,6 +18,8 @@ type RASProps={
 }
 const RAS=({id,accordianId,Section,title}:RASProps)=>{
     const {classes} = useAboutusStyles();
+    const dispatch = useDispatch();
+    const BannerEdit = useSelector((state:Rootstate)=>state.accordian.EditBanner);
     const [counter, setCounter] = useState<number>(1);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
     const [banner, setBanner] = useState<{id:string}[]>([]);
@@ -34,59 +39,33 @@ const RAS=({id,accordianId,Section,title}:RASProps)=>{
         setBanner((prev) => [...prev, { id: newId }]);
         setBannerCount(bannercount+1)
     };
-
-    const handleDeleteBanner = (subId: string) => {
-        setBanner((prev) => prev.filter((sub) => sub.id !== subId));
-        setBannerCount(bannercount-1)
-    }; 
     return(
-        <>
-     
+        <>   
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
+                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetEdit(true))}} disable={!BannerEdit.Edit}/>
                     <Badge
-                                                        badgeContent={bannercount}
-                                                            sx={{
-                                                                "& .MuiBadge-badge": {
-                                                                backgroundColor: "#0A4FA4",
-                                                                color: "#fff", 
-                                                                },
-                                                            }}
-                                    
-                                                            anchorOrigin={{
-                                                                vertical: "top",
-                                                                horizontal: "right",
-                                                            }}
-                                                    >
-                                                    <AddSection label='Add Banner' onClick={handleAddBanner}/>
-                                                    </Badge>
-                                    <Badge
-                                                        badgeContent={counter}
-                                                            sx={{
-                                                                "& .MuiBadge-badge": {
-                                                                backgroundColor: "#0A4FA4",
-                                                                color: "#fff", 
-                                                                },
-                                                            }}
-                                    
-                                                            anchorOrigin={{
-                                                                vertical: "top",
-                                                                horizontal: "right",
-                                                            }}
-                                                    >
-                                                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
-                                                    </Badge>
-                    
-                    
+                        badgeContent={counter}
+                        sx={{
+                        "& .MuiBadge-badge": {
+                            backgroundColor: "#0A4FA4",
+                            color: "#fff", 
+                            },
+                        }}            
+                        anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                        }}
+                    >
+                        <AddSection label='Add Section' onClick={handleAddSubpage}/>
+                    </Badge>                
                 </Box>
                 {title ==='Technologies' &&<Hero id={id} accordianId={id} Section={Section}/>}
                 <SubSection id='Sub Section-1' accordianId='2' Section={Section}/>
                 {subpages.map((sub) => (
                     <SubSection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))}
-                {banner.map((sub)=>(
-                    <Banner key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteBanner(sub.id)}/>
-                ))}
+                    <Banner  id='Banner' accordianId={accordianId} Section={Section} />
             </Box>
         </>
     )

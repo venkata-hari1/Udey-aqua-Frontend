@@ -7,8 +7,9 @@ import MyPagination from "../utils/MyPagination";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
-import { sortByKey } from '../utils/Filter';
-import type { SortOrder } from '../utils/Filter';
+import  { sortByKey } from "../utils/Filter"
+import type { SortOrder } from "../utils/Filter";
+
 import { useState } from "react";
 import { getinuserdata } from "../utils/data";
 import {SortAscIcon, SortDesIcon}from "../utils/SortIcon";
@@ -51,8 +52,7 @@ const exportPDF = () => {
       user.name,
       user.phone,
       user.message,
-      user.date,
-       
+      user.date, 
     ]);
 
     autoTable(doc, {

@@ -38,7 +38,7 @@ const AccordianData=[
    {id:8,menu:"Our Projects",type: "component",content:UserEndProjects } ,
    {id:9,menu:"Testimonials",type: "link",link:'/admin/userend-web/userend-aboutus' } , 
    {id:10,menu:"News & Events",type: "link",link:'/admin/userend-web/userend-news&events' } , 
-   {id:11,menu:"Pricing",type: "component",content:UserendPricing } , 
+   {id:11,menu:"Pricing",type: "link",link:'/admin/userend-web/userend-culture' } , 
    {id:12,menu:"Our Directors & Advisors",type: "link",link:'/admin/userend-web/userend-aboutus' } ,
    {id:13,menu:"Get In Touch",type: "component",content:UserendGetintouch } ,  
    {id:14,menu:"Footer",type: "component",content:UserendFooter }, 

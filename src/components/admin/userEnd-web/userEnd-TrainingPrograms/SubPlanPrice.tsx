@@ -136,7 +136,7 @@ const SubPriceplan=({id,onDelete,Section}:SubPriceplan)=>{
                     <SaveButton error={isValid || isSaved}  onClick={SaveData}/>
                     {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
-            <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> !openDialog} onDelete={handleConfirmDelete}/>
+            <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> setOpenDialog(false)} onDelete={handleConfirmDelete}/>
             </Box>
         </>
     )

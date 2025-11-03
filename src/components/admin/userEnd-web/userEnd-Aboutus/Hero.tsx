@@ -1,73 +1,55 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Button, Stack, TextField, Typography, DialogContent, DialogActions,Dialog,MenuItem,Select, IconButton} from '@mui/material';
+import { Box, Stack, TextField, Typography,MenuItem,Select, IconButton} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader, DeleteButton} from './AboutUsButtons';
 import CloseIcon from "@mui/icons-material/Close";
-
 import { useState,  } from 'react';
-import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
+import { HelperTextValidate,newHandleFileChange } from '../../utils/Validations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+
 type HeroProps={
     id?:string;
     accordianId?:string;
     Section?:string;
     title?:string;
-    ondelete?:()=> void
+    ondelete?:()=>void
 }
- const Hero=({id,accordianId,Section,title,ondelete}:HeroProps)=>{
+ const Hero=({id,accordianId,Section,title}:HeroProps)=>{
     const {classes} =useAboutusStyles();
-    const [,setFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const [file,setfile] = useState<File|null>(null)
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
-    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[] } | null>(null);
+    const [prevData, setPrevData] = useState<{ subtitle: string; file:File |null } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false);
-    const [openDialog, setOpenDialog] = useState(false);
     const [selected, setSelected] = useState("Cage Culture");
-        const options = ["Aqua Culture","Cage Culture"]; 
+    const options = ["Aqua Culture","Cage Culture"]; 
     
     const TextFieldError=HelperTextValidate(subtitle).message;
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;  
     
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCancel = () => {
-        setOpenDialog(false);
-    };
-
-    const handleConfirmDelete = () => {
-        setOpenDialog(false);
-        if (ondelete) ondelete(); 
-    };
-
-    const removeImage=(IndexToRemove:number)=>{
-        setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-        setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removeImage=()=>{
         setError('');
+        setfile(null)
         setIsSaved(false);
     };
     const SaveData = ()=>{
         setPrevData({
         subtitle,
-        Images,
+        file,
     });
     setIsSaved(true);
     setEdit(false);
-    console.log(`subtitle:${subtitle}, Images:${Images}`);
+    console.log(`subtitle:${subtitle}, Images:${file}`);
     };
     const CancelData = ()=>{
         if (prevData) {
         setSubtitle(prevData.subtitle);
-        setImage(prevData.Images);
-        setFile([]); // reset current file uploads
+        setfile(prevData.file) 
         setIsSaved(true);
     } else {
         setSubtitle('');
-        setImage([]);
-        setFile([]);
+        setfile(null)
         setIsSaved(false);
     }
     setEdit(false); 
@@ -81,34 +63,34 @@ type HeroProps={
                         <Box className={classes.whoWeareHeaderbox}>
                             <Typography className={classes.HeaderText}>
                                { title=='news&events'? 'Highlight Section 1' : title ==='Home'? 
-                               Section ==='Our projects' ? <>
-                <Select
-                                  value={selected}
-                                  onChange={(e) => setSelected(e.target.value)}
-                                  IconComponent={KeyboardArrowDownRoundedIcon}
-                                  sx={{
-                                    width:'147px',
-                                    height:'37px',
-                                    color: "blue",
-                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
-                                    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
-                                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
-                                  }}>
-                                    {options.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                        {option}
-                                        </MenuItem>
-                                    ))}
-                        </Select>
-                </>
-                               
-                               : id : 'Header Section'}
+                               Section ==='Our projects' ? 
+                               <>
+                                    <Select
+                                    value={selected}
+                                    onChange={(e) => setSelected(e.target.value)}
+                                    IconComponent={KeyboardArrowDownRoundedIcon}
+                                    sx={{
+                                        width:'147px',
+                                        height:'37px',
+                                        color: "blue",
+                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                                    }}>
+                                        {options.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                            {option}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </>            
+                               : id :'Header Section'
+                               }
                             </Typography>
                             <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:2}}>
                                  <EditButton error={!prevData} onClick={()=>{ setCancel(true);
                                     setEdit(true)
                                 }}/>
-                                {(title ==="Home" && id != 'Slide 1') && <DeleteButton  onClick={handleDeleteClick}/>}
                             </Box>
                         </Box>
                     )}
@@ -147,32 +129,27 @@ type HeroProps={
                         </Typography>
                         <Box className={classes.myImageUploadBox}>
                             <input type='file'
-                                    multiple
                                     accept="image/*" 
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     disabled={!Edit}
-                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
+                                    onChange={(e) =>newHandleFileChange(e,setfile,setError,setIsSaved)}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                            {(Images.length>0) && (
+                            {(file) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
+                                            <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
                                                 <img 
-                                                    src={prev}
-                                                    alt={`preview ${index+1}`}
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={`preview `}
                                                     className={classes.ImagePic}
                                                 />
-                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
                                                   <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                 </IconButton>
                                             </Box>
-                                        )}
-
-                                        </Box>
-                                        
+                                        </Box>                            
                                 </Box>
                             )}
                             <Box>
@@ -210,35 +187,10 @@ type HeroProps={
                 </Box>
                 <Box className={classes.SeveandCancelBox} >
                    {
-                    (id ==='1')?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:(title ==='Home')?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>}
+                    (id ==='1')?<SaveButton error={isSaved || !file || isTextInvalid}  onClick={SaveData}/>:(title ==='Home')?<SaveButton error={isSaved || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved  || isTextInvalid}  onClick={SaveData}/>}
                     {cancel &&(<CancelButton onClick={CancelData}/>)} 
                 </Box>
             </Box>
-
-            {/* Dialog Box*/}
-            <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
-                                                sx: {
-                                                width: 500,       
-                                                height: 250,      
-                                                borderRadius: 3,   
-                                                padding: 2,        
-                                                },
-                                            }}>
-                            <DialogContent className={classes.DialogContent}>
-                                <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
-                            </DialogContent>
-                            <DialogActions sx={{ 
-                                            display: 'flex', 
-                                            justifyContent: 'center'  
-                                        }}>
-                                <Button onClick={handleCancel} className={classes.deleteButton}>
-                                    Cancel
-                                </Button>
-                                <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
-                                    Delete
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
         </>
     )
 }

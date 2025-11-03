@@ -148,7 +148,7 @@ const{classes:aboutus}=useAboutusStyles()
         </Grid>
     </Grid>
     <Box className={aboutus.SeveandCancelBox} >
-     <SaveButton error={isTextInvalid || isSaved} onClick={SaveData} />
+     <SaveButton error={!isTextInvalid || isSaved} onClick={SaveData} />
       {cancel &&(<CancelButton onClick={CancelData} />)}
     </Box>
     </Box>
