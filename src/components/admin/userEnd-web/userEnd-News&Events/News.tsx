@@ -1,9 +1,8 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Button, Stack, TextField, Typography, IconButton} from '@mui/material';
 import { CancelButton, EditButton, SaveButton, UploadButton, Calender,  AddSection} from '../userEnd-Aboutus/AboutUsButtons';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { useState,  } from 'react';
-import { HandleFileChange, HelperTextValidate, HandlePDFChange } from '../../utils/Validations';
+import { HelperTextValidate, HandlePDFChange, newHandlePDFChange } from '../../utils/Validations';
 import Subsection from '../userEnd-Aboutus/Subsection';
 import  Badge  from "@mui/material/Badge";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,12 +15,12 @@ type HeroProps={
 }
  const News=({id,accordianId,Section,}:HeroProps)=>{
     const {classes} =useAboutusStyles();
-    const [,setFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const [file,setFile]= useState<File|null>(null);
+    const [pdffile, setpdffile] = useState<string>('');
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
-    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[] } | null>(null);
+    const [prevData, setPrevData] = useState<{ subtitle: string; file: File | null} | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false);
@@ -33,9 +32,8 @@ type HeroProps={
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 || content.length<3 || content.length >200;
-    const removeImage=(IndexToRemove:number)=>{
-        setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-        setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removeImage=()=>{
+        setFile(null);
         setError('');
         setIsSaved(false);
     };
@@ -51,29 +49,28 @@ type HeroProps={
     const SaveData = ()=>{
         setPrevData({
         subtitle,
-        Images,
+        file,
     });
     setIsSaved(true);
     setEdit(false);
-    console.log(`subtitle:${subtitle}, Images:${Images}`);
-    if (Images.length >=0){
+    console.log(`subtitle:${subtitle}, Images:${file}`);
+    if(pdffile){
         setpdfImage(true)
     }
     };
     const CancelData = ()=>{
         if (prevData) {
         setSubtitle(prevData.subtitle);
-        setImage(prevData.Images);
-        setFile([]); // reset current file uploads
+        setFile(prevData.file); // reset current file uploads
         setIsSaved(true);
     } else {
         setSubtitle('');
-        setImage([]);
-        setFile([]);
+        setFile(null);
         setIsSaved(false);
     }
     setEdit(false); 
     setCancel(false)
+    setpdfImage(true)
     }
     
     return(
@@ -166,7 +163,7 @@ type HeroProps={
                                                 Pdf Section
                                             </Typography>
                                             <EditButton error={!pdfImage } onClick={()=>{ setCancel(true);
-                                                setEdit(true)
+                                                setEdit(true); setpdfImage(false)
                                             }}/>
                                         </Box>
                                         <Typography className={classes.mytext}>
@@ -179,21 +176,21 @@ type HeroProps={
                                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                                     style={{display:'none'}}
                                                     disabled={!Edit}
-                                                    onChange={(e) =>HandlePDFChange(e, setFile, setError, setIsSaved, setImage)}
+                                                    onChange={(e) =>newHandlePDFChange(e, setFile, setError, setIsSaved, setpdffile)}
                                                     />
                                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                                            {(Images.length>0) && (
+                                            {(file) && (
                                                 <Box className={classes.ImagesBox}>
                                                     <Box className={classes.ImagespicBox}>
-                                                        {Images.map((prev,index)=>
-                                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
+                                                        
+                                                            <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
                                                                 <Box sx={{
                                                                         overflow: "hidden",   
                                                                         position: "relative",
                                                                     }}
                 >
                                                                     <embed
-                                                                        src={Images[index]} 
+                                                                        src={pdffile} 
                                                                         type="application/pdf"
                                                                         className={classes.ImagePic} 
                                                                         style={{
@@ -203,11 +200,11 @@ type HeroProps={
                                                                             }} 
                                                                     />
                                                                 </Box>
-                                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
                                                                      <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                                 </IconButton>
                                                             </Box>
-                                                        )}
+                                                        
                 
                                                         </Box>
                                                         
@@ -224,7 +221,7 @@ type HeroProps={
                                         </Box>
                                     </Stack>
                                     <Box className={classes.SeveandCancelBox} >
-                        <SaveButton error={Images.length === 0}  onClick={SaveData}/>
+                        <SaveButton error={!pdffile || pdfImage}  onClick={SaveData}/>
                         {cancel &&(<CancelButton onClick={CancelData}/>)}
                     </Box>
                     

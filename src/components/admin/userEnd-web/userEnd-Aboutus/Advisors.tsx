@@ -3,8 +3,9 @@ import { Box, Stack, TextField, Typography, Button, Dialog, MenuItem,Select,Dial
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton} from './AboutUsButtons';
 import { useState,  } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
+import UserendDeletepopup from "../../utils/UserendDeletepop";
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import {HelperTextValidate, NameandRoleValidate,validateEmail1,phoneNumberValidation} from '../../utils/Validations';
+import {HelperTextValidate, NameandRoleValidate,validateEmail1,phoneNumberValidation, newHandleFileChange} from '../../utils/Validations';
 
 type AdvisorProps={
     id:string;
@@ -15,14 +16,13 @@ type AdvisorProps={
 }
 const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const {classes} = useAboutusStyles();
-    const [file,setFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const [file,SetFile] = useState<File | null>(null);
     const [error,setError]= useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
     const [role, setRole] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    const [prevData, setPrevData] = useState<{name: string;role:string;content:string; Images: string[] } | null>(null);
+    const [prevData, setPrevData] = useState<{name: string;role:string;content:string; file:File | null } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false) 
@@ -34,70 +34,13 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const contentFlied = HelperTextValidate(content);
     const emailerror= validateEmail1(role);
     const phoneerror= phoneNumberValidation(role);
-    const isTextInvalid = role.length === 0 || role.length < 3 || role.length > 80 || name.length === 0 || name.length < 3 || name.length > 80 || content.length === 0 || content.length < 3 || content.length > 200;
-    file
+    const isTextInvalid = role.length < 3 || role.length > 80 || name.length < 3 || name.length > 80 ||content.length < 3 || content.length > 200;
 
-    const validate = (file:File):string | null=>{
-        const maxSize=5 *1024*1024;
-        const types=['image/jpg','image/png','image/jpeg'];
-        if (file.size > maxSize){
-            return ('File Must be Less Than 5MB');
-
-        };
-        if (!types.includes(file.type)){
-            return ("File must be jpg,png,jpeg format");
-        };
-       return null;
-    };
-    const HandleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        setError('');
-        setIsSaved(false);
-    
-        if (files && files.length > 0) {
-            const selectedFiles: File[] = Array.from(files);
-    
-            selectedFiles.forEach(file => {
-                const errorMsg = validate(file);
-                if (errorMsg) {
-                    setError(errorMsg);
-                    return; 
-                }
-    
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const imgs = new Image();
-                    imgs.onload = () => {
-                        
-                        if (imgs.width <= 300 || imgs.height <= 100) {
-                            setError('File must be in landscape format (min 300x100)');
-                            return; 
-                        }
-                        setFile(prev => [...prev, file]);
-                        setImage(prev => [...prev, e.target?.result as string]);
-                    };
-                    imgs.src = e.target?.result as string;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-    
-        event.target.value = ''; 
-    };
-    const removeImage=(IndexToRemove:number)=>{
-        setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-        setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removeImage=()=>{
+        SetFile(null)
         setError('');
         setIsSaved(false);
     };
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCancel = () => {
-        setOpenDialog(false);
-    };
-
     const handleConfirmDelete = () => {
         setOpenDialog(false);
         if (onDelete) onDelete(); 
@@ -107,26 +50,24 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
         name,
         role,
         content,
-        Images,
+        file,
     });
     setIsSaved(true);
     setEdit(false);
-    console.log(`name:${name}, role:${role},content:${content},Images:${Images}`);
+    console.log(`name:${name}, role:${role},content:${content},Images:${file}`);
     };
     const CancelData = ()=>{
         if (prevData) {
         setRole(prevData.role);
         setName(prevData.name);
         setContent(prevData.content);
-        setImage(prevData.Images);
-        setFile([]); // reset current file uploads
+        SetFile(prevData.file); 
         setIsSaved(true);
     } else {
         setContent('');
         setRole('');
         setName('');
-        setImage([]);
-        setFile([]);
+        SetFile(null);
         setIsSaved(false);
     }
     setEdit(false); 
@@ -163,7 +104,7 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
           <EditButton error={ Edit} onClick={()=> {setCancel(true);
             setEdit(true)
           }}/>
-          {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
+          {id != 'Sub Section-1'&& <DeleteButton onClick={()=>setOpenDialog(true)}/>}
         </Box>
       </Box>}
       <Box className={classes.myuploadandheadingbox}>
@@ -178,24 +119,24 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
                                 id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
                                 disabled={!Edit}
-                                onChange={HandleFileChange}
+                                onChange={(e) =>newHandleFileChange(e, SetFile, setError, setIsSaved, )}
                                 />
                         <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                        {(Images.length>0 || prevData) && (
+                        {(file) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
-                                    {Images.map((prev,index)=>
-                                        <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                    
+                                        <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                             <img 
-                                                src={prev}
-                                                alt={`preview ${index+1}`}
+                                                src={URL.createObjectURL(file)}
+                                                alt={`preview `}
                                                 className={classes.ImagePic}
                                             />
-                                            <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                            <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
                                                 <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                             </IconButton>
                                         </Box>
-                                    )}
+                                    
                                     
                                     </Box>
                                    
@@ -272,32 +213,10 @@ const Advisors=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
                                 className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText
                             }}/>
                 </Box>
-                <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
-                                    sx: {
-                                    width: 500,       
-                                    height: 250,      
-                                    borderRadius: 3,   
-                                    padding: 2,        
-                                    },
-                                }}>
-                <DialogContent className={classes.DialogContent}>
-                    <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {selected}?</Typography>
-                </DialogContent>
-                <DialogActions sx={{ 
-                                display: 'flex', 
-                                justifyContent: 'center'  
-                            }}>
-                    <Button onClick={handleCancel} className={classes.deleteButton}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+               <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> setOpenDialog(false)} onDelete={handleConfirmDelete}/>    
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                            <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                            <SaveButton error={isSaved || !file|| isTextInvalid}  onClick={SaveData}/>
                             {cancel &&(<CancelButton onClick={CancelData}/>)}
                         </Box>
         </>

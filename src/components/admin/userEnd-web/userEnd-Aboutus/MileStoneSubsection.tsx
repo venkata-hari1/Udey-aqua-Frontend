@@ -1,9 +1,11 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions, IconButton} from '@mui/material';
+import { Box, Stack, TextField, Typography, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, EditButton, CancelButton} from './AboutUsButtons';
-import { useState, useEffect } from 'react';
-import { HandleFileChange, HelperTextValidate, NameandRoleValidate, YearValidate } from '../../utils/Validations';
+import { useState } from 'react';
+import { HelperTextValidate, NameandRoleValidate, YearValidate, newHandleFileChange } from '../../utils/Validations';
 import CloseIcon from "@mui/icons-material/Close";
+import UserendDeletepopup from "../../utils/UserendDeletepop";
+
 type MilestoneSubpageProps={
     id:string;
     accordianId:string;
@@ -12,86 +14,60 @@ type MilestoneSubpageProps={
 }
 const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpageProps)=>{
     const {classes} = useAboutusStyles();
-    const [,setFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const [file,SetFile] = useState<File | null>(null);
     const [error,setError]= useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
     const [Title, setTitle] = useState<string>('');
     const [year, setYear] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    const [prevData, setPrevData] = useState<boolean>(false);
+    const [prevData, setPrevData] = useState<{ Title: string; file: File |null; content:string ; year:string } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false)
 
-
     const TitleFlied = NameandRoleValidate(Title);
     const YearFlied = YearValidate(year);
     const contentFlied = HelperTextValidate(content);
-    const isTextInvalid = Title.length === 0 || Title.length < 3 || Title.length > 80 || year.length === 0 || year.length < 2 || year.length > 4 || content.length === 0 || content.length < 3 || content.length > 200;
-    
+    const isTextInvalid =  Title.length < 3 || Title.length > 80 ||  year.length < 2 || year.length > 4 || content.length < 3 || content.length > 200;
 
-    const removeImage=(IndexToRemove:number)=>{
-        setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-        setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removeImage=()=>{   
+        SetFile(null)
         setError('');
         setIsSaved(false);
     };
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCancel = () => {
-        setOpenDialog(false);
-    };
-
     const handleConfirmDelete = () => {
         setOpenDialog(false);
         if (onDelete) onDelete(); 
     };
-    const SaveData = (title:string,id:string)=>{
-                const Data={
-                    year:year,
-                    title:Title,
-                    content:content,
-                    image:Images
-                }
-                console.log(Data);
-            localStorage.setItem(`${title}_${id}`, JSON.stringify(Data));
-            setIsSaved(true);
-            setPrevData(true)
-     setEdit(false)
-     if (cancel){
+    const SaveData = ()=>{
+        setPrevData({
+            Title,
+            file,
+            year,
+            content
+        });
+        setIsSaved(true);
+        setEdit(false);
+        console.log(`subtitle:${Title}, Images:${file}, content: ${content}`);
+    };
+    const CancelData = ()=>{
+        if (prevData) {
+        setTitle(prevData.Title);
+        setContent(prevData.content);
+        SetFile(prevData.file);
+        setYear(prevData.year)
+        setIsSaved(true);
+        } else {
+            setTitle('');
+            setContent('');
+            setYear('');
+            setContent('');
+            SetFile(null);
+            setIsSaved(false);
+        }
+        setEdit(false); 
         setCancel(false)
-     }
-            };
-            const CancelData = (title:string,id:string)=>{
-                const PrevData=localStorage.getItem(`${title}_${id}`);
-                if (PrevData) {
-                    const parsedData = JSON.parse(PrevData);
-                    setYear(parsedData.year || "");
-                    setTitle(parsedData.title || []);
-                    setContent(parsedData.content || []);
-                    setImage(parsedData.image || []);
-                    setFile([]); 
-                    setIsSaved(true);
-                    setError("");
-                } else {
-                    alert("No previous data found!");
-                }
-                if (cancel){
-        setCancel(false)
-     }
-        setEdit(false)
-        setPrevData(!!prevData)
-            }
-            useEffect(() => {
-                const saved = localStorage.getItem(`${Section}_${id}`);
-                if (saved) {
-                setPrevData(true);
-                setIsSaved(true);
-                }
-            }, []);
+    }
     return(
         <>
       <Box className={classes.whoWeareHeaderbox}>
@@ -100,7 +76,7 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
           <EditButton error={! prevData} onClick={()=> {setCancel(true);
             setEdit(true)
           }}/>
-          {id != 'Milestone-1'&& <DeleteButton onClick={handleDeleteClick}/>}
+          {id != 'Milestone-1'&& <DeleteButton onClick={()=>setOpenDialog(true)}/>}
         </Box>
       </Box>
       <Box className={classes.myuploadandheadingbox}>
@@ -110,29 +86,28 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                     </Typography>
                     <Box className={classes.myImageUploadBox}>
                         <input type='file'
-                                multiple
                                 accept="image/*" 
                                 id={`upload-file-${Section}-${accordianId}-${id}`}
                                 style={{display:'none'}}
-                                onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
+                                onChange={(e) =>newHandleFileChange(e, SetFile, setError, setIsSaved)}
                                 disabled={!Edit}
                                 />
                         <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                        {(Images.length>0 || prevData) && (
+                        {(file) && (
                             <Box className={classes.ImagesBox}>
                                 <Box className={classes.ImagespicBox}>
-                                    {Images.map((prev,index)=>
-                                        <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
+                                    
+                                        <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
                                             <img 
-                                                src={prev}
-                                                alt={`preview ${index+1}`}
-                                                className={classes.ImagePic}
-                                            />
-                                           <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={`preview `}
+                                                    className={classes.ImagePic}
+                                                />
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
                                                   <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
-                                            </IconButton>
+                                                </IconButton>
                                         </Box>
-                                    )}
+                                   
                                     </Box> 
                             </Box>
                         )}
@@ -188,33 +163,11 @@ const MilestoneSubsection=({id,accordianId,Section,onDelete}:MilestoneSubpagePro
                                 className: (content.length >= 3 && content.length < 200) ? classes.greyText : classes.helperText
                             }}/>
                 </Box>
-                <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
-                                    sx: {
-                                    width: 500,       
-                                    height: 250,      
-                                    borderRadius: 3,   
-                                    padding: 2,        
-                                    },
-                                }}>
-                <DialogContent className={classes.DialogContent}>
-                    <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
-                </DialogContent>
-                <DialogActions sx={{ 
-                                display: 'flex', 
-                                justifyContent: 'center'  
-                            }}>
-                    <Button onClick={handleCancel} className={classes.deleteButton}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> setOpenDialog(false)} onDelete={handleConfirmDelete}/>    
             </Box>    
             <Box className={classes.SeveandCancelBox}>
-                <SaveButton error={ isSaved||Images.length ===0  || isTextInvalid} onClick={()=>SaveData(Section,id)}/>
-                {cancel&&(<CancelButton onClick={()=>CancelData(Section,id)}/>)}
+                <SaveButton error={ isSaved|| !file || isTextInvalid} onClick={()=>SaveData()}/>
+                {cancel&&(<CancelButton onClick={()=>CancelData()}/>)}
             </Box>
         </>
     )

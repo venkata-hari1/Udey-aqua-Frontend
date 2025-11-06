@@ -25,7 +25,6 @@ const AboutUs=()=>{
     (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
       dispatch(setExpandAccordian(isExpanded ? panel : null));
     };
-
     const AccordianData = [
         {id:'1',title:'Hero Section',component:Hero, refid:'Hero'},
         {id:'2',title:'Who We Are',component: WhoWeAre, refid:'Our Motto'},

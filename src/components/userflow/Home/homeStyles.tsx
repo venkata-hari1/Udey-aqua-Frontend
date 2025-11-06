@@ -14,7 +14,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     background: `radial-gradient(circle at 60% 40%, ${COLORS.HERO_BLUE} 0%, ${COLORS.DARK_BLUE} 100%)`,
     overflow: "hidden",
     [theme.breakpoints.down("md")]: {
-      minHeight: "40vh",
+      minHeight: "50vh",
     },
   },
   particles: {

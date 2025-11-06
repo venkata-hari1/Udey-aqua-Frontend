@@ -1,7 +1,7 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Stack, TextField, Typography,IconButton} from '@mui/material';
 import { UploadButton, CancelButton, UpdateHeader,  UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
-import { useEffect, useState,  } from 'react';
+import {  useState,  } from 'react';
 import { HelperTextValidate, PriceValidate, HandlePDFChange, HandleFileChange } from '../../utils/Validations';
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ interface Bannerprops {
 const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     const {classes} = useAboutusStyles();
     const dispatch = useDispatch();
-    const BannerEdit = useSelector((state:Rootstate)=>state.accordian.EditBanner);
+    const cancelEnable = useSelector((state:Rootstate)=>state.accordian.Cancel);
     const [,setFile]= useState<File[]>([]);
     const [pdffile,setPdfFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -39,7 +39,7 @@ const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     const PriceContent = HelperTextValidate(pdfContent)
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 ||  content.length < 3 || content.length > 200 ||pdfPrice.length < 3 || pdfPrice.length > 200 || /[^0-9]/.test(pdfPrice)||  pdfContent.length < 3 || pdfContent.length > 200
     
-    var Enable= isSaved && !BannerEdit
+    var Enable= isSaved && cancelEnable
 
     const SaveData = () => {
     setPrevData({
@@ -121,20 +121,20 @@ const CancelData = () => {
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
-                                    disabled={!Edit}
+                                    disabled={Enable}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={Enable}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Enable}/> 
                             {(Images.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Enable ? 1 : 0.5,}} >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
                                                     className={classes.ImagePic}
                                                 />
-                                                 <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
+                                                 <IconButton className={classes.cancelImgIcon} disabled={!Enable} onClick={()=>{removeImage(index)}}>
                                                   <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                 </IconButton>
                                             </Box>
@@ -273,7 +273,7 @@ const CancelData = () => {
                 <Box className={classes.SeveandCancelBox}>
                     <UpdateHeader error={isSaved || Ispdf || Images.length === 0 || isTextInvalid}  onClick={SaveData}
                     />
-                    {cancel &&(<CancelButton onClick={CancelData}/>)}
+                    {cancelEnable &&(<CancelButton onClick={CancelData}/>)}
                     
                 </Box>
             </Box>

@@ -522,6 +522,43 @@ export const HandlePDFChange = (
   }
   event.target.value = "";
 };
+
+export const newHandlePDFChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  setPdfFile: Dispatch<SetStateAction<File|null>>,
+  setPdfError: Dispatch<SetStateAction<string>>,
+  setIsPdfSaved: Dispatch<SetStateAction<boolean>>,
+  setpdf:Dispatch<SetStateAction<string>>
+) => {
+  const files = event.target.files;
+
+
+  setPdfError("");
+  setIsPdfSaved(false);
+
+  if (files && files.length > 0) {
+    const selectedFiles: File[] = Array.from(files);
+
+    selectedFiles.forEach((file) => {
+      const isPDF =file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+      if (! isPDF) {
+        setPdfError("Only PDF files are allowed.");
+        return;
+      }
+      const maxSizeMB = 5;
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        setPdfError(`File size must be less than ${maxSizeMB} MB.`);
+        return;
+      }
+      const fileURL = URL.createObjectURL(file);
+      setpdf(fileURL)
+      setPdfFile(file);
+    });
+  }
+  event.target.value = "";
+};
+
+
 export const HelperTextValidate = (text: string): {  message: string } => {
   if (text.length === 0) {
     return {  message: "" }; 
