@@ -1,14 +1,13 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, } from '@mui/material';
-import {  AddSection, } from '../userEnd-Aboutus/AboutUsButtons';
+import {  AddSection, BadgeButton, } from '../userEnd-Aboutus/AboutUsButtons';
 import SubSection from './subSection';
 import { useState,  } from 'react';
 import Banner from './Banner';
 import Hero from '../userEnd-Aboutus/Hero';
-import  Badge  from "@mui/material/Badge";
 import { useSelector, useDispatch } from 'react-redux';
 import type { Rootstate } from '../../../../redux/store';
-import { SetCancel } from '../../../../redux/reducers/Nav';
+import { SetEdit } from '../../../../redux/reducers/Nav';
 
 type RASProps={
     id:string;
@@ -19,7 +18,7 @@ type RASProps={
 const RAS=({id,accordianId,Section,title}:RASProps)=>{
     const {classes} = useAboutusStyles();
     const dispatch = useDispatch();
-    const BannerEdit = useSelector((state:Rootstate)=>state.accordian.EditBanner);
+    const BannerEdit = useSelector((state:Rootstate)=>state.accordian.EditBanner.banner);
     const [counter, setCounter] = useState<number>(1);
     const [subpages, setSubpages] = useState<{ id:string}[]>([]);
     const [banner, setBanner] = useState<{id:string}[]>([]);
@@ -43,22 +42,8 @@ const RAS=({id,accordianId,Section,title}:RASProps)=>{
         <>   
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
-                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetCancel(true))}} disable={!BannerEdit}/>
-                    <Badge
-                        badgeContent={counter}
-                        sx={{
-                        "& .MuiBadge-badge": {
-                            backgroundColor: "#0A4FA4",
-                            color: "#fff", 
-                            },
-                        }}            
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                    >
-                        <AddSection label='Add Section' onClick={handleAddSubpage}/>
-                    </Badge>                
+                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetEdit({setcancel:true}))}} disable={!BannerEdit}/>
+                    <BadgeButton counter={counter} label='Add Section' onClick={handleAddSubpage}/>      
                 </Box>
                 {title ==='Technologies' &&<Hero id={id} accordianId={id} Section={Section}/>}
                 <SubSection id='Sub Section-1' accordianId='2' Section={Section}/>

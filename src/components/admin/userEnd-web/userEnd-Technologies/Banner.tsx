@@ -16,7 +16,7 @@ interface Bannerprops {
 const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     const {classes} = useAboutusStyles();
     const dispatch = useDispatch();
-    const cancelEnable = useSelector((state:Rootstate)=>state.accordian.Cancel);
+    const cancelEnable = useSelector((state:Rootstate)=>state.accordian.EditBanner.cancel);
     const [,setFile]= useState<File[]>([]);
     const [pdffile,setPdfFile]= useState<File[]>([]);
     const [Images,setImage] = useState<string[]>([]);
@@ -54,7 +54,7 @@ const Banner=({ accordianId, id,Section}: Bannerprops)=>{
     setIsPdfSaved(true);
     setEdit(false);
     setCancel(false);
-    dispatch(SetEdit(true))
+    dispatch(SetEdit({setbanner:false}))
     console.log(`subtitle:${subtitle}, Images:${Images}, content:${content}, price:${pdfPrice}, pdfcontent:${pdfContent}, pdf:${pdf}`);
 };
 
@@ -81,7 +81,7 @@ const CancelData = () => {
     }
     setEdit(false);
     setCancel(false);
-    dispatch(SetEdit(false))
+    dispatch(SetEdit({setbanner:false}))
 };
     const removeImage=(IndexToRemove:number)=>{
             setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
@@ -121,20 +121,20 @@ const CancelData = () => {
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
-                                    disabled={Enable}
+                                    disabled={!Edit}
                                     />
-                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Enable}/> 
+                            <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
                             {(Images.length>0|| prevData)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
                                         {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Enable ? 1 : 0.5,}} >
+                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
                                                     src={prev}
                                                     alt={`preview ${index+1}`}
                                                     className={classes.ImagePic}
                                                 />
-                                                 <IconButton className={classes.cancelImgIcon} disabled={!Enable} onClick={()=>{removeImage(index)}}>
+                                                 <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
                                                   <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                 </IconButton>
                                             </Box>

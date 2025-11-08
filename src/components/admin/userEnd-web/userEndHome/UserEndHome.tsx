@@ -12,10 +12,6 @@ import UserendWhychoose from "./UserendWhychoose";
 import UserEndAddvideo from "./UserEndAddvideo";
 import UserEndProjects from "./UserEndProjects";
 import { useNavigate } from "react-router-dom";
-import UserendTestimonials from "./UserendTestimonials";
-import UserendNewsEvents from "./UserendNewsEvents";
-import UserendPricing from "./UserendPricing";
-import UserendDirectors from "./UserendDirectors";
 import UserendGetintouch from "./UserendGetintouch";
 import UserendFooter from "./UserendFooter";
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
@@ -47,13 +43,10 @@ const handleDispatch=(id:string,link :string)=>{
   dispatch(setExpandAccordian(id))
   navigate(link)
 }
-const handleBackarrow=()=>{
- navigate('/admin/userend-web')
-}
  return (
     <Box className={aboutus.AboutUscontainer}>
       <Box className={aboutus.AboutUsArrowAndHeaderBox}>
-        <ArrowBack onClick={handleBackarrow}/>
+        <ArrowBack onClick={()=>navigate('/admin/userend-web',{state:{Activepage:1}})}/>
         <Typography className={aboutus.AboutUsHeader}>Home</Typography>
       </Box>
       <Box className={aboutus.AccordianBox}>

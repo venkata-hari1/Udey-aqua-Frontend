@@ -4,7 +4,7 @@ import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, Calen
 import { useState,  } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
 import { HelperTextValidate } from '../../utils/Validations';
-import { HandleFileChange, newHandleFileChange } from '../../utils/Validations';
+import { newHandleFileChange } from '../../utils/Validations';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import UserendDeletepopup from "../../utils/UserendDeletepop";
@@ -47,17 +47,11 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     } else {
         canSave = isSubtitleValid && isContentValid  && !isSaved && !!file;
     }
-
-
     const removeImage=()=>{
             setfile(null)
             setError('');
             setIsSaved(false);
     };
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
     const handleConfirmDelete = () => {
         setOpenDialog(false);
         if (onDelete) onDelete(); 
@@ -123,7 +117,7 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                         <EditButton error={!prevData} onClick={()=> {setCancel(true);
                             setEdit(true)
                         }}/>
-                        {(id != 'Blog-1')&& <DeleteButton onClick={handleDeleteClick}/>}
+                        {(id != 'Blog-1')&& <DeleteButton onClick={()=>setOpenDialog(true)}/>}
                     </Box>
                     </>
                     )
@@ -140,7 +134,7 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                         <EditButton error={!prevData} onClick={()=> {setCancel(true);
                             setEdit(true)
                         }}/>
-                        {(id != 'Sub Section-1'&& id !='1')&& <DeleteButton onClick={handleDeleteClick}/>}
+                        {(id != 'Sub Section-1'&& id !='1')&& <DeleteButton onClick={()=>setOpenDialog(true)}/>}
                     </Box>
                     </>)
                     }

@@ -1,6 +1,6 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
 import { Box, Button, Stack, TextField, Typography, IconButton} from '@mui/material';
-import { CancelButton, EditButton, SaveButton, UploadButton, Calender,  AddSection} from '../userEnd-Aboutus/AboutUsButtons';
+import { CancelButton, EditButton, SaveButton, UploadButton, Calender,  AddSection, BadgeButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState,  } from 'react';
 import { HelperTextValidate, HandlePDFChange, newHandlePDFChange } from '../../utils/Validations';
 import Subsection from '../userEnd-Aboutus/Subsection';
@@ -79,22 +79,7 @@ type HeroProps={
                 <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-end',gap:2}}>
                     <AddSection label='Add Latest News'/>
                     <AddSection label='Add Latest Pdf'/>
-                    <Badge
-                                                        badgeContent={counter}
-                                                            sx={{
-                                                                "& .MuiBadge-badge": {
-                                                                backgroundColor: "#0A4FA4",
-                                                                color: "#fff", 
-                                                                },
-                                                            }}
-                                    
-                                                            anchorOrigin={{
-                                                                vertical: "top",
-                                                                horizontal: "right",
-                                                            }}
-                                                    >
-                                                    <AddSection label='Add Section' onClick={handleAddSubpage}/>
-                                                    </Badge>
+                    <BadgeButton label='Add Sections' counter={counter} onClick={()=>handleAddSubpage}/>
                      
                 </Box>
                 {(accordianId !='1'  )&& (                

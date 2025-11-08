@@ -51,7 +51,7 @@ const AboutUs=()=>{
             <Box className={classes.AboutUscontainer} >
                 <Box className={classes.AboutUsHeaderbox}>
                     <Box className={classes.AboutUsArrowAndHeaderBox}>
-                        <ArrowBack onClick={()=>naviagte(-1)}/>
+                        <ArrowBack onClick={()=>naviagte('/admin/userend-web',{state:{Activepage:2}})}/>
                         <Typography className={classes.AboutUsHeader}>About Us</Typography>
                     </Box>
                     <Box className={classes.AboutUsHeaderButtonBox}>

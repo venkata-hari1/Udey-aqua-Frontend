@@ -7,7 +7,7 @@ const UserendHero = () => {
   return(
         <>
          <Box className={aboutus.WhoWeAreContainer}>
-            <Hero id='' accordianId='2' Section='Hero' title='Home'/>
+            <Hero id='1' accordianId='2' Section='Hero' title='Home'/>
          </Box>
         </>
     )

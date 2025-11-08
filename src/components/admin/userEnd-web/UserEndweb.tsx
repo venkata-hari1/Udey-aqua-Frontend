@@ -1,13 +1,15 @@
 import {Box, Button} from "@mui/material"
 import useUserEndwebStyles from "./UserendwebStyles"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 const UserEndweb = () => {
 
 const navigate=useNavigate()
-
+const location = useLocation()
+const intialActive = location.state?.Activepage ?? 1
 const navigation=[
 {id:1,menu:"Home",path:'/admin/userend-web/userend-home'},
 {id:2,menu:"About Us",path:'/admin/userend-web/userend-aboutus'},
@@ -18,13 +20,17 @@ const navigation=[
 {id:7,menu:"Contact Us",path:'/admin/userend-web/userend-contactus'}
 ]
   const{classes,cx}=useUserEndwebStyles();
-  const[activeIndex,setActiveIndex]=useState<number | null>(1)
+  const[activeIndex,setActiveIndex]=useState<number>(intialActive)
   
   const setNavigation=(menu:any)=>{
     setActiveIndex(menu.id)
      navigate(menu.path)
   }
-  
+  useEffect(()=>{
+    if(location.state?.Activepage){
+      setActiveIndex(location.state.Activepage)
+    }
+  },[location.state?.Activepage])
   return (
     <Box>
       <Box className={classes.userEndButtonsContainer}>

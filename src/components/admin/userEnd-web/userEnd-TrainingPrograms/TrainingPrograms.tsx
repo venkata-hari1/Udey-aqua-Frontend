@@ -38,7 +38,7 @@ const TrainingPrograms=()=>{
                 <Box className={classes.AboutUscontainer}>
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
-                            <ArrowBack onClick={()=>naviagte(-1)}/>
+                            <ArrowBack onClick={()=>naviagte('/admin/userend-web',{state:{Activepage:4}})}/>
                             <Typography className={classes.AboutUsHeader}> Training Programs</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>

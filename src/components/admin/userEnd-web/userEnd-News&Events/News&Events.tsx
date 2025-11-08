@@ -49,7 +49,7 @@ const NewsEvents=()=>{
                 <Box className={classes.AboutUscontainer}>
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
-                            <ArrowBack onClick={()=>naviagte(-1)}/>
+                            <ArrowBack onClick={()=>naviagte('/admin/userend-web',{state:{Activepage:6}})}/>
                             <Typography className={classes.AboutUsHeader}> News & Events</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>

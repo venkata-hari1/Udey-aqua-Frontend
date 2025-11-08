@@ -39,7 +39,7 @@ const Technologies=()=>{
                 <Box className={classes.AboutUscontainer}>
                     <Box className={classes.AboutUsHeaderbox}>
                         <Box className={classes.AboutUsArrowAndHeaderBox}>
-                            <ArrowBack onClick={()=>naviagte(-1)}/>
+                            <ArrowBack onClick={()=>naviagte('/admin/userend-web',{state:{Activepage:3}})}/>
                             <Typography className={classes.AboutUsHeader}> Cultures</Typography>
                         </Box>
                         <Box className={classes.AboutUsHeaderButtonBox}>

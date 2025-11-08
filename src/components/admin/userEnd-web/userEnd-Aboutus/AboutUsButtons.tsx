@@ -1,5 +1,5 @@
 import { useAboutusStyles } from "./AboutusStyles";
-import { Button, IconButton, Box, Checkbox, Typography, TextField, Popper, Paper, ClickAwayListener} from "@mui/material";
+import { Button, IconButton, Box, Checkbox, Typography, TextField, Popper, Paper, ClickAwayListener,MenuItem,Select,} from "@mui/material";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -11,6 +11,9 @@ import { useState, useRef } from "react";
 import {LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
+import Badge from "@mui/material/Badge";
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
     const {classes} =useAboutusStyles();
@@ -337,4 +340,56 @@ export const Calender=({text,textColor}:CalenderProps)=>{
     
     )
 }
-
+type BadgeProps={
+    counter:number,
+    label:string,
+    onClick:()=>void
+    
+}
+export const BadgeButton=({counter,onClick,label}:BadgeProps)=>{
+    return(
+        <Box>
+            <Badge
+                badgeContent={counter}
+                sx={{
+                    "& .MuiBadge-badge": {
+                        backgroundColor: "#0A4FA4",
+                        color: "#fff", 
+                    },
+                }}
+            
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
+            >
+                <AddSection label={label} onClick={onClick}/>
+            </Badge>
+        </Box>
+    )
+}
+type DropDownProps={
+    Data:string[]
+    value:string,
+    setSelected:(val:string)=>void
+}
+export const DropDownButton = ({Data,value,setSelected}:DropDownProps)=>{
+    return(
+    <Select
+        value={value}
+        onChange={(e) => setSelected(e.target.value)}
+        IconComponent={KeyboardArrowDownRoundedIcon}
+        sx={{ width:'147px',height:'37px',color: "blue",
+               "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+        }}
+    >
+        {Data.map((option) => (
+            <MenuItem key={option} value={option}>
+                {option}
+            </MenuItem>
+        ))}
+    </Select>
+    )
+}
