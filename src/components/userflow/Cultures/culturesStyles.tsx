@@ -515,11 +515,15 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     "& .MuiDialogContent-root::-webkit-scrollbar-thumb": {
       background: "transparent",
     },
+    [theme.breakpoints.down('md')]:{
+      //
+    }
   },
   pdfDialogTitle: {
     textAlign: "center",
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    fontFamily:'DM Serif Display',
   },
   pdfDialogTitlePill: {
     display: "inline-block",
@@ -532,12 +536,17 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 999,
     fontWeight: 600,
     fontSize: 14,
+    fontStyle:'DM Serif Display',
     maxWidth: "fit-content",
     margin: "10px auto 5px auto",
+    [theme.breakpoints.down('md')]:{
+      fontWeight: 400,
+    fontSize: '20px',
+    }
   },
   pdfDialogTitlePillFloat: {
     backgroundColor: COLORS.SECONDARY_BLUE,
-    borderRadius: "10px",
+    borderRadius: "20px",
     textTransform: "capitalize",
     margin: "auto",
   },

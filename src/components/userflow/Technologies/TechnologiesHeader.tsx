@@ -13,7 +13,8 @@ const TechnologiesHeader = ({
   return (
     <>
       <Grid container size={{ xs: 12 }}>
-        <Grid size={12} sx={{ background:'#F7FAFC',borderRadius:'10%'}}>
+        <Grid size={12} //sx={{ background:'#F7FAFC',borderRadius:'10%'}}
+        >
           <Typography className={classes.technologiesHeaderTitle}>
             {title}
           </Typography>

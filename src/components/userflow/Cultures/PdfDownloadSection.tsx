@@ -196,7 +196,7 @@ const PdfDownloadSection = ({ currentLabel, price = 89 }: PdfDownloadSectionProp
         }}
       >
         <DialogTitle className={classes.pdfDialogTitle}>
-          <Box className={classes.pdfDialogTitlePill}>
+          <Box className={classes.pdfDialogTitlePill} sx={{background: "linear-gradient(180deg, #0A4FA4 0%, #041E3E 100%)",}}>
             {`${currentLabel || "Sea Bass"} Farming Guide`}
           </Box>
         </DialogTitle>
@@ -215,7 +215,7 @@ const PdfDownloadSection = ({ currentLabel, price = 89 }: PdfDownloadSectionProp
               {listItems.map((item, index) => (
                 <ListItem key={index} className={classes.pdfDialogListItem}>
                   <Box className={classes.pdfDialogBulletDot} />
-                  <ListItemText primary={item} />
+                  <ListItemText primary={item}/>
                 </ListItem>
               ))}
             </List>

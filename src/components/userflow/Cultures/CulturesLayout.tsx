@@ -11,7 +11,7 @@ import Hero from "../../userflow/common/Hero/Hero";
 
 
 const sidebarItems = [
-  { label: "Sea Bass", path: "/cultures" },
+  { label: "Sea Bass", path: "/cultures" ,},
   { label: "Pearl Spot", path: "/cultures/pearl-spot" },
   { label: "Mud Crab", path: "/cultures/mud-crab" },
   { label: "Murrel", path: "/cultures/murrel" },
