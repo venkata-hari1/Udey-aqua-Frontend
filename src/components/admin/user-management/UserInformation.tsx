@@ -16,7 +16,7 @@ const UserInformation = () => {
   {id:4,key:'Phone Number',value:'+91 8123456789'},
   {id:5,key:'Address',value:'21B, Rash Behari, Ballyguge, Kolkatta,West Bengal 700019'},
   {id:6,key:'Plan',value:'Sea Bass'},
-  {id:7,key:'Acquaculture',value:'Pond Farming'},
+  {id:7,key:'Aquaculture',value:'Pond Farming'},
   {id:8,key:'Selected Program',value:'3 Days'},
   {id:9,key:'Availability',value:'Hyderabad'},
   {id:10,key:'Payment',value:'Rs/ 10,000'},

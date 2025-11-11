@@ -1,108 +1,125 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
-import useUserEndwebStyles from "../UserendwebStyles";
-import CancelIcon from "@mui/icons-material/Cancel";
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import {
-  ErrorMessages,
-  Uploadbutton,
-  UserEndSaveCancelButtons,
-} from "./UserEndCommonButtons";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { CancelButton, EditButton, SaveButton } from "../userEnd-Aboutus/AboutUsButtons";
+import { Box, Typography, Stack, IconButton} from '@mui/material';
+import {  EditButton,  UploadButton, SaveButton, CancelButton} from '../userEnd-Aboutus/AboutUsButtons';
+import { useState } from 'react';
+import {HandleFileChange} from '../../utils/Validations';
+import CloseIcon from "@mui/icons-material/Close";
 
-interface CorporateLogo {
-  id: string;
-  name: string;
-  image: string;
-  imgerror: string;
+type AquacultureTypeProps={
+    id?:string;
+    accordianId?:string;
+    Section:string;
+    onDelete?:()=>void
 }
+const UserendCorporates=({id,accordianId, Section}:AquacultureTypeProps)=>{
+    const {classes} = useAboutusStyles();   
+    const [file,setFile]= useState<File[]>([]);
+    const [Images,setImage] = useState<string[]>([]);
+    const [error,setError]= useState<string>('');
+    const [prevData, setPrevData] = useState<{  Images:string[]; } | null>(null);
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved,setIssaved] = useState<boolean>(false)
+    const [cancel, setCancel] = useState<boolean>(false)
 
-const UserendCorporates = () => {
-  const { classes } = useUserEndwebStyles();
-  const { classes:aboutus } = useAboutusStyles();
-  const [corporates, setCorporates] = useState<CorporateLogo[]>([]);
+    const SaveData = ()=>{
+        setPrevData({
+            Images
+        });
+        setIssaved(true);
 
- 
- 
-  const handleUpload = (files: File[]) => {
-    const newLogos = files.map((file) => ({
-      id: uuidv4(),
-      name: "Corporate Logo",
-      image: URL.createObjectURL(file),
-      imgerror: "",
-    }));
-    setCorporates((prev) => [...prev, ...newLogos]);
-  };
+        setEdit(false);
+        setCancel(false)
+        console.log(` Images:${file}`);
+    };
 
-  const handleImageError = (msg: string, id?: string) => {
-    if (!id) return;
-    setCorporates((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, imgerror: msg } : c))
-    );
-  };
+    const CancelData = ()=>{
+        if (prevData) {
+        setImage(prevData.Images || []);
+        setFile([]);
+        setIssaved(true);
+    } else {
+        setFile([]);
+        setIssaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
+    const removeImage=()=>{
+            setFile([])
+            setError('');
+            setIssaved(false);
+    };
 
-  const handleRemoveImage = (id: string) => {
-    setCorporates((prev) => prev.filter((c) => c.id !== id));
-  };
-
-  const handleSave = () => {
-    
-  };
-
-  const sliceEdit=()=>{
-
-  }
-
-  return (
-
-    
-
-    <Box>
-      <Stack className={classes.corporateStack1}>
-        <Typography className={classes.titleText}>Logos</Typography>
-        <EditButton onClick={sliceEdit}/>
-      </Stack>
-
-      <Box className={classes.corporateImageBox}>
-        <Uploadbutton
-          multiple
-          onUpload={handleUpload}
-          onError={(msg, id) => handleImageError(msg, id)}
-        />
-         <Stack
-          direction="row"
-          spacing={2} 
-          className={classes.CorporateuploadImageStack}
-          sx={{ flexWrap: "wrap" }} 
-        >
-          {corporates.map((corp, index) => (
-             
-             <Box key={corp.id} sx={{ display: "flex", alignItems: "center" , gap:2}}>
-               <Box>
-                <Typography className={classes.titleText}>{index + 1}</Typography>
-                <Box className={aboutus.ImagespicBox} sx={{position:'relative'}}>
-                  <img src={corp.image} className={classes.herouploadImage} />
-                  <CancelIcon sx={{color:'#F7FAFC'}}
-                    className={classes.corporateImgCancelIcon}
-                    onClick={() => handleRemoveImage(corp.id)}
-                  />
+    return(
+        <>
+            <Box>
+                <Box sx={{display:'flex',justifyContent:'flex-end',gap:'10px'}}>
+                    <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
+                        setEdit(true)
+                    }}/>
                 </Box>
-                <ErrorMessages message={corp.imgerror} />
-              </Box>
-             
-              {index !== corporates.length - 1 && (
-                <Divider orientation="vertical" flexItem sx={{ border: "1px solid blue" }} />
-              )}
-            </Box>
-          ))}
-        </Stack>
-        <Box className={aboutus.SeveandCancelBox} >
-           <SaveButton/>
-       <CancelButton/></Box> 
-      </Box>
-    </Box>
-  );
-};
+                <Box sx={{position:'relative', display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                    <Box className={classes.myuploadandheadingbox} sx={{minHeight:'200px'}}>
+                        <Stack className={classes.myUploadStack}>
+                            <Typography className={classes.mytext}>
+                                image
+                            </Typography>
+                            <Box className={classes.myImageUploadBox}>
+                                <input type='file'
+                                        multiple
+                                        accept="image/*" 
+                                        id={`upload-file-${Section}-${accordianId}-${id}`}
+                                        style={{display:'none'}}
+                                        disabled={!Edit}
+                                        onChange={(e)=>HandleFileChange(e,setFile,setError,setIssaved,setImage)}
+                                        />
+                                <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
+                                {(file) && (
+                                    <Box>
+                                        <Box sx={{display:'flex',flexDirection:'row',gap:2}}>
+                                                {Images.map((prev,index)=>
+                                                <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5, pr: 2,borderRight: index !== Images.length - 1 ? "2px solid #0A4FA4" : "none"}} >
+                                                    <img 
+                                                        src={prev}
+                                                        alt={`preview ${index+1}`}
+                                                        className={classes.ImagePic}
+                                                    />
+                                                    <IconButton sx={{ backgroundColor: 'red',borderRadius: '50%',width: '25px',height: '25px',padding: 0,
+                                                                      position: 'absolute',
+                                                                      top: '-8px',
+                                                                      right: '5px',
+                                                                      cursor: 'pointer',
+                                                                      "&:hover": {
+                                                                        backgroundColor:'red', 
+                                                                      },}}  
+                                                                  disabled={!Edit} onClick={()=>{removeImage()}}
+                                                    >
+                                                        <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                    </IconButton>
+                                                </Box>
 
-export default UserendCorporates;
+                                            )}
+                                            </Box>
+                                    </Box>
+                                )}
+                                <Box>
+                                    { error && (
+                                        <Typography className={classes.errorText}>
+                                            {error}
+                                        </Typography>
+                                        )
+                                    }
+                                </Box>
+                            </Box>
+                        </Stack>
+                </Box>
+                </Box>
+            </Box>
+            <Box className={classes.SeveandCancelBox} >
+                <SaveButton error={isSaved || !file}  onClick={SaveData}/>
+                {cancel &&(<CancelButton onClick={CancelData}/>)}
+            </Box>                       
+        </>
+    )
+}
+export default UserendCorporates; 

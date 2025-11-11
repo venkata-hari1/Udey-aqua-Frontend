@@ -13,7 +13,7 @@ type AccordianState ={
 const initialState : AccordianState = {
     ExpandAccordian:null,
     EditBanner:{
-        edit:false,
+        edit:true,
         cancel:false,
         banner:false
     },
@@ -26,8 +26,8 @@ const AccordianSlice = createSlice({
     reducers:{
         setExpandAccordian:(state, action:PayloadAction<string | null>)=>{
             state.ExpandAccordian= action.payload},
-        SetEdit:(state, action:PayloadAction<Partial<{setedit:boolean,setcancel:boolean,setbanner:boolean}>>)=>{
-            Object.assign(state,action.payload)},
+        SetEdit:(state, action:PayloadAction<Partial<{edit:boolean,cancel:boolean,banner:boolean}>>)=>{
+            state.EditBanner = { ...state.EditBanner, ...action.payload  };},
         AddCulture:(state,action:PayloadAction<string>)=>{
              state.CulturesData.push(action.payload)
         }

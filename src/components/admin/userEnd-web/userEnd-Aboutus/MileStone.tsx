@@ -37,7 +37,7 @@ const MileStone=({id,accordianId,Section}:MileStoneProps)=>{
                     <BadgeButton label='Add Section' counter={counter} onClick={handleAddSubpage}/>
                 </Box>
                 <Box>
-                    <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>
+                    <Hero id='1' accordianId={accordianId} Section={Section} title='About us'/>
                 </Box>
                 <MilestoneSubsection  id='Milestone-1' accordianId="7" Section={Section} />
                 {subpages.map((sub) => (

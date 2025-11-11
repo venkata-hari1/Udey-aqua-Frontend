@@ -37,7 +37,7 @@ const WhoWeAre=({id,accordianId,Section}:WhoweareProps)=>{
                 <BadgeButton label='Add Section' counter={counter} onClick={handleAddSubpage}/>         
             </Box>
             <Box>
-                <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>
+                <Hero id='1' accordianId={accordianId} Section={Section} title='About us'/>
             </Box>
             <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section} title='About us' />
             {subpages.map((sub) => (

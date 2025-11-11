@@ -4,7 +4,7 @@ import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, Calen
 import { useState,  } from 'react';
 import CloseIcon from "@mui/icons-material/Close";
 import { HelperTextValidate } from '../../utils/Validations';
-import { newHandleFileChange } from '../../utils/Validations';
+import { newHandleFileChange, newHandlePDFChange } from '../../utils/Validations';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import UserendDeletepopup from "../../utils/UserendDeletepop";
@@ -20,8 +20,13 @@ interface SubsectionProps {
 const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps)=>{
     const {classes} = useAboutusStyles();
     const [file,setfile] = useState<File|null>(null)
+    const [Images,setImages] = useState<string>('');
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
+    const [pdf, setPdf] = useState<string>('');
+    const [pdffile, Setpdffile] = useState<File |null>(null);
+    const [pdferror,setPdfError]= useState<string>('');
+    const [, setIsPdfSaved] = useState<boolean>(false);
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
     const [prevData, setPrevData] = useState<{ subtitle: string; file: File | null;content:string } | null>(null);
@@ -51,6 +56,12 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
             setfile(null)
             setError('');
             setIsSaved(false);
+    };
+    const removepdf=()=>{
+            setPdf('')
+            Setpdffile(null)
+            setPdfError('');
+            setIsPdfSaved(false);
     };
     const handleConfirmDelete = () => {
         setOpenDialog(false);
@@ -82,6 +93,32 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
     }
     setEdit(false); 
     setCancel(false)
+    }
+    const Handlechange=(
+        e: React.ChangeEvent<HTMLInputElement>,
+        setfile:React.Dispatch<React.SetStateAction<File|null>>,
+        setError: React.Dispatch<React.SetStateAction<string>>,
+        Setpdffile:React.Dispatch<React.SetStateAction<File|null>>,
+        setPdfError: React.Dispatch<React.SetStateAction<string>>,
+        setIsSaved: React.Dispatch<React.SetStateAction<boolean>>,
+        setIsPdfSaved: React.Dispatch<React.SetStateAction<boolean>>,
+        setPdf:React.Dispatch<React.SetStateAction<string>>
+    )=>{    
+            const file = e.target.files?.[0] || null;
+
+            if (!file) {
+                setError("No file selected");
+                return;
+            }
+           if (file.type === "application/pdf") {
+                newHandlePDFChange(e, Setpdffile, setPdfError, setIsPdfSaved, setPdf);
+                return;
+            }
+            if (file.type.startsWith("image/")){
+                newHandleFileChange(e, setfile, setError, setIsSaved);
+                return;
+            }
+
     }
     return(
         <>
@@ -172,33 +209,57 @@ const Subsection=({ accordianId, id,Section,title, onDelete,  }: SubsectionProps
                                 </Typography>
                                 <Box className={classes.myImageUploadBox}>
                                     <input type='file'
-                                            accept="image/*" 
+                                            accept={title === 'News & Events' ? "image/*,application/pdf" : "image/*"}
                                             id={`upload-file-${Section}-${accordianId}-${id}`}
                                             style={{display:'none'}}
-                                            onChange={(e) =>newHandleFileChange(e, setfile, setError, setIsSaved)}
+                                            onChange={(e) =>Handlechange(e,setfile,setError,Setpdffile,setPdfError,setIsSaved,setIsPdfSaved,setPdf)}
                                             disabled={!Edit}
                                             />
                                     <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
                                     {(file)  && (
                                         <Box className={classes.ImagesBox}>
                                             <Box className={classes.ImagespicBox}>
-                                                
                                                     <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}   >
                                                         <img 
                                                             src={URL.createObjectURL(file)}
-                                                            alt={`preview `}
+                                                            alt={`Imagepreview `}
                                                             className={classes.ImagePic}
                                                         />
                                                         <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={removeImage}>
                                                             <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                         </IconButton>
                                                     </Box>
-                                               
                                             </Box>
                                         </Box>
                                     )}
+                                    {(pdffile)  && (
+                                        <Box className={classes.ImagesBox}>
+                                            <Box className={classes.ImagespicBox}>
+                                            <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                                <Box sx={{
+                                                        overflow: "hidden",   
+                                                        position: "relative",
+                                                    }}>
+                                                    <embed
+                                                        src={pdf} 
+                                                        type="application/pdf"
+                                                        className={classes.ImagePic} 
+                                                        style={{
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            display: "block",
+                                                            }} 
+                                                    />
+                                                </Box>
+                                                 <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={removepdf}>
+                                                    <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
+                                            </Box>
+                                    </Box>
+                                        </Box>
+                                    )}
                                     <Box>
-                                        {error && (
+                                        {(error|| pdferror) && (
                                                 <Typography className={classes.errorText}>
                                                     {error}
                                                 </Typography>

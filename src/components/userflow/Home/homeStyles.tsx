@@ -1598,7 +1598,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "row",
     gap: theme.spacing(1),
     justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: 'stretch',
     position: "relative",
     zIndex: 2,
     width: "100%",
@@ -1652,6 +1652,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     height: "100%",
+  display: "flex",
+  flexDirection: "column",
+
+
     [theme.breakpoints.down('md')]:{
        width: "90%",
         marginLeft: 60,
@@ -1707,7 +1711,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     margin: "auto",
-    flex:1
+    flex:1,
+    marginTop: "auto",
   },
   teamCardInfoCol: {
     display: "flex",
@@ -1721,7 +1726,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.DARK,
     fontSize: 22,
     textAlign: "left",
-    flex:1
+    alignItems:'center',    
   },
   teamCardLocation: {
     color: COLORS.DARK,

@@ -109,7 +109,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginRight: "auto",
     zIndex: 1,
     [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(2,2,0.5,2),
+      //paddingRight: theme.spacing(2),
       marginBottom: theme.spacing(3),
       zIndex: 1,
     },
@@ -121,7 +122,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginBottom: theme.spacing(1),
     fontSize: 32,
     [theme.breakpoints.down("md")]: {
-      fontSize: 22,
+      fontSize: 20,
     },
   },
   aboutCardDesc: {
@@ -130,7 +131,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.DARK,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
-      fontSize: 14,
+      fontSize: 13,
+      fontWeight: 400,
       marginBottom: theme.spacing(4),
     },
   },

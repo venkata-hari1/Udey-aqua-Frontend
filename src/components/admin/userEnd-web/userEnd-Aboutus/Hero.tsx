@@ -30,7 +30,9 @@ type HeroProps={
     const [cancel, setCancel] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [selected, setSelected] = useState("Cage Culture");
+    const [cultureselected, setcultureSelected] = useState("Sea Bass");
     const OurprojectsItems = useSelector((state:Rootstate)=>state.accordian.CulturesData);
+    const Culturesdata = ['Sea Bass','Pearl Spot','Mud Crab','Murrel','Tilapia','Sea Weed']
     const TextFieldError=HelperTextValidate(subtitle)
     const headingError=HelperTextValidate(heading)
     const newsectionerror=HelperTextValidate(newsection)
@@ -74,7 +76,7 @@ type HeroProps={
         <>
         
             <Box className={(accordianId == '1')? classes.WhoWeAreContainer : undefined}>
-                {(accordianId !='1' && Section !="Why chhoose us" && Section !="About us" && id !== '1' )&& (                
+                {(accordianId !='1' && Section !="Why chhoose us" && Section !="About us" && id !== '1' && id !='2' )&& (                
                         <Box className={classes.whoWeareHeaderbox}>
                             <Box>
                                 <Typography className={classes.HeaderText}>
@@ -103,7 +105,7 @@ type HeroProps={
                                     />}
                                 
                                 </>
-                                : id :'Header Section'}
+                                : id :Section ==='Videos'?'Highlights Section-1':'Header Section'}
                                 </Typography>
                             </Box>
                             <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:2}}>
@@ -113,13 +115,14 @@ type HeroProps={
                         </Box>
                     )}
                 {/* Herosections,why choos us and Aboutus section Edit button */}
-                {((accordianId =='1' ) || id === '1' || (Section =="Why chhoose us" || Section =="About us") ) && (
+                {(accordianId =='1' || id === '1' || (Section =="Why chhoose us" || Section =="About us") || id === '2' ) && (
                     <>
                     <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'100%'}}>
                         <Box>
                         {(Section ==='Our projects' ) && (
                             <><DropDownButton setSelected={setSelected} Data={OurprojectsItems} value={selected}/></>
                         )}
+                        {(title==='Cultures' && id ==='2') && (<><DropDownButton setSelected={setcultureSelected} Data={Culturesdata} value={cultureselected}/></>)}
                         </Box>
                         <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
                             setEdit(true)

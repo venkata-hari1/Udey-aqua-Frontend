@@ -8,7 +8,7 @@ import { BadgeButton } from '../userEnd-Aboutus/AboutUsButtons';
 
 type HeroProps={
     id:string;
-    accordianId?:string;
+    accordianId:string;
     Section:string
 }
  const SuccessStories=({id,accordianId,Section}:HeroProps)=>{
@@ -19,7 +19,7 @@ type HeroProps={
     const {classes} = useAboutusStyles();
            
     const handleAddSubpage = (type: 'Highlights' | 'Subsections') => {
-        const newId =  `${(type === 'Highlights' ? Highlights : SubSection ) + 1}`
+        const newId = `${type === "Highlights" ? "" : "Sub Section"}-${ (type === "Highlights" ? Highlights : SubSection) + 1 }`;
         if (type === 'Highlights') {
             setHighlights((prev) => [...prev, { id: newId }]);
             sethighlightscounter(Highlights+1);
@@ -33,7 +33,7 @@ type HeroProps={
             setHighlights((prev) => {
             const filtersubpages =prev.filter((sub) => sub.id !== subId);
             const reindexing = filtersubpages.map((sub,index)=>({
-                id:`Milestone-${index+2}`
+                id:`Highlights-${index+2}`
             }))
             return reindexing
         });
@@ -42,7 +42,7 @@ type HeroProps={
             setSubpages((prev) => {
             const filtersubpages =prev.filter((sub) => sub.id !== subId);
             const reindexing = filtersubpages.map((sub,index)=>({
-                id:`Milestone-${index+2}`
+                id:`Sub section-${index+2}`
             }))
             return reindexing
         });
@@ -57,11 +57,11 @@ type HeroProps={
                 <BadgeButton label='Add Sections' counter={SubSection} onClick={()=>handleAddSubpage('Subsections')}/>                
             </Box>
             <Box>
-                <Hero id={id} accordianId={accordianId} Section={Section} title='News & Events'/>
+                <Hero id='1' accordianId={accordianId} Section={Section} title='News & Events'/>
             </Box>
-            <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section} title='News & Events'  />
+            <Subsection id='Sub Section-1' accordianId={accordianId} Section={Section} title='News & Events' />
             {subpages.map((sub) => (
-                <Subsection key={sub.id} id={sub.id} accordianId={id} Section={Section} title='News & Events' onDelete={() => handleDeleteSubpage('Subsections',sub.id)} />
+                <Subsection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} title='News & Events' onDelete={() => handleDeleteSubpage('Subsections',sub.id)} />
             ))}
             {highlights.map((sub) => (
                 <SubHighlights key={sub.id} id={sub.id} accordianId={id} subSection='Highlights'  onDelete={() => handleDeleteSubpage('Highlights',sub.id)} />

@@ -10,10 +10,11 @@ interface SubSectionprops {
   accordianId:string
   id: string;
   Section:string;
+  title?:string
   onDelete?: () => void; // callback to delete this subpage
 }
 
-const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
+const SubSection=({ accordianId, id,Section, onDelete ,title}: SubSectionprops)=>{
     const {classes} = useAboutusStyles();
     const [file,SetFile] = useState<File | null>(null);
     const [pdffile, Setpdffile] = useState<File |null>(null);
@@ -148,13 +149,11 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                             {(pdffile)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        
                                             <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <Box sx={{
                                                         overflow: "hidden",   
                                                         position: "relative",
-                                                    }}
->
+                                                    }}>
                                                     <embed
                                                         src={pdf} 
                                                         type="application/pdf"
@@ -170,7 +169,6 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                                     <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                 </IconButton>
                                             </Box>
-                                        
                                     </Box>
                                 </Box>
                             )}
@@ -186,7 +184,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                 </Stack>
                     <Box className={classes.TextFiledBox}>
                         <Typography  className={classes.mytext}>
-                            subtitle
+                            {title ==='News & Events' ?'Subtitle' :'Title'}
                         </Typography>
                         <TextField value={subtitle} 
                                    className={classes.myTextFleid}
@@ -213,7 +211,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={isSaved || !file|| isTextInvalid}  onClick={SaveData}/>
+                    <SaveButton error={isSaved || !file|| isTextInvalid || !pdffile}  onClick={SaveData}/>
                     {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 

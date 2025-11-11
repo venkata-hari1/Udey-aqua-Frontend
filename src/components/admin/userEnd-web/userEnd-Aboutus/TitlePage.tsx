@@ -111,7 +111,7 @@ const TitlePage=({id,accordianId, Section, setTitlehandle}:TitleProps)=>{
                     </Box>
                 </Box>
                 <Box className={classes.heroDivider}/>
-                <Hero/>
+                <Hero id=''/>
                 <Box className={classes.heroDivider}/>
                 <Box sx={{marginTop:'20px'}}>
                     <Box sx={{display:'flex',justifyContent:'flex-end'}}>

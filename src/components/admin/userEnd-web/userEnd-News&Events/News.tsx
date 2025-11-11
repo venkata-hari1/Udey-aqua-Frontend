@@ -4,7 +4,6 @@ import { CancelButton, EditButton, SaveButton, UploadButton, Calender,  AddSecti
 import { useState,  } from 'react';
 import { HelperTextValidate, HandlePDFChange, newHandlePDFChange } from '../../utils/Validations';
 import Subsection from '../userEnd-Aboutus/Subsection';
-import  Badge  from "@mui/material/Badge";
 import CloseIcon from "@mui/icons-material/Close";
 
 type HeroProps={

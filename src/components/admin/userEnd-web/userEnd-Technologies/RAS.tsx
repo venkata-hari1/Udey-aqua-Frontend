@@ -42,13 +42,13 @@ const RAS=({id,accordianId,Section,title}:RASProps)=>{
         <>   
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox} sx={{gap:3}}>
-                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetEdit({setcancel:true}))}} disable={!BannerEdit}/>
+                    <AddSection label='Edit Banner' onClick={()=>{dispatch(SetEdit({cancel:true,edit:true}))}} disable={!BannerEdit}/>
                     <BadgeButton counter={counter} label='Add Section' onClick={handleAddSubpage}/>      
                 </Box>
-                {title ==='Technologies' &&<Hero id={id} accordianId={id} Section={Section}/>}
-                <SubSection id='Sub Section-1' accordianId='2' Section={Section}/>
+                {title ==='Technologies' &&<Hero id='1' accordianId={id} Section={Section}/>}
+                <SubSection id='Sub Section-1' accordianId='2' Section={Section} title='Technologies'/>
                 {subpages.map((sub) => (
-                    <SubSection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <SubSection key={sub.id} id={sub.id} accordianId={accordianId} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} title='Technologies'/>
                 ))}
                     <Banner  id='Banner' accordianId={accordianId} Section={Section} />
             </Box>

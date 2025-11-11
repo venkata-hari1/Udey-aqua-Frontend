@@ -23,7 +23,7 @@ const UserendFooter=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false) 
-    const [socialLinks, setSocialLinks] = useState<{id:number}[]>([{ id: 1, }]);
+    const [socialLinks, setSocialLinks] = useState([{ id: 1, title: "", url: "" ,error: "",urlerror:''}]);
     const [prevData, setPrevData] = useState<{Title:string,links:string,content:string,name:string,role:string } | null>(null);
     
   
@@ -34,9 +34,10 @@ const UserendFooter=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
     const linkerror= websiteValidation(links);
     const isTextInvalid =  role.length < 3 || role.length > 80 || phoneerror.isError || linkerror.isError || emailerror.isError ||  content.length < 3 || content.length > 200 || Title.length < 3 || Title.length > 80 ;
     const handleAddLink = () => {
-      const lastId = socialLinks[socialLinks.length - 1]?.id || 0;
-      const newId=lastId+1
-      setSocialLinks((prev) => [...prev, { id:newId }]);
+      setSocialLinks(prev => [
+        ...prev,
+        { id: prev.length + 1, title: "", url: "" , error:'',urlerror:''}
+      ]);
     };
     const handleDeleteLink = (id: number) => {
       setSocialLinks((prev) => prev.filter(link => link.id !== id));
@@ -96,26 +97,40 @@ const UserendFooter=({id,accordianId, Section, onDelete, title}:AdvisorProps)=>{
                     </IconButton>
                     </Box>
                     <TextField className={classes.Linkfield}
-                    value={title}
-                                    onChange={(e)=>{setTitle(e.target.value);
-                                            setIsSaved(false)}}
-                                    helperText={titleFlied.message}
+                      value={link.title}
+                      onChange={(e)=>{
+                                const value = e.target.value
+                                const error = HelperTextValidate(value).message                            
+                                setSocialLinks(prev =>
+                                prev.map(item =>
+                                  item.id === link.id ? { ...item, title:value, error:error }: item ));
+                                setIsSaved(false)}}
+                                    helperText={link.error}
                                     disabled={!Edit}
                                     FormHelperTextProps={{
-                                className: (Title.length >= 3 && Title.length < 200) ? classes.greyText : classes.helperText
+                                className: (link.title.length >= 3 && link.title.length < 200) ? classes.greyText : classes.helperText
                             }}/>
                     <Box sx={{display:'flex',flexDirection:'row',gap:2}}>
                       <InsertLinkIcon sx={{color:'#0A4FA4'}}/>
                       <Typography className={classes.mytext}>Insert link</Typography>
                     </Box>
                     <TextField className={classes.Linkfield}
-                    value={links}
-                                    onChange={(e)=>{setLinks(e.target.value);
-                                            setIsSaved(false)}}
-                                    helperText={linkerror.error}
+                    value={link.url}
+                                    onChange={(e)=>{
+                                      const value = e.target.value
+                                      const error = websiteValidation(value)
+                                      setSocialLinks(prev =>
+                                        prev.map(item =>
+                                          item.id === link.id
+                                            ? { ...item, url: value, urlerror:error.error }
+                                            : item
+                                        )
+                                      );
+                                      setIsSaved(false)}}
+                                    helperText={link.urlerror}
                                     disabled={!Edit}
                                     FormHelperTextProps={{
-                                className: !linkerror.isError ? classes.greyText : classes.helperText
+                                className: !websiteValidation(link.url).isError ? classes.greyText : classes.helperText
                             }}/>
                   </Box>))
                 }
