@@ -515,9 +515,6 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     "& .MuiDialogContent-root::-webkit-scrollbar-thumb": {
       background: "transparent",
     },
-    [theme.breakpoints.down('md')]:{
-      //
-    }
   },
   pdfDialogTitle: {
     textAlign: "center",
