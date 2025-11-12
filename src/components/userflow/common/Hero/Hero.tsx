@@ -65,10 +65,17 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <Box
       className={`hero-section align-${align}`}
-      style={{
+      sx={{
         "--bg-image": `url(${image})`,
         "--overlay-color": overlayColor,
         backgroundColor: "#0A4FA469",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+        width: "100%",
+        height: "70vh",
+        overflow: "hidden",
+        color: "white"
       } as React.CSSProperties}
     >
       <SwimmingFish Count={fishCount} Height={fishHeight} />
