@@ -11,7 +11,6 @@ import useHomeStyles from "./homeStyles";
 import img1 from "../../../assets/testimonials/person_1.jpg";
 import img2 from "../../../assets/testimonials/person_2.jpg";
 import img3 from "../../../assets/testimonials/person_3.jpg";
-
 import SwimmingFish from "../../animations/SwimmingFish";
 import {  JackInTheBox} from "react-awesome-reveal";
 const testimonials: Testimonial[] = [

@@ -1,9 +1,9 @@
 import {useAboutusStyles} from './AboutusStyles';
 import { Box,} from '@mui/material';
-import { AddSection,} from './AboutUsButtons';
 import { useState,  } from 'react';
 import Advisors from './Advisors';
-import Badge from "@mui/material/Badge";
+import { BadgeButton } from './AboutUsButtons';
+
 type HeroProps={
     id:string;
     accordianId:string;
@@ -19,35 +19,28 @@ const OurDirectors=({id,accordianId,Section}:HeroProps)=>{
         setCounter(counter+1)
     };
     const handleDeleteSubpage = (subId: string) => {
-        setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+        setSubpages((prev) => {
+            const filtersubpages =prev.filter((sub) => sub.id !== subId);
+            const reindexing = filtersubpages.map((sub,index)=>({
+                id:`subpage-${index+2}`
+            }))
+            return reindexing
+        });
+
+        setCounter(counter -1)
     }; 
     return(
         <>
          <Box className={classes.WhoWeAreContainer}>
             <Box sx={{display:'flex',justifyContent:'flex-end', marginBottom:1}}>
-                <Badge
-                    badgeContent={counter}
-                        sx={{
-                            "& .MuiBadge-badge": {
-                            backgroundColor: "#0A4FA4",
-                            color: "#fff", 
-                            },
-                        }}
-
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                >
-                    <AddSection onClick={handleAddSubpage}/>
-                </Badge>  
+                <BadgeButton label='Add Section' counter={counter} onClick={handleAddSubpage}/> 
             </Box>
             <Box>
                 
             </Box>
-            <Advisors id='Sub Section-1' accordianId={accordianId} Section={Section}  />
+            <Advisors id='Sub Section-1' accordianId={accordianId} Section={Section} title='About us' />
             {subpages.map((sub) => (
-                    <Advisors key={sub.id} id={sub.id} accordianId={id} Section={Section} onDelete={() => handleDeleteSubpage(sub.id)} />
+                    <Advisors key={sub.id} id={sub.id} accordianId={id} Section={Section} title='About us'  onDelete={() => handleDeleteSubpage(sub.id)} />
                 ))} 
          </Box>
         </>

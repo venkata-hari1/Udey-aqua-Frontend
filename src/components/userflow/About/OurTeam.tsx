@@ -152,6 +152,7 @@ const OurTeam = () => {
       const slug = prevMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       navigate(`/about/our-team/${slug}`);
     }
+    
   };
 
   const handleNext = () => {
@@ -161,6 +162,8 @@ const OurTeam = () => {
       const slug = nextMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       navigate(`/about/our-team/${slug}`);
     }
+    
+    
   };
 
   const renderMembers = (category: "Directors" | "Advisors") => (
@@ -181,7 +184,7 @@ const OurTeam = () => {
               <Card className={classes.memberCard}>
                 <CardMedia
                   component="img"
-                  height="240"
+                  height="240" 
                   image={member.image}
                   alt={member.name}
                   className={classes.memberImage}
@@ -259,7 +262,7 @@ const OurTeam = () => {
           </Box>
         )}
       </Box>
-      <Box className={classes.sectionWrapper}>
+      <Box  className={classes.sectionWrapper}>
         {!open ? (
           <>
             {renderMembers("Directors")}
@@ -267,10 +270,10 @@ const OurTeam = () => {
           </>
         ) : (
           <Fade in={open}>
-            <Box className={classes.carouselWrapperCustom}>
+            <Box  className={classes.carouselWrapperCustom}>
               {isMobile ? (
                 <>
-                  <Box className={classes.carouselMobileImgBox}>
+                  <Box  className={classes.carouselMobileImgBox}>
                     <img
                       src={currentMember.image}
                       alt={currentMember.name}

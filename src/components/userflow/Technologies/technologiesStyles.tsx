@@ -215,16 +215,18 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     fontFamily: FONTS.DM_SERIF_DISPLAY,
     fontSize: 38,
     [theme.breakpoints.down("md")]: {
-      fontSize: 14,
+      fontSize: 20,
+      fontWeight: 400,
       maxWidth: "fit-content",
-      margin: "auto",
-      textAlign: "center",
+      //margin: "auto",
+      //textAlign: "center",
+      textAlign:'left',
       marginTop: "-10px",
-      marginBottom: "15px",
-      padding: "3px 20px",
-      borderRadius: 999,
-      color: COLORS.WHITE,
-      background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
+      //marginBottom: "15px",
+      //padding: "3px 20px",
+      //borderRadius: 999,
+      //color: COLORS.WHITE,
+      //background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     },
   },
   technologiesHeaderSubtitle: {
@@ -235,8 +237,9 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     marginTop: 0,
     textTransform: "capitalize",
     [theme.breakpoints.down("md")]: {
-      fontSize: 16,
-      marginTop: theme.spacing(1),
+      fontSize: 13,
+      fontWeight: 600,
+      //marginTop: theme.spacing(0),
     },
   },
   technologiesHeaderImg: {
@@ -263,7 +266,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     marginRight: "auto",
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(2),
-      marginBottom: theme.spacing(6),
+      marginBottom: theme.spacing(3),
     },
   },
   technologiesCardTitle: {
@@ -284,7 +287,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
     marginBottom: theme.spacing(3),
     [theme.breakpoints.down("md")]: {
       fontSize: 14,
-      marginBottom: theme.spacing(4),
+      marginBottom: theme.spacing(1),
     },
   },
   technologiesCardImg: {

@@ -46,7 +46,7 @@ const navLinks2 = ["Cultures", "Training Programs", "Technologies"];
 
 const Footer = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { classes } = useSharedStyles();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -252,7 +252,7 @@ const isEmailValid=error==="" &&email.length>0
                       component="img"
                       src={TwitterIcon}
                       alt="Twitter"
-                      className={classes.footerSocialIconWhite}
+                      className={classes.twitterIconWhite}
                     />
                   </Box>
                   <Box

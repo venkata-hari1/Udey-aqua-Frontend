@@ -1,97 +1,74 @@
-import { Box, Stack, Typography } from "@mui/material"
-import useUserEndwebStyles from "../UserendwebStyles"
- import fishImg from './../../../../assets/admin/userendabout.jpg'
-import CancelIcon from '@mui/icons-material/Cancel';
-import { Uploadbutton, UserEndSaveCancelButtons,ErrorMessages, EditButton, UserEndSaveButton } from "./UserEndCommonButtons";
-import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
+import { Box, TextField, Typography,} from '@mui/material';
+import { SaveButton,  CancelButton, EditButton, AddSection} from '../userEnd-Aboutus/AboutUsButtons';
+import { useState,  } from 'react';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import {YoutubeValidation} from '../../utils/Validations';
 
-const UserEndAddvideo = () => {
-const{classes}=useUserEndwebStyles() 
+const UserEndAddvideo=()=>{
+    const {classes} = useAboutusStyles();
+    const [links, setLinks] = useState<string>('');
+    const [Edit, setEdit] = useState<boolean>(true);
+    const [isSaved, setIsSaved] = useState<boolean>(false);
+    const [cancel, setCancel] = useState<boolean>(false) 
+    const [prevData, setPrevData] = useState<string>('');
+   
+    const linkerror= YoutubeValidation(links);
+    
 
-       const[video,setVideo]=useState({
-          id: uuidv4(),
-          name: "Video",
-          video: "",
-          videoerror: "",
-          isSaved:false,
-  })
+    
+    const SaveData = ()=>{
+        setPrevData(links);
+        setIsSaved(true);
+        setEdit(false);
+        console.log();
+        };
+    const CancelData = ()=>{
+        if (prevData) {
+        setLinks(prevData)
+        setIsSaved(true);
+    } else {
+        
+        setLinks('')
+        setIsSaved(false);
+    }
+    setEdit(false); 
+    setCancel(false)
+    }
+    
+    
+    return(
+        <>
+          <Box sx={{display:"flex", flexDirection:'row', justifyContent:"flex-end",gap:2}} >
+            <EditButton error={ Edit} onClick={()=> {setCancel(true);
+              setEdit(true)
+            }}/>
+          </Box>
+          <Box className={classes.myuploadandheadingbox} sx={{gap:10}}>
+                <Box>
+                    <Box sx={{display:'flex',flexDirection:'row',gap:2}}>
+                      <InsertLinkIcon sx={{color:'#0A4FA4'}}/>
+                      <Typography className={classes.mytext}>Insert link</Typography>
+                    </Box>
+                    <TextField className={classes.Linkfield}
+                        value={links}
+                        onChange={(e)=>{setLinks(e.target.value);
+                                    setIsSaved(false)}}
+                        helperText={linkerror.error}
+                        disabled={!Edit}
+                        FormHelperTextProps={{
+                          className: !linkerror.isError ? classes.greyText : classes.helperText
+                        }}/>
 
-  const videoSaveDisabled =
-  !video.video || !!video.videoerror;
 
- const[isEditing,setIsediting]=useState(false)
- const handleUpload=(file:File)=>{
-  const videoUrl = URL.createObjectURL(file);
-  const updatedVideo={...video,video:videoUrl,videoerror:""}
-  setVideo(updatedVideo) 
+
+                </Box>              
+          </Box>    
+          <Box className={classes.SeveandCancelBox}>
+            <SaveButton error={isSaved || linkerror.isError} onClick={SaveData} />
+            {cancel &&(<CancelButton onClick={CancelData} />)}
+          </Box>
+        </>
+    )
 }
-
-const handleVideoError=(msg:string)=>{
-  const updatedVideoerror={...video,videoerror:msg}
-  setVideo(updatedVideoerror)
-}
-
-const handleRemoveVideo=()=>{
-  const updatedVideo={...video,video:""}
-  setVideo(updatedVideo)
-}
-
-const handleSave=()=>{
-  localStorage.setItem("addVideo",JSON.stringify(video))
-  setVideo({...video,video:"",videoerror:"",isSaved:true,})
-  setIsediting(false) 
-}  
-const handleEdit=()=>{
-  setIsediting(true)
-  const savedData=localStorage.getItem("addVideo");
-  if(savedData){
-    const parsed=JSON.parse(savedData);
-    setVideo({
-      ...video,
-      video:parsed.video
-    })
-  }
-  } 
- 
-  const handleCancel=()=>{
-      setVideo({...video,video:"",videoerror:""})
-  setIsediting(false)
-  }
-  return (
-   <Box>    
-   <Box className={classes.useHerocontainer}> 
-   <Box mt={2}>
-       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-       <EditButton sliceEdit={handleEdit}
-       disabled={!video.isSaved}/>
-   </Box>
-  <Stack className={classes.UploadandAboutbox}>
-        <Stack className={classes.UploadImageStack}>
-        <Typography className={classes.titleText}>Video</Typography>
-        <Uploadbutton  type="video"
-           onUpload={(file) => handleUpload(file)}
-           onError={(msg) => handleVideoError(msg)}/>   
-          {video.video && (
-            <Box className={classes.herouploadImageBox}>
-              <img src={fishImg} className={classes.herouploadImage} alt="video preview" />
-              <CancelIcon
-                className={classes.cancelImgIcon}
-                onClick={handleRemoveVideo}
-              />
-            </Box>
-          )}
-         <ErrorMessages message={video.videoerror}/>
-        </Stack>
-      </Stack>
-      {isEditing ? <UserEndSaveCancelButtons onSave={handleSave} 
-      onCancel={handleCancel}disabled={videoSaveDisabled} />:
-      <UserEndSaveButton onSave={handleSave} disabled={videoSaveDisabled}/>}
-      
-  </Box>
-  </Box>
-    </Box>
-  )
-}
-
-export default UserEndAddvideo
+export default UserEndAddvideo;

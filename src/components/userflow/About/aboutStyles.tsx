@@ -109,8 +109,9 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginRight: "auto",
     zIndex: 1,
     [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(2),
-      marginBottom: theme.spacing(6),
+      padding: theme.spacing(2,2,0.5,2),
+      //paddingRight: theme.spacing(2),
+      marginBottom: theme.spacing(3),
       zIndex: 1,
     },
   },
@@ -121,7 +122,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     marginBottom: theme.spacing(1),
     fontSize: 32,
     [theme.breakpoints.down("md")]: {
-      fontSize: 22,
+      fontSize: 20,
     },
   },
   aboutCardDesc: {
@@ -130,7 +131,8 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.DARK,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
-      fontSize: 14,
+      fontSize: 13,
+      fontWeight: 400,
       marginBottom: theme.spacing(4),
     },
   },
@@ -252,6 +254,10 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     height: "100%",
     objectFit: "cover",
     zIndex: 1,
+    [theme.breakpoints.down("md")]: {
+      minHeight: "50vh",
+      
+    },
   },
   aboutHeroOverlay: {
     position: "absolute",
@@ -622,12 +628,19 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     "&:hover": {
       transform: "scale(1.03)",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       margin: "0 auto",
+      height:'28vh',
+      width:'50%'
     },
   },
   memberImage: {
     objectFit: "cover",
+    [theme.breakpoints.down("sm")]: {
+      margin: "0 auto",
+      height:'20vh',
+      width:'100%'
+    },
   },
   sectionWrapper: {
     marginBottom: theme.spacing(4),
@@ -1545,6 +1558,7 @@ testimonialRoot: {
       paddingBottom: 20,
       marginTop: 16,
       marginBottom: 32,
+      width:'90vw'
     },
   },
   extraWidth: {
@@ -1569,8 +1583,9 @@ testimonialRoot: {
     },
     [theme.breakpoints.down("md")]: {
       gap: 0,
-      paddingLeft: 0,
-      paddingRight: 0,
+      paddingLeft:0,
+      paddingRight:0,
+      flexGrow:1,
       justifyContent: "flex-start",
       scrollSnapType: "x mandatory",
     },
@@ -1809,6 +1824,11 @@ testimonialRoot: {
     display: "flex",
     width: "100%",
     height: "100%",
+    [theme.breakpoints.down('md')]:{
+       width: "80%",
+      height: "100%",
+      paddingLeft:'10vw'
+    }
   },
   testimonialWideImageContainer: {
     width: "30%",
@@ -1853,6 +1873,9 @@ testimonialRoot: {
   // AboutCardsSection styles
   aboutCardsGrid: {
     marginTop: theme.spacing(6),
+    [theme.breakpoints.down('md')]:{
+      marginTop: theme.spacing(2),
+    }
   },
 }));
 

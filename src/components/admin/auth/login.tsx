@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import bgimg from '../../../assets/admin/Group 39739.png';
-import logo from '../../../assets/admin/logo.png';
+import logo from '../../../assets/Logo (2).png';
 import emailIconPng from '../../../assets/admin/mail.png';
 import lockIconPng from '../../../assets/admin/lock.png';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -23,6 +23,9 @@ import {
   StyledLoginButton,
 } from '../styles/logins.styles';
 import { validateEmail, validatePassword } from '../utils/Validations';
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../../../redux/store";
+import { loginAdmin } from "../../../redux/reducers/auth";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -46,20 +49,47 @@ const Login: React.FC = () => {
     setPasswordError(validatePassword(value));
   };
 
-  const validateAndLogin = () => {
-    const emailResult = validateEmail(email);
-    const passwordResult = validatePassword(password);
+  // const validateAndLogin = () => {
+  //   const emailResult = validateEmail(email);
+  //   const passwordResult = validatePassword(password);
 
-    setEmailError(emailResult);
-    setPasswordError(passwordResult);
+  //   setEmailError(emailResult);
+  //   setPasswordError(passwordResult);
 
-    if (emailResult === '' && passwordResult === '') {
-      console.log('login success :', { email, password });
-      navigate('/admin/dashboard');
-    } else {
-      console.log('validation failed');
+  //   if (emailResult === '' && passwordResult === '') {
+  //     console.log('login success :', { email, password });
+  //     navigate('/admin/dashboard');
+  //   } else {
+  //     console.log('validation failed');
+  //   }
+  // };
+
+const dispatch = useDispatch<AppDispatch>();
+
+const Loginadm = async () => {
+  const emailResult = validateEmail(email);
+  const passwordResult = validatePassword(password);
+
+  setEmailError(emailResult);
+  setPasswordError(passwordResult);
+
+  if (emailResult === '' && passwordResult === '') {
+    try {
+      const resultAction = await dispatch(loginAdmin({ email, password }));
+
+      if (loginAdmin.fulfilled.match(resultAction)) {
+        console.log('Login successful:', resultAction.payload);
+        navigate('/admin/dashboard');
+      } else {
+        console.log('Login failed:', resultAction.payload);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
-  };
+  } else {
+    console.log('Validation failed');
+  }
+};
 
   return (
     <StyledLoginRoot>
@@ -138,7 +168,7 @@ const Login: React.FC = () => {
            <StyledLoginButton
             variant="contained"
             fullWidth
-            onClick={validateAndLogin}
+            onClick={Loginadm}
             disabled={isDisabled}
           >
             Login

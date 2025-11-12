@@ -8,6 +8,13 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from 'react-router-dom';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { hasGrayBackground, shouldShowbackArrow, showSearchbox } from '../utils/RouteUtils';
+import ReusableSearch from '../utils/ReusableSearch';
+import React, { useState } from "react";
+import { tablebodydata } from '../utils/data';
+
+
+
+
 
 type Iprops={
   open:boolean;
@@ -17,12 +24,16 @@ type Iprops={
 const Header = ({toggleDrawer}:Iprops) => {
 const theme = useTheme();
 const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const [searchTerm, setSearchTerm] = useState("");
+
 
 const location=useLocation()
 const path=location.pathname.split('/').pop() ||""
 console.log(path)
 
 const navigate=useNavigate()
+
+ 
 //header title
 
 let title="";
@@ -48,13 +59,18 @@ switch(path){
   title="Profile"
   break;
   case "userend-web":
+    title="User End Website"
+    break
   case "userend-home":
+    title="User End Website"
+    break
+  case "userend-culture":
+    title="User End Website"
+    break
   case 'userend-aboutus':
     title="User End Website"
     break;
-  case "userend-culture":    
-  title="User End Website"
-  break;
+  
   case "userend-technologies":
     title="User End Website"
     break;
@@ -62,16 +78,17 @@ switch(path){
     title="User End Website"
     break;
   case "userend-news&events":
-    title="User End Website"
+   title="User End Website"
     break;
-  case "subpage":
-    title="User End Website"
+    
+   case "userend-contactus":
+   title="User End Website"
     break;
   case "logout":
     title="Logout"
 }
 //backarrow handle
-const backarrowHandle=()=>{
+{/*const backarrowHandle=()=>{
   switch(path){
    case "training-registrations":
    navigate('/admin/user-management')  
@@ -85,9 +102,13 @@ const backarrowHandle=()=>{
    case "subscriber":
     navigate('/admin/user-management')
     break; 
-   navigate('/admin/userend-web')
-   break;
    case "userend-aboutus":
+   navigate('/admin/userend-web') 
+   break;
+   case "userend-home":
+   navigate('/admin/userend-web') 
+   break;
+   case "userend-culture":
    navigate('/admin/userend-web') 
    break;
    case "userend-technologies":
@@ -96,15 +117,36 @@ const backarrowHandle=()=>{
    case "userend-trainingprograms":
     navigate('/admin/userend-web')
     break;
+    case "userend-contactus":
+    navigate('/admin/userend-web')
+    break;
    case "userend-news&events":
     navigate('/admin/userend-web')
    
+   
+   
 
  }
-}
+}*/}
 
+const searchPages = [
+  
+  { label: "About Us", path: "userend-web/userend-aboutus" },
+  { label: "Culture Home", path: "userend-web/userend-culture" },
+  { label: "Home", path: "/admin/userend-web/userend-home" },
+  { label: "Training Programs", path: "userend-web/userend-trainingprograms" },
+  { label: "Technologies", path: "userend-web/userend-technologies" },
+  { label: "News & Events", path: "userend-web/userend-news&events" },
+  { label: "Contact Us", path: "userend-web/userend-contactus" },
+];
+
+const handleSearchSelect = (item: { label: string; path: string }) => {
+    setSearchTerm("");
+    navigate(item.path);
+  }
 
 const{classes}=useHeaderStyles()
+
   return (
     <AppBar position="static" className={classes.headerAppbar} style={{background:hasGrayBackground(path)}}>
       <Toolbar className={classes.headerToolbar}>
@@ -120,9 +162,9 @@ const{classes}=useHeaderStyles()
           )}
          <Box className={classes.headerandSearchContainer}> 
         <Box className={classes.AdmintitleBox}>
-        {shouldShowbackArrow(path)&&
+        {/*{shouldShowbackArrow(path)&&
         <ArrowBackIosOutlinedIcon className={classes.backArrow}
-        onClick={backarrowHandle}/>}
+        onClick={backarrowHandle}/>}*/}
         
         <Typography variant="h6" component="div" className={classes.AdminheaderTitle}>
           {title}
@@ -130,24 +172,62 @@ const{classes}=useHeaderStyles()
         </Box>    
         
         <Box className={classes.searchBox}>
-          {showSearchbox(path)&&
-           <TextField
-            className={classes.headerSearch}
-            size="small"
-            type="search"
-            
-            placeholder="Search"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: '#0A4FA4',fontSize:15 }} />
-                </InputAdornment>
-              ),
-            }}
-        />
-          }
+          {showSearchbox(path) &&
+                (<ReusableSearch
+                  data={searchPages}
+                  keys={["label"]}
+                  width="100%"
+                  onSelect={(item) => navigate(item.path)}
+                  renderInput={({ value, onChange }) => (
+                    <TextField
+                      className={classes.headerSearch} // keep your styles
+                      size="small"
+                      type="search"
+                      placeholder="Search"
+                      value={value}
+                      onChange={onChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                />)
+            }
           
-        </Box>
+          {/* user management */}
+          {showSearchbox(path)&& path == 'user-management' &&
+                (<ReusableSearch
+                  data={tablebodydata}
+                  keys={['name','availability','address']}
+                  width="100%"
+                  onSelect={(item) => navigate('/user-management',{state:{user:item}})}
+                  renderInput={({ value, onChange }) => (
+                    <TextField
+                      className={classes.headerSearch} // keep your styles
+                      size="small"
+                      type="search"
+                      placeholder="Search"
+                      value={value}
+                      onChange={onChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon sx={{ color: '#0A4FA4', fontSize: 15 }} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                 
+                />)
+            }
+  
+</Box>
+
         </Box>
       </Toolbar>
     </AppBar>

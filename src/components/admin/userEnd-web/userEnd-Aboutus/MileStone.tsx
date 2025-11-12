@@ -1,6 +1,6 @@
 import {useAboutusStyles} from './AboutusStyles';
 import { Box } from '@mui/material';
-import { AddSection } from './AboutUsButtons';
+import { AddSection, BadgeButton } from './AboutUsButtons';
 import { useState } from 'react';
 import MilestoneSubsection from './MileStoneSubsection';
 import Hero from './Hero';
@@ -20,31 +20,24 @@ const MileStone=({id,accordianId,Section}:MileStoneProps)=>{
         setCounter(counter+1)
     };
     const handleDeleteSubpage = (subId: string) => {
-        setSubpages((prev) => prev.filter((sub) => sub.id !== subId));
+         setSubpages((prev) => {
+            const filtersubpages =prev.filter((sub) => sub.id !== subId);
+            const reindexing = filtersubpages.map((sub,index)=>({
+                id:`Milestone-${index+2}`
+            }))
+            return reindexing
+        });
+
+        setCounter(counter -1)
     };  
     return(
         <>
             <Box className={classes.WhoWeAreContainer}>
                 <Box className={classes.AddSectionBox}>
-                    <Badge
-                    badgeContent={counter}
-                        sx={{
-                            "& .MuiBadge-badge": {
-                            backgroundColor: "#0A4FA4",
-                            color: "#fff", 
-                            },
-                        }}
-
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                >
-                    <AddSection onClick={handleAddSubpage}/>
-                </Badge>
+                    <BadgeButton label='Add Section' counter={counter} onClick={handleAddSubpage}/>
                 </Box>
                 <Box>
-                    <Hero id={id} accordianId={accordianId} Section={Section} title='About us'/>
+                    <Hero id='1' accordianId={accordianId} Section={Section} title='About us'/>
                 </Box>
                 <MilestoneSubsection  id='Milestone-1' accordianId="7" Section={Section} />
                 {subpages.map((sub) => (

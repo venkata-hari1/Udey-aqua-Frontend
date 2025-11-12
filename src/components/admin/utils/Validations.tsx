@@ -28,7 +28,7 @@ export const validateEmail1 = (email: string): ValidationResult => {
   let error = "";
 
   if (email.length === 0) {
-    error = "Email cannot be empty";
+    error = "";
   } else if (email.startsWith(".") || email.endsWith(".")) {
     error = "Email cannot start or end with '.'";
   } else if (!emailRegex.test(email)) {
@@ -54,29 +54,31 @@ export const TitleValidate = (text: string): {  message: string } => {
     return {message: `* Remaining Characters ${text.length}/100` }; 
   }
 };
-export const PriceValidate = (text: string): { message: string } => {
+export const PriceValidate = (text: string): { message: string; isError:boolean } => {
   const trimmedText = text.trim();
 
   if (trimmedText.length === 0) {
-    return { message: "" };
+    return { message: "", isError:false };
   }
 
   if (!/^\d+$/.test(trimmedText)) {
-    return { message: "* Must be Numbers" };
+    return { message: "* Must be Numbers, Remove Alphabets", isError:true };
   }
 
   if (trimmedText.length < 2) {
     return {
       message: `* Must contain at least 2 characters. Remaining Characters ${trimmedText.length}/12`,
+      isError:true
     };
   }
 
   if (trimmedText.length > 12) {
-    return { message: "* Character Limit Exceeded" };
+    return { message: "* Character Limit Exceeded",isError:true };
   }
 
   return {
     message: `* Remaining Characters ${trimmedText.length}/12`,
+    isError:false
   };
 };
 export const PlanContentValidate = (text: string): {  message: string } => {
@@ -102,9 +104,13 @@ export const validatePassword = (pword: any):string => {
   }
   else if (!/[A-Z]/.test(pword)) {
   return "* Password must contain at least one uppercase letter";
+}else if (!/[a-z]/.test(pword)) {
+  return "* Password must contain at least one lowercase letter";
 }
-  else if (!/[!@#$%^&*(),.?":{}|<>]/.test(pword)) {
-     return "* Must Contain atleast one Special Character ";
+   else if (!/[!@#$%^&*(),.?":{}|<>]/.test(pword) ) {
+     return "* Must Contain atleast one Special Character and No Spaces ";
+}else if ( /\s/.test(pword)){
+  return "* Password doesn't contain Spaces"
 }
 else if (!/\d/.test(pword)) {
 return "* Must contain at least one number";
@@ -149,7 +155,7 @@ else if (!/\d/.test(cfmpwd)) {
   return "* Must contain at least one number";
 } 
 else if (cfmpwd !== pword) {
-  return "Password and Confirm password are not matching";
+  return "Passwords do not match";
 } 
 else {
   return "";
@@ -205,18 +211,24 @@ export const phoneNumberValidation = (phone: string): ValidationResult => {
 
   if (phone.length === 0) {
     return {
-      error: "* Phone number cannot be empty",
+      error: "",
       isError: true,
     };
-  } else if (/[^0-9]/.test(phone)) {
+  } if (phone === '+91'){
     return {
-      error: "* Only numbers are allowed",
+      error: "",
       isError: true,
     };
-  } else if (phone.length !== requiredLength) {
+  }
+   else if (!/^(\+91)[6-9]\d{4}\d{5}$/.test(phone)) {
     return {
-      error: `* Phone number must be exactly ${requiredLength} digits. Entered: ${phone.length}/${requiredLength}`,
+      error: "* Enter a valid Indian phone number",
       isError: true,
+    };
+  } else if (phone.length <= requiredLength) {
+    return {
+      error: `* Phone number must be 10 digits. Entered: ${phone.length}/${requiredLength}`,
+      isError: false,
     };
   } else {
     return {
@@ -237,8 +249,9 @@ export const addressContentValidation = (content: string): ValidationResult => {
   const minChars = 3; // or set your desired minimum
 
   const addressRegexp = /^[\w\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{0,200}$/;
-
-  if (content.length === 0 || content.length < minChars) {
+   if (content.length === 0) {
+    return {  error: "", isError: false }; }
+  if ( content.length <= minChars) {
     return {
       error: `* Must contain at least ${minChars} character(s). Remaining Characters ${content.length}/${maxChars}`,
       isError: true,
@@ -248,12 +261,19 @@ export const addressContentValidation = (content: string): ValidationResult => {
       error: `* Maximum ${maxChars} characters allowed and valid characters only`,
       isError: true,
     };
-  } else if (content.length > maxChars) {
+  }else if (content.length > 3) {
+    return {
+      error: `*  Remaining Characters ${content.length}/100`,
+      isError: false
+    };
+  }
+   else if (content.length > maxChars) {
     return {
       error: `* Character limit exceeded. Remaining Characters ${content.length}/${maxChars}`,
       isError: true,
     };
-  } else {
+  }
+   else {
     return {
       error: "",
       isError: false,
@@ -423,6 +443,51 @@ export const HandleFileChange = (
     
         event.target.value = '';
 }
+//new handle file
+export const newHandleFileChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  setFile:Dispatch<SetStateAction<File|null>>,
+  setError:Dispatch<SetStateAction<string>>,
+  setIsSaved:Dispatch<SetStateAction<boolean>>,
+) => {
+
+      const files = event.target.files;
+        setError('');
+        setIsSaved(false);
+    
+        if (files && files.length > 0) {
+            const selectedFiles: File[] = Array.from(files);
+          
+            selectedFiles.forEach(file => {
+                const errorMsg = validate(file);
+                
+                if (errorMsg) {
+                    setError(errorMsg);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imgs = new Image();
+                    imgs.onload = () => {
+                        if (imgs.width <= 300 || imgs.height <= 100) {
+                            setError('** File must be in landscape format (min 300x100)');
+                            setFile(null)
+                            return; 
+                        }
+                        else{
+                          setFile(file);
+                        }
+                    };
+                    imgs.src = e.target?.result as string;
+                };
+                reader.readAsDataURL(file);
+                
+            });
+        }
+    
+        event.target.value = '';
+}
+
 
 export const HandlePDFChange = (
   event: ChangeEvent<HTMLInputElement>,
@@ -458,6 +523,43 @@ export const HandlePDFChange = (
   }
   event.target.value = "";
 };
+
+export const newHandlePDFChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  setPdfFile: Dispatch<SetStateAction<File|null>>,
+  setPdfError: Dispatch<SetStateAction<string>>,
+  setIsPdfSaved: Dispatch<SetStateAction<boolean>>,
+  setpdf:Dispatch<SetStateAction<string>>
+) => {
+  const files = event.target.files;
+
+
+  setPdfError("");
+  setIsPdfSaved(false);
+
+  if (files && files.length > 0) {
+    const selectedFiles: File[] = Array.from(files);
+
+    selectedFiles.forEach((file) => {
+      const isPDF =file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+      if (! isPDF) {
+        setPdfError("Only PDF files are allowed.");
+        return;
+      }
+      const maxSizeMB = 5;
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        setPdfError(`File size must be less than ${maxSizeMB} MB.`);
+        return;
+      }
+      const fileURL = URL.createObjectURL(file);
+      setpdf(fileURL)
+      setPdfFile(file);
+    });
+  }
+  event.target.value = "";
+};
+
+
 export const HelperTextValidate = (text: string): {  message: string } => {
   if (text.length === 0) {
     return {  message: "" }; 
@@ -503,3 +605,50 @@ export const YearValidate = (text: string): {  message: string } => {
   }
 };
 
+interface WebsiteResult {
+  error: string;
+  isError: boolean;
+}
+export const websiteValidation = (url: string): WebsiteResult => {
+  const regex = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+)\.([a-zA-Z]{2,})(\/\S*)?$/;
+  const yotutbe=/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})(?:[&\S]*)?$/
+  if (url.length ==0){
+    return {error:'',isError:true}
+  }if (! regex.test(url)){
+    return {error:'* Website must be in ( http: or https: or www. )', isError:true};
+  }
+  else{
+    return {error:'',isError:false};
+  }
+};
+interface WebsiteResult {
+  error: string;
+  isError: boolean;
+}
+export const YoutubeValidation = (url: string): WebsiteResult => {
+  const regex = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})(?:[&\S]*)?$/;
+  
+  if (url.length ==0){
+    return {error:'',isError:true}
+  }if (! regex.test(url)){
+    return {error:'* Must be an Youttube link', isError:true};
+  }
+  else{
+    return {error:'',isError:false};
+  }
+};
+
+export const PlanContentValidation =(text: string) =>{
+  const Text = text.replace(/<[^>]*>/g, '');
+  if (Text.length === 0) {
+    return {  message: "" }; 
+  } else if (Text.length < 3) {
+    return {
+      message: `* Must contain at least 3 characters. Remaining Characters ${Text.length}/200`,
+    };
+  } else if (Text.length > 200) {
+    return {  message: "* Character Limit Exceeded" };
+  } else {
+    return {message: `* Remaining Characters ${Text.length}/200` }; 
+  }
+}

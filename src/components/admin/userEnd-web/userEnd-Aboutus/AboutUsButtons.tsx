@@ -1,5 +1,5 @@
 import { useAboutusStyles } from "./AboutusStyles";
-import { Button, IconButton, Box, Checkbox, Typography, TextField, Popper, Paper, ClickAwayListener} from "@mui/material";
+import { Button, IconButton, Box, Checkbox, Typography, TextField, Popper, Paper, ClickAwayListener,MenuItem,Select,} from "@mui/material";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -11,6 +11,9 @@ import { useState, useRef } from "react";
 import {LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
+import Badge from "@mui/material/Badge";
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 export const DeleteButton=({onClick}:{onClick?:()=>void})=>{
     const {classes} =useAboutusStyles();
@@ -131,22 +134,20 @@ export const CancelButton=({onClick}:{onClick?:()=>void})=>{
         </Button>
     )
 }
-export const AddSection=({onClick}:{onClick?:()=>void})=>{
+type addsectionpros={
+    label:string
+    onClick ?: ()=> void;
+    disable?:boolean
+}
+export const AddSection=({onClick,label,disable}:addsectionpros)=>{
     const {classes} =useAboutusStyles();
     return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add section
+        <Button variant='contained' disableElevation disabled={disable} className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
+            {label}
         </Button>
     )
 }
-export const AddBanner=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Banner
-        </Button>
-    )
-}
+
 type AddSubpageProps={
     error?:boolean;
     onClick?:()=>void
@@ -167,22 +168,8 @@ export const ArrowBack=({onClick}:{onClick?:()=>void})=>{
         </IconButton>
     )
 }
-export const AddTestimonials=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Testimonials
-        </Button>
-    )
-}
-export const AddHighlights=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
-    return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Highlights
-        </Button>
-    )
-}
+
+
 export const AddButton=({onClick,}:{onClick?:()=>void,})=>{
     const {classes} =useAboutusStyles();
     return(
@@ -196,20 +183,24 @@ type FormDataProps={
     text: string;
     checked: boolean;
     onTextChange: (id: number, value: string) => void;
-    onCheckChange: (id: number) => void;
+    onCheckChange?: (id: number) => void;
     onDelete: (id: number) => void;
 }
-export const FormData=({id,text,checked,onTextChange,onCheckChange,onDelete,}:FormDataProps)=>{
+export const FormData=({id,text,checked,onTextChange,onDelete,}:FormDataProps)=>{
+    const [Edit, setEdit] = useState<boolean>(false)
     return(
         <>
             <Box sx={{flexDirection:'row',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <Box sx={{flexDirection:'row',display:'flex',gap:1,alignItems:'center'}}>
-                    <Checkbox sx={{color:'#0A4FA4'}} checked={checked} onChange={() => onCheckChange(id)}/>
+                    <Checkbox sx={{color:'#0A4FA4'}} checked={checked} //onChange={() => onCheckChange(id)}
+                        />
                         <TextField
                             variant="standard"
                             size="small"
                             value={text}
                             onChange={(e) => onTextChange(id, e.target.value)}
+                            onBlur={()=>setEdit(false)}
+                            disabled={!Edit}
                             InputProps={{
                                 disableUnderline:  text.trim() !== "",
                                 sx: {
@@ -228,11 +219,18 @@ export const FormData=({id,text,checked,onTextChange,onCheckChange,onDelete,}:Fo
                             }}
                         />
                 </Box>
-                <IconButton onClick={() => onDelete(id)}>
-                    <Box component="img"
-                        src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
-                    />
-                </IconButton>
+                <Box>
+                         <IconButton onClick={()=>setEdit(true)} >
+                        <Box component="img"
+                            src={EditIcon} alt="Editicon" width='19px' height='19px'
+                        />
+                    </IconButton>
+                    <IconButton onClick={() => onDelete(id)} disabled={!Edit} sx={{opacity: !Edit?0.5:1}}>
+                        <Box component="img"
+                            src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
+                        />
+                    </IconButton>
+                    </Box>
             </Box>
             
             
@@ -240,27 +238,22 @@ export const FormData=({id,text,checked,onTextChange,onCheckChange,onDelete,}:Fo
     )
 }
 // R & D Inputs
-
-type RDProps={
-    id: number;
-    text: string;
-    checked: boolean;
-    onTextChange: (id: number, value: string) => void;
-    onCheckChange: (id: number) => void;
-    onDelete: (id: number) => void;
-}
-export const RDdata=({id,text,checked,onTextChange,onCheckChange,}:RDProps)=>{
+export const RDdata=({id,text,checked,onTextChange,onDelete}:FormDataProps)=>{
+    const [Edit, setEdit] = useState<boolean>(false)
     return(
         <>
             
                 <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',padding:'5px 200px 5px 5px',alignItems:'center'}}>
                     <Box sx={{display:'flex',flexDirection:'row',gap:2,alignItems:'center'}} >
-                        <Checkbox sx={{color:'#0A4FA4'}} checked={checked} onChange={() => onCheckChange(id)}/>
+                        <Checkbox sx={{color:'#0A4FA4'}} checked={checked} //onChange={() => onCheckChange(id)}
+                            />
                         <TextField
                             variant="standard"
                             size="small"
                             value={text}
                             onChange={(e) => onTextChange(id, e.target.value)}
+                            disabled={!Edit}
+                            onBlur={()=>setEdit(false)}
                             InputProps={{
                                 disableUnderline:  text.trim() !== "",
                                 sx: {
@@ -280,11 +273,18 @@ export const RDdata=({id,text,checked,onTextChange,onCheckChange,}:RDProps)=>{
                             }}
                         />
                     </Box>
-                    <IconButton >
+                    <Box>
+                         <IconButton onClick={()=>setEdit(true)} >
                         <Box component="img"
                             src={EditIcon} alt="Editicon" width='19px' height='19px'
                         />
                     </IconButton>
+                    <IconButton onClick={() => onDelete(id)} disabled={!Edit} sx={{opacity: !Edit?0.5:1}}>
+                        <Box component="img"
+                            src={DeleteIcon} alt="Deleteicon" width='19px' height='19px'
+                        />
+                    </IconButton>
+                    </Box>
                 </Box>   
         </>
     )
@@ -340,19 +340,56 @@ export const Calender=({text,textColor}:CalenderProps)=>{
     
     )
 }
-export const Addlatestnews=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
+type BadgeProps={
+    counter:number,
+    label:string,
+    onClick:()=>void
+    
+}
+export const BadgeButton=({counter,onClick,label}:BadgeProps)=>{
     return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add latest news
-        </Button>
+        <Box>
+            <Badge
+                badgeContent={counter}
+                sx={{
+                    "& .MuiBadge-badge": {
+                        backgroundColor: "#0A4FA4",
+                        color: "#fff", 
+                    },
+                }}
+            
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
+            >
+                <AddSection label={label} onClick={onClick}/>
+            </Badge>
+        </Box>
     )
 }
-export const Addlatestpdf=({onClick}:{onClick?:()=>void})=>{
-    const {classes} =useAboutusStyles();
+type DropDownProps={
+    Data:string[]
+    value:string,
+    setSelected:(val:string)=>void
+}
+export const DropDownButton = ({Data,value,setSelected}:DropDownProps)=>{
     return(
-        <Button variant='contained' disableElevation className={classes.AddSection} startIcon={<AddOutlinedIcon/>} onClick={onClick}>
-            Add Latest pdf
-        </Button>
+    <Select
+        value={value}
+        onChange={(e) => setSelected(e.target.value)}
+        IconComponent={KeyboardArrowDownRoundedIcon}
+        sx={{ width:'147px',height:'37px',color: "blue",
+               "& .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "blue" },
+        }}
+    >
+        {Data.map((option) => (
+            <MenuItem key={option} value={option}>
+                {option}
+            </MenuItem>
+        ))}
+    </Select>
     )
 }

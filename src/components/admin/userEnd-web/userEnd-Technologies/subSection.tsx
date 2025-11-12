@@ -1,33 +1,34 @@
 import {useAboutusStyles} from '../userEnd-Aboutus/AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, IconButton} from '@mui/material';
 import { DeleteButton, SaveButton, UploadButton, CancelButton, EditButton, UploadPDFButton} from '../userEnd-Aboutus/AboutUsButtons';
 import { useState, } from 'react';
-import { HelperTextValidate, HandleFileChange, HandlePDFChange } from '../../utils/Validations';
-
+import { HelperTextValidate, newHandleFileChange, newHandlePDFChange} from '../../utils/Validations';
+import CloseIcon from "@mui/icons-material/Close";
+import UserendDeletepopup from "../../utils/UserendDeletepop";
 
 interface SubSectionprops {
   accordianId:string
   id: string;
   Section:string;
+  title?:string
   onDelete?: () => void; // callback to delete this subpage
 }
 
-const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
+const SubSection=({ accordianId, id,Section, onDelete ,title}: SubSectionprops)=>{
     const {classes} = useAboutusStyles();
-    const [,setFile]= useState<File[]>([]);
-    const [pdffile,setPdfFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const [file,SetFile] = useState<File | null>(null);
+    const [pdffile, Setpdffile] = useState<File |null>(null);
     const [pdferror,setPdfError]= useState<string>('');
-    const [pdf, setPdf] = useState<string[]>([]);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false);
-    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[];content:string;pdf:string[]; } | null>(null);
+    const [prevData, setPrevData] = useState<{ subtitle: string; file:File | null;content:string;pdffile: File | null; } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [, setIsPdfSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false)
+    const [pdf,setpdf] = useState('')
 
     const TextFieldError=HelperTextValidate(content)
     const SubtitleField=HelperTextValidate(subtitle)
@@ -36,55 +37,43 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
     const SaveData = ()=>{
         setPrevData({
         subtitle,
-        Images,
+        file,
         content,
-        pdf
+        pdffile
     });
     setIsSaved(true);
     setEdit(false);
     setCancel(false)
-    console.log(`subtitle:${subtitle}, Images:${Images},content:${content},pdf:${pdf}`);
+    console.log(`subtitle:${subtitle}, Images:${file},content:${content},pdf:${pdffile}`);
 };
 
     const CancelData = ()=>{
         if (prevData) {
         setSubtitle(prevData.subtitle);
-        setImage(prevData.Images);
         setContent(prevData.content)
-        setPdf(prevData.pdf)
-        setFile([]); 
+        Setpdffile(prevData.pdffile)
+        SetFile(prevData.file); 
         setIsSaved(true);
     } else {
         setSubtitle('');
-        setImage([]);
         setContent('');
-        setPdf([]);
-        setFile([]);
+        Setpdffile(null)
+        SetFile(null);
         setIsSaved(false);
     }
     setEdit(false); 
     setCancel(false)
     }
-    const removeImage=(IndexToRemove:number)=>{
-            setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-            setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removeImage=()=>{
+            SetFile(null)
             setError('');
             setIsSaved(false);
     };
-    const removePdf=(IndexToRemove:number)=>{
-            setPdfFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-            setPdf(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removePdf=()=>{
+            Setpdffile(null)
             setPdfError('');
             setIsPdfSaved(false);
     };
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCancel = () => {
-        setOpenDialog(false);
-    };
-
     const handleConfirmDelete = () => {
         setOpenDialog(false);
         if (onDelete) onDelete(); 
@@ -102,7 +91,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                         <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
                         setEdit(true)
                     }}/>
-                        {id != 'Sub Section-1'&& <DeleteButton onClick={handleDeleteClick}/>}
+                        {id != 'Sub Section-1'&& <DeleteButton onClick={()=>setOpenDialog(true)}/>}
                     </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
@@ -112,32 +101,28 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                         </Typography>
                         <Box className={classes.myImageUploadBox}>
                             <input type='file'
-                                    multiple
                                     accept="image/*" 
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
+                                    onChange={(e) =>newHandleFileChange(e, SetFile, setError, setIsSaved, )}
                                     disabled={!Edit}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                            {(Images.length>0)  && (
+                            {(file)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                        
+                                            <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
-                                                    src={prev}
-                                                    alt={`preview ${index+1}`}
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={`preview `}
                                                     className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
-                                                </Button>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
-                                        )}
+                                        
                                     </Box>
                                 </Box>
                             )}
@@ -155,25 +140,22 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                         </Typography>
                         <Box className={classes.myImageUploadBox}>
                             <input type='file'
-                                    multiple
                                     accept="application/pdf" 
                                     id={`upload-pdf-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={(e) =>HandlePDFChange(e, setPdfFile, setPdfError, setIsPdfSaved, setPdf)}
+                                    onChange={(e) =>newHandlePDFChange(e, Setpdffile, setPdfError, setIsPdfSaved,setpdf)}
                                     />
                             <UploadPDFButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                            {(pdf.length>0|| prevData)  && (
+                            {(pdffile)  && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {pdf.map((_,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                            <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <Box sx={{
                                                         overflow: "hidden",   
                                                         position: "relative",
-                                                    }}
->
+                                                    }}>
                                                     <embed
-                                                        src={URL.createObjectURL(pdffile[index])} // string URL from createObjectURL
+                                                        src={pdf} 
                                                         type="application/pdf"
                                                         className={classes.ImagePic} 
                                                         style={{
@@ -183,14 +165,10 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                                                             }} 
                                                     />
                                                 </Box>
-
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removePdf(index)}}
-                                                                >
-                                                    x
-                                                </Button>
+                                                 <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removePdf()}}>
+                                                    <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
-                                        )}
                                     </Box>
                                 </Box>
                             )}
@@ -206,7 +184,7 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                 </Stack>
                     <Box className={classes.TextFiledBox}>
                         <Typography  className={classes.mytext}>
-                            subtitle
+                            {title ==='News & Events' ?'Subtitle' :'Title'}
                         </Typography>
                         <TextField value={subtitle} 
                                    className={classes.myTextFleid}
@@ -233,34 +211,12 @@ const SubSection=({ accordianId, id,Section, onDelete }: SubSectionprops)=>{
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                    <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                    <SaveButton error={isSaved || !file|| isTextInvalid || !pdffile}  onClick={SaveData}/>
                     {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 
             </Box>
-            <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
-                                    sx: {
-                                    width: 500,       
-                                    height: 250,      
-                                    borderRadius: 3,   
-                                    padding: 2,        
-                                    },
-                                }}>
-                <DialogContent className={classes.DialogContent}>
-                    <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {id}?</Typography>
-                </DialogContent>
-                <DialogActions sx={{ 
-                                display: 'flex', 
-                                justifyContent: 'center'  
-                            }}>
-                    <Button onClick={handleCancel} className={classes.deleteButton}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> setOpenDialog(false)} onDelete={handleConfirmDelete}/>              
         </>
     )
 }

@@ -20,10 +20,11 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
     graphContainerBox:{
       display:'flex',
       marginTop:'60px',
-      width:'100%',
+      //width:'100%',
       justifyContent:'center',
+      paddingLeft:'30px',
       alignItems:'stretch',
-      gap:10,
+      gap:30,
       flexWrap:"wrap",
       
       [theme.breakpoints.down('md')]:{
@@ -32,12 +33,13 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
     },
     topCardcontainer:{
       minWidth:300,
-      backgroundColor:'#DBECF9'
+      backgroundColor:'#DBECF9',
+      border:'1px solid #0A4FA4'
     },
     topCardcontentBox:{
       display:"flex",
       gap:"30px",
-      justifyContent:"center",
+      justifyContent:"flex-start",
       alignItems:"center"
     },
     topCardcount:{
@@ -46,7 +48,7 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
     },
     topCardlabel:{
       fontSize:'14px',
-      fontWeight:500,
+      fontWeight:800,
     },
   graphCardContainer:{
     flex:3,
@@ -57,7 +59,7 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
     marginBottom:4,
     fontFamily:'Dm Serif Display',
     color:"#0A4FA4",
-    paddingLeft:'40px',
+    paddingLeft:'20px',
     [theme.breakpoints.down('sm')]:{
       paddingLeft:0,
     }
@@ -65,7 +67,8 @@ const useAdmindbStyles = makeStyles()((theme: Theme) => ({
    rightCardContainer:{
      flex:2,
      backgroundColor:'#DBECF9',
-     border:'1px groove #0A4FA4'
+     border:'1px groove #0A4FA4',
+     maxWidth:'400px'
    },
    rightCardtitle:{
     marginTop:"10px",

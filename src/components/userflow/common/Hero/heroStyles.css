@@ -91,20 +91,24 @@
 
 @media (max-width: 900px) {
   .hero-title {
-    font-size: 28px;
+    font-size: 20px;
+    font-weight: 400;
     line-height: 32px;
     margin: 8px 0;
   }
 
   .hero-subtitle {
   line-height: 16px;
-  font-size: 16px;
-  max-width: 500px;
-  white-space: nowrap;
-  overflow: hidden;  
+  font-size: 12px;
+  font-weight: 600;
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
   }
 
   .hero-content-container {
     margin-top: 48px;
   }
+  .hero-section {
+  height: 30vh;
+}
 }

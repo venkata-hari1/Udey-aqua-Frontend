@@ -39,7 +39,7 @@ const CulturePage = ({
   // Outside clicks no longer close cards; only arrow toggles each card
 
   return (
-    <Box>
+    <Box sx={{}}>
       {/* Header Section */}
       <Box className={classes.culturePageHeader}>
         <Box className={classes.culturePageBanner}>

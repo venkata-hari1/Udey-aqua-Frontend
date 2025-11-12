@@ -5,7 +5,7 @@ import { COLORS, FONTS, SHADOWS } from "../Shared/styles";
 import pdfWaterBg from "../../../assets/cultures/pdf_water.png";
 
 const useCulturesStyles = makeStyles()((theme: Theme) => ({
-  // Layout styles
+  // Layoutstyles
   culturesLayoutRoot: {
     width: "100%",
     minHeight: "100vh",
@@ -195,6 +195,11 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down('md')]:{
+      marginLeft:'2vw',
+      marginBottom:'0vh',
+      width: "113%",
+    }
   },
   culturePageBanner: {
     position: "relative",
@@ -223,8 +228,8 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
       transform: "translateY(-50%) scale(0.7)",
       transformOrigin: "left center",
       left: "-20px",
-      width: "180px",
-      height: "180px",
+      width: "150px",
+      height: "150px",
     },
   },
   culturePageIconImg: {
@@ -233,8 +238,8 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     objectFit: "contain",
     filter: "brightness(0) invert(1)",
     [theme.breakpoints.down("md")]: {
-      width: "80px",
-      height: "80px",
+      width: "100px",
+      height: "100px",
     },
   },
   culturePageTextContent: {
@@ -254,7 +259,8 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
       // scale the whole block uniformly to match desktop styling while reducing size
       transform: "scale(0.9)",
       transformOrigin: "left center",
-      marginLeft: "40px",
+      marginLeft: "30px",
+      padding: theme.spacing(2, 2, 2, 10),
     },
   },
   culturePageTitle: {
@@ -284,6 +290,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       fontSize: "13px",
       marginTop: "10px",
+      
     },
   },
   culturePageFishBackground: {
@@ -513,6 +520,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     textAlign: "center",
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    fontFamily:'DM Serif Display',
   },
   pdfDialogTitlePill: {
     display: "inline-block",
@@ -525,12 +533,17 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 999,
     fontWeight: 600,
     fontSize: 14,
+    fontStyle:'DM Serif Display',
     maxWidth: "fit-content",
     margin: "10px auto 5px auto",
+    [theme.breakpoints.down('md')]:{
+      fontWeight: 400,
+    fontSize: '20px',
+    }
   },
   pdfDialogTitlePillFloat: {
     backgroundColor: COLORS.SECONDARY_BLUE,
-    borderRadius: "10px",
+    borderRadius: "20px",
     textTransform: "capitalize",
     margin: "auto",
   },
@@ -631,6 +644,9 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
   // CulturePage styles
   culturePageCardsGrid: {
     marginTop: theme.spacing(6),
+    [theme.breakpoints.down('md')]:{
+      marginTop: theme.spacing(3),
+    }
   },
   culturePageIconRotated: {
     transform: "rotate(-100deg)",

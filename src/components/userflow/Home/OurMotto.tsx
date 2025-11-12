@@ -55,7 +55,7 @@ const OurMotto = () => {
 
       <Box ref={scrollRef} className={classes.ourMottoScrollWrap}>
         {mottoData.map((card, idx) => (
-          <Zoom key={idx}>
+          <Zoom key={idx} triggerOnce={false} fraction={0.1}>
           <Box  className={classes.mottoCardOuter}>
             <MottoCard {...card} />
           </Box>

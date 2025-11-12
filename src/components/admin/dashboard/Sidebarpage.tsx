@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
-import Logo from '../../../assets/admin/logo.png';
+import Logo from '../../../assets/Logo (2).png';
 import useSidebarStyles from "../styles/SidebarStyles";
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GridViewIcon from '@mui/icons-material/GridView';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -19,7 +19,7 @@ const{classes,cx}=useSidebarStyles()
 const navigationmenu=[
   {id:1,icon:GridViewIcon,menu:'Dashboard',link:'/admin/dashboard'},
   {id:2,icon:EditNoteIcon,menu:'User End Web', link:'/admin/userend-web'},
-  {id:3,icon:PeopleOutlineIcon,menu:'User Management',link:'/admin/user-management',
+  {id:3,icon:PeopleOutlineIcon,menu:'User Management',link:'/admin/user-management/training-registrations',
     submenu:[
       {id:31,icon:ModelTrainingIcon,menu:'Training Registrations',link:'/admin/user-management/training-registrations'},
       {id:32,icon:PortraitIcon,menu:'Get In Touch Users',link:'/admin/user-management/getin-touch'},
@@ -34,13 +34,25 @@ const navigationmenu=[
 
  //handlemenu
  const[activeMenu,setActivemenu]=useState<string |null>(null)
+ const[activesubMenu,setActivesubmenu]=useState<string>('Training Registrations')
 
  const handleMenuClick=(menuitem:any)=>{
   console.log(menuitem.link)
   navigate(menuitem.link)
   setActivemenu(prev=>(prev===menuitem.menu?null:menuitem.menu))
+  
  }
- 
+ const handlesubMenuClick=(subitem:any)=>{
+  console.log(subitem.link)
+  navigate(subitem.link)
+  setActivesubmenu(prev=>(prev===subitem.menu?null:subitem.menu))
+  
+ }
+ useEffect(()=>{
+  if(activeMenu ==='User Management'){
+    setActivesubmenu('Training Registrations')
+  }
+ },[activeMenu])
  return (
     <Box className={classes.SidebarMainstyle}>
      
@@ -49,25 +61,27 @@ const navigationmenu=[
      <Typography className={classes.AdminTitle}>Admin</Typography>
      </Box>
 
-     <Box className={classes.navigationContainer}>
+     <Box className={classes.navigationContainer} >
       {navigationmenu.filter(item=>item.menu!=='Logout').map(menuitem=>(
         <Box key={menuitem.id}>
           <Box className={cx(classes.menuItem,
           {[classes.menuItemActive]:activeMenu===menuitem.menu})}
            onClick={()=>handleMenuClick(menuitem)}
            >
-          <Box display="flex" justifyContent="center" gap={2}>
+          <Box display="flex" justifyContent="center" alignItems='center' gap={2}>
            {menuitem.icon && <menuitem.icon />}
           {menuitem.menu}
           </Box>  
          
          </Box>
           {activeMenu==='User Management'&& menuitem.submenu&&(
-            <Box sx={{pl:4,mt:1,display:'flex',flexDirection:'column',gap:1,justifyContent:'center'}}>
+            <Box sx={{pl:4,mt:1,display:'flex',flexDirection:'column',gap:1,justifyContent:'center',}}>
               {menuitem.submenu.map(sub=>(
-                <Box key={sub.id} className={classes.subMenuItem} onClick={()=>navigate(sub.link)}>
+                <Box key={sub.id}>
+                <Box  className={cx(classes.subMenuItem, {[classes.submenuItemActivate]: activesubMenu === sub.menu,})} sx={{alignItems:'center'}} onClick={()=>{handlesubMenuClick(sub)}} >
                    {sub.icon && <sub.icon />}{sub.menu}
                 </Box>
+               </Box>
               ))}
             </Box>
           )}

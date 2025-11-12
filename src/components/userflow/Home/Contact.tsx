@@ -142,6 +142,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
         </Grid>
       )}
        <Slide direction="left">
+      <Box sx={{paddingLeft:1,paddingRight:1}}>
       <Grid container spacing={2} className={classes.contactRoot}>
        
         <Grid container size={12} spacing={2} className={classes.contactMain}>
@@ -270,6 +271,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
           </Grid>
         </Grid>
       </Grid>
+      </Box>
       </Slide>
     </>
   );

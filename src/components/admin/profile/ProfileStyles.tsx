@@ -7,8 +7,8 @@ const useProfileStyles = makeStyles()((theme: Theme) => ({
    border:'1px solid #0A4FA4'
   },
   cardAdminHeading:{
-    fontWeight:800,
-    fontSize:16,
+    fontWeight:950,
+    fontSize:18,
     marginBottom:"20px",
   },
   keyTextlabel:{
@@ -19,12 +19,12 @@ const useProfileStyles = makeStyles()((theme: Theme) => ({
     cursor:'pointer',
   },
   valueButtonlabel:{
-   fontSize:'10px',
-   marginLeft:'17px',
+   fontSize:'12px',
+   marginLeft:'80px',
    border:'1px solid #0A4FA4',
    color:'black',
    textTransform:'capitalize',
-   height:'30px',
+   height:'40px',
    cursor:'pointer',
    [theme.breakpoints.down('sm')]:{
      padding:'2px 9px',

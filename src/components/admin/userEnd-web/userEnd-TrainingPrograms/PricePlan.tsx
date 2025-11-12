@@ -2,7 +2,7 @@ import { useAboutusStyles } from "../userEnd-Aboutus/AboutusStyles";
 import { Box } from "@mui/material";
 import { useState } from "react";
 import SubPriceplan from "./SubPlanPrice";
-import { AddPricePlan } from "./PricingButtons";
+import { AddSection } from "../userEnd-Aboutus/AboutUsButtons";
 
 
 //type Priceplan={
@@ -27,7 +27,7 @@ const PricePlan=()=>{
         <>
             <Box className={classes.PricingMainContainer}>
                 <Box sx={{display:'flex',justifyContent:'flex-end'}}>
-                    <AddPricePlan onClick={addsubPriceplans}/>
+                    <AddSection label="Add Price Plan" onClick={addsubPriceplans}/>
                 </Box>
                 <SubPriceplan id='Plan 1' Section="Priceplan"/>
                 {subprice.map((sub)=>(

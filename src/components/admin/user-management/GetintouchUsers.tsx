@@ -1,9 +1,19 @@
 import { Box, Button,Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import useUsermanagementStyles from "./UsermanagementStyle"
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import FilterListIcon from '@mui/icons-material/FilterList';
+// import FilterListIcon from '@mui/icons-material/FilterList';
 import Delete_Img from '../../../assets/admin/delete_icon.png'
 import MyPagination from "../utils/MyPagination";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
+import  { sortByKey } from "../utils/Filter"
+import type { SortOrder } from "../utils/Filter";
+
+import { useState } from "react";
+import { getinuserdata } from "../utils/data";
+import {SortAscIcon, SortDesIcon}from "../utils/SortIcon";
+
 
 const GetintouchUsers = () => {
 
@@ -16,24 +26,62 @@ const getinUserheading=[
  {id:6,label:'Action'} 
 ]
 
-const getinuserdata=[
- {id:1,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+const getinuserdata1=[
+ {id:1,name:'Surya Pratap',phone:'+91 8123456789',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
- {id:2,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+ {id:2,name:'Nalamothu Ramya',phone:'+91 8123456789',message:'Hi,i want to know about fish farming  programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
- {id:3,name:'Surya Pratap',phone:'91-8123203040',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
+ {id:3,name:'Vijay nayar',phone:'+91 8123456789',message:'Hi, I’d like to learn more about your aquaculture training programs. Please share the upcoming schedule and enrollment process',
   date:'12/07/2025 10:00 AM',  
  },
 ]
 const {classes}=useUsermanagementStyles()
 
+const exportPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Get in Touch Users", 14, 22);
+
+    
+
+    const tableData = getinuserdata1.map(user => [
+      user.id,
+      user.name,
+      user.phone,
+      user.message,
+      user.date, 
+    ]);
+
+    autoTable(doc, {
+      startY: 30,
+      head: [getinUserheading.map(h => h.label)],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      styles: { fontSize: 10 },
+    });
+
+    doc.save("GetinTouchUsers.pdf");
+  };
+
+   const [tableData, setTableData] = useState(getinuserdata1);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  
+  const toggleSort = () => {
+    const newOrder: SortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    const sortedData = sortByKey(tableData, 'id', newOrder);
+    setTableData(sortedData);
+    setSortOrder(newOrder);
+  };
+
   return (
   <Box>
   <Box className={classes.rightbuttonsGetinUser}>
-       <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />} >Export</Button>
-       <Button variant="outlined" className={classes.GetinuserFilter} endIcon={<FilterListIcon />}>Filters</Button>
+       <Button variant="contained" className={classes.GetinuserExport} endIcon={<FileDownloadOutlinedIcon />}  onClick={exportPDF} >Export</Button>
+       <Button variant="outlined" className={classes.GetinuserFilter} onClick={toggleSort} >  {sortOrder === 'asc' ? <SortAscIcon sx={{marginRight:1}}/> : <SortDesIcon sx={{marginRight:1}}/>}  Filters </Button>
   </Box>
    <TableContainer component={Paper}>
        <Table sx={{width:'100%'}} size="medium">
@@ -49,7 +97,7 @@ const {classes}=useUsermanagementStyles()
           </TableRow>
           </TableHead>
             <TableBody>
-            {getinuserdata.map(tdata=>(
+            {tableData.map(tdata=>(
               <TableRow key={tdata.id} className={classes.tablebodyRow}>
               <TableCell padding="checkbox" align="left" >
                <Checkbox className={classes.trainingCheckbox}/>

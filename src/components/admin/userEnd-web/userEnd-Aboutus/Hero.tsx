@@ -1,79 +1,134 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Button, Stack, TextField, Typography} from '@mui/material';
-import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader} from './AboutUsButtons';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Stack, TextField, Typography, IconButton} from '@mui/material';
+import { CancelButton, EditButton, SaveButton, UploadButton, UpdateHeader, DeleteButton, DropDownButton} from './AboutUsButtons';
+import CloseIcon from "@mui/icons-material/Close";
 import { useState,  } from 'react';
-import { HandleFileChange, HelperTextValidate, } from '../../utils/Validations';
+import { HelperTextValidate,newHandleFileChange } from '../../utils/Validations';
+import { useSelector,useDispatch} from 'react-redux';
+import type { Rootstate } from '../../../../redux/store';
+import { AddCulture } from '../../../../redux/reducers/Nav';
+import UserendDeletepopup from '../../utils/UserendDeletepop';
+
 type HeroProps={
-    id?:string;
+    id:string;
     accordianId?:string;
-    Section:string;
+    Section?:string;
     title?:string;
+    ondelete?:()=>void
 }
- const Hero=({id,accordianId,Section,title}:HeroProps)=>{
+ const Hero=({id,accordianId,Section,title,ondelete}:HeroProps)=>{
     const {classes} =useAboutusStyles();
-    const [,setFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const dispatch = useDispatch();
+    const [file,setfile] = useState<File|null>(null)
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
-    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[] } | null>(null);
+    const [heading,setheading]=useState<string>('');
+    const [newsection,setnewsection]=useState<string>('');
+    const [prevData, setPrevData] = useState<{ subtitle: string; file:File |null; heading:string } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
-    const [cancel, setCancel] = useState<boolean>(false)
-    const TextFieldError=HelperTextValidate(subtitle).message;
-    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;   
-    const removeImage=(IndexToRemove:number)=>{
-        setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-        setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const [cancel, setCancel] = useState<boolean>(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selected, setSelected] = useState("Cage Culture");
+    const [cultureselected, setcultureSelected] = useState("Sea Bass");
+    const OurprojectsItems = useSelector((state:Rootstate)=>state.accordian.CulturesData);
+    const Culturesdata = ['Sea Bass','Pearl Spot','Mud Crab','Murrel','Tilapia','Sea Weed']
+    const TextFieldError=HelperTextValidate(subtitle)
+    const headingError=HelperTextValidate(heading)
+    const newsectionerror=HelperTextValidate(newsection)
+    const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200;  
+    
+    const removeImage=()=>{
         setError('');
+        setfile(null)
         setIsSaved(false);
     };
     const SaveData = ()=>{
         setPrevData({
         subtitle,
-        Images,
+        file,
+        heading
     });
     setIsSaved(true);
     setEdit(false);
-    console.log(`subtitle:${subtitle}, Images:${Images}`);
+    console.log(`subtitle:${subtitle}, Images:${file}`);
     };
     const CancelData = ()=>{
         if (prevData) {
+        setheading(prevData.heading)
         setSubtitle(prevData.subtitle);
-        setImage(prevData.Images);
-        setFile([]); // reset current file uploads
+        setfile(prevData.file) 
         setIsSaved(true);
     } else {
         setSubtitle('');
-        setImage([]);
-        setFile([]);
+        setheading('')
+        setfile(null)
         setIsSaved(false);
     }
     setEdit(false); 
     setCancel(false)
     }
-    
+    const handleConfirmDelete = () => {
+        setOpenDialog(false);
+        if (ondelete) ondelete(); 
+    };
     return(
         <>
+        
             <Box className={(accordianId == '1')? classes.WhoWeAreContainer : undefined}>
-                {(accordianId !='1'  )&& (                
+                {(accordianId !='1' && Section !="Why chhoose us" && Section !="About us" && id !== '1' && id !='2' )&& (                
                         <Box className={classes.whoWeareHeaderbox}>
-                            <Typography className={classes.HeaderText}>
-                               { title=='news&events'? 'Highlight Section 1' : 'Header Section'}
-                            </Typography>
-                            <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',}}>
-                                 <EditButton error={!prevData} onClick={()=>{ setCancel(true);
-                                    setEdit(true)
-                                }}/>
+                            <Box>
+                                <Typography className={classes.HeaderText}>
+                                { title=='news&events'? 'Highlight Section 1' : title ==='Home'? Section==='Our projects'? 
+                                <>  
+                                    {(/subsection[0-9]+/.test(id)) &&<DropDownButton setSelected={setSelected} Data={OurprojectsItems} value={selected}/>}
+                                    {(/newsection[0-9]+/.test(id)) &&<TextField fullWidth value={newsection}
+                                        onChange={(e)=>{setnewsection(e.target.value);
+                                                        setIsSaved(false)}}
+                                        helperText={newsectionerror.message}
+                                        onBlur={()=>dispatch(AddCulture(newsection))}
+                                        disabled={!Edit}
+                                        sx={{"& .MuiOutlinedInput-root":{
+                                                "& fieldset":{
+                                                borderColor:'#0A4FA4',
+                                                },
+                                                "&:hover fieldset":{
+                                                borderColor:'#0A4FA4',
+                                                },
+                                                "&.Mui-focused fieldset":{
+                                                    borderColor:'#0A4FA4',
+                                                }},}}
+                                        FormHelperTextProps={{
+                                            className: (heading.length >= 3 && heading.length < 200) ? classes.greyText : classes.helperText
+                                        }}
+                                    />}
+                                
+                                </>
+                                : id :Section ==='Videos'?'Highlights Section-1':'Header Section'}
+                                </Typography>
+                            </Box>
+                            <Box sx={{display:'flex',flexDirection:'row',justifyContent:'flex-start',gap:2}}>
+                                <EditButton error={!prevData} onClick={()=>{ setCancel(true);setEdit(true)}}/>
+                                <DeleteButton onClick={()=>setOpenDialog(true)}/>
                             </Box>
                         </Box>
                     )}
-                {(id === '1') && (
-                    <Box className={classes.deleteButtonBox}>
+                {/* Herosections,why choos us and Aboutus section Edit button */}
+                {(accordianId =='1' || id === '1' || (Section =="Why chhoose us" || Section =="About us") || id === '2' ) && (
+                    <>
+                    <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'100%'}}>
+                        <Box>
+                        {(Section ==='Our projects' ) && (
+                            <><DropDownButton setSelected={setSelected} Data={OurprojectsItems} value={selected}/></>
+                        )}
+                        {(title==='Cultures' && id ==='2') && (<><DropDownButton setSelected={setcultureSelected} Data={Culturesdata} value={cultureselected}/></>)}
+                        </Box>
                         <EditButton error={ !prevData} onClick={()=>{ setCancel(true);
                             setEdit(true)
                         }}/>
                     </Box>
+                    </>
                 )}
                 <Box className={classes.myuploadandheadingbox}>
                     <Stack className={classes.myUploadStack}>
@@ -82,32 +137,27 @@ type HeroProps={
                         </Typography>
                         <Box className={classes.myImageUploadBox}>
                             <input type='file'
-                                    multiple
                                     accept="image/*" 
                                     id={`upload-file-${Section}-${accordianId}-${id}`}
                                     style={{display:'none'}}
                                     disabled={!Edit}
-                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
+                                    onChange={(e) =>newHandleFileChange(e,setfile,setError,setIsSaved)}
                                     />
                             <UploadButton id={id} accordianId={accordianId} Section={Section} disable={!Edit}/> 
-                            {(Images.length>0) && (
+                            {(file) && (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {Images.map((prev,index)=>
-                                            <Box key={index} sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
+                                            <Box  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}}  >
                                                 <img 
-                                                    src={prev}
-                                                    alt={`preview ${index+1}`}
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={`preview `}
                                                     className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage(index)}}>
-                                                    <CancelIcon   />
-                                                </Button>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
-                                        )}
-
-                                        </Box>
-                                        
+                                        </Box>                            
                                 </Box>
                             )}
                             <Box>
@@ -120,9 +170,22 @@ type HeroProps={
                             </Box>
                         </Box>
                     </Stack>
-                    <Box sx={{gap:10}}>
+                    <Box>
+                        {Section=='Our projects' && <>
+                        <Typography className={classes.mytext}> Heading</Typography>
+                        <TextField className={classes.myTextFleid} sx={{mb:2}}
+                            fullWidth
+                            value={heading}
+                            onChange={(e)=>{setheading(e.target.value);
+                                            setIsSaved(false)}}
+                            helperText={headingError.message}
+                           disabled={!Edit}
+                            FormHelperTextProps={{
+                                className: (heading.length >= 3 && heading.length < 200) ? classes.greyText : classes.helperText
+                            }}/>
+                        </>}
                         <Typography className={classes.mytext}>
-                            subtitle
+                            {title ==='Home' && Number(accordianId)<5 && Section!='Our projects'  ?'Heading Content' : title =='Home'  && Number(accordianId)>=5? 'Content': Section=='Our projects'?'Description':'subtitle'}
                         </Typography>
                         <TextField 
                             fullWidth
@@ -132,7 +195,7 @@ type HeroProps={
                             value={subtitle}
                             onChange={(e)=>{setSubtitle(e.target.value);
                                             setIsSaved(false)}}
-                            helperText={TextFieldError}
+                            helperText={TextFieldError.message}
                            disabled={!Edit}
                             FormHelperTextProps={{
                                 className: (subtitle.length >= 3 && subtitle.length < 200) ? classes.greyText : classes.helperText
@@ -140,9 +203,11 @@ type HeroProps={
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox} >
-                    {id ==='1'?<SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>}
-                    {cancel &&(<CancelButton onClick={CancelData}/>)}
+                   {
+                    (id ==='1')?<SaveButton error={isSaved || !file || isTextInvalid}  onClick={SaveData}/>:(title ==='Home')?<SaveButton error={isSaved || isTextInvalid}  onClick={SaveData}/>:<UpdateHeader error={isSaved  || isTextInvalid}  onClick={SaveData}/>}
+                    {cancel &&(<CancelButton onClick={CancelData}/>)} 
                 </Box>
+                <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> setOpenDialog(false)} onDelete={handleConfirmDelete}/>           
             </Box>
         </>
     )

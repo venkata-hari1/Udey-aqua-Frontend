@@ -14,7 +14,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     background: `radial-gradient(circle at 60% 40%, ${COLORS.HERO_BLUE} 0%, ${COLORS.DARK_BLUE} 100%)`,
     overflow: "hidden",
     [theme.breakpoints.down("md")]: {
-      minHeight: "40vh",
+      minHeight: "50vh",
     },
   },
   particles: {
@@ -98,7 +98,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
  
     height: "100%",
     [theme.breakpoints.down("md")]: {
-      flex: "0 0 40%",
+      flex: "0 0 60%",
+      display: "flex",
+      alignContent:'flex-start',
+      height: "100%",
+      //marginTop:'20px'
     },
   },
   heroImg: {
@@ -255,6 +259,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       maxWidth: 320,
       marginLeft: "auto",
       marginRight: "auto",
+      //scrollSnapAlign: "center"
+
     },
   },
   spanColor:{
@@ -266,10 +272,21 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     height: 70,
     marginBottom: -46,
     zIndex: 2,
+    [theme.breakpoints.down("md")]:{
+       position: "relative",
+        width: 240,
+        height: 70,
+        marginBottom: -56,
+        zIndex: 2,
+    }
   },
   mottoCardHeadImg: {
     width: "100%",
     height: "100%",
+    [theme.breakpoints.down('md')]:{
+       width: "80%",
+       height: "80%",
+    }
   },
   mottoCardFishText: {
     position: "absolute",
@@ -280,6 +297,16 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     color: COLORS.PRIMARY_BLUE,
     fontSize: 20,
     whiteSpace: "nowrap",
+    [theme.breakpoints.down('md')]:{
+       position: "absolute",
+        top: "40%",
+        left: "55%",
+        transform: "translate(-50%, -50%)",
+        fontWeight: 600,
+        color: COLORS.PRIMARY_BLUE,
+        fontSize: 20,
+        whiteSpace: "nowrap",
+    }
   },
   mottoCardBox: {
     width: 320,
@@ -298,9 +325,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     [theme.breakpoints.down("md")]: {
       marginLeft: "auto",
       marginRight: "auto",
-      width: "100%",
+      //width: "100%",
       maxWidth: 320,
-    },
+      width: 270,
+    height: 250,
+    }
   },
   mottoCardImgWrap: {
     width: "100%",
@@ -314,6 +343,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    [theme.breakpoints.down('md')]:{
+     width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    }
   },
   mottoCardButtonWrap: {
     position: "absolute",
@@ -351,6 +385,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     lineHeight: 1.2,
     marginLeft: "auto",
     marginRight: "auto",
+    [theme.breakpoints.down('md')]:{
+      fontSize: 20,
+    }
   },
   // Wrapper used in OurMotto.tsx; ensures single-card centering on mobile
   mottoCardOuter: {
@@ -363,14 +400,17 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingRight: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
       flex: "0 0 100%",
-      minWidth: "100%",
+      //minWidth: "100%",
       maxWidth: "100%",
-      scrollSnapAlign: "center",
+      minWidth:'400px',
+      scrollSnapAlign:"center",
+      flexShrink:0,
       paddingLeft: 0,
       paddingRight: 0,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      
     },
   },
   mottoCardOuterLast: {
@@ -636,13 +676,15 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     },
     [theme.breakpoints.down("md")]: {
       gap: 0,
-      justifyContent: "center",
+      justifyContent: "flex-start",
       alignItems: "center",
       paddingLeft: 0,
       paddingRight: 0,  
       scrollSnapType: "x mandatory",
       scrollPaddingLeft: 0,
       scrollPaddingRight: 0,
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(0),
     },
   },
   ourMottoScrollFlexStart: {},
@@ -793,10 +835,13 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     },
   },
   aboutUsVideoWrap: {
-    width: "100%",
-    height: "100%",
+    width: "100vw",
+    height: "100vh",
     position: "relative",
     overflow: "visible",
+    
+                    
+                                   
     [theme.breakpoints.down('md')]:{
       paddingTop:'10px',
       paddingLeft:"10px",
@@ -1001,7 +1046,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
       gap: 0,
-      justifyContent: "center",
+      justifyContent: "flex-start",
     },
   },
   ourProjectsScrollFlexStart: {
@@ -1029,6 +1074,12 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    [theme.breakpoints.down("md")]: {
+      width: 300,
+      height: 400,
+      backgroundPosition: "center",
+      
+    },
   },
   projectCardBgImg: {
     position: "absolute",
@@ -1139,6 +1190,9 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
       scrollSnapType: "x mandatory",
       scrollPaddingLeft: 0,
       scrollPaddingRight: 0,
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(8),
+
     },
   },
   partnersSlide: {
@@ -1351,6 +1405,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     justifyContent: "space-between",
     [theme.breakpoints.down("md")]: {
       margin: "0 auto",
+      width: 260, 
+      height: 650,
     },
   },
   pricingCardImgWrap: {
@@ -1363,6 +1419,11 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    [theme.breakpoints.down('md')]:{
+       width: 180, 
+       height: 180, 
+       borderRadius: "50%",
+    }
   },
   pricingCardImg: {
     width: 220, // Increased from 200
@@ -1372,6 +1433,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     margin: "auto",
     filter: "brightness(0) invert(1)", 
     opacity: 0.9,
+    [theme.breakpoints.down('md')]:{
+       width: 150, 
+       height: 150, 
+    }
   },
   pricingCardTitle: {
     fontWeight: 700,
@@ -1533,7 +1598,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "row",
     gap: theme.spacing(1),
     justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: 'stretch',
     position: "relative",
     zIndex: 2,
     width: "100%",
@@ -1545,18 +1610,19 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     margin: "auto",
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
-      scrollSnapType: "x mandatory",
-      scrollPaddingLeft: 0,
-      scrollPaddingRight: 0,
-      paddingLeft: 0,
-      paddingRight: 0,
-      gap: theme.spacing(2),
-      justifyContent: "center",
+      justifyContent: 'flex-start',
+      scrollSnapType: 'x mandatory',
+      margin: '0 auto',   
+      width: '100%',
+
+      '& > *': {
+        scrollSnapAlign: 'center', 
+      },
     },
   },
   teamCardsScrollFlexStart: {
-    justifyContent: "flex-start",
-    gap: theme.spacing(4),
+    justifyContent: "center",
+    //gap: theme.spacing(4),
   },
   teamCardOuter: {
     minWidth: 320,
@@ -1570,17 +1636,15 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     marginLeft: 0,
     marginRight: 0,
     [theme.breakpoints.down("md")]: {
-      minWidth: "100%",
-      maxWidth: "100%",
-      scrollSnapAlign: "center",
-      justifyContent: "center",
+      minWidth:'400px',
+      flex: '0 0 auto',
     },
   },
   teamCardOuterFirst: {
-    marginLeft: theme.spacing(4),
+    //marginLeft: theme.spacing(4),
   },
   teamCardOuterLast: {
-    marginRight: theme.spacing(4),
+    //marginRight: theme.spacing(4),
   },
   // pagination styles removed for default carousel behavior
   teamCardInner: {
@@ -1588,6 +1652,18 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     height: "100%",
+  display: "flex",
+  flexDirection: "column",
+
+
+    [theme.breakpoints.down('md')]:{
+       width: "90%",
+        marginLeft: 60,
+        marginRight: 60,
+        //alignItems:'center',
+        height: "100%",
+        justifyContent:'center'
+    }
   },
   teamCardRoot: {
     width: 280,
@@ -1599,6 +1675,19 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     position: "relative",
     paddingBottom: theme.spacing(3),
+    [theme.breakpoints.down('md')]:{
+      width: 280,
+      background: COLORS.WHITE,
+      borderRadius: 4,
+      boxShadow: SHADOWS.CARD,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent:'center',
+      position: "relative",
+      paddingBottom: theme.spacing(3),
+
+    }
   },
   teamCardAvatar: {
     width: "100%",
@@ -1622,18 +1711,22 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     margin: "auto",
+    flex:1,
+    marginTop: "auto",
   },
   teamCardInfoCol: {
     display: "flex",
     marginTop: theme.spacing(0.5),
     flexDirection: "column",
     alignItems: "flex-start",
+    flex:1
   },
   teamCardName: {
     fontWeight: 900,
     color: COLORS.DARK,
     fontSize: 22,
     textAlign: "left",
+    alignItems:'center',    
   },
   teamCardLocation: {
     color: COLORS.DARK,
@@ -1684,7 +1777,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     "&::-webkit-scrollbar": { display: "none" },
     [theme.breakpoints.down("md")]: {
       gap: 0,
-      justifyContent: "center",
+      justifyContent: "flex-start",
     },
   },
   testimonialsScrollFlexStart: {
@@ -1726,6 +1819,7 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
+    
   },
   testimonialCardCloudWrap: {
     width: "100%",
@@ -1734,6 +1828,14 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    [theme.breakpoints.down('md')]:{
+      width: "90%",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    }
   },
   testimonialCardCloudImg: {
     width: "100%",
@@ -1757,6 +1859,24 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     paddingLeft: theme.spacing(3),
     margin: "auto",
     marginTop: -14,
+    [theme.breakpoints.down('md')]:{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "90%",
+      height: 200,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: theme.palette.primary.main,
+      fontWeight: 600,
+      fontSize: 20,
+      lineHeight: 1.3,
+      paddingTop: theme.spacing(0.25),
+      paddingLeft: theme.spacing(3),
+      margin: "auto",
+      marginTop: -14,
+    }
   },
   testimonialCardAvatar: {
     width: 64,
@@ -1778,7 +1898,10 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     alignItems: "center",
     width: 120,
-    marginTop: theme.spacing(1),
+    [theme.breakpoints.down("md")]:{
+      position: "absolute",
+      left: "15%",
+    }
   },
   testimonialCardName: {
     fontWeight: 600,

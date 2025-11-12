@@ -77,9 +77,9 @@ const Hero: React.FC<HeroProps> = ({
       <Container className="hero-content">
         <Typography className="hero-title">{title}</Typography>
         <Typography className="hero-subtitle">{subtitle}</Typography>
+        <Typography></Typography>
       </Container>
     </Box>
   );
 };
-
 export default Hero;

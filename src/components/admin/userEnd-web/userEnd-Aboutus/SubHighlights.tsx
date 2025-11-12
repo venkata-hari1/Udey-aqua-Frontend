@@ -1,26 +1,26 @@
 import {useAboutusStyles} from './AboutusStyles';
-import { Box, Stack, TextField, Typography, Button, Dialog, DialogContent, DialogActions} from '@mui/material';
+import { Box, Stack, TextField, Typography, IconButton} from '@mui/material';
 import { DeleteButton, EditButton, SaveButton,  UploadButtonTestimonials, CancelButton} from './AboutUsButtons';
 import { useState,  } from 'react';
-import { HandleFileChange, HelperTextValidate } from '../../utils/Validations';
-
+import { HelperTextValidate, newHandleFileChange } from '../../utils/Validations';
+import CloseIcon from "@mui/icons-material/Close";
+import UserendDeletepopup from "../../utils/UserendDeletepop";
 
 interface SubHighlightsProps {
   accordianId:string
   id: string;
   subSection:string
-  onDelete?: () => void; // callback to delete this subpage
+  onDelete?: () => void;
 }
 
 const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProps)=>{
     const {classes} = useAboutusStyles();
-    const [,setFile]= useState<File[]>([]);
-    const [Images,setImage] = useState<string[]>([]);
+    const [file,SetFile] = useState<File | null>(null);
     const [error,setError]= useState<string>('');
     const [subtitle,setSubtitle]=useState<string>('');
     const [content,setContent]=useState<string>('');
     const [openDialog, setOpenDialog] = useState(false); 
-    const [prevData, setPrevData] = useState<{ subtitle: string; Images: string[]; content:string } | null>(null);
+    const [prevData, setPrevData] = useState<{ subtitle: string;file:File | null; content:string } | null>(null);
     const [Edit, setEdit] = useState<boolean>(true);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [cancel, setCancel] = useState<boolean>(false)
@@ -29,20 +29,11 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
     const SubtitleField=HelperTextValidate(subtitle)
     const isTextInvalid =  subtitle.length < 3 || subtitle.length > 200 ||  content.length < 3 || content.length > 200;
 
-    const removeImage=(IndexToRemove:number)=>{
-            setFile(prev=>prev.filter((_,index)=> index !== IndexToRemove));
-            setImage(prev=>prev.filter((_,index)=>index !== IndexToRemove));
+    const removeImage=()=>{
+            SetFile(null)
             setError('');
             setIsSaved(false);
     };
-    const handleDeleteClick = () => {
-        setOpenDialog(true);
-    };
-
-    const handleCancel = () => {
-        setOpenDialog(false);
-    };
-
     const handleConfirmDelete = () => {
         setOpenDialog(false);
         if (onDelete) onDelete(); 
@@ -50,25 +41,23 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
     const SaveData = ()=>{
         setPrevData({
         subtitle,
-        Images,
+        file,
         content
     });
     setIsSaved(true);
     setEdit(false);
-    console.log(`subtitle:${subtitle}, Images:${Images}, content: ${content}`);
+    console.log(`subtitle:${subtitle}, Images:${file}, content: ${content}`);
     };
     const CancelData = ()=>{
         if (prevData) {
         setSubtitle(prevData.subtitle);
-        setImage(prevData.Images);
-        setContent(prevData.content)
-        setFile([]); // reset current file uploads
+        SetFile(prevData.file);
+        setContent(prevData.content) 
         setIsSaved(true);
     } else {
         setSubtitle('');
-        setImage([]);
         setContent('');
-        setFile([]);
+        SetFile(null);
         setIsSaved(false);
     }
     setEdit(false); 
@@ -100,7 +89,7 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
                        <EditButton error={ Edit} onClick={()=>{ setCancel(true);
                         setEdit(true)
                        }}/>
-                        <DeleteButton onClick={handleDeleteClick}/>
+                        {id!='Highlights-1' && <DeleteButton onClick={()=>setOpenDialog(true)}/>}
                     </Box>
                 </Box>
                 <Box className={classes.myuploadandheadingbox}>
@@ -127,28 +116,25 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
                                     accept="image/*" 
                                     id={`upload-file-${accordianId}-${subSection}-${id}`}
                                     style={{display:'none'}}
-                                    onChange={(e) =>HandleFileChange(e, setFile, setError, setIsSaved, setImage)}
+                                    onChange={(e) =>newHandleFileChange(e, SetFile, setError, setIsSaved, )}
                                     disabled={!Edit}
                                     />
                             <UploadButtonTestimonials id={id} accordianId={accordianId} subSection={subSection} disable={!Edit}/> 
-                            {(Images.length>0 || prevData)&& (
+                            {(file)&& (
                                 <Box className={classes.ImagesBox}>
                                     <Box className={classes.ImagespicBox}>
-                                        {Images.map((prev,index)=>
-                                            <Box key={index}  sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
+                                        
+                                            <Box   sx={{position:'relative',opacity: Edit ? 1 : 0.5,}} >
                                                 <img 
-                                                    src={prev}
-                                                    alt={`preview ${index+1}`}
-                                                    className={classes.TestmonialPic}
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={`preview `}
+                                                    className={classes.ImagePic}
                                                 />
-                                                <Button className={classes.cancelImgIcon}
-                                                        onClick={()=>{removeImage(index)}}
-                                                        disabled={!Edit}
-                                                                >
-                                                    x
-                                                </Button>
+                                                <IconButton className={classes.cancelImgIcon} disabled={!Edit} onClick={()=>{removeImage()}}>
+                                                  <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
+                                                </IconButton>
                                             </Box>
-                                        )}
+                                       
                                         
                                     </Box> 
                                 </Box>
@@ -195,34 +181,12 @@ const SubHighlights=({ accordianId, id,subSection, onDelete }: SubHighlightsProp
                     </Box>
                 </Box>
                 <Box className={classes.SeveandCancelBox}>
-                     <SaveButton error={isSaved || Images.length === 0 || isTextInvalid}  onClick={SaveData}/>
+                     <SaveButton error={isSaved || !file|| isTextInvalid}  onClick={SaveData}/>
                     {cancel &&(<CancelButton onClick={CancelData}/>)}
                 </Box>
                 <Box className={classes.heroDivider}></Box>
             </Box>
-            <Dialog open={openDialog} fullWidth onClose={handleCancel} className={classes.DialoagBox} PaperProps={{
-                                    sx: {
-                                    width: 500,       
-                                    height: 250,      
-                                    borderRadius: 3,   
-                                    padding: 2,        
-                                    },
-                                }}>
-                <DialogContent className={classes.DialogContent}>
-                    <Typography sx={{fontSize:'24px',color:'red',fontWeight:500,wordWrap: 'break-word'}}>Are you sure you want to delete this {subSection}{id}?</Typography>
-                </DialogContent>
-                <DialogActions sx={{ 
-                                display: 'flex', 
-                                justifyContent: 'center'  
-                            }}>
-                    <Button onClick={handleCancel} className={classes.deleteButton}>
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmDelete} className={classes.CancelButton}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <UserendDeletepopup open={openDialog} message={`Are you sure you want to delete this ${id}?`} onClose={()=> setOpenDialog(false)} onDelete={handleConfirmDelete}/>    
         </>
     )
 }

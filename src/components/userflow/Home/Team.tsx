@@ -309,7 +309,7 @@ const Team: React.FC<TeamProps> = ({
             (isOverflowing ? " " + classes.teamCardsScrollFlexStart : "")
           }
         >
-          {isOverflowing && <Box />}
+          {/*{isOverflowing && <Box />}*/}
           {(activeTab === "directors" ? teamData : advisorsData).map(
             (item, idx) => (
               <Box key={idx} className={classes.teamCardOuter}>
@@ -319,11 +319,10 @@ const Team: React.FC<TeamProps> = ({
               </Box>
             )
           )}
-          {isOverflowing && <Box />}
+         {/* {isOverflowing && <Box sx={{width: 0, height: 0,}}/>}*/}
         </Box>
       </Box>
     </Box>
   );
 };
-
 export default Team;
