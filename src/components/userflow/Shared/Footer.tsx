@@ -343,6 +343,7 @@ const isEmailValid=error==="" &&email.length>0
                   }}
 
                 className={classes.subscribeInput2} 
+                sx={{marginBottom:'3vh'}}
                 />
                 {/* Error message removed: button stays disabled on invalid email */}
               </Box>

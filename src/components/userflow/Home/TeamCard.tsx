@@ -15,7 +15,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ image, name, location, role }) => {
   const { classes } = useHomeStyles();
   const navigate = useNavigate();
   return (
-    <Box className={classes.teamCardRoot}>
+    <Box className={classes.teamCardRoot}sx={{backgroundColor:'#F7FAFC',}}>
       <Avatar src={image} className={classes.teamCardAvatar} />
       <Typography className={classes.teamCardRole}>{role}</Typography>
       <Box className={classes.teamCardInfoRow}>

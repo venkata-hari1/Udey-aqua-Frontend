@@ -145,18 +145,12 @@ const Testimonials = () => {
 
   return (
     <>
-      <Grid container className={classes.aboutLayoutRoot} direction="column">
-        <Grid size={{ xs: 12 }}>
-          <Grid container className={classes.aboutMainRow} wrap="nowrap">
-            <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
-              <Grid container size={{ xs: 12 }}>
-                <Grid size={{ xs: 12 }}>
+      <Grid container size={{ xs: 12 }} sx={{width:'100%'}}>
+            <Grid sx={{width:'100%'}}>
                   <Typography className={classes.aboutHeaderTitle}>Testimonials</Typography>
-                  <Typography className={classes.aboutHeaderSubtitle}>
+                  <Typography className={classes.aboutHeaderSubtitle} sx={{marginBottom:'2vh'}}>
                     Real Journeys of Growth Through Aquaculture Innovation
                   </Typography>
-                </Grid>
-              </Grid>
 
               <Box className={classes.testimonialCarouselWrapper}>
                 <Box
@@ -294,8 +288,7 @@ const Testimonials = () => {
                 </Box>
               )}
             </Grid>
-          </Grid>
-        </Grid>
+          
 
         {!isReadMoreMode && (
           <Grid size={{ xs: 12 }}>

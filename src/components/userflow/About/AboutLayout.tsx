@@ -35,26 +35,21 @@ const AboutLayout = () => {
 
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
-         <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
-  
-      <Grid size={{ xs: 12}}>
-  
-<Hero
-  page="about"
-  align="center"
-  overlayColor="#00000050"
-  fishCount={20}
-  fishHeight={isMobile ? 2000 : 3000}
-/>
-</Grid>
-
-     
+        <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
+        <Grid size={{ xs: 12}}>
+            <Hero
+              page="about"
+              align="center"
+              overlayColor="#00000050"
+              fishCount={20}
+              fishHeight={isMobile ? 2000 : 3000}
+            />
+        </Grid>
       <Grid size={{ xs: 12 }}>
     
-        <Grid container className={classes.aboutMainRow} wrap="nowrap">
+        <Grid container className={(location.pathname ==='/about/milestones')?classes.milestonescontainer:classes.aboutMainRow} wrap="nowrap">
        
-          {!isMobile && (
-            <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper} >
+          {(!isMobile && location.pathname !='/about/milestones') && <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper} >
               <Box className={classes.aboutSidebar}>
                 <Box className={classes.aboutSidebarNavTitle}>About Us</Box>
                 {sidebarItems.map((item) => (
@@ -78,9 +73,9 @@ const AboutLayout = () => {
    
             </Grid>
             
-          )}
+          }
           {isMobile && <ContactBox />}
-          <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
+          <Grid size={{ xs: 12 }}className={(location.pathname ==='/about/milestones')?classes.milestonescontainer:classes.aboutMainContent}>
             <Outlet />
           </Grid>
          

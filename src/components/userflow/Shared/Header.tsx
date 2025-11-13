@@ -96,7 +96,7 @@ const navItems: NavItem[] = [
 const Header = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [activeNav, setActiveNav] = useState("");
+  
   const [trigger, setTrigger] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
@@ -106,10 +106,10 @@ const Header = () => {
   const { classes } = useSharedStyles();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-
+const [activeNav, setActiveNav] = useState("");
   useEffect(() => {
     const currentPath = location.pathname;
-    if (currentPath === "/") {
+    if (currentPath === "/" || currentPath.startsWith("/home")) {
       setActiveNav("Home");
     } else if (currentPath.startsWith("/about")) {
       setActiveNav("About Us");
@@ -164,7 +164,7 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isHome = location.pathname === "/";
+  const isHome = location.pathname === "/home";
 
   const toggleExpanded = (itemLabel: string): void => {
     setExpandedItems((prev) =>
@@ -212,7 +212,6 @@ const Header = () => {
       .split(" ")
       .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
       .join(" ");
-
   return (
     <AppBar
       position="fixed"
@@ -255,16 +254,17 @@ const Header = () => {
             spacing={2}
             className={clsx(
               classes.desktopTopBar,
-              trigger || !isHome
-                ? classes.desktopTopBarTrigger
-                : classes.desktopTopBarNoTrigger
+              //(trigger && isHome) || !isHome
+              //</>  ? classes.desktopTopBarTrigger
+               // : classes.desktopTopBarNoTrigger
+                !isHome &&  classes.desktopTopBarTrigger 
             )}
           >
             <Grid size={{ xs: 8 }} container spacing={1} alignItems="center">
               <Grid
                 size={{ xs: 4 }}
                 container
-                alignItems="center"
+                alignItems="center" 
                 className={`${classes.desktopContact} ${classes.headerContactLink}`}
                 component="a"
                 href="mailto:info@Uday.com"

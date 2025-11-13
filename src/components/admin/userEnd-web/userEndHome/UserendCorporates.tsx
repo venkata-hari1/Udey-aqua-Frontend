@@ -44,8 +44,9 @@ const UserendCorporates=({id,accordianId, Section}:AquacultureTypeProps)=>{
     setEdit(false); 
     setCancel(false)
     }
-    const removeImage=()=>{
-            setFile([])
+    const removeImage=(removeid:number)=>{
+             setFile(prev=>prev.filter((_,index)=> index !== removeid));
+        setImage(prev=>prev.filter((_,index)=>index !== removeid));
             setError('');
             setIssaved(false);
     };
@@ -92,7 +93,7 @@ const UserendCorporates=({id,accordianId, Section}:AquacultureTypeProps)=>{
                                                                       "&:hover": {
                                                                         backgroundColor:'red', 
                                                                       },}}  
-                                                                  disabled={!Edit} onClick={()=>{removeImage()}}
+                                                                  disabled={!Edit} onClick={()=>{removeImage(index)}}
                                                     >
                                                         <CloseIcon sx={{ color: "white", fontSize: 18, stroke:'white',strokeWidth:2 }}/>
                                                     </IconButton>
@@ -116,7 +117,7 @@ const UserendCorporates=({id,accordianId, Section}:AquacultureTypeProps)=>{
                 </Box>
             </Box>
             <Box className={classes.SeveandCancelBox} >
-                <SaveButton error={isSaved || !file}  onClick={SaveData}/>
+                <SaveButton error={isSaved || Images.length ==0}  onClick={SaveData}/>
                 {cancel &&(<CancelButton onClick={CancelData}/>)}
             </Box>                       
         </>

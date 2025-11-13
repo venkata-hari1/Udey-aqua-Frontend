@@ -47,9 +47,9 @@ const AboutInfoCard = ({
           {largeDesc}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "flex-end",marginBottom:'16px', }}>
-          <IconButton onClick={()=>navigate(-1)} className={classes.backButton}>
+          {/*<IconButton onClick={()=>navigate(-1)} className={classes.backButton}>
             <ArrowBack />
-          </IconButton>
+          </IconButton>*/}
         </Box>
       </Collapse>
       {!expanded ? (

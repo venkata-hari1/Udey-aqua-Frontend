@@ -1,8 +1,5 @@
 // src/components/userflow/About/Milestones.tsx
-import { Box, Grid, Typography,useMediaQuery,
-  useTheme, } from "@mui/material";
-// import AboutHero from "./AboutHero";
-import Hero  from "../common/Hero/Hero";
+import { Box, Grid, Typography,useMediaQuery,useTheme,IconButton } from "@mui/material";
 import useAboutStyles from "./aboutStyles";
 import fishSvg from "../../../assets/icons/fish.svg";
 import img from "../../../assets/about_us/milestones.png";
@@ -68,20 +65,13 @@ const Milestones = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
-      {!isMobile&&<Hero
-  page="about"
-  align="center"
-  overlayColor="#00000050"
-  fishCount={20}
-  fishHeight={2000}
-/>}
       <Typography className={classes.mileStoneHeader}>Milestones</Typography>
       <Typography className={classes.mileStoneSubtitle}>
         Our Journey in Aquaculture Innovation
       </Typography>
 
       <Box component="img" src={img} className={classes.mileStoneImg} />
-
+      <Box>
       <Box className={classes.milestoneScrollContainer}>
         <Box className={classes.milestoneContainer}>
           <Box className={classes.dottedLine} />
@@ -144,13 +134,15 @@ const Milestones = () => {
             );
           })}
         </Box>
-       
       </Box>
-       <Box className={classes.backButtonWrapper} onClick={() => navigate(-1)}>
-          <Box className={classes.backButton}>
-            <ArrowBack />
+        <Box sx={{ display: "flex", justifyContent: "flex-end",marginBottom:'5vh', }}>
+          <Box sx={{paddingRight:'20vh'}}>
+            <IconButton onClick={()=>navigate(-1)} className={classes.backButton}>
+                <ArrowBack />
+            </IconButton>
           </Box>
         </Box>
+      </Box>
     </>
   );
 };

@@ -6,6 +6,7 @@ import aboutImg from "../../../assets/home/about_image.png";
 import useHomeStyles from "./homeStyles";
 import AboutUsVideo from "./video";
 import { Slide } from "react-awesome-reveal";
+import { AspectRatio } from "@mui/icons-material";
 
 const AboutUs = () => {
   const { classes } = useHomeStyles();
@@ -61,12 +62,13 @@ const AboutUs = () => {
         </Grid>
 
        
-        <Grid size={{ xs: 12, md: 6 }} className={classes.aboutUsRight}>
+        <Grid size={{ xs: 12, md: 6,}} sx={{height:'50vh',alignItems:'center',}}>
         <Slide direction="right"> 
           <Box
             component="img"
             src={aboutImg}
             alt="About Uday Aqua"
+            height='100%'
             className={classes.aboutUsImg}
           />
           </Slide>

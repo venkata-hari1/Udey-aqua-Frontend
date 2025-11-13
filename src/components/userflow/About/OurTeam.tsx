@@ -16,10 +16,10 @@ import {
   ArrowForwardIos,
 } from "@mui/icons-material";
 import useAboutStyles from "./aboutStyles";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import {  useParams, useNavigate } from "react-router-dom";
 import aboutImg from "../../../assets/about_us/team.png";
-
+import { useLayoutEffect } from "react";
 // Images
 import team1 from "../../../assets/team/team_1.png";
 import team2 from "../../../assets/team/team_2.png";
@@ -111,8 +111,7 @@ const OurTeam = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
-  //const memberref= useRef<HTMLDivElement | null>(null)
-
+  const imageref= useRef<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"Directors" | "Advisors">("Directors");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -133,6 +132,12 @@ const OurTeam = () => {
         setOpen(true);
       }
     }
+    else {
+    // 🟢 When navigating back to /about/our-team
+    setOpen(false);
+    setCurrentIndex(0);
+    setActiveTab("Directors");}
+
   }, [memberSlug]);
 
   const handleCardClick = (
@@ -151,6 +156,7 @@ const OurTeam = () => {
       const prevMember = list[currentIndex - 1];
       const slug = prevMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       navigate(`/about/our-team/${slug}`);
+      handleScroll();
     }
     
   };
@@ -161,10 +167,17 @@ const OurTeam = () => {
       const nextMember = list[currentIndex + 1];
       const slug = nextMember.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       navigate(`/about/our-team/${slug}`);
+      handleScroll();
+      
     }
     
     
   };
+  const handleScroll = ()=>{
+    setTimeout(() => {
+    imageref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 200);
+  }
 
   const renderMembers = (category: "Directors" | "Advisors") => (
     <>
@@ -327,7 +340,7 @@ const OurTeam = () => {
                 </>
               ) : (
                 <>
-                  <Box className={classes.carouselDesktopTopRow}>
+                  <Box  ref={imageref}  className={classes.carouselDesktopTopRow}>
                     <Box className={classes.carouselDesktopImgBox}>
                       <img
                         src={currentMember.image}

@@ -301,6 +301,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
+    
   },
   navLinks1: {
     display: "flex",
@@ -310,7 +311,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   },
   navLink: {
     color: COLORS.WHITE,
-    ...TYPOGRAPHY.body1(theme),
+    //...TYPOGRAPHY.body1(theme),
     marginBottom: 4,
     cursor: "pointer",
     textDecoration: "none",
@@ -529,8 +530,8 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     marginBottom: 4,
   },
   navLinkDesktop: {
-    ...TYPOGRAPHY.body1(theme),
-    marginBottom: 4,
+    //...TYPOGRAPHY.body1(theme),
+    //marginBottom: 4,
   },
   navLinkBoldDesktop: {
     ...TYPOGRAPHY.subtitle1(theme),
@@ -711,12 +712,12 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     transition: "background 0.3s, color 0.3s, border-bottom 0.3s",
   },
   desktopTopBarTrigger: {
-    background: COLORS.WHITE,
+   background: COLORS.WHITE,
     color: theme.palette.primary.main,
   },
   desktopTopBarNoTrigger: {
-    background: "transparent",
-    color: COLORS.WHITE,
+   // background: "transparent",
+   // color: COLORS.WHITE,
   },
   desktopContact: {
     display: "flex",
@@ -728,10 +729,10 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   desktopDivider: {
     width: 1,
     height: 20,
-    background: theme.palette.primary.main,
+    background: COLORS.LIGHT_BLUE,
   },
   desktopDividerNoTrigger: {
-    background: COLORS.LIGHT_BLUE,
+    background: COLORS.WHITE,
   },
   desktopSearchPaper: {
     padding: "3px 6px",

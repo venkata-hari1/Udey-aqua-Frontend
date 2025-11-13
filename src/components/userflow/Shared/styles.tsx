@@ -48,6 +48,7 @@ export const FONTS = {
   DM_SERIF_DISPLAY: "'DM Serif Display', serif",
   INTER: "'Inter', sans-serif",
   POPPINS: "'Poppins', sans-serif",
+  SPACEGROTESK:"'Space Grotesk'"
 };
 
 export const TYPOGRAPHY = {

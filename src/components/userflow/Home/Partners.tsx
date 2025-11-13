@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import SectionTitle from "./SectionTitle";
 
 import { Fade } from "react-awesome-reveal";
-import ciba from "../../../assets/partners/ciba.png";
+import ciba from "../../../assets/home/CIBA.png";
 import cmfri from "../../../assets/partners/cmfri.png";
 import nfdb from "../../../assets/partners/ngdb.png";
 import nabard from "../../../assets/partners/nabard.png";
@@ -11,11 +11,11 @@ import icar from "../../../assets/partners/icar.png";
 import { useRef, useState, useEffect } from "react";
 import useHomeStyles from "./homeStyles";
 const partners = [
-  { src: ciba, alt: "CIBA" },
-  { src: cmfri, alt: "CMFRI" },
-  { src: nfdb, alt: "NFDB" },
-  { src: nabard, alt: "NABARD" },
-  { src: icar, alt: "ICAR" },
+  { src: ciba, alt: "CIBA" , height:'142px'},
+  { src: cmfri, alt: "CMFRI", height:'164px' },
+  { src: nfdb, alt: "NFDB", height:'227px' },
+  { src: nabard, alt: "NABARD", height:'165px' },
+  { src: icar, alt: "ICAR" , height:'152px'},
 ];
 
 const PartnersSection = () => {
@@ -64,7 +64,7 @@ const PartnersSection = () => {
 
         >
           {partners.map((partner, index) => (
-            <Box key={`desktop-${index}`} className={classes.partnersCard}>
+            <Box key={`desktop-${index}`} className={classes.partnersCard} height={partner.height}>
               <Box
                 component="img"
                 src={partner.src}
@@ -94,6 +94,7 @@ const PartnersSection = () => {
                     component="img"
                     src={partner.src}
                     alt={partner.alt}
+                    height={partner.height}
                     className={classes.partnersImg}
                   />
                 </Box>

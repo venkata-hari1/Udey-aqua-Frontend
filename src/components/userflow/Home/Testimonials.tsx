@@ -64,6 +64,7 @@ const Testimonials: React.FC = () => {
                 ? " " + classes.testimonialsCardOuterLast
                 : "")
             }
+            
           >
             <JackInTheBox cascade damping={0.2}>
             <TestimonialCard testimonial={t} />

@@ -23,6 +23,15 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
       background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     },
   },
+  milestonescontainer:{
+    width: "100%",
+    backgroundColor:'#fff'
+    //paddingLeft:'0px',
+    //paddingRight:'0px',
+    //padding:'0px',
+    //marginLeft:'0px',
+    //marginRight:'0px'
+  },
   About:{
     position: "absolute",
     top: "50%",
@@ -484,7 +493,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     position: "relative",
     padding: "8px 15px 0 15px",
     [theme.breakpoints.down('md')]:{
@@ -493,7 +502,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     }
   },
   milestoneItem: {
-    display: "flex",
+     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
     width: "100%",
@@ -508,16 +517,21 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   },
   milestoneScrollContainer: {
     maxHeight: "100vh",
+    marginLeft:'20vh',
+    marginRight:'20vh',
     overflowY: "scroll",
     scrollbarWidth: "none",
-    marginBottom: "120px",
+    marginBottom: "40px",
   },
   milestoneImg: {
     flex: "0 0 50%",
     maxWidth: "45%",
     height: "auto",
+    width:'100%',
     borderRadius: 8,
-    
+     paddingLeft:'60px',
+     paddingRight:'60px',
+    right:'10px',
     zIndex: 2,
     [theme.breakpoints.down("md")]: {
       maxWidth: "45%",
@@ -575,7 +589,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     transform: "translate(-50%, -50%) rotate(180deg)",
   },
   dottedLine: {
-    position: "absolute",
+     position: "absolute",
     top: 0,
     bottom: 0,
     left: "50%",
@@ -752,7 +766,7 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     }
   },
   backButtonWrapper: {
-    width: "100%",
+    width: "95%",
     display: "flex",
     justifyContent: "flex-end",
   },
@@ -1188,11 +1202,12 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
   // Testimonials Styles
   
   testimonialCarouselWrapper: {
-    width: "85vw",
+    //width: "85vw",
+    width:'100%',
     maxWidth: "100vw",
-    margin: "24px 0 40px 0",
-    marginLeft: "calc(50% - 50vw)",
-    marginRight: "calc(50% - 50vw)",
+    //margin: "24px 0 40px 0",
+    //marginLeft: "calc(50% - 50vw)",
+    //marginRight: "calc(50% - 50vw)",
     position: "relative",
     paddingLeft: 0,
     paddingRight: 0,
@@ -1240,7 +1255,7 @@ testimonialRoot: {
     position: "relative",
     marginBottom: 24,
     minHeight: 400,
-    marginLeft: 200,
+    //marginLeft: 200,
     [theme.breakpoints.down("md")]: {
       marginBottom: 16,
       minHeight: 300,
@@ -1759,7 +1774,7 @@ testimonialRoot: {
   },
   testimonialReadMoreImageContainer: {
     width: "100%",
-    height: 420,
+    height:'65vh',
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundPositionY: "calc(50% + 100px)",
@@ -1857,10 +1872,11 @@ testimonialRoot: {
   // Milestones styles
   milestoneItemRow: {
     flexDirection: "row",
-
+    paddingRight:'10vh'
   },
   milestoneItemRowReverse: {
     flexDirection: "row-reverse",
+    paddingLeft:'10vh'  
   },
   milestoneGridFlex: {
     flex: 1,

@@ -91,9 +91,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
     </Box>
   )}
 </Typography>
-
-        </Box>
-        <Box className={classes.newsCardFooter}>
+<Box className={classes.newsCardFooter}>
           <Button
             variant="outlined"
             className={classes.newsCardButton}
@@ -101,6 +99,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
           >
             Read More
           </Button>
+        </Box>
         </Box>
       </Box>
     </Box>

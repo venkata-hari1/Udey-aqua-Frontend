@@ -22,7 +22,6 @@ const MottoCard = ({ img, fishText, title, button, buttonText, aboutCard }: Mott
       navigate('/about');
     }
   };
-
   return (
     <Grid container className={classes.mottoCardRoot} direction="column" alignItems="center" spacing={2} size={{ xs: 12 }}>
       <Grid className={classes.mottoCardHeadWrap} size={{ xs: 12 }}>
