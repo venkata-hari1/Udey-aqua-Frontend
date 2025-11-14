@@ -73,11 +73,10 @@ const CulturesLayout: React.FC = () => {
           fishHeight={500}
         />
       </Grid>
-
       <Grid size={{ xs: 12 }}>
         <Grid container className={classes.culturesMainRow} wrap="nowrap">
           {!isMobile && (
-            <Grid size={{ xs: 3 }} className={classes.culturesSidebarWrapper}>
+            <Grid size={{ xs: 3 }} className={classes.culturesSidebarWrapper} sx={{marginBottom:'1vh'}}>
               <Box className={classes.culturesSidebar} >
                 <Box className={classes.culturesSidebarNavTitle}>Cultures</Box>
                 {sidebarItems.map((item) => (

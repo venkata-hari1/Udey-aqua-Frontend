@@ -15,6 +15,7 @@ import FormField from "../FormField";
 import { IMAGES } from "./constants";
 import { validateForm } from "./utils";
 import type { StepComponentProps, FormData, FormErrors } from "./types";
+import { NameandRoleValidate,phoneNumberValidation } from "../../../admin/utils/Validations";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 const PIN_API_BASE =
@@ -43,6 +44,9 @@ const Step3 = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   // Show validation messages only after user clicks Continue
   const [showErrors, setShowErrors] = useState(false);
+
+  var NameError=NameandRoleValidate(formData.name)
+  var PhoneError = phoneNumberValidation(formData.phone)
 
   const [statesList, setStatesList] = useState<string[]>(ALL_INDIA_STATES);
   const [loadingDistricts, setLoadingDistricts] = useState(false);
@@ -271,9 +275,9 @@ const Step3 = ({
             <Grid size={{ xs: 12, md: 6 }}>
             <FormField
                 label="Phone"
-                placeholder="+91 9876543210"
+                placeholder="+91"
                 required
-                value={`+91 ${formData.phone || ""}`}
+                value={formData.phone}
                 onChange={(value) => {
                   const digitsOnly = value.replace(/\D/g, "");
                   const withoutCountry = digitsOnly.startsWith("91")

@@ -6,12 +6,17 @@ import contactImg from "../../../assets/home/contact_us.png";
 import useHomeStyles from "./homeStyles";
 import { showToast } from "../../admin/utils/Toast";
 import { Slide } from "react-awesome-reveal";
+import { NameandRoleValidate,phoneNumberValidation } from "../../admin/utils/Validations";
+import { FormatShapes } from "@mui/icons-material";
 
 
 const Contact = ({ title = true }: { title?: boolean }) => {
-  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "+91", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const { classes } = useHomeStyles();
+
+  var NameError=NameandRoleValidate(form.name)
+  var PhoneError = phoneNumberValidation(form.phone)
 
   const NAME_MIN = 3;
   const NAME_MAX = 30;
@@ -54,7 +59,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
   const phoneError = submitted
     ? !form.phone
       ? "Enter a valid phone number"
-      : !isValidPhone(form.phone)
+      : !phoneNumberValidation(form.phone)
       ? "Phone number must be exactly 10 digits"
       : ""
     : "";
@@ -114,7 +119,7 @@ const Contact = ({ title = true }: { title?: boolean }) => {
         message: form.message.trim(),
       });
       setSubmitted(false);
-      setForm({ name: "", phone: "", message: "" });
+      setForm({ name: "", phone: "+91", message: "" });
     } else {
       console.warn({
         errors: { nameError, phoneError, messageError },
@@ -182,13 +187,16 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                   <TextField
                     name="name"
                     value={form.name}
-                    onChange={handleChange}
+                    onChange={(e)=>{setForm({...form,name:e.target.value})}}
                     placeholder="Enter your name"
                     fullWidth
                     variant="outlined"
                     size="small"
+                    inputProps={{maxLength:30}}
                     className={classes.contactTextField}
                     error={Boolean(nameError)}
+                    helperText={NameError.message}
+                    FormHelperTextProps={{className:classes.spanColor}}
                   />
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>
@@ -214,15 +222,17 @@ const Contact = ({ title = true }: { title?: boolean }) => {
                   </Box>
                   <TextField
                     name="phone"
-                    value={`+91 ${form.phone}`}
-                    onChange={handleChange}
-                    placeholder="+91 9876543210"
+                    value={form.phone}
+                    onChange={(e)=>{setForm({...form,phone:e.target.value})}}
                     fullWidth
                     variant="outlined"
                     size="small"
+                    defaultValue={+91}
                     className={classes.contactTextField}
-                    error={Boolean(phoneError)}
-                    inputProps={{ maxLength: 15 }}
+                    //error={PhoneError.isError}
+                    inputProps={{ maxLength: 13 }}
+                    helperText={PhoneError.error}
+                    FormHelperTextProps={{className:classes.spanColor}}
                   />
                 </Grid>
                 <Grid size={12} className={classes.contactFieldWrap}>

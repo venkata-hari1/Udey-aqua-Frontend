@@ -172,7 +172,7 @@ const Videos = () => {
         currentItem={carousel.currentItem}
         onPrevious={carousel.goToPrevious}
         onNext={carousel.goToNext}
-        showArrows={false}
+        showArrows={true}
         renderBackground={(item) => (
           <Box className={classes.successStoriesBg}>
             <Box

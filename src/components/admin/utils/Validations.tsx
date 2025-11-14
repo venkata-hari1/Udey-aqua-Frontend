@@ -579,7 +579,7 @@ export const NameandRoleValidate = (text: string): {  message: string } => {
     return {  message: "" }; 
   } else if (text.length < 3) {
     return {
-      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/80`,
+      message: `* Must contain at least 3 characters. Remaining Characters ${text.length}/30`,
     };
   } else if (text.length > 80) {
     return {  message: "* Character Limit Exceeded" };

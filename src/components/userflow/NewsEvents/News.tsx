@@ -467,6 +467,9 @@ const News = () => {
           <Typography className={classes.newsDetailAuthor}>
             {detail.author}
           </Typography>
+          <Typography className={classes.newsDetailParagraph} sx={{marginTop:'1vh'}}>
+            Farmer Sunitha switched to mud crab farming using our sustainable pond design and feeding methods. With guidance from our CAS-based training, he achieved healthier crab sizes and reduced mortality rates. His eco-conscious approach was featured in a regional agri‑magazine, inspiring others to adopt cleaner aquaculture practices.
+          </Typography>
           <Box
             className={classes.backButtonContainer}
             onClick={() =>
@@ -579,7 +582,7 @@ const News = () => {
                 width={16}
                 height={16}
               />
-              <Select
+              {/*<Select
                 value={`${selMonth}-${selYear}`}
                 onChange={(e) => {
                   const [m, y] = String(e.target.value).split("-");
@@ -587,17 +590,23 @@ const News = () => {
                   setSelYear(Number(y));
                 }}
                 open={openSelect}
-                onOpen={() => {
-                  /* no-op to prevent field click from opening */
-                }}
-                onClose={(event) => {
-                  /* ignore outside clicks/escape */ event.preventDefault?.();
+                onOpen={() => {}}
+                onClose={(event) => {event.preventDefault?.();
                 }}
                 className={classes.readMoreNewsSelect}
+
                 MenuProps={{
-                  PaperProps: { className: classes.newsSelectMenuPaper },
-                  MenuListProps: { className: classes.newsSelectMenuList },
+                  PaperProps: {
+                    sx: {
+                      maxHeight:300,
+                      overflowY: "auto",
+                    },
+                    className: classes.newsSelectMenuPaper,
+                  },
+                  MenuListProps: {disablePadding: true,style: { padding: 0, margin: 0 }
+},
                   disableScrollLock: true,
+
                 }}
                 renderValue={() => (
                   <Typography variant="body2">24-08-2025</Typography>
@@ -611,7 +620,47 @@ const News = () => {
                     </MenuItem>
                   ))
                 )}
-              </Select>
+              </Select>*/}
+              <Select
+  value={`${selMonth}-${selYear}`}
+  onChange={(e) => {
+    const [m, y] = String(e.target.value).split("-");
+    setSelMonth(Number(m));
+    setSelYear(Number(y));
+  }}
+  className={classes.readMoreNewsSelect}
+  IconComponent={ArrowToggleIcon}
+  renderValue={() => (
+    <Typography variant="body2">24-08-2025</Typography>
+  )}
+  MenuProps={{
+    disableScrollLock: true,
+    PaperProps: {
+      style: {
+        maxHeight: 300,
+        overflowY: "auto",
+      },
+    },
+    MenuListProps: {
+      disablePadding: true,
+      style: {
+        maxHeight: "none", // ← IMPORTANT (prevents content from shrinking)
+        padding: 0,
+        margin: 0,
+      },
+    },
+  }}
+>
+  {years.map((y) =>
+    months.map((_, mIdx) => (
+      <MenuItem key={`${mIdx}-${y}`} value={`${mIdx}-${y}`}>
+        {months[mIdx]} {y}
+      </MenuItem>
+    ))
+  )}
+</Select>
+
+
             </Box>
           </Box>
         </Box>

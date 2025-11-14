@@ -471,6 +471,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: 400,
     backgroundColor: COLORS.LIGHT_GRAY,
+    border:'0.5px solid black'
   },
   storyCardImg: {
     position: "absolute",
@@ -505,8 +506,11 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     position: "absolute",
     left: 0,
     right: 0,
+    zIndex: 5,
+    //marginLeft:'0.3px',
     bottom: "-3px",
     padding: 16,
+    width:'97%',
     background: "rgba(255,255,255)",
     borderRadius: "12px 12px 0 0",
     border: "1px solid #57B6FF",
@@ -666,7 +670,8 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   },
   lightboxContent: {
     position: "relative",
-    maxWidth: "90vw",
+    //maxWidth: "90vw",
+    width:'100%',
     // maxHeight: "92vh",
     overflow: "auto",
   },
@@ -674,7 +679,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: "100%",
     maxHeight: "90vh",
-    objectFit: "contain",
+    objectFit: "cover",
   },
   lightboxClose: {
     position: "absolute",
@@ -1603,10 +1608,10 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     transform: "translate(-50%, -50%)",
   },
   videoPlayButtonCircle: {
-    width: 50,
+    width: 70,
     height: 50,
     backgroundColor: "#FF0000",
-    borderRadius: "50%",
+    borderRadius: "15%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -1643,8 +1648,9 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
   videoModalContent: {
     position: "relative",
     width: "100%",
-    maxWidth: "90vw",
-    maxHeight: "90vh",
+    height:'90%',
+    //maxWidth: "90vw",
+    //maxHeight: "90vh",
   },
   videoModalClose: {
     position: "absolute",
@@ -1703,7 +1709,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     overflowY: "auto",
   },
   gallerySelectMenuList: {
-    maxHeight: 200,
+    //maxHeight: 200,
     overflowY: "auto",
   },
 
@@ -1786,7 +1792,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     overflowY: "auto",
   },
   successStoriesSelectMenuList: {
-    maxHeight: 200,
+    //maxHeight: 200,
     overflowY: "auto",
   },
   successStoriesDetailContainer: {

@@ -147,11 +147,11 @@ const Contact = () => {
         </Container>
       </Box>
 
-      <Box className={classes.contactFishSection}>
+     {/* <Box className={classes.contactFishSection}>
         <Container className={classes.contactFishContainer}>
         <SunFishAnimation Fish={fish123} Zindex={100} Count={2}/>
         </Container>
-      </Box>
+      </Box>*/}
 
       <Box className={classes.contactInfoSection}>
         <Container className={classes.contactInfoContainer}>

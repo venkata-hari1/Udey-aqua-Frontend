@@ -65,8 +65,10 @@ const AboutLayout = () => {
                     {item.label}
                   </NavLink>
                 ))}
+                
               </Box>
-              <ContactBox />
+              <Box sx={{margin:0}}><ContactBox /></Box>
+              
            
               
               {/* Removed side fish to allow main content to take full width */}

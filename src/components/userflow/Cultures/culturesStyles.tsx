@@ -112,7 +112,7 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "column",
     alignItems: "center",
     gap: theme.spacing(3),
-    margin: theme.spacing(3),
+    //margin: theme.spacing(3),
     marginRight: theme.spacing(5),
     [theme.breakpoints.down("md")]: {
       display: "none",

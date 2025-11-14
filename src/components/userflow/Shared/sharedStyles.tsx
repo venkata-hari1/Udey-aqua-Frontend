@@ -1119,7 +1119,7 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
     borderRadius: 12,
     boxShadow: SHADOWS.DARK_CARD,
     padding: theme.spacing(2.5),
-    marginTop: theme.spacing(2),
+    //marginTop:'70vh',
     marginBottom: theme.spacing(2),
     display: "flex",
     flexDirection: "column",

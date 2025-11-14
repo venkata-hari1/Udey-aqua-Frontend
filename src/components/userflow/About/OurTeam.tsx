@@ -133,7 +133,6 @@ const OurTeam = () => {
       }
     }
     else {
-    // 🟢 When navigating back to /about/our-team
     setOpen(false);
     setCurrentIndex(0);
     setActiveTab("Directors");}
