@@ -286,11 +286,8 @@ const InvoiceGenerator: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData 
     doc.setTextColor(0,0,0);
     doc.text('For queries, contact info@udayaqua.com.', tablerowstart, endpoint+270);
 
+    doc.save(`Invoice-${invoiceData.invoiceNumber}.pdf`);
 
-
-    const pdfBlob = doc.output("blob");
-    const pdfURL = URL.createObjectURL(pdfBlob);
-    window.open(pdfURL);
   };
 
   return (
