@@ -582,45 +582,6 @@ const News = () => {
                 width={16}
                 height={16}
               />
-              {/*<Select
-                value={`${selMonth}-${selYear}`}
-                onChange={(e) => {
-                  const [m, y] = String(e.target.value).split("-");
-                  setSelMonth(Number(m));
-                  setSelYear(Number(y));
-                }}
-                open={openSelect}
-                onOpen={() => {}}
-                onClose={(event) => {event.preventDefault?.();
-                }}
-                className={classes.readMoreNewsSelect}
-
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      maxHeight:300,
-                      overflowY: "auto",
-                    },
-                    className: classes.newsSelectMenuPaper,
-                  },
-                  MenuListProps: {disablePadding: true,style: { padding: 0, margin: 0 }
-},
-                  disableScrollLock: true,
-
-                }}
-                renderValue={() => (
-                  <Typography variant="body2">24-08-2025</Typography>
-                )}
-                IconComponent={ArrowToggleIcon as any}
-              >
-                {years.map((y) =>
-                  months.map((_, mIdx) => (
-                    <MenuItem key={`${mIdx}-${y}`} value={`${mIdx}-${y}`}>
-                      {months[mIdx]} {y}
-                    </MenuItem>
-                  ))
-                )}
-              </Select>*/}
               <Select
   value={`${selMonth}-${selYear}`}
   onChange={(e) => {

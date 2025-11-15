@@ -52,7 +52,7 @@ const Murrel = () => {
   return (
     <CulturePage
       title="Murrel"
-      subtitle="A Guide To Farming The Hardy Air-Breathing Fish"
+      subtitle="A Guide to Farming the Popular Marine Carnivore"
       headerImg={murrelImg}
       cards={cards}
     />

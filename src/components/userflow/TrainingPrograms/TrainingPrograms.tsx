@@ -175,7 +175,7 @@ const TrainingPrograms: React.FC = () => {
                 onClick={handleViewAllCultures}
                 className={classes.viewAllLink}
               >
-                View all
+                View All
               </Typography>
             ) : (
               <Typography
@@ -229,7 +229,7 @@ const TrainingPrograms: React.FC = () => {
                 onClick={handleViewAllTechnologies}
                 className={classes.viewAllLink}
               >
-                View all
+                View All
               </Typography>
             ) : (
               <Typography

@@ -271,7 +271,7 @@ const Step4 = ({
                       )
                     }
                   />
-                  <label htmlFor="terms">Terms & Conditions Apply</label>
+                  <label htmlFor="terms" style={{textDecoration:'underline',textDecorationThickness:'1px'}}>Terms & Conditions Apply</label>
                 </Box>
                 {step4Errors.termsAccepted && (
                   <Typography className={classes.step3Error}>

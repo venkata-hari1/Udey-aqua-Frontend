@@ -76,9 +76,9 @@ const CulturesLayout: React.FC = () => {
       <Grid size={{ xs: 12 }}>
         <Grid container className={classes.culturesMainRow} wrap="nowrap">
           {!isMobile && (
-            <Grid size={{ xs: 3 }} className={classes.culturesSidebarWrapper} sx={{marginBottom:'1vh'}}>
-              <Box className={classes.culturesSidebar} >
-                <Box className={classes.culturesSidebarNavTitle}>Cultures</Box>
+            <Grid size={{ xs: 3 }} className={classes.culturesSidebarWrapper}>
+              <Box className={classes.culturesSidebar} sx={{marginBottom:3}}>
+                <Box className={classes.culturesSidebarNavTitle}>About Us</Box>
                 {sidebarItems.map((item) => (
                   <NavLink
                     key={item.path}
@@ -94,8 +94,10 @@ const CulturesLayout: React.FC = () => {
                 ))}
               </Box>
               <ContactBox />
+           
               
-        
+              {/* Removed side fish to allow main content to take full width */}
+   
             </Grid>
           )}
           {isMobile && <ContactBox />}

@@ -98,7 +98,7 @@ const Step5 = ({
                 Selected Training Program
               </Typography>
             </Box>
-            <Box className={`${classes.step5Grid} ${classes.step5GridSpace}`}>
+            <Box className={`${classes.step5Grid} ${classes.step5GridSpace}`}sx={{padding:'2vh',marginLeft:'6px',gap:10}}>
               <Typography className={classes.step5DetailLabel}>
                 Culture
               </Typography>

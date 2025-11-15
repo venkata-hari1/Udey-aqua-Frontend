@@ -2,7 +2,7 @@
 // Form data interfaces
 export interface FormData {
   name: string;
-  phone: string;
+  phone:string;
   email: string;
   address: string;
   district: string;

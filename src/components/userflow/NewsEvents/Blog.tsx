@@ -321,6 +321,7 @@ const Blog = () => {
               id={`blog-card-${blog.id}`}
               onClick={() => handleReadMore(blog)}
               className={blog.id === lastClickedId ? classes.blogCardHighlight : undefined}
+              sx={{marginBottom:4}}
             >
               <NewsCard {...blog} autoWidth />
             </Box>

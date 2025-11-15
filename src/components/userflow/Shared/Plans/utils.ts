@@ -45,8 +45,8 @@ export const validateForm = (
 
   if (!formData.name.trim()) {
     errors.name = "Name is required";
-  } else if (/^\d+$/.test(formData.name.trim())) {
-    errors.name = "Name cannot contain only numbers";
+  } else if (!/^[a-zA-z]+$/.test(formData.name.trim())) {
+    errors.name = "Name cannot contain only numbers and special characters";
   } else if (formData.name.trim().length < 3) {
     errors.name = "Name must be at least 3 characters";
   } else if (formData.name.trim().length > 30) {

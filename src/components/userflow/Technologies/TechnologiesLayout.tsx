@@ -81,7 +81,7 @@ const TechnologiesLayout: React.FC = () => {
               size={{ xs: 3 }}
               className={classes.technologiesSidebarWrapper}
             >
-              <Box className={classes.technologiesSidebar}>
+              <Box className={classes.technologiesSidebar} sx={{marginBottom:3}}>
                 <Box className={classes.technologiesSidebarNavTitle}>
                   Technologies
                 </Box>

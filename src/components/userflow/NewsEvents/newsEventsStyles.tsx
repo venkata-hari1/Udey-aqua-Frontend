@@ -156,7 +156,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     },
   },
   newsEventsSidebar: {
-    position:'absolute',
+    //position:'absolute',
     zIndex:100,
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
@@ -471,7 +471,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     width: "100%",
     height: 400,
     backgroundColor: COLORS.LIGHT_GRAY,
-    border:'0.5px solid black'
+    //border:'0.5px solid '
   },
   storyCardImg: {
     position: "absolute",
@@ -626,7 +626,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     width: "auto",
     height: 300,
     overflow: "hidden",
-    border:'1px solid #6f6f6fff',
+    //border:'1px solid #6f6f6fff',
     borderRadius:"10px",
     background: COLORS.LIGHT_GRAY,
     cursor: "pointer",
@@ -902,7 +902,7 @@ const useNewsEventsStyles = makeStyles()((theme: Theme) => ({
     position: "relative",
     cursor: "pointer",
     transition: "transform 0.3s ease",
-    border:'3px solid #57b6ff',
+    //border:'3px solid #57b6ff',
     borderRadius:'5px',
   },
   latestUpdatesImage: {

@@ -11,6 +11,8 @@ interface FormFieldProps {
   value?: string;
   onChange?: (value: string) => void;
   error?: string;
+  inputProps?: object; 
+  defaultvalue?:string
 }
 
 const FormField = ({
@@ -22,6 +24,8 @@ const FormField = ({
   value = "",
   onChange,
   error,
+  inputProps,
+  defaultvalue
 }: FormFieldProps) => {
   const { classes } = usePlansStyles();
 
@@ -46,6 +50,8 @@ const FormField = ({
         error={!!error}
         helperText={error}
         fullWidth
+        inputProps={inputProps}
+        defaultValue={defaultvalue}
       />
     </Box>
   );

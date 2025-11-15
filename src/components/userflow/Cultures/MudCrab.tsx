@@ -51,7 +51,7 @@ const MudCrab = () => {
   return (
     <CulturePage
       title="Mud Crab"
-      subtitle="A Guide To Farming The High-Value Crustacean"
+      subtitle="A Guide to Farming the Popular Marine Carnivore"
       headerImg={mudCrabImg}
       cards={cards}
     />

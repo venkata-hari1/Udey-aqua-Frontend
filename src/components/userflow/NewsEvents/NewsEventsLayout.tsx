@@ -39,7 +39,7 @@ const NewsEventsLayout = () => {
         <Grid container className={classes.newsEventsMainRow} wrap="nowrap">
           {!isMobile && (
             <Grid size={{ xs: 3 }} className={classes.newsEventsSidebarWrapper}>
-              <Box className={classes.newsEventsSidebar}>
+              <Box className={classes.newsEventsSidebar} sx={{marginBottom:3}}>
                 <Box className={classes.newsEventsSidebarNavTitle}>
                   News & Events
                 </Box>

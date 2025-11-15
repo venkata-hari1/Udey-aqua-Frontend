@@ -609,8 +609,8 @@ const useHomeStyles = makeStyles()((theme: Theme) => ({
   },
   newsCardAuthorSpan: {
     textDecoration: "underline",
-    color: COLORS.LIGHT_BLUE,
-    fontWeight: 600,
+    color: '#0463EE',
+    fontWeight: 700,
   },
   newsCardFooter: {
     backgroundColor:'#F7FAFC',

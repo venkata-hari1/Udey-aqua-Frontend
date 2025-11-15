@@ -52,7 +52,7 @@ const SeaWeed = () => {
   return (
     <CulturePage
       title="Sea Weed"
-      subtitle="A Guide To Farming Marine Algae"
+      subtitle="A Guide to Farming the Popular Marine Carnivore"
       headerImg={seaWeedImg}
       cards={cards}
     />

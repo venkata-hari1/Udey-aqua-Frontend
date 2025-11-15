@@ -335,15 +335,16 @@ const useAboutStyles = makeStyles()((theme: Theme) => ({
     position:'relative',
     flexDirection: "column",
     alignItems: "center",
-    gap: theme.spacing(3),
+    //gap: theme.spacing(3),
     margin: theme.spacing(3),
     marginRight: theme.spacing(5),
+    
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
   },
   aboutSidebar: {
-    position:'absolute',
+   // position:'absolute',
     zIndex:'100',
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,

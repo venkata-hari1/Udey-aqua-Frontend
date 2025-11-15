@@ -52,7 +52,7 @@ const Tilapia = () => {
   return (
     <CulturePage
       title="Tilapia"
-      subtitle="A Guide To Farming The Fast-Growing Freshwater Fish"
+      subtitle="A Guide to Farming the Popular Marine Carnivore"
       headerImg={tilapiaImg}
       cards={cards}
     />

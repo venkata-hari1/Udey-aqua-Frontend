@@ -35,22 +35,27 @@ const AboutLayout = () => {
 
   return (
     <Grid container className={classes.aboutLayoutRoot} direction="column">
-        <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
-        <Grid size={{ xs: 12}}>
-            <Hero
-              page="about"
-              align="center"
-              overlayColor="#00000050"
-              fishCount={20}
-              fishHeight={isMobile ? 2000 : 3000}
-            />
-        </Grid>
+         <SwimmingFish  Position="absolute" Count={30}  Height={isMobile?2000:3000} />
+  
+      <Grid size={{ xs: 12}}>
+  
+<Hero
+  page="about"
+  align="center"
+  overlayColor="#00000050"
+  fishCount={20}
+  fishHeight={isMobile ? 2000 : 3000}
+/>
+</Grid>
+
+     
       <Grid size={{ xs: 12 }}>
     
-        <Grid container className={(location.pathname ==='/about/milestones')?classes.milestonescontainer:classes.aboutMainRow} wrap="nowrap">
+        <Grid container className={classes.aboutMainRow} wrap="nowrap">
        
-          {(!isMobile && location.pathname !='/about/milestones') && <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper} >
-              <Box className={classes.aboutSidebar}>
+          {!isMobile && (
+            <Grid size={{ xs: 3 }} className={classes.aboutSidebarWrapper}>
+              <Box className={classes.aboutSidebar} sx={{marginBottom:3}}>
                 <Box className={classes.aboutSidebarNavTitle}>About Us</Box>
                 {sidebarItems.map((item) => (
                   <NavLink
@@ -65,19 +70,17 @@ const AboutLayout = () => {
                     {item.label}
                   </NavLink>
                 ))}
-                
               </Box>
-              <Box sx={{margin:0}}><ContactBox /></Box>
-              
+              <ContactBox />
            
               
               {/* Removed side fish to allow main content to take full width */}
    
             </Grid>
             
-          }
+          )}
           {isMobile && <ContactBox />}
-          <Grid size={{ xs: 12 }}className={(location.pathname ==='/about/milestones')?classes.milestonescontainer:classes.aboutMainContent}>
+          <Grid size={{ xs: 12 }} className={classes.aboutMainContent}>
             <Outlet />
           </Grid>
          

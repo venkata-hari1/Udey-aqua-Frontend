@@ -1114,14 +1114,14 @@ const useSharedStyles = makeStyles()((theme: Theme) => ({
   // ContactBox styles
   contactBoxWrapper: {
     width: "100%",
-    background: COLORS.WHITE,
-    color: COLORS.PRIMARY_BLUE,
-    borderRadius: 12,
-    boxShadow: SHADOWS.DARK_CARD,
-    padding: theme.spacing(2.5),
-    //marginTop:'70vh',
-    marginBottom: theme.spacing(2),
-    display: "flex",
+        background: COLORS.WHITE,
+        color: COLORS.PRIMARY_BLUE,
+        borderRadius: 12,
+        boxShadow: SHADOWS.DARK_CARD,
+        padding: theme.spacing(2.5),    
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
     fontSize: 16,
@@ -1852,7 +1852,7 @@ export const usePlansStyles = makeStyles()((theme: Theme) => ({
   step5Grid: {
     display: "grid",
     gridTemplateColumns: "140px 1fr",
-    rowGap: 4,
+    rowGap: 8,
     columnGap: 16,
   },
   step5GridSpace: {

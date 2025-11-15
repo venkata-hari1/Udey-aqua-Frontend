@@ -584,7 +584,7 @@ export const NameandRoleValidate = (text: string): {  message: string } => {
   } else if (text.length > 80) {
     return {  message: "* Character Limit Exceeded" };
   } else {
-    return {message: `* Remaining Characters ${text.length}/80` }; 
+    return {message: `* Remaining Characters ${text.length}/30` }; 
   }
 };
 

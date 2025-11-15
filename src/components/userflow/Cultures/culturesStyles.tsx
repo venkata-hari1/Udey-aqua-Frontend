@@ -103,7 +103,6 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-
   // Sidebar styles
   culturesSidebarWrapper: {
     width: 240,
@@ -111,15 +110,15 @@ const useCulturesStyles = makeStyles()((theme: Theme) => ({
     position:'relative',
     flexDirection: "column",
     alignItems: "center",
-    gap: theme.spacing(3),
-    //margin: theme.spacing(3),
+    //gap:'65vh',
+    margin: theme.spacing(3),
     marginRight: theme.spacing(5),
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
   },
   culturesSidebar: {
-    position:'absolute',
+    //position:'absolute',
     zIndex:'100',
     width: "100%",
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,

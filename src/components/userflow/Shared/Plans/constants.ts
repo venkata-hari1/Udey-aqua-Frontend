@@ -124,7 +124,7 @@ export const IMAGES = {
 
 // Form validation patterns
 export const VALIDATION_PATTERNS = {
-  phone: /^\+91\d{10}$/,
+  phone: /^\d{10}$/,
   // Allow common email formats including dots, plus, hyphens, subdomains, and longer TLDs
   email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
   pincode: /^\d{6}$/,

@@ -52,7 +52,7 @@ const SeaBass = () => {
   return (
     <CulturePage
       title="Sea Bass"
-      subtitle="A Guide To Farming The Premium Marine Fish"
+      subtitle="A Guide to Farming the Popular Marine Carnivore"
       headerImg={seaBassImg}
       cards={cards}
     />

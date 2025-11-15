@@ -52,7 +52,7 @@ const PearlSpot = () => {
   return (
     <CulturePage
       title="Pearl Spot"
-      subtitle="A Guide To Farming The Popular Freshwater Fish"
+      subtitle="A Guide to Farming the Popular Marine Carnivore"
       headerImg={pearlSpotImg}
       cards={cards}
     />

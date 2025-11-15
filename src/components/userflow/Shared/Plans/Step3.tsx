@@ -15,7 +15,6 @@ import FormField from "../FormField";
 import { IMAGES } from "./constants";
 import { validateForm } from "./utils";
 import type { StepComponentProps, FormData, FormErrors } from "./types";
-import { NameandRoleValidate,phoneNumberValidation } from "../../../admin/utils/Validations";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 const PIN_API_BASE =
@@ -43,16 +42,22 @@ const Step3 = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   // Show validation messages only after user clicks Continue
-  const [showErrors, setShowErrors] = useState(false);
+  const [showErrors, {/*setShowErrors*/}] = useState(false);
 
-  var NameError=NameandRoleValidate(formData.name)
-  var PhoneError = phoneNumberValidation(formData.phone)
-
-  const [statesList, setStatesList] = useState<string[]>(ALL_INDIA_STATES);
+  const [statesList, setStatesList] = useState<string[]>([...ALL_INDIA_STATES].sort((a, b) => a.localeCompare(b)));
   const [loadingDistricts, setLoadingDistricts] = useState(false);
   const [stateDistrictPin, setStateDistrictPin] = useState<
     Record<string, Record<string, Set<string>>>
   >({});
+
+  const Emailerror = validateForm({...formData,email:formData.email}).errors.email
+  const Nameerror = validateForm({...formData,name:formData.name}).errors.name
+  const Pincodeerror = validateForm({...formData,pincode:formData.pincode}).errors.pincode
+  const Phoneerror = validateForm({...formData,phone:formData.phone}).errors.phone
+  const Adresserror = validateForm({...formData,phone:formData.phone}).errors.address
+  
+  const isValid = Emailerror || Nameerror || Pincodeerror || Phoneerror || Adresserror 
+
 
   useEffect(() => {
     try {
@@ -60,12 +65,12 @@ const Step3 = ({
       if (cachedStates) {
         const parsed = JSON.parse(cachedStates) as string[];
         if (Array.isArray(parsed) && parsed.length) {
-          setStatesList(parsed);
+          setStatesList(parsed.sort((a, b) => a.localeCompare(b)));
           return;
         }
       }
     } catch {}
-    setStatesList(ALL_INDIA_STATES);
+    setStatesList(ALL_INDIA_STATES.sort((a, b) => a.localeCompare(b)));
     try {
       localStorage.setItem(
         "pin_states_list_v1",
@@ -109,6 +114,7 @@ const Step3 = ({
     }
   };
 
+
   const handleStateChange = async (stateName: string) => {
     setFormErrors((prev) => ({
       ...prev,
@@ -134,7 +140,15 @@ const Step3 = ({
           Object.keys(parsed).forEach((dist) => {
             fromCache[dist] = new Set(parsed[dist]);
           });
-          setStateDistrictPin((prev) => ({ ...prev, [stateName]: fromCache }));
+          const sortedCache: Record<string, Set<string>> = {};
+          Object.keys(fromCache)
+            .sort((a, b) => a.localeCompare(b))
+            .forEach((dist) => {
+              sortedCache[dist] = new Set(
+                [...fromCache[dist]].sort((a, b) => a.localeCompare(b)) // sort pincodes too
+              );
+          });
+          setStateDistrictPin((prev) => ({ ...prev, [stateName]: sortedCache }));
 
           return;
         }
@@ -166,7 +180,15 @@ const Step3 = ({
         }
         if (records.length < pageSize) break;
       }
-      setStateDistrictPin((prev) => ({ ...prev, [stateName]: mapForState }));
+      const sortedMap: Record<string, Set<string>> = {};
+      Object.keys(mapForState)
+        .sort((a, b) => a.localeCompare(b)) // sort districts
+        .forEach((dist) => {
+          sortedMap[dist] = new Set(
+            [...mapForState[dist]].sort((a, b) => a.localeCompare(b)) // sort pincodes
+        );
+      });
+      setStateDistrictPin((prev) => ({ ...prev, [stateName]: sortedMap }));
       try {
         const serializable: Record<string, string[]> = {};
         Object.entries(mapForState).forEach(([dist, pins]) => {
@@ -201,15 +223,13 @@ const Step3 = ({
   };
 
   // Ensure Select never receives out-of-range value while options are loading or changed
-  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {}).sort((a, b) =>
-    a.localeCompare(b, undefined, { sensitivity: "base" })
-  );
+  const availableDistrictNames = Object.keys(stateDistrictPin[formData.state] || {});
   const safeDistrictValue = availableDistrictNames.includes(formData.district)
     ? formData.district
     : "";
 
   const handleContinue = () => {
-    setShowErrors(true);
+    {/*setShowErrors(true);
     const digitsOnly = (formData.phone || "").replace(/[^0-9]/g, "");
     const normalizedPhone = /^\+91\d{10}$/.test(formData.phone)
       ? formData.phone
@@ -238,7 +258,7 @@ const Step3 = ({
       district: normalizedForm.district.trim(),
       pincode: normalizedForm.pincode,
       state: normalizedForm.state.trim(),
-    });
+    });*/}
 
     if (onStepChange) {
       onStepChange(skipStep4FromPdf ? 5 : 4);
@@ -269,15 +289,17 @@ const Step3 = ({
                 required
                 value={formData.name}
                 onChange={(value) => handleInputChange("name", value)}
-              error={showErrors ? formErrors.name : undefined}
+                //error={showErrors ? formErrors.name : undefined}
+                error={formData.name.length>0 ? Nameerror: " "}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
             <FormField
                 label="Phone"
-                placeholder="+91"
+                placeholder=""
+                defaultvalue="+91"
                 required
-                value={formData.phone}
+                value={'+91'+formData.phone}
                 onChange={(value) => {
                   const digitsOnly = value.replace(/\D/g, "");
                   const withoutCountry = digitsOnly.startsWith("91")
@@ -286,7 +308,8 @@ const Step3 = ({
                   const tenDigits = withoutCountry.slice(0, 10);
                   handleInputChange("phone", tenDigits);
                 }}
-              error={showErrors ? formErrors.phone : undefined}
+              //error={showErrors ? formErrors.phone : undefined}
+              error={formData.phone.length>0 ? Phoneerror: " "}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -296,7 +319,8 @@ const Step3 = ({
                 required
                 value={formData.email}
                 onChange={(value) => handleInputChange("email", value)}
-              error={showErrors ? formErrors.email : undefined}
+                //error={showErrors ? formErrors.email : undefined}
+                error={formData.email.length>0 ? Emailerror: " "}    
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -305,9 +329,11 @@ const Step3 = ({
                 placeholder="Enter your address"
                 multiline
                 rows={3}
+                inputProps={{maxLength:500}}
                 value={formData.address}
                 onChange={(value) => handleInputChange("address", value)}
-              error={showErrors ? formErrors.address : undefined}
+              //error={showErrors ? formErrors.address : undefined}
+              error={formData.address.length>0 ? Adresserror: " "} 
               />
             </Grid>
             <Grid
@@ -338,7 +364,7 @@ const Step3 = ({
                   <MenuItem value="" disabled>
                     Select State
                   </MenuItem>
-                  {[...statesList].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" })).map((s) => (
+                  {statesList.map((s) => (
                     <MenuItem key={s} value={s}>
                       {s}
                     </MenuItem>
@@ -382,7 +408,7 @@ const Step3 = ({
                       <MenuItem value="" disabled>
                         Select District
                       </MenuItem>
-                      {availableDistrictNames.map(
+                      {Object.keys(stateDistrictPin[formData.state] || {}).map(
                         (name) => (
                           <MenuItem key={name} value={name}>
                             {name}
@@ -436,8 +462,11 @@ const Step3 = ({
                       }}
                       placeholder="Enter 6-digit pincode"
                       className={classes.step3Field}
-                      error={showErrors ? !!formErrors.pincode : false}
-                      helperText={showErrors ? formErrors.pincode : undefined}
+                      //error={showErrors ? !!formErrors.pincode : false}
+                      //helperText={formData.pincode.length>0 ? Pincodeerror: " "}
+                      error={!!formErrors.pincode}
+                      helperText={formErrors.pincode || ""}
+
                       disabled={
                         !formData.state || !formData.district || loadingDistricts
                       }
@@ -498,8 +527,10 @@ const Step3 = ({
                   }}
                   placeholder="Enter 6-digit pincode"
                   className={classes.step3Field}
-                  error={showErrors ? !!formErrors.pincode : false}
-                  helperText={showErrors ? formErrors.pincode : undefined}
+                  //error={showErrors ? !!formErrors.pincode : false}
+                  //helperText={showErrors ? formErrors.pincode : undefined}
+                  error={formData.pincode.length>0 ? !!formErrors.pincode : false}
+                  helperText={formData.pincode.length>0 ?formErrors.pincode : ""}
                   disabled={
                     !formData.state || !formData.district || loadingDistricts
                   }
@@ -540,7 +571,7 @@ const Step3 = ({
                   <MenuItem value="" disabled>
                     Select District
                   </MenuItem>
-                  {availableDistrictNames.map(
+                  {Object.keys(stateDistrictPin[formData.state] || {}).map(
                     (name) => (
                       <MenuItem key={name} value={name}>
                         {name}
@@ -563,6 +594,7 @@ const Step3 = ({
                   variant="contained"
                   className={classes.plansCardButton}
                   onClick={handleContinue}
+                  disabled={!!isValid}
                 >
                   Continue
                 </Button>

@@ -150,7 +150,7 @@ const useTechnologiesStyles = makeStyles()((theme: Theme) => ({
   },
   technologiesSidebar: {
     width: "100%",
-    position:'absolute',
+    //position:'absolute',
     zIndex:100,
     background: `linear-gradient(180deg, ${COLORS.PRIMARY_BLUE} 0%, ${COLORS.PRIMARY_DARK} 100%)`,
     boxShadow: SHADOWS.SIDEBAR,
